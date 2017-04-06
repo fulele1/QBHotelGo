@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/immersion_status"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:id="@+id/llRoot"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <!-- Title -->
+
+    <include layout="@layout/pub_titlebar" />
+
+    <FrameLayout
+        android:background="#f1f1f1"
+        android:id="@+id/layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       ></FrameLayout>
+
+</LinearLayout>

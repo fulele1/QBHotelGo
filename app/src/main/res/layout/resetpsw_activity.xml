@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Activity.BackPswActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30px"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_user_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_edge"
+            android:gravity="center"
+            android:text="旧密码："
+            android:textSize="@dimen/textview_normal_size" />
+
+        <EditText
+            android:id="@+id/et_oldpsw"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawablePadding="10px"
+            android:hint="请输入旧密码"
+            android:padding="@dimen/padding"
+            android:paddingLeft="10px"
+            android:textSize="@dimen/textview_small_size" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_edge"
+            android:gravity="center"
+            android:text="@string/password"
+            android:textSize="@dimen/textview_normal_size" />
+
+        <EditText
+            android:id="@+id/et_newpsw"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawablePadding="10px"
+            android:hint="请输入新密码"
+            android:inputType="textPassword"
+            android:padding="@dimen/padding"
+            android:paddingLeft="10px"
+            android:textSize="@dimen/textview_small_size" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_edge"
+            android:gravity="center"
+            android:text="@string/password"
+            android:textSize="@dimen/textview_normal_size" />
+
+        <EditText
+            android:id="@+id/et_confirm_psw"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawablePadding="10px"
+            android:hint="请确认新密码"
+            android:inputType="textPassword"
+            android:padding="@dimen/padding"
+            android:paddingLeft="10px"
+            android:textSize="@dimen/textview_small_size" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+    <Button
+        android:id="@+id/bt_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_marginTop="30px"
+        android:layout_weight="0.5"
+        android:background="@drawable/bg_button_selector"
+        android:padding="5dp"
+        android:text="提交"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/button_normal_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20" />
+</LinearLayout>

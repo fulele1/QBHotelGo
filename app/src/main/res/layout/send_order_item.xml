@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_order_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_textview"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="@dimen/margin_edge"
+        android:paddingRight="@dimen/margin_edge"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="#312520"
+        android:textSize="@dimen/textview_small_size" />
+
+    <TextView
+        android:id="@+id/tv_order_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_textview"
+        android:padding="5dp"
+        android:textColor="#312520"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/margin_edge"
+        android:paddingRight="@dimen/margin_edge"
+        android:textSize="@dimen/textview_small_size" />
+
+    <TextView
+        android:id="@+id/tv_order_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_textview"
+        android:gravity="right|center_vertical"
+        android:padding="5dp"
+        android:textColor="#312520"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/margin_edge"
+        android:paddingRight="@dimen/margin_edge"
+        android:textSize="@dimen/textview_small_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#cfcfcf" />
+</LinearLayout>

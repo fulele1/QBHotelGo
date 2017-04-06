@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_order_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="订单编号："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <EditText
+                android:id="@+id/et_order_num"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:hint="请输入订单编号"
+                android:inputType="number"
+                android:paddingLeft="10px"
+                android:textSize="@dimen/textview_small_size" />
+
+            <ImageView
+                android:id="@+id/iv_zxing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/zxing" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="客户姓名："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <EditText
+                android:id="@+id/et_user_name"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:hint="请输入客户姓名"
+                android:paddingLeft="10px"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+        </LinearLayout>
+
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="#ffffff"-->
+        <!--android:gravity="center"-->
+        <!--android:paddingRight="@dimen/padding">-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginLeft="@dimen/margin_edge"-->
+        <!--android:gravity="center"-->
+        <!--android:text="@string/item_type"-->
+        <!--android:textSize="@dimen/textview_normal_size" />-->
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_item_type"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@null"-->
+        <!--android:drawableLeft="@mipmap/little_star"-->
+        <!--android:drawablePadding="10px"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:hint="@string/input_item_type"-->
+        <!--android:paddingLeft="10px"-->
+        <!--android:textSize="@dimen/textview_small_size" />-->
+
+        <!--<Spinner-->
+        <!--android:id="@+id/sp_goods_type"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"></Spinner>-->
+        <!--</LinearLayout>-->
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="客户电话："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <EditText
+                android:id="@+id/et_user_phone"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:hint="请输入客户电话"
+                android:inputType="phone"
+                android:paddingLeft="10px"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="身份证号："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <TextView
+                android:id="@+id/et_cert_num"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:gravity="center_vertical"
+                android:hint="请读取客户身份证"
+                android:paddingLeft="10px"
+
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+            <ImageView
+                android:id="@+id/iv_cert_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/zxing" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="开锁地址："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <EditText
+                android:id="@+id/et_unlock_address"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:gravity="center_vertical"
+                android:hint="请输入开锁地址"
+                android:paddingLeft="10px"
+                android:maxLength="40"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="锁具类型："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <TextView
+                android:id="@+id/et_unlock_type"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:gravity="center_vertical"
+                android:hint="请选择开锁类型"
+                android:paddingLeft="10px"
+
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+            <Spinner
+                android:id="@+id/sp_lock_type"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/textColor">
+
+            </Spinner>
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="开锁费用："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <EditText
+                android:id="@+id/et_unlock_money"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:hint="请输入开锁费用"
+                android:inputType="number"
+                android:paddingLeft="10px"
+                android:maxLength="20"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:gravity="center"
+                android:text="开锁时间："
+                android:textSize="@dimen/textview_normal_size" />
+
+            <TextView
+                android:id="@+id/et_unlock_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/little_star"
+                android:drawablePadding="10px"
+                android:gravity="center_vertical"
+                android:hint="请输入开锁时间"
+                android:paddingLeft="10px"
+
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/textview_small_size" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="身份证照片"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="人脸照片"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="门锁照片"
+                    android:textSize="@dimen/textview_small_size" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_cert_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    android:src="@mipmap/zm" />
+
+                <ImageView
+                    android:id="@+id/iv_user_face"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    android:src="@mipmap/pictrue_256" />
+
+                <ImageView
+                    android:id="@+id/iv_lock_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    android:src="@mipmap/pictrue_256" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/tv_read_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textview_small_size"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/bt_complete"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_edge"
+            android:layout_marginRight="@dimen/margin_edge"
+            android:layout_marginTop="30px"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_button_selector"
+            android:text="提交"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/button_normal_size" />
+
+    </LinearLayout>
+</ScrollView>

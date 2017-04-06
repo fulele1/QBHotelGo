@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_advise_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_edittext"
+        android:hint="请输入标题"
+        android:maxLength="15"
+        android:maxLines="1"
+        android:padding="@dimen/margin_edge" />
+
+    <EditText
+        android:id="@+id/et_advise_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_marginTop="20dp"
+        android:maxLength="100"
+        android:background="@drawable/bg_edittext"
+        android:hint="请输入您宝贵的意见(少于100字)"
+        android:inputType="textMultiLine"
+        android:minLines="5"
+        android:padding="@dimen/margin_edge" />
+
+    <Button
+        android:id="@+id/bt_complete"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_marginTop="30px"
+        android:background="@drawable/bg_button_selector"
+        android:text="提交"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/button_normal_size" />
+
+</LinearLayout>
