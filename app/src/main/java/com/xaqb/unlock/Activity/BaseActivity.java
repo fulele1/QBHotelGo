@@ -100,17 +100,17 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     /**
      * 初始化view控件
      */
-    public abstract void initViews();
+    public abstract void initViews() throws Exception;
 
     /**
      * 初始化数据
      */
-    public abstract void initData();
+    public abstract void initData() throws Exception;
 
     /**
      * 给view添加事件监听
      */
-    public abstract void addListener();
+    public abstract void addListener() throws Exception;
 
 
     /**

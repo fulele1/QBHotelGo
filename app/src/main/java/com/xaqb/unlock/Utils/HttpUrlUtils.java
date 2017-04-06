@@ -70,5 +70,10 @@ public class HttpUrlUtils {
         return getBaseUrl() + "/v1/staff/order";
     }
 
+    // TODO: 2017/3/15 获得订单详情接口
+    public String getOrderDetail() {
+        return getBaseUrl() + "/v1/staff/order";
+    }
+
 
 }

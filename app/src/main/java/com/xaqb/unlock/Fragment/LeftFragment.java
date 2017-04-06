@@ -26,7 +26,6 @@ import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Globals;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
@@ -125,26 +124,26 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
      */
     private void loadUserPic(String url) {
         if (url != null && !url.equals(""))
-            try {
-                OkHttpUtils
-                        .get()
-                        .url(url)
-                        .build()
-                        .execute(new BitmapCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int i) {
-                                LogUtils.i(e.toString());
-                            }
+            OkHttpUtils
+                    .get()
+                    .url(url)
+                    .build()
+                    .execute(new BitmapCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int i) {
+                            e.printStackTrace();
+                        }
 
-                            @Override
-                            public void onResponse(Bitmap bitmap, int i) {
+                        @Override
+                        public void onResponse(Bitmap bitmap, int i) {
+                            try {
                                 ivPic.setImageBitmap(bitmap);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
+                        }
+                    });
 
-                        });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
     }
 
     @Override

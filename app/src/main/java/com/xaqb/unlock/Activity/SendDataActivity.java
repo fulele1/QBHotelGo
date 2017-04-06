@@ -1,6 +1,7 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -105,15 +106,19 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
             @Override
             public void onItemClick(View view, int position) {
                 SendOrder item = mDataAdapter.getDataList().get(position);
-                showToast(item.toString());
+//                item.getOrderID();
+//                showToast(item.toString());
+                Intent intent = new Intent(instance,OrderDetailActivity.class);
+                intent.putExtra("or_id",item.getOrderID());
+                startActivity(intent);
             }
         });
 
         mLuRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public void onItemLongClick(View view, int position) {
-                SendOrder item = mDataAdapter.getDataList().get(position);
-                showToast("long----------" + item.toString());
+//                SendOrder item = mDataAdapter.getDataList().get(position);
+//                showToast("long----------" + item.toString());
             }
         });
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -141,25 +146,19 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void initData() {
         if (!checkNetwork()) return;
-//        sendOrders = new ArrayList<>();
-//        for (int i = 0; i < 10; i++) {
-//            sendOrders.add(new SendOrder("2015111" + i, "埃里克韩" + i, "dasdf" + i));
-//        }
-//        mDataAdapter.setDataList(sendOrders);
-//        onRefresh();
-        try {
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index);
-            OkHttpUtils.get()
-                    .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index)
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int i) {
-                            e.printStackTrace();
-                        }
+        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index);
+        OkHttpUtils.get()
+                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        e.printStackTrace();
+                    }
 
-                        @Override
-                        public void onResponse(String s, int i) {
+                    @Override
+                    public void onResponse(String s, int i) {
+                        try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
@@ -182,6 +181,8 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                                     sendOrder.setOrderNo(data.get(j).get("or_orderno").toString());
                                     sendOrder.setOrderAddress(data.get(j).get("or_useraddress").toString());
                                     sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
+                                    sendOrder.setOrderID(data.get(j).get("or_id").toString());
+                                    sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
                                     sendOrders.add(sendOrder);
                                 }
                                 if (sendOrders.size() == 0) {
@@ -210,12 +211,13 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                                 showToast(map.get("mess").toString());
                                 return;
                             }
-
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
+                    }
+                });
 
 
     }

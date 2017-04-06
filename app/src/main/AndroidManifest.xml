@@ -162,6 +162,9 @@
         <activity
             android:name=".CameraTool.CertCaptureActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.OrderDetailActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

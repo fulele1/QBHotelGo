@@ -10,7 +10,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,17 +17,14 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -76,14 +72,14 @@ import okhttp3.Call;
  */
 public class OrderActivity extends BaseActivity {
     private WindowManager.LayoutParams params;
-    private PopupWindow popupWindow;
+    //    private PopupWindow popupWindow;
     private View layout, vPart; // pop的布局
     private LayoutInflater inflater;
     private OrderActivity instance;
     private Button btComplete;
     //    private String username, psw;
-    private EditText etUserName, etUserPhone, etUnlockPay,etUnlockAddress;
-    private TextView etUserCertNum,  etLockType, etUnlcokTime, tvReadResult;
+    private EditText etUserName, etUserPhone, etUnlockPay, etUnlockAddress;
+    private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
     private ImageView ivCertPic, ivFacePic, ivLockPic, ivZxing, ivCertScan;
     private RelativeLayout rlPicFromSdcard, rlTakePic, rlCancle;
     private String userName, userPhone, userCertNum, unlockAddress, lockType, unlockPay, unlockTime, imagePath1, imagePath2;
@@ -110,8 +106,8 @@ public class OrderActivity extends BaseActivity {
      */
     private IDCardReader idReader = null;
     private IDCardInfo idCardInfo;
-    private Bitmap bitmap;
-    private Bitmap bitmapF;
+    private Bitmap bitmapCert;
+    private Bitmap bitmapFace;
 
     @Override
     public void initTitleBar() {
@@ -137,7 +133,7 @@ public class OrderActivity extends BaseActivity {
         etUserPhone = (EditText) findViewById(R.id.et_user_phone);
         etUserCertNum = (TextView) findViewById(R.id.et_cert_num);
         etUnlockAddress = (EditText) findViewById(R.id.et_unlock_address);
-        etLockType = (TextView) findViewById(R.id.et_unlock_type);
+//        etLockType = (TextView) findViewById(R.id.et_unlock_type);
         etUnlockPay = (EditText) findViewById(R.id.et_unlock_money);
         etUnlcokTime = (TextView) findViewById(R.id.et_unlock_time);
         tvReadResult = (TextView) findViewById(R.id.tv_read_result);
@@ -153,7 +149,7 @@ public class OrderActivity extends BaseActivity {
 //        spinner = (Spinner) findViewById(R.id.sp_goods_type);
 //
         //poowindow
-        params = getWindow().getAttributes();
+        /*params = getWindow().getAttributes();
         inflater = instance.getLayoutInflater();
         layout = inflater.inflate(R.layout.pop_add_pic_method, null);
         popupWindow = new PopupWindow(layout, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -176,7 +172,7 @@ public class OrderActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent1 = new Intent(Intent.ACTION_PICK, null);
-                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                intent1.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image*//*");
                 startActivityForResult(intent1, 1);
             }
         });
@@ -196,7 +192,7 @@ public class OrderActivity extends BaseActivity {
             public void onClick(View v) {
                 canclePopwindow();
             }
-        });
+        });*/
 
         /**
          * 初始化高德地图控件
@@ -307,13 +303,13 @@ public class OrderActivity extends BaseActivity {
         PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
     }
 
-    private void canclePopwindow() {
-        if (popupWindow != null && popupWindow.isShowing()) {
-            params.alpha = 1f;
-            getWindow().setAttributes(params);
-            popupWindow.dismiss();
-        }
-    }
+//    private void canclePopwindow() {
+//        if (popupWindow != null && popupWindow.isShowing()) {
+//            params.alpha = 1f;
+//            getWindow().setAttributes(params);
+//            popupWindow.dismiss();
+//        }
+//    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -409,6 +405,7 @@ public class OrderActivity extends BaseActivity {
                     if (file.exists()) {
                         Bitmap bm = BitmapFactory.decodeFile(picPath);
                         ivFacePic.setImageBitmap(bm);
+                        bitmapFace = bm;
                     }
                 }
                 if (data.getIntExtra("back_info", -3) != -3) {
@@ -513,28 +510,24 @@ public class OrderActivity extends BaseActivity {
                 ivLockPic.setImageBitmap(BitmapFactory.decodeFile(path));
                 break;
         }
-        canclePopwindow();
+//        canclePopwindow();
     }
 
-    private String[] typeNum = {"01", "02", "03", "04", "05"};
+    //    private String[] typeNum = {"01", "02", "03", "04", "05"};
     private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
 
     @Override
     public void initData() {
 
+        OkHttpUtils.get().url(HttpUrlUtils.getHttpUrl().getLockType()).build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                    }
 
-        ArrayAdapter adapter = new ArrayAdapter(instance, R.layout.item_spinner, lockTypes);
-        lockTypeSpinner.setAdapter(adapter);
-        try {
-            OkHttpUtils.get().url(HttpUrlUtils.getHttpUrl().getLockType()).build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int i) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String s, int i) {
+                    @Override
+                    public void onResponse(String s, int i) {
+                        try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
 //                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals("101")) {
@@ -543,15 +536,18 @@ public class OrderActivity extends BaseActivity {
 //                                LogUtils.i(data.toString());
                                 for (int j = 0; j < data.size(); j++) {
 //                                LogUtils.i(data.get(j).toString());
-                                    typeNum[j] = data.get(j).get("lt_code").toString();
-                                    lockTypes[j] = data.get(j).get("lt_name").toString();
+//                                    typeNum[j] = data.get(j).get("lt_code").toString();
+                                    lockTypes[j] = data.get(j).get("lt_code").toString() + "-" + data.get(j).get("lt_name").toString();
                                 }
                             }
+                            ArrayAdapter adapter = new ArrayAdapter(instance, R.layout.item_spinner, lockTypes);
+                            lockTypeSpinner.setAdapter(adapter);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    }
+                });
+
 
     }
 
@@ -588,7 +584,7 @@ public class OrderActivity extends BaseActivity {
                     default:
                         break;
                 }
-                etLockType.setText(goodsType);
+//                etLockType.setText(goodsType);
             }
 
             @Override
@@ -598,108 +594,118 @@ public class OrderActivity extends BaseActivity {
         });
     }
 
-    // 弹出照片选择框
-    private void showPopwindow() {
-        params.alpha = 0.7f;
-        getWindow().setAttributes(params);
-        popupWindow.showAtLocation(findViewById(R.id.ll_order_main), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
-                0, 0);
-    }
+//    // 弹出照片选择框
+//    private void showPopwindow() {
+//        params.alpha = 0.7f;
+//        getWindow().setAttributes(params);
+//        popupWindow.showAtLocation(findViewById(R.id.ll_order_main), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
+//                0, 0);
+//    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.iv_user_face:
-                if (!isReadCard) {
-                    ToastUtil.showToast(instance, "请先读卡");
-                    return;
-                }
-                if (bitmapF == null) {
-                    ToastUtil.showToast(instance, "获取身份图片错误...");
-                    return;
-                }
-                try {
-                    ComponentName componetName = new ComponentName(
-                            //这个是另外一个应用程序的包名
-                            "com.yinan.facerecognition",
-                            //这个参数是要启动的Activity
-                            "com.yinan.facerecognition.activity.FaceTestActivity");
-                    Intent intent = new Intent();
-                    intent.putExtra("send_picture", CertImgDisposeUtils.bitmaptoString(bitmapF));
-                    intent.putExtra("camera_id", 0);
-                    intent.setComponent(componetName);
-                    startActivityForResult(intent, 1111);
-                } catch (ActivityNotFoundException e) {
-                    ToastUtil.showToast(instance, "请安装人脸识别应用。");
-                    return;
-                } catch (Exception e) {
-                    ToastUtil.showToast(instance, "打开应用错误。");
-                    return;
-                }
-                break;
-            case R.id.iv_cert_pic:
-                readIDCard();
-                break;
-            case R.id.iv_lock_pic:
-                requestCoede = 2;
-                showPopwindow();
-                break;
-            case R.id.iv_zxing:
-                intent = new Intent(instance, CaptureActivity.class);
-                startActivityForResult(intent, 0);
-                break;
-            case R.id.iv_cert_scan:
-                readIDCard();
+        try {
+            switch (v.getId()) {
+                case R.id.iv_user_face:
+                    if (!isReadCard) {
+                        ToastUtil.showToast(instance, "请先读卡");
+                        return;
+                    }
+                    if (bitmapFace == null) {
+                        ToastUtil.showToast(instance, "获取身份图片错误...");
+                        return;
+                    }
+                    try {
+                        ComponentName componetName = new ComponentName(
+                                //这个是另外一个应用程序的包名
+                                "com.yinan.facerecognition",
+                                //这个参数是要启动的Activity
+                                "com.yinan.facerecognition.activity.FaceTestActivity");
+                        Intent intent = new Intent();
+                        intent.putExtra("send_picture", CertImgDisposeUtils.bitmaptoString(bitmapFace));
+                        intent.putExtra("camera_id", 0);
+                        intent.setComponent(componetName);
+                        startActivityForResult(intent, 1111);
+                    } catch (ActivityNotFoundException e) {
+                        ToastUtil.showToast(instance, "请安装人脸识别应用。");
+                        return;
+                    } catch (Exception e) {
+                        ToastUtil.showToast(instance, "打开应用错误。");
+                        return;
+                    }
+                    break;
+                case R.id.iv_cert_pic:
+                    readIDCard();
+                    break;
+                case R.id.iv_lock_pic:
+                    requestCoede = 2;
+//                showPopwindow();
+                    checkPer();
+                    break;
+                case R.id.iv_zxing:
+                    intent = new Intent(instance, CaptureActivity.class);
+                    startActivityForResult(intent, 0);
+                    break;
+                case R.id.iv_cert_scan:
+                    readIDCard();
 //                intent = new Intent(instance, CertCaptureActivity.class);
 //                startActivityForResult(intent, 100);
-                break;
+                    break;
 //            case R.id.ll_receiver_info:
 //                intent = new Intent(instance, AddressListActivity.class);
 //                intent.putExtra("isChose", true);
 //                intent.putExtra("isSender", false);
 //                startActivity(intent);
 //                break;
-            case R.id.bt_complete:
-                String weightPoint = "";
-                userName = etUserName.getText().toString().trim();
-                userPhone = etUserPhone.getText().toString().trim();
-                userCertNum = etUserCertNum.getText().toString().trim();
-                unlockAddress = etUnlockAddress.getText().toString().trim();
+                case R.id.bt_complete:
+                    String weightPoint = "";
+                    userName = etUserName.getText().toString().trim();
+                    userPhone = etUserPhone.getText().toString().trim();
+                    userCertNum = etUserCertNum.getText().toString().trim();
+                    unlockAddress = etUnlockAddress.getText().toString().trim();
 
-                lockType = etLockType.getText().toString().trim();
-                unlockPay = etUnlockPay.getText().toString().trim();
-                unlockTime = etUnlcokTime.getText().toString().trim();
+//                lockType = etLockType.getText().toString().trim();
+
+                    lockType = lockTypeSpinner.getSelectedItem().toString();
+                    if (lockType != null && lockType.contains("-")) {
+                        lockType = lockType.substring(0, lockType.indexOf("-"));
+                    }
+                    unlockPay = etUnlockPay.getText().toString().trim();
+                    unlockTime = etUnlcokTime.getText().toString().trim();
 
 //                if (goodsWeight.contains(".")) {
 //                    weightPoint = goodsWeight.substring(goodsWeight.indexOf("."), goodsWeight.length());
 //                }
 //                message = etLeavingMessage.getText().toString().trim();
-                if (!textNotEmpty(userName)) {
-                    showToast("请输入客户姓名");
-                } else if (!textNotEmpty(userPhone)) {
-                    showToast("请输入客户电话");
-                } else if (!textNotEmpty(userCertNum)) {
-                    showToast("请输入客户身份证号码");
-                } else if (!textNotEmpty(unlockAddress)) {
-                    showToast("请输入开锁地址");
-                } else if (!textNotEmpty(lockType)) {
-                    showToast("请输入锁具类型");
-                } else if (!textNotEmpty(unlockPay)) {
-                    showToast("请输入开锁费用");
-                } else if (bitmap == null) {
-                    showToast("请拍摄身份证照片");
-                } else if (bitmapF == null) {
-                    showToast("请进行人脸识别");
-                } else if (!textNotEmpty(imagePath2)) {
-                    showToast("请拍摄门锁照片");
-                } else {
-                    try {
-                        order();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (!textNotEmpty(userName)) {
+                        showToast("请输入客户姓名");
+                    } else if (!textNotEmpty(userPhone)) {
+                        showToast("请输入客户电话");
+                    } else if (!textNotEmpty(userCertNum)) {
+                        showToast("请输入客户身份证号码");
+                    } else if (!textNotEmpty(unlockAddress)) {
+                        showToast("请输入开锁地址");
+                    } else if (!textNotEmpty(lockType)) {
+                        showToast("请输入锁具类型");
+                    } else if (!textNotEmpty(unlockPay)) {
+                        showToast("请输入开锁费用");
+                    } else if (bitmapCert == null) {
+                        showToast("请拍摄身份证照片");
+                    } else if (bitmapFace == null) {
+                        showToast("请进行人脸识别");
+                    } else if (!textNotEmpty(imagePath2)) {
+                        showToast("请拍摄门锁照片");
+                    } else {
+                        try {
+                            order();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-                break;
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -773,8 +779,8 @@ public class OrderActivity extends BaseActivity {
         datas.put("useraddress", unlockAddress);
         datas.put("locktype", lockType);
         datas.put("certcode", userCertNum);
-        datas.put("certimg", Base64Utils.photoToBase64(bitmap, 80));
-        datas.put("faceimg", Base64Utils.photoToBase64(bitmapF, 80));
+        datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
+        datas.put("faceimg", Base64Utils.photoToBase64(bitmapFace, 80));
         datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80));
         datas.put("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()));
         datas.put("province", "陕西");
@@ -894,10 +900,10 @@ public class OrderActivity extends BaseActivity {
 //                    bitmap.recycle();
 //                    bitmap = null;
 //                }
-                bitmap = new CertImgDisposeUtils(instance).creatBitmap(idCardInfo);
-                bitmapF = idCardInfo.getPhoto();
-                if (bitmap != null) {
-                    ivCertPic.setImageBitmap(bitmap);
+                bitmapCert = new CertImgDisposeUtils(instance).creatBitmap(idCardInfo);
+                bitmapFace = idCardInfo.getPhoto();
+                if (bitmapCert != null) {
+                    ivCertPic.setImageBitmap(bitmapCert);
 //                    recordData.setCertPhoto(FuncUtils.photoToBase64(bitmap, 40));
                 }
                 etUserCertNum.setText(idCardInfo.getCardNum());
