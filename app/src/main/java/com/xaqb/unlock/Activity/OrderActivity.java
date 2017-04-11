@@ -42,6 +42,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Base64Utils;
+import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
@@ -108,6 +109,7 @@ public class OrderActivity extends BaseActivity {
     private IDCardInfo idCardInfo;
     private Bitmap bitmapCert;
     private Bitmap bitmapFace;
+    private Bitmap bitmapRealFace;
 
     @Override
     public void initTitleBar() {
@@ -405,7 +407,7 @@ public class OrderActivity extends BaseActivity {
                     if (file.exists()) {
                         Bitmap bm = BitmapFactory.decodeFile(picPath);
                         ivFacePic.setImageBitmap(bm);
-                        bitmapFace = bm;
+                        bitmapRealFace = bm;
                     }
                 }
                 if (data.getIntExtra("back_info", -3) != -3) {
@@ -519,7 +521,7 @@ public class OrderActivity extends BaseActivity {
     @Override
     public void initData() {
 
-        OkHttpUtils.get().url(HttpUrlUtils.getHttpUrl().getLockType()).build()
+        OkHttpUtils.get().url(HttpUrlUtils.getHttpUrl().getLockType()+"?access_token=" + SPUtils.get(instance, "access_token", "")).build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
@@ -530,7 +532,7 @@ public class OrderActivity extends BaseActivity {
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
 //                            LogUtils.i(map.toString());
-                            if (map.get("state").toString().equals("101")) {
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
 //                                LogUtils.i("login===", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
 //                                LogUtils.i(data.toString());
@@ -691,7 +693,7 @@ public class OrderActivity extends BaseActivity {
                         showToast("请输入开锁费用");
                     } else if (bitmapCert == null) {
                         showToast("请拍摄身份证照片");
-                    } else if (bitmapFace == null) {
+                    } else if (bitmapRealFace == null) {
                         showToast("请进行人脸识别");
                     } else if (!textNotEmpty(imagePath2)) {
                         showToast("请拍摄门锁照片");
@@ -780,7 +782,7 @@ public class OrderActivity extends BaseActivity {
         datas.put("locktype", lockType);
         datas.put("certcode", userCertNum);
         datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
-        datas.put("faceimg", Base64Utils.photoToBase64(bitmapFace, 80));
+        datas.put("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80));
         datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80));
         datas.put("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()));
         datas.put("province", "陕西");

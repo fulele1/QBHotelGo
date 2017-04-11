@@ -11,8 +11,11 @@ public class HttpUrlUtils {
     }
 
     // TODO: 2017/3/15 基础url
+//    public String getBaseUrl() {
+//        return "http://ksapi.qbdongdong.com/";
+//    }
     public String getBaseUrl() {
-        return "http://ksapi.qbdongdong.com/";
+        return "http://api.ddkaisuo.net/";
     }
 
     // TODO: 2017/3/15 用户登录接口
@@ -73,6 +76,21 @@ public class HttpUrlUtils {
     // TODO: 2017/3/15 获得订单详情接口
     public String getOrderDetail() {
         return getBaseUrl() + "/v1/staff/order";
+    }
+
+    // TODO: 2017/3/15 线下现金支付接口
+    public String getPayCash() {
+        return getBaseUrl() + "/v1/staff/pay/offlinepay/";
+    }
+
+    // TODO: 2017/3/15 线上在线支付接口
+    public String getPayOnline() {
+        return getBaseUrl() + "/v1/staff/pay/onlinepay/";
+    }
+
+    // TODO: 2017/3/15 获取支付状态接口
+    public String getPayResult() {
+        return getBaseUrl() + "/v1/staff/pay/orderstatus/";
     }
 
 

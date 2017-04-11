@@ -99,36 +99,41 @@ public class UserInfoActivity extends BaseActivity {
 
             @Override
             public void onResponse(String s, int i) {
-                Map<String, Object> map = GsonUtil.JsonToMap(s);
-                LogUtils.i(map.toString());
-                if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                    Map<String, Object> data = GsonUtil.JsonToMap(GsonUtil.GsonString(map.get("table")));
-                    LogUtils.i(data.toString());
-                    url = data.get("staff_headpic").toString();
-                    nickname = data.get("staff_nickname").toString();
-                    phone = data.get("staff_mp").toString();
-                    company = data.get("staff_company").toString();
-                    address = data.get("address").toString();
-                    if (textNotEmpty(nickname)) {
-                        tvNickName.setText(nickname);
+                try {
+                    Map<String, Object> map = GsonUtil.JsonToMap(s);
+                    LogUtils.i(map.toString());
+                    if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                        url = map.get("staff_headpic").toString();
+                        nickname = map.get("staff_nickname").toString();
+                        phone = map.get("staff_mp").toString();
+                        company = map.get("staff_company").toString();
+                        address = map.get("address").toString();
+                        if (textNotEmpty(nickname)) {
+                            tvNickName.setText(nickname);
+                        }
+                        if (textNotEmpty(phone)) {
+                            tvPhone.setText(phone);
+                        }
+                        if (textNotEmpty(company)) {
+                            tvCompany.setText(company);
+                        }
+                        if (textNotEmpty(address)) {
+                            tvAddress.setText(address);
+                        }
+                        if (textNotEmpty(url)) {
+                            loadUserPic();
+                        }
+                    } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                        finish();
+                        showToast("登录失效，请重新登录");
+                        startActivity(new Intent(instance, LoginActivity.class));
+                    } else {
+                        showToast(map.get("mess").toString());
+                        return;
                     }
-                    if (textNotEmpty(phone)) {
-                        tvPhone.setText(phone);
-                    }
-                    if (textNotEmpty(company)) {
-                        tvCompany.setText(company);
-                    }
-                    if (textNotEmpty(address)) {
-                        tvAddress.setText(address);
-                    }
-                    if (textNotEmpty(url)) {
-                        loadUserPic();
-                    }
-                } else {
-                    showToast(map.get("mess").toString());
-                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
             }
         });
     }
@@ -191,7 +196,7 @@ public class UserInfoActivity extends BaseActivity {
                     .execute(new BitmapCallback() {
                         @Override
                         public void onError(Call call, Exception e, int i) {
-
+                            e.printStackTrace();
                         }
 
                         @Override
@@ -326,23 +331,26 @@ public class UserInfoActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(String s, int i) {
-                        loadingDialog.dismiss();
-                        Map<String, Object> map = GsonUtil.JsonToMap(s);
-                        LogUtils.i(map.toString());
-                        if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                            ivPic.setImageBitmap(head);// 用ImageView显示出来
-                            PermissionUtils.requestPermission(instance, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
-                            isPicChange = true;
+                        try {
+                            loadingDialog.dismiss();
+                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+                            LogUtils.i(map.toString());
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                ivPic.setImageBitmap(head);// 用ImageView显示出来
+                                PermissionUtils.requestPermission(instance, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
+                                isPicChange = true;
 //                        Map<String, Object> map1 = GsonUtil.GsonToMaps(GsonUtil.GsonString(map.get("mess")));
 //                        SPUtils.put(instance, "userheadpic", map1.get("userheadpic"));
 //                        showToast("同步头像到服务器成功");
-                            //再次请求网络，重新获取最新的头像和昵称
-                            initData();
-                        } else {
-                            showToast(map.get("mess").toString());
-                            return;
+                                //再次请求网络，重新获取最新的头像和昵称
+                                initData();
+                            } else {
+                                showToast(map.get("mess").toString());
+                                return;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-
                     }
                 });
     }

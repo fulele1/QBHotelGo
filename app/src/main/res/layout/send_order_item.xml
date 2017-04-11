@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
+    android:background="@drawable/bg_textview"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -17,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bg_textview"
             android:gravity="center_vertical|left"
             android:paddingBottom="5dp"
             android:paddingLeft="@dimen/margin_edge"
@@ -31,7 +31,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bg_textview"
             android:paddingBottom="5dp"
             android:paddingLeft="@dimen/margin_edge"
             android:paddingRight="@dimen/margin_edge"
@@ -44,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/bg_textview"
             android:gravity="right|center_vertical"
             android:paddingBottom="5dp"
             android:paddingLeft="@dimen/margin_edge"
@@ -52,12 +50,30 @@
             android:paddingTop="5dp"
             android:textColor="#312520"
             android:textSize="@dimen/textview_small_size" />
-
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@mipmap/circle_checked_72px" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/iv_pay_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@mipmap/circle_checked_72px" />
+
+        <TextView
+            android:id="@+id/tv_pay_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="未付款" />
+    </LinearLayout>
+
 </LinearLayout>

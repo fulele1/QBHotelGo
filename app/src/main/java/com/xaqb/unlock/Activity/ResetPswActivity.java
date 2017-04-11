@@ -1,5 +1,6 @@
 package com.xaqb.unlock.Activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,14 +102,22 @@ public class ResetPswActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String s, int i) {
-                            loadingDialog.dismiss();
-                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                showToast("修改密码成功");
-                                finish();
-                            } else {
-                                showToast(map.get("mess").toString());
-                                return;
+                            try {
+                                loadingDialog.dismiss();
+                                Map<String, Object> map = GsonUtil.JsonToMap(s);
+                                if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                    showToast("修改密码成功");
+                                    finish();
+                                } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                                    finish();
+                                    showToast("登录失效，请重新登录");
+                                    startActivity(new Intent(instance, LoginActivity.class));
+                                } else {
+                                    showToast(map.get("mess").toString());
+                                    return;
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
                         }
                     });

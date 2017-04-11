@@ -1,5 +1,6 @@
 package com.xaqb.unlock.Activity;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -100,14 +101,15 @@ public class BackPswActivity extends BaseActivity {
                 showToast("验证码失效，请重新获取验证码");
                 return;
             }
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getBackPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+            LogUtils.i(HttpUrlUtils.getHttpUrl().getBackPswUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在修改");
             OkHttpUtils
                     .post()
-                    .url(HttpUrlUtils.getHttpUrl().getBackPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+                    .url(HttpUrlUtils.getHttpUrl().getBackPswUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                     .addParams("new_pwd", confirmPsw)
                     .addParams("code", vCode)
                     .addParams("codekey", codeKey)
+                    .addParams("tel", phone)
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -117,17 +119,24 @@ public class BackPswActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String s, int i) {
-                            loadingDialog.dismiss();
-                            LogUtils.i(s);
-                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                showToast("找回密码成功");
-                                finish();
-                            } else {
-                                showToast(map.get("mess").toString());
-                                return;
+                            try {
+                                loadingDialog.dismiss();
+                                LogUtils.i(s);
+                                Map<String, Object> map = GsonUtil.JsonToMap(s);
+                                if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                    showToast("找回密码成功");
+                                    finish();
+                                } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                                    finish();
+                                    showToast("登录失效，请重新登录");
+                                    startActivity(new Intent(instance, LoginActivity.class));
+                                } else {
+                                    showToast(map.get("mess").toString());
+                                    return;
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-
                         }
                     });
         }
@@ -153,19 +162,23 @@ public class BackPswActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String s, int i) {
-                            loadingDialog.dismiss();
-                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            if (map.get("state").toString().equals(Globals.httpFaildState)) {
-                                showToast(map.get("mess").toString());
-                                return;
+                            try {
+                                loadingDialog.dismiss();
+                                Map<String, Object> map = GsonUtil.JsonToMap(s);
+                                if (map.get("state").toString().equals(Globals.httpFaildState)) {
+                                    showToast(map.get("mess").toString());
+                                    return;
+                                }
+                                time.start();
+                                LogUtils.i(GsonUtil.GsonString(map.get("table")).toString());
+                                codeKey = map.get("table").toString();
+                                if (codeKey.contains("\"")) {
+                                    codeKey = codeKey.substring(1, codeKey.length() - 1).toString();
+                                }
+                                showToast("已发送验证码至您的手机");
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            time.start();
-                            LogUtils.i(GsonUtil.GsonString(map.get("table")).toString());
-                            codeKey = map.get("table").toString();
-                            if (codeKey.contains("\"")) {
-                                codeKey = codeKey.substring(1, codeKey.length() - 1).toString();
-                            }
-                            showToast("已发送验证码至您的手机");
                         }
                     });
         }

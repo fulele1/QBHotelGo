@@ -51,6 +51,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void assignViews() {
+
 //        iv = (ImageView) findViewById(R.id.iv);
         tvForgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
 //        tvRegister = (TextView) findViewById(R.id.tv_register);

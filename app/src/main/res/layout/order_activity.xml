@@ -153,6 +153,7 @@
                 android:hint="请输入客户电话"
                 android:inputType="phone"
                 android:paddingLeft="10px"
+                android:maxLength="20"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textview_small_size" />
 
@@ -412,7 +413,6 @@
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="1"
-                    android:padding="3dp"
                     android:src="@mipmap/pictrue_256" />
 
                 <ImageView
@@ -420,7 +420,6 @@
                     android:layout_width="0dp"
                     android:layout_height="150dp"
                     android:layout_weight="1"
-                    android:padding="3dp"
                     android:src="@mipmap/pictrue_256" />
             </TableRow>
 

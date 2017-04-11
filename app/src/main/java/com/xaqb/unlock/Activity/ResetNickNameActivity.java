@@ -103,16 +103,24 @@ public class ResetNickNameActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(String s, int i) {
-                        loadingDialog.dismiss();
-                        Map<String, Object> map = GsonUtil.JsonToMap(s);
-                        LogUtils.i(map.toString());
-                        if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                            SPUtils.put(instance, "staff_nickname", nickName);
-                            showToast("修改昵称成功");
-                            finish();
-                        } else {
-                            showToast(map.get("mess").toString());
-                            return;
+                        try {
+                            loadingDialog.dismiss();
+                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+                            LogUtils.i(map.toString());
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                SPUtils.put(instance, "staff_nickname", nickName);
+                                showToast("修改昵称成功");
+                                finish();
+                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                                finish();
+                                showToast("登录失效，请重新登录");
+                                startActivity(new Intent(instance, LoginActivity.class));
+                            } else {
+                                showToast(map.get("mess").toString());
+                                return;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
 //                        int id = (int) SPUtils.get(instance, "userInfoId", 1);
 //                        UserInfo userInfo = DataSupport.find(UserInfo.class, id);

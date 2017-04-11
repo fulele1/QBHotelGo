@@ -194,37 +194,45 @@ public class RealNameActivity extends BaseActivity {
 
                     @Override
                     public void onResponse(String s, int i) {
-                        loadingDialog.dismiss();
-                        btSubmit.setEnabled(true);
-                        Map<String, Object> map = GsonUtil.JsonToMap(s);
-                        LogUtils.i(map.toString());
-                        if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                            switch (map.get("state").toString()) {
-                                case "0":
-                                    showToast("上传成功，请等待审核！");
-                                    SPUtils.put(instance, "staff_is_real", "2");
-                                    finish();
-                                    break;
-                                case "1":
-                                    showToast(map.get("mess").toString());
+                        try {
+                            loadingDialog.dismiss();
+                            btSubmit.setEnabled(true);
+                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+                            LogUtils.i(map.toString());
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                switch (map.get("state").toString()) {
+                                    case "0":
+                                        showToast("上传成功，请等待审核！");
+                                        SPUtils.put(instance, "staff_is_real", "2");
+                                        finish();
+                                        break;
+                                    case "1":
+                                        showToast(map.get("mess").toString());
 //                                showToast("已经认证成功！");
 //                                finish();
-                                    break;
-                                case "102.0":
-                                    showToast("认证中，请等待审核！");
+                                        break;
+                                    case "102.0":
+                                        showToast("认证中，请等待审核！");
 //                                finish();
-                                    break;
-                                case "101.0":
-                                    showToast("已经认证成功！");
-                                    finish();
-                                    break;
-                                default:
-                                    showToast("认证失败，请核对信息！");
-                                    break;
+                                        break;
+                                    case "101.0":
+                                        showToast("已经认证成功！");
+                                        finish();
+                                        break;
+                                    default:
+                                        showToast("认证失败，请核对信息！");
+                                        break;
+                                }
+                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                                finish();
+                                showToast("登录失效，请重新登录");
+                                startActivity(new Intent(instance, LoginActivity.class));
+                            } else {
+                                showToast(map.get("mess").toString());
+                                return;
                             }
-                        } else {
-                            showToast(map.get("mess").toString());
-                            return;
+                        }catch (Exception e){
+                            e.printStackTrace();
                         }
                     }
                 });

@@ -138,7 +138,7 @@
         <activity
             android:name=".Activity.RealNameActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.OrderActivity"
             android:screenOrientation="portrait"
@@ -164,6 +164,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".zxing.activity.CaptureActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -108,8 +109,8 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                 SendOrder item = mDataAdapter.getDataList().get(position);
 //                item.getOrderID();
 //                showToast(item.toString());
-                Intent intent = new Intent(instance,OrderDetailActivity.class);
-                intent.putExtra("or_id",item.getOrderID());
+                Intent intent = new Intent(instance, OrderDetailActivity.class);
+                intent.putExtra("or_id", item.getOrderID());
                 startActivity(intent);
             }
         });
@@ -146,9 +147,9 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void initData() {
         if (!checkNetwork()) return;
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index);
+        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
-                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index)
+                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -207,6 +208,10 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                                 LuRecyclerViewStateUtils.setFooterViewState(mRecyclerView, LoadingFooter.State.Normal);
                                 notifyDataSetChanged();
                                 needRefresh = false;
+                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                                finish();
+                                showToast("登录失效，请重新登录");
+                                startActivity(new Intent(instance, LoginActivity.class));
                             } else {
                                 showToast(map.get("mess").toString());
                                 return;
@@ -214,12 +219,8 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 });
-
-
     }
 
     @Override
@@ -262,25 +263,40 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            ViewHolder viewHolder = (ViewHolder) holder;
-            viewHolder.tvContent.setText(mDataList.get(position).getOrderNo());
-            String time = mDataList.get(position).getOrderTime();
-            if (!time.isEmpty()) {
-                viewHolder.tvTime.setText(ToolsUtils.getStrTime(time));
+            try {
+                ViewHolder viewHolder = (ViewHolder) holder;
+                viewHolder.tvContent.setText(mDataList.get(position).getOrderNo());
+                String time = mDataList.get(position).getOrderTime();
+                if (!time.isEmpty()) {
+                    viewHolder.tvTime.setText(ToolsUtils.getStrTime(time));
+                }
+                viewHolder.tvAddress.setText(mDataList.get(position).getOrderAddress());
+                String payStatus = mDataList.get(position).getOrderPayStatus();
+                if (payStatus.equals("00") || payStatus.equals("02")) {
+                    viewHolder.tvPayStatus.setText("未付款");
+                    viewHolder.ivPayStatus.setImageResource(R.mipmap.circle_delete_72px);
+                } else if (payStatus.equals("01")) {
+                    viewHolder.tvPayStatus.setText("已付款");
+                    viewHolder.ivPayStatus.setImageResource(R.mipmap.circle_checked_72px);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            viewHolder.tvAddress.setText(mDataList.get(position).getOrderAddress());
         }
 
 
         private class ViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView tvTime, tvContent, tvAddress;
+            private TextView tvTime, tvContent, tvAddress, tvPayStatus;
+            private ImageView ivPayStatus;
 
             public ViewHolder(View view) {
                 super(view);
                 tvContent = (TextView) view.findViewById(R.id.tv_order_no);
                 tvTime = (TextView) view.findViewById(R.id.tv_order_time);
                 tvAddress = (TextView) view.findViewById(R.id.tv_order_address);
+                tvPayStatus = (TextView) view.findViewById(R.id.tv_pay_status);
+                ivPayStatus = (ImageView) view.findViewById(R.id.iv_pay_status);
             }
         }
     }
