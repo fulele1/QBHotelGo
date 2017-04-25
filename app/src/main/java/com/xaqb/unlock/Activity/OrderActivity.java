@@ -50,6 +50,7 @@ import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -60,6 +61,8 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +86,7 @@ public class OrderActivity extends BaseActivity {
     private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
     private ImageView ivCertPic, ivFacePic, ivLockPic, ivZxing, ivCertScan;
     private RelativeLayout rlPicFromSdcard, rlTakePic, rlCancle;
-    private String userName, userPhone, userCertNum, unlockAddress, lockType, unlockPay, unlockTime, imagePath1, imagePath2;
+    private String userName, userPhone, userCertNum,userSex,idAddress,userNation, unlockAddress, lockType, unlockPay, unlockTime, imagePath1, imagePath2;
     private Intent intent;
     private int requestCoede;
     private File temp;
@@ -91,7 +94,7 @@ public class OrderActivity extends BaseActivity {
     private List<String> images = new ArrayList<>();
     private Spinner lockTypeSpinner;
     private String goodsType;
-    private boolean isReadCard;
+    private boolean isReadCard, isConfigFace;
 
     /**
      * 高德地图相关
@@ -406,6 +409,7 @@ public class OrderActivity extends BaseActivity {
                     }
                     if (file.exists()) {
                         Bitmap bm = BitmapFactory.decodeFile(picPath);
+                        bm = ToolsUtils.drawText(bm, getString(R.string.logo), 100);
                         ivFacePic.setImageBitmap(bm);
                         bitmapRealFace = bm;
                     }
@@ -415,11 +419,14 @@ public class OrderActivity extends BaseActivity {
                     ToastUtil.showToast(instance, "识别分数: " + score);
                     if (score == -1) {
                         sStatus += "人脸识别超时";
+                        isConfigFace = false;
                         tvReadResult.setTextColor(Color.RED);
                     } else if (score >= 55) {   //50可自定义（推荐45,55,70，分别对应宽松、正常、严格）
                         sStatus += "人脸识别成功(" + score + "分)";
                         tvReadResult.setTextColor(Color.BLUE);
+                        isConfigFace = true;
                     } else {
+                        isConfigFace = false;
                         sStatus += "人脸识别失败(" + score + "分)";
                         tvReadResult.setTextColor(Color.RED);
                     }
@@ -436,6 +443,7 @@ public class OrderActivity extends BaseActivity {
 
     public void onReadCert(String sNo, Bitmap oCert) {
         etUserCertNum.setText(sNo);
+        oCert = ToolsUtils.drawText(oCert, getString(R.string.logo), 50);
         ivCertPic.setImageBitmap(oCert);
     }
 
@@ -520,8 +528,11 @@ public class OrderActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
-        OkHttpUtils.get().url(HttpUrlUtils.getHttpUrl().getLockType()+"?access_token=" + SPUtils.get(instance, "access_token", "")).build()
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
+        OkHttpUtils.get().url(HttpUrlUtils.getHttpUrl().getLockType() + "?access_token=" + SPUtils.get(instance, "access_token", "")).build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
@@ -535,11 +546,19 @@ public class OrderActivity extends BaseActivity {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
 //                                LogUtils.i("login===", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
+                                //然后通过比较器来实现排序
+                                Collections.sort(data, new Comparator<Map<String, Object>>() {
+                                    @Override
+                                    public int compare(Map<String, Object> t1, Map<String, Object> t2) {
+                                        return t1.get("lt_code").toString().compareTo(t2.get("lt_code").toString());
+                                    }
+                                });
 //                                LogUtils.i(data.toString());
                                 for (int j = 0; j < data.size(); j++) {
 //                                LogUtils.i(data.get(j).toString());
 //                                    typeNum[j] = data.get(j).get("lt_code").toString();
                                     lockTypes[j] = data.get(j).get("lt_code").toString() + "-" + data.get(j).get("lt_name").toString();
+
                                 }
                             }
                             ArrayAdapter adapter = new ArrayAdapter(instance, R.layout.item_spinner, lockTypes);
@@ -663,7 +682,7 @@ public class OrderActivity extends BaseActivity {
                     String weightPoint = "";
                     userName = etUserName.getText().toString().trim();
                     userPhone = etUserPhone.getText().toString().trim();
-                    userCertNum = etUserCertNum.getText().toString().trim();
+//                    userCertNum = etUserCertNum.getText().toString().trim();
                     unlockAddress = etUnlockAddress.getText().toString().trim();
 
 //                lockType = etLockType.getText().toString().trim();
@@ -781,6 +800,9 @@ public class OrderActivity extends BaseActivity {
         datas.put("useraddress", unlockAddress);
         datas.put("locktype", lockType);
         datas.put("certcode", userCertNum);
+        datas.put("usersex", userSex);
+        datas.put("idaddress", idAddress);
+        datas.put("usernation", userNation);
         datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
         datas.put("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80));
         datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80));
@@ -800,8 +822,9 @@ public class OrderActivity extends BaseActivity {
      * @param jsonStr json字符串
      */
     private void saveJson(String jsonStr) {
-        String fileName = "Unlock -" + userName + "-" + unlockAddress + "-" + etUnlcokTime.getText().toString() + ".txt";
+        String fileName = "咚咚开锁 -" + userName + "-" + unlockAddress + "-" + etUnlcokTime.getText().toString() + ".txt";
         if (SDCardUtils.writeNewFile(instance.getFilesDir().getAbsolutePath() + "/" + fileName, jsonStr)) {
+            showToast("保存数据成功，等待上传");
             finish();
         } else {
             showToast("保存数据失败");
@@ -905,20 +928,30 @@ public class OrderActivity extends BaseActivity {
                 bitmapCert = new CertImgDisposeUtils(instance).creatBitmap(idCardInfo);
                 bitmapFace = idCardInfo.getPhoto();
                 if (bitmapCert != null) {
+                    bitmapCert = ToolsUtils.drawText(bitmapCert, getString(R.string.logo), 50);
                     ivCertPic.setImageBitmap(bitmapCert);
 //                    recordData.setCertPhoto(FuncUtils.photoToBase64(bitmap, 40));
                 }
-                etUserCertNum.setText(idCardInfo.getCardNum());
+                userCertNum = idCardInfo.getCardNum();
+                userSex = idCardInfo.getGender();
+                if(userSex.equals("男")){
+                    userSex = "1";
+                }else{
+                    userSex = "0";
+                }
+                idAddress = idCardInfo.getAddress();
+                userNation = idCardInfo.getNation();
+                etUserCertNum.setText(ToolsUtils.certNumEncryption(userCertNum));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            sStatus += "请将身份证贴于背面区域";
-            ToastUtil.showToast(instance, sStatus);
+//            sStatus += "请将身份证贴于背面区域";
+            ToastUtil.showToast(instance, "请将身份证贴于背面区域");
         }
-//        etUserName.setText(sStatus);
+        tvReadResult.setTextColor(Color.BLUE);
+        tvReadResult.setText(sStatus);
     }
-
 
     private BroadcastReceiver addressBroadcastReceiver = new BroadcastReceiver() {
 

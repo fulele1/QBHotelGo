@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -136,7 +137,10 @@ public class OrderDetailActivity extends BaseActivity {
 
 
     private void getOrderDetail(String orderId) {
-        if (!checkNetwork()) return;
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -177,7 +181,7 @@ public class OrderDetailActivity extends BaseActivity {
                                     loadImg(ivLock, imageUrl);
                                 }
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                finish();
+                                ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
@@ -282,7 +286,10 @@ public class OrderDetailActivity extends BaseActivity {
      * 在线支付
      */
     private void payOnline() {
-        if (!checkNetwork()) return;
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -306,7 +313,7 @@ public class OrderDetailActivity extends BaseActivity {
                                 isQuery = false;
                                 getPayResult();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                finish();
+                                ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
@@ -328,7 +335,10 @@ public class OrderDetailActivity extends BaseActivity {
      * 获取支付结果
      */
     private void getPayResult() {
-        if (!checkNetwork()) return;
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getPayResult() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayResult() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -360,7 +370,7 @@ public class OrderDetailActivity extends BaseActivity {
                                 dialogType = 1;
                                 showDialog("提示", "支付成功", "确定", "", 0);
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                finish();
+                                ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
@@ -391,7 +401,10 @@ public class OrderDetailActivity extends BaseActivity {
      * 现金支付
      */
     private void payCash() {
-        if (!checkNetwork()) return;
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -412,7 +425,7 @@ public class OrderDetailActivity extends BaseActivity {
                                 btPayOnline.setText("已经支付");
                                 btPayOnline.setEnabled(false);
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                finish();
+                                ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {

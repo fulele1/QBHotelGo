@@ -2,6 +2,8 @@ package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.Fragment.LeftFragment;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Service.FileService;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.banner.BannerItem;
@@ -43,18 +46,27 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private String[] titles = {
             "广告测试1", "广告测试2", "广告测试3", "广告测试4"
     };
+    private boolean isQuit =false;
 
     private ImageView ivUser, ivMessage, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName;
     private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
     //    private Button btOrder;
     private Fragment mContent;
     private SlidingMenu sm;
+    private Handler mHandler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isQuit = false;
+        }
+    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         instance = this;
+        ActivityController.addActivity(instance);
         assignViews();
         initData();
         addListener();
@@ -159,7 +171,9 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             case R.id.iv_user:
                 sm.toggle();
                 break;
-//            case R.id.iv_message:
+            case R.id.iv_message:
+                Toast.makeText(instance,"正在研发中...",Toast.LENGTH_SHORT).show();
+                break;
 //                //测试更新
 ////                /**
 ////                 * 2016-12-02 add register and service
@@ -189,8 +203,9 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 startActivity(i);
                 break;
             case R.id.iv_nearby_order:
-                i = new Intent(instance, NearbyOrderActivity.class);
-                startActivity(i);
+                Toast.makeText(instance,"正在研发中...",Toast.LENGTH_SHORT).show();
+//                i = new Intent(instance, NearbyOrderActivity.class);
+//                startActivity(i);
                 break;
             case R.id.iv_user_info:
                 i = new Intent(instance, UserInfoActivity.class);
@@ -206,7 +221,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                     startActivity(new Intent(instance, RealNameActivity.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
-                    Toast.makeText(instance, "已经认证成功！", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(instance, "已经认证成功！", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！", Toast.LENGTH_SHORT).show();
                 }
@@ -255,6 +271,20 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         return list;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!isQuit) {
+            isQuit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+//        super.onBackPressed();
+    }
 
     @Override
     protected void onResume() {
@@ -267,5 +297,11 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     protected void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityController.removeActivity(instance);
     }
 }

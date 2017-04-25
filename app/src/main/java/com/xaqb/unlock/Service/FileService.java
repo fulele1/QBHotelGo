@@ -60,7 +60,7 @@ public class FileService extends Service {
                             File[] oFiles = new File(FileService.this.getFilesDir().getAbsolutePath()).listFiles();
                             if (oFiles != null) {
                                 for (int i = 0; i < oFiles.length; i++) {
-                                    if (oFiles[i].getName().startsWith("Unlock")) {
+                                    if (oFiles[i].getName().startsWith("咚咚开锁")) {
                                         try {
                                             file = oFiles[i];
                                             fileList.add(file);
@@ -119,6 +119,9 @@ public class FileService extends Service {
             String address = GsonUtil.getString(inputStream);
             Map<String, Object> maps = GsonUtil.JsonToMap(address);
 //            LogUtils.i("上传的文件file参数==", maps.toString());
+            LogUtils.i(maps.get("usersex").toString());
+            LogUtils.i(maps.get("idaddress").toString());
+            LogUtils.i(maps.get("usernation").toString());
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(FileService.this, "access_token", ""))
@@ -134,6 +137,9 @@ public class FileService extends Service {
                     .addParams("certcode", maps.get("certcode").toString())
                     .addParams("certimg", maps.get("certimg").toString())
                     .addParams("lockimg", maps.get("lockimg").toString())
+                    .addParams("usersex", maps.get("usersex").toString())
+                    .addParams("idaddress", maps.get("idaddress").toString())
+                    .addParams("usernation", maps.get("usernation").toString())
                     .addParams("province", maps.get("province").toString())
                     .addParams("city", maps.get("city").toString())
                     .addParams("district", maps.get("district").toString())

@@ -21,12 +21,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
+import com.xaqb.unlock.Utils.QBCallback;
+import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -88,54 +91,116 @@ public class UserInfoActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-        OkHttpUtils.get()
-                .url(HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-                .build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int i) {
-                e.printStackTrace();
-            }
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
+        QBHttp.get(instance,
+                HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "")
+                , null,
+                new QBCallback() {
+                    @Override
+                    public void doWork(Map<?, ?> map) {
+                        try {
+                            LogUtils.i(map.toString());
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                url = map.get("staff_headpic").toString();
+                                nickname = map.get("staff_nickname").toString();
+                                phone = map.get("staff_mp").toString();
+                                company = map.get("staff_company").toString();
+                                address = map.get("address").toString();
+                                if (textNotEmpty(nickname)) {
+                                    tvNickName.setText(nickname);
+                                }
+                                if (textNotEmpty(phone)) {
+                                    tvPhone.setText(phone);
+                                }
+                                if (textNotEmpty(company)) {
+                                    tvCompany.setText(company);
+                                }
+                                if (textNotEmpty(address)) {
+                                    tvAddress.setText(address);
+                                }
+                                if (textNotEmpty(url)) {
+                                    loadUserPic();
+                                }
+                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+                                ActivityController.finishAll();
+                                showToast("登录失效，请重新登录");
+                                startActivity(new Intent(instance, LoginActivity.class));
+                            } else {
+                                showToast(map.get("mess").toString());
+                                return;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-            @Override
-            public void onResponse(String s, int i) {
-                try {
-                    Map<String, Object> map = GsonUtil.JsonToMap(s);
-                    LogUtils.i(map.toString());
-                    if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                        url = map.get("staff_headpic").toString();
-                        nickname = map.get("staff_nickname").toString();
-                        phone = map.get("staff_mp").toString();
-                        company = map.get("staff_company").toString();
-                        address = map.get("address").toString();
-                        if (textNotEmpty(nickname)) {
-                            tvNickName.setText(nickname);
-                        }
-                        if (textNotEmpty(phone)) {
-                            tvPhone.setText(phone);
-                        }
-                        if (textNotEmpty(company)) {
-                            tvCompany.setText(company);
-                        }
-                        if (textNotEmpty(address)) {
-                            tvAddress.setText(address);
-                        }
-                        if (textNotEmpty(url)) {
-                            loadUserPic();
-                        }
-                    } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                        finish();
-                        showToast("登录失效，请重新登录");
-                        startActivity(new Intent(instance, LoginActivity.class));
-                    } else {
-                        showToast(map.get("mess").toString());
-                        return;
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+
+                    @Override
+                    public void doError() {
+
+                    }
+
+                    @Override
+                    public void reDoWork() {
+
+                    }
+                });
+
+//        LogUtils.i(HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+//        loadingDialog.show("加载中...");
+//        OkHttpUtils.get()
+//                .url(HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+//                .build().execute(new StringCallback() {
+//            @Override
+//            public void onError(Call call, Exception e, int i) {
+//                e.printStackTrace();
+//                loadingDialog.dismiss();
+//                showToast("网络访问异常");
+//            }
+//
+//            @Override
+//            public void onResponse(String s, int i) {
+//                loadingDialog.dismiss();
+//                try {
+//                    Map<String, Object> map = GsonUtil.JsonToMap(s);
+//                    LogUtils.i(map.toString());
+//                    if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+//                        url = map.get("staff_headpic").toString();
+//                        nickname = map.get("staff_nickname").toString();
+//                        phone = map.get("staff_mp").toString();
+//                        company = map.get("staff_company").toString();
+//                        address = map.get("address").toString();
+//                        if (textNotEmpty(nickname)) {
+//                            tvNickName.setText(nickname);
+//                        }
+//                        if (textNotEmpty(phone)) {
+//                            tvPhone.setText(phone);
+//                        }
+//                        if (textNotEmpty(company)) {
+//                            tvCompany.setText(company);
+//                        }
+//                        if (textNotEmpty(address)) {
+//                            tvAddress.setText(address);
+//                        }
+//                        if (textNotEmpty(url)) {
+//                            loadUserPic();
+//                        }
+//                    } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+//                        ActivityController.finishAll();
+//                        showToast("登录失效，请重新登录");
+//                        startActivity(new Intent(instance, LoginActivity.class));
+//                    } else {
+//                        showToast(map.get("mess").toString());
+//                        return;
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -187,8 +252,8 @@ public class UserInfoActivity extends BaseActivity {
 
 
     private void loadUserPic() {
+        if (!checkNetwork()) return;
         if (url != null && !url.equals(""))
-
             OkHttpUtils
                     .get()
                     .url(url)
@@ -312,6 +377,10 @@ public class UserInfoActivity extends BaseActivity {
      * @param s 头像base64
      */
     private void resetUserPic(String s) {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "").toString() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
         loadingDialog.show("正在修改");
         Map<String, String> map = new HashMap<>();
@@ -327,6 +396,7 @@ public class UserInfoActivity extends BaseActivity {
                     public void onError(Call call, Exception e, int i) {
                         loadingDialog.dismiss();
                         showToast("网络访问异常");
+                        e.printStackTrace();
                     }
 
                     @Override

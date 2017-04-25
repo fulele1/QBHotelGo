@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
     android:background="@drawable/bg_textview"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/tv_order_no"
@@ -50,6 +49,9 @@
             android:paddingTop="5dp"
             android:textColor="#312520"
             android:textSize="@dimen/textview_small_size" />
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -63,8 +65,8 @@
             android:id="@+id/iv_pay_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:src="@mipmap/circle_checked_72px" />
 
         <TextView
@@ -75,5 +77,6 @@
             android:gravity="center"
             android:text="未付款" />
     </LinearLayout>
+
 
 </LinearLayout>

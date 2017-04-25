@@ -19,9 +19,10 @@ public class LeftMenuListAdapter extends BaseAdapter {
     private Context context;
     private String status = "";
     private String[] leftMenuTitles = {
-            "我的订单", "修改密码", "意见反馈", "使用帮助", "实名认证", "关于我们"
+            "我的订单","收入明细", "修改密码", "意见反馈", "使用帮助", "实名认证", "关于我们"
     };
     private int[] icons = {
+            R.mipmap.upload_64,
             R.mipmap.map_64,
             R.mipmap.gear_64,
             R.mipmap.document_64,
@@ -65,7 +66,7 @@ public class LeftMenuListAdapter extends BaseAdapter {
 
         holder.ivIcon.setImageResource(icons[i]);
         holder.tvTitle.setText(leftMenuTitles[i]);
-        if (i == 4) {
+        if (i == 5) {
             status = SPUtils.get(context, "staff_is_real", "").toString();
             if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                 holder.ivStatus.setImageResource(R.mipmap.error);

@@ -83,7 +83,7 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
-                android:text="退出登录"
+                android:text="注销登录"
                 android:paddingLeft="@dimen/margin_edge"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textview_small_size" />

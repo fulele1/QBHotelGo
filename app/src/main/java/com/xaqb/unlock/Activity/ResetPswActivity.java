@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -74,6 +75,10 @@ public class ResetPswActivity extends BaseActivity {
     }
 
     private void resetPsw() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         oldPsw = etOldPsw.getText().toString().trim();
         newPsw = etNewPsw.getText().toString().trim();
         confirmPsw = etConfirmPsw.getText().toString().trim();
@@ -98,6 +103,8 @@ public class ResetPswActivity extends BaseActivity {
                         @Override
                         public void onError(Call call, Exception e, int i) {
                             e.printStackTrace();
+                            loadingDialog.dismiss();
+                            showToast("网络访问异常");
                         }
 
                         @Override
@@ -109,14 +116,14 @@ public class ResetPswActivity extends BaseActivity {
                                     showToast("修改密码成功");
                                     finish();
                                 } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                    finish();
+                                    ActivityController.finishAll();
                                     showToast("登录失效，请重新登录");
                                     startActivity(new Intent(instance, LoginActivity.class));
                                 } else {
                                     showToast(map.get("mess").toString());
                                     return;
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }

@@ -43,14 +43,14 @@ public class WillSendActivity extends BaseActivity {
             File[] oFiles = new File(appPath()).listFiles();
             int i, iLen = 0;
             for (i = 0; i < oFiles.length; i++) {
-                if (oFiles[i].getName().startsWith("Unlock"))
+                if (oFiles[i].getName().startsWith("咚咚开锁"))
                     iLen++;
             }
             if (iLen > 0) {
                 aFile = new String[iLen];
                 iLen = 0;
                 for (i = 0; i < oFiles.length; i++) {
-                    if (oFiles[i].getName().startsWith("Unlock")) {
+                    if (oFiles[i].getName().startsWith("咚咚开锁")) {
                         aFile[iLen] = oFiles[i].getName();
                         iLen++;
                     }

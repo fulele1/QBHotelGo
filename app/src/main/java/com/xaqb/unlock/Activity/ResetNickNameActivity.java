@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -83,6 +84,10 @@ public class ResetNickNameActivity extends BaseActivity {
     }
 
     private void resetNickName() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "").toString() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
         loadingDialog.show("正在修改");
         Map<String, String> map = new HashMap<>();
@@ -99,6 +104,7 @@ public class ResetNickNameActivity extends BaseActivity {
                     public void onError(Call call, Exception e, int i) {
                         loadingDialog.dismiss();
                         showToast("网络访问异常");
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -112,7 +118,7 @@ public class ResetNickNameActivity extends BaseActivity {
                                 showToast("修改昵称成功");
                                 finish();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                finish();
+                                ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {

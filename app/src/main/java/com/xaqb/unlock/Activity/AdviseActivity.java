@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -68,6 +69,10 @@ public class AdviseActivity extends BaseActivity {
     }
 
     private void uploadAdvise() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         title = etTitle.getText().toString().trim();
         advise = etAdvise.getText().toString().trim();
         if (title == null || title.equals("")) {
@@ -78,7 +83,6 @@ public class AdviseActivity extends BaseActivity {
             LogUtils.i(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在提交");
             try {
-
                 OkHttpUtils
                         .post()
                         .url(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -92,18 +96,19 @@ public class AdviseActivity extends BaseActivity {
                             @Override
                             public void onError(Call call, Exception e, int i) {
                                 e.printStackTrace();
+                                loadingDialog.dismiss();
                             }
 
                             @Override
                             public void onResponse(String s, int i) {
+                                loadingDialog.dismiss();
                                 try {
-                                    loadingDialog.dismiss();
                                     Map<String, Object> map = GsonUtil.JsonToMap(s);
                                     if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                         showToast("提交意见成功");
                                         finish();
                                     } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                        finish();
+                                        ActivityController.finishAll();
                                         showToast("登录失效，请重新登录");
                                         startActivity(new Intent(instance, LoginActivity.class));
                                     } else {

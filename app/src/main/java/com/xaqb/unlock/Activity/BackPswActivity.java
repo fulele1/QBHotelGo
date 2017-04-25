@@ -1,6 +1,5 @@
 package com.xaqb.unlock.Activity;
 
-import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +11,6 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
-import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -81,6 +79,10 @@ public class BackPswActivity extends BaseActivity {
     }
 
     private void resetPsw() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         phone = etPhone.getText().toString().trim();
         vCode = etVCode.getText().toString().trim();
         psw = etPsw.getText().toString().trim();
@@ -101,11 +103,11 @@ public class BackPswActivity extends BaseActivity {
                 showToast("验证码失效，请重新获取验证码");
                 return;
             }
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getBackPswUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+            LogUtils.i(HttpUrlUtils.getHttpUrl().getBackPswUrl());
             loadingDialog.show("正在修改");
             OkHttpUtils
                     .post()
-                    .url(HttpUrlUtils.getHttpUrl().getBackPswUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+                    .url(HttpUrlUtils.getHttpUrl().getBackPswUrl())
                     .addParams("new_pwd", confirmPsw)
                     .addParams("code", vCode)
                     .addParams("codekey", codeKey)
@@ -115,6 +117,7 @@ public class BackPswActivity extends BaseActivity {
                         @Override
                         public void onError(Call call, Exception e, int i) {
                             e.printStackTrace();
+                            loadingDialog.dismiss();
                         }
 
                         @Override
@@ -126,10 +129,6 @@ public class BackPswActivity extends BaseActivity {
                                 if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                     showToast("找回密码成功");
                                     finish();
-                                } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                    finish();
-                                    showToast("登录失效，请重新登录");
-                                    startActivity(new Intent(instance, LoginActivity.class));
                                 } else {
                                     showToast(map.get("mess").toString());
                                     return;
@@ -143,6 +142,10 @@ public class BackPswActivity extends BaseActivity {
     }
 
     public void getVCode() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         phone = etPhone.getText().toString().trim();
         if (phone == null || phone.equals("")) {
             showToast("请输入手机号码");

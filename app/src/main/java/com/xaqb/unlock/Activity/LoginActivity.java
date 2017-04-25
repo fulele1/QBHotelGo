@@ -66,12 +66,14 @@ public class LoginActivity extends BaseActivity {
         username = (String) SPUtils.get(instance, "userName", "");
         psw = (String) SPUtils.get(instance, "userPsw", "");
         boolean rememberPsw = (boolean) SPUtils.get(instance, "rememberPsw", false);
-        if (rememberPsw) cbRememberPsw.setChecked(true);
-        if (username != null && !username.isEmpty()) {
-            etUsername.setText(username);
-        }
-        if (psw != null && !psw.isEmpty()) {
-            etPsw.setText(psw);
+        if (rememberPsw) {
+            cbRememberPsw.setChecked(true);
+            if (username != null && !username.isEmpty()) {
+                etUsername.setText(username);
+            }
+            if (psw != null && !psw.isEmpty()) {
+                etPsw.setText(psw);
+            }
         }
         SDCardUtils.copyDBToSD(this, Environment.getExternalStorageDirectory().getAbsolutePath() + "/unlock/tessdata", "number.traineddata");
     }
@@ -101,6 +103,10 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
 //        startActivity(new Intent(instance, MainActivity.class));
         username = etUsername.getText().toString().trim();
         psw = etPsw.getText().toString().trim();
@@ -111,37 +117,32 @@ public class LoginActivity extends BaseActivity {
         } else {
             LogUtils.i(HttpUrlUtils.getHttpUrl().getLoginUrl());
             loadingDialog.show("正在登陆");
-            try {
-                OkHttpUtils
-                        .post()
-                        .url(HttpUrlUtils.getHttpUrl().getLoginUrl())
-                        .addParams("name", username)
-                        .addParams("pwd", psw)
-                        .addParams("deviceid", MyApplication.deviceId)
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int i) {
-                                loadingDialog.dismiss();
-                                showToast("网络访问异常");
-                            }
+            OkHttpUtils
+                    .post()
+                    .url(HttpUrlUtils.getHttpUrl().getLoginUrl())
+                    .addParams("name", username)
+                    .addParams("pwd", psw)
+                    .addParams("deviceid", MyApplication.deviceId)
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int i) {
+                            loadingDialog.dismiss();
+                            showToast("网络访问异常");
+                        }
 
-                            @Override
-                            public void onResponse(String s, int i) {
-                                LogUtils.i("s ==", s);
+                        @Override
+                        public void onResponse(String s, int i) {
+                            try {
                                 loadingDialog.dismiss();
                                 Map<?, ?> map = GsonUtil.JsonToMap(s);
-                                LogUtils.i("map== ", map.toString());
-//                                TreeMap<String, Object> map11 =
-//                                        GsonUtil.gson.fromJson(s, new TypeToken<TreeMap<String, Object>>(){}.getType());
-//                                Map<?, ?> map11 = GsonUtil.GsonToMap(s);
-//                                LogUtils.i("map11========== ", map11.toString());
-
-
+                                LogUtils.i(map.toString());
                                 if (map.get("state").toString().equals("0")) {
                                     SPUtils.put(instance, "userAccount", username);
                                     SPUtils.put(instance, "userid", map.get("id").toString());
                                     SPUtils.put(instance, "access_token", map.get("access_token"));
+                                    SPUtils.put(instance, "tokenTime", System.currentTimeMillis());
+                                    SPUtils.put(instance, "refresh_token", map.get("refresh_token"));
                                     SPUtils.put(instance, "staff_headpic", map.get("staff_headpic"));
                                     SPUtils.put(instance, "staff_nickname", map.get("staff_nickname"));
                                     SPUtils.put(instance, "staff_mp", map.get("staff_mp"));
@@ -152,13 +153,11 @@ public class LoginActivity extends BaseActivity {
 //                            SPUtils.put(instance, "userPicLocal", "storage/sdcard1/DongDong/" + SPUtils.get(instance, "userid", "").toString() + "userHead");
                                     showToast("登录成功");
 
+                                    SPUtils.put(instance, "userName", username);
+                                    SPUtils.put(instance, "userPsw", psw);
                                     if (cbRememberPsw.isChecked()) {
-                                        SPUtils.put(instance, "userName", username);
-                                        SPUtils.put(instance, "userPsw", psw);
                                         SPUtils.put(instance, "rememberPsw", true);
                                     } else {
-                                        SPUtils.put(instance, "userName", "");
-                                        SPUtils.put(instance, "userPsw", "");
                                         SPUtils.put(instance, "rememberPsw", false);
                                     }
                                     finish();
@@ -167,12 +166,12 @@ public class LoginActivity extends BaseActivity {
                                     showToast(map.get("mess").toString());
                                     return;
                                 }
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
-            } catch (Exception e) {
-                showToast("网络访问异常，请稍后再试");
-                e.printStackTrace();
-            }
+                        }
+
+                    });
         }
     }
 }

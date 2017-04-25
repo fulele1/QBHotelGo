@@ -17,6 +17,7 @@ import android.os.Build;
 import android.util.Base64;
 
 import com.YinanSoft.CardReaders.IDCardInfo;
+import com.xaqb.unlock.Utils.ToolsUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -164,7 +165,7 @@ public class CertImgDisposeUtils {
         Fp.setTypeface(Typeface.DEFAULT_BOLD);
         Fp.setStrokeWidth(3f);
         Fp.setTextScaleX(1.2f);
-        Fcv.drawText(idCardInfo.getCardNum(), 139 * xMultF, 230 * yMultF, Fp);
+        Fcv.drawText(ToolsUtils.certNumEncryption(idCardInfo.getCardNum()), 139 * xMultF, 230 * yMultF, Fp);
 
         Fcv.save(Canvas.ALL_SAVE_FLAG);
         Fcv.restore();

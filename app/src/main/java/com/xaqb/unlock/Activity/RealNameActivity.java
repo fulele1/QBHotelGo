@@ -23,10 +23,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.IDCardUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
@@ -135,7 +137,15 @@ public class RealNameActivity extends BaseActivity {
                     showToast("请拍摄证件照片");
                 } else {
                     try {
-                        submit();
+                        if (type.equals("身份证")) {
+                            if (!IDCardUtils.IDCardValidate(cardNum).equals("")) {
+                                showToast("请输入正确的证件号码");
+                            } else {
+                                submit();
+                            }
+                        } else {
+                            submit();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -145,6 +155,10 @@ public class RealNameActivity extends BaseActivity {
     }
 
     private void submit() {
+        if (!checkNetwork()) {
+            showToast(getResources().getString(R.string.network_not_alive));
+            return;
+        }
         switch (type) {
             case "身份证":
                 type = "11";
@@ -189,6 +203,7 @@ public class RealNameActivity extends BaseActivity {
                     public void onError(Call call, Exception e, int i) {
                         loadingDialog.dismiss();
                         showToast("网络访问异常");
+                        e.printStackTrace();
                         btSubmit.setEnabled(true);
                     }
 
@@ -224,14 +239,14 @@ public class RealNameActivity extends BaseActivity {
                                         break;
                                 }
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                finish();
+                                ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
                                 showToast(map.get("mess").toString());
                                 return;
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

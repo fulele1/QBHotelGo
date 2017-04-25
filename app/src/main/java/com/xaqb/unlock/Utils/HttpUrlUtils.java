@@ -93,5 +93,19 @@ public class HttpUrlUtils {
         return getBaseUrl() + "/v1/staff/pay/orderstatus/";
     }
 
+    // TODO: 2017/3/15 获取实名认证信息接口
+    public String getRealNameInfo() {
+        return getBaseUrl() + "v1/staff/realyapply/";
+    }
+
+    // TODO: 2017/3/15 获取收入明细接口
+    public String getPayDetail() {
+        return getBaseUrl() + "/v1/staff/pay/paydetail";
+    }
+    // TODO: 2017/3/15 获取刷新token接口
+    public String getrefreshToken() {
+        return getBaseUrl() + "/v1/index/token/refresh_token/";
+    }
+
 
 }

@@ -34,7 +34,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:padding="3dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/user" />
 
         <ImageView
             android:layout_width="8dp"
@@ -77,7 +77,6 @@
             android:layout_marginLeft="@dimen/margin_edge"
             android:layout_marginRight="@dimen/margin_edge"
             android:gravity="center"
-            android:text="hh"
             android:textSize="@dimen/textview_small_size" />
 
         <ImageView
@@ -119,7 +118,6 @@
             android:layout_marginLeft="@dimen/margin_edge"
             android:layout_marginRight="@dimen/margin_edge"
             android:gravity="center"
-            android:text="13234545456"
             android:textSize="@dimen/textview_small_size" />
 
         <ImageView
@@ -163,7 +161,6 @@
             android:layout_marginLeft="@dimen/margin_edge"
             android:layout_marginRight="@dimen/margin_edge"
             android:gravity="center"
-            android:text="开锁局"
             android:textSize="@dimen/textview_small_size" />
 
         <ImageView
@@ -207,7 +204,6 @@
             android:layout_marginRight="@dimen/margin_edge"
             android:gravity="center|right"
             android:maxLines="2"
-            android:text="二环路"
             android:textSize="@dimen/textview_small_size" />
 
         <ImageView
@@ -226,6 +222,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="#ffffff"
+        android:visibility="gone"
         android:gravity="center">
 
         <TextView
@@ -250,7 +247,6 @@
             android:layout_marginLeft="@dimen/margin_edge"
             android:layout_marginRight="@dimen/margin_edge"
             android:gravity="center"
-            android:text="上门开锁、换锁"
             android:textSize="@dimen/textview_small_size" />
 
         <ImageView

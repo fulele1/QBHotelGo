@@ -5,21 +5,18 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
-import com.github.jdsjlzx.interfaces.OnItemLongClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
-import com.xaqb.unlock.Entity.SendOrder;
+import com.xaqb.unlock.Entity.IncomeInfo;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -41,15 +38,13 @@ import okhttp3.Call;
 
 /**
  * Created by chengeng on 2016/12/2.
- * 已发数据页面
+ * 空activity，用于复制粘贴
  */
-public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private SendDataActivity instance;
-    private ArrayList<SendOrder> sendOrders = new ArrayList<>();
+    private IncomeActivity instance;
+    private ArrayList<IncomeInfo> incomeInfos = new ArrayList<>();
     public static boolean needRefresh;//是否需要刷新列表
-
-    private static final String TAG = "lzx";
     /**
      * 服务器端一共多少条数据
      */
@@ -78,13 +73,13 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
     private ImageView ivNoData;
     @Override
     public void initTitleBar() {
-        setTitle("我的订单");
+        setTitle("收入明细");
         showBackwardView(true);
     }
 
     @Override
     public void initViews() {
-        setContentView(R.layout.send_data_activity);
+        setContentView(R.layout.income_activity);
         instance = this;
         assignViews();
     }
@@ -104,34 +99,33 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
         mLuRecyclerViewAdapter = new LuRecyclerViewAdapter(mDataAdapter);
         mRecyclerView.setAdapter(mLuRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        View noDataView = View.inflate(instance, R.layout.list_no_data, null);
-        mRecyclerView.setEmptyView(noDataView);
+//        View noDataView = View.inflate(instance, R.layout.list_no_data, null);
+//        mRecyclerView.setEmptyView(noDataView);
 //        mLuRecyclerViewAdapter.addHeaderView(new SampleHeader(this));
-        mLuRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                SendOrder item = mDataAdapter.getDataList().get(position);
-//                item.getOrderID();
-//                showToast(item.toString());
-                Intent intent = new Intent(instance, OrderDetailActivity.class);
-                intent.putExtra("or_id", item.getOrderID());
-                startActivity(intent);
-            }
-        });
-
-        mLuRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
-            @Override
-            public void onItemLongClick(View view, int position) {
+//        mLuRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
 //                SendOrder item = mDataAdapter.getDataList().get(position);
-//                showToast("long----------" + item.toString());
-            }
-        });
+////                item.getOrderID();
+////                showToast(item.toString());
+//                Intent intent = new Intent(instance, OrderDetailActivity.class);
+//                intent.putExtra("or_id", item.getOrderID());
+//                startActivity(intent);
+//            }
+//        });
+
+//        mLuRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+////                SendOrder item = mDataAdapter.getDataList().get(position);
+////                showToast("long----------" + item.toString());
+//            }
+//        });
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 LoadingFooter.State state = LuRecyclerViewStateUtils.getFooterViewState(mRecyclerView);
                 if (state == LoadingFooter.State.Loading) {
-                    Log.d(TAG, "the state is Loading, just wait..");
                     return;
                 }
                 index++;
@@ -154,17 +148,16 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
+        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayDetail() + "?p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("加载中...");
         OkHttpUtils.get()
-                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""))
+                .url(HttpUrlUtils.getHttpUrl().getPayDetail() + "?p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
                         e.printStackTrace();
                         loadingDialog.dismiss();
-                        showToast("网络访问异常");
                     }
 
                     @Override
@@ -177,7 +170,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                                 LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 if (data == null || data.size() == 0) {
-                                    addItems(sendOrders);
+                                    addItems(incomeInfos);
                                     notifyDataSetChanged();
                                     ivNoData.setVisibility(View.VISIBLE);
                                     mSwipeRefreshLayout.setRefreshing(false);
@@ -187,18 +180,19 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                                 LogUtils.i("curr = ", map.get("curr").toString());
                                 LogUtils.i("data = ", data.toString());
                                 TOTAL_COUNTER = Integer.parseInt(map.get("page").toString());
-                                sendOrders = new ArrayList<>();
-                                SendOrder sendOrder;
+                                incomeInfos = new ArrayList<>();
+                                IncomeInfo info;
                                 for (int j = 0; j < data.size(); j++) {
-                                    sendOrder = new SendOrder();
-                                    sendOrder.setOrderNo(data.get(j).get("or_orderno").toString());
-                                    sendOrder.setOrderAddress(data.get(j).get("or_useraddress").toString());
-                                    sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
-                                    sendOrder.setOrderID(data.get(j).get("or_id").toString());
-                                    sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
-                                    sendOrders.add(sendOrder);
+                                    info = new IncomeInfo();
+                                    info.setId(data.get(j).get("sp_id").toString());
+                                    info.setOrderTime(data.get(j).get("sp_createtime").toString());
+                                    info.setOrderPrice(data.get(j).get("sp_price").toString());
+                                    info.setOrderId(data.get(j).get("or_orderno").toString());
+                                    info.setPayType(data.get(j).get("sp_paytype").toString());
+                                    info.setSerialNumber(data.get(j).get("sp_serialnum").toString());
+                                    incomeInfos.add(info);
                                 }
-                                if (sendOrders.size() == 0) {
+                                if (incomeInfos.size() == 0) {
 //                                    ivNoData.setVisibility(View.VISIBLE);
                                     return;
                                 }
@@ -208,11 +202,11 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                                     mCurrentCounter = 0;
                                 }
                                 int currentSize = mDataAdapter.getItemCount();
-                                if (currentSize == currentSize + sendOrders.size()) {
+                                if (currentSize == currentSize + incomeInfos.size()) {
                                     LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.TheEnd, null);
                                     return;
                                 }
-                                addItems(sendOrders);
+                                addItems(incomeInfos);
                                 if (isRefresh) {
                                     isRefresh = false;
                                     mSwipeRefreshLayout.setRefreshing(false);
@@ -233,6 +227,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                         }
                     }
                 });
+
     }
 
     @Override
@@ -243,13 +238,9 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
         }
     }
 
-    /**
-     * 刷新数据
-     */
     @Override
     public void onRefresh() {
         mCurrentCounter = 0;
@@ -259,8 +250,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
         initData();
     }
 
-
-    private class MyAdapter extends ListBaseAdapter<SendOrder> {
+    private class MyAdapter extends ListBaseAdapter<IncomeInfo> {
 
         private LayoutInflater mLayoutInflater;
 
@@ -270,27 +260,29 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ViewHolder(mLayoutInflater.inflate(R.layout.send_order_item, parent, false));
+            return new ViewHolder(mLayoutInflater.inflate(R.layout.income_list_item, parent, false));
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             try {
                 ViewHolder viewHolder = (ViewHolder) holder;
-                viewHolder.tvContent.setText(mDataList.get(position).getOrderNo());
-                String time = mDataList.get(position).getOrderTime();
+                String time = mDataList.get(position).getPayType();
+                if (time.equals("wxplay")) {
+                    viewHolder.tvPayType.setText("微信支付");
+                } else if (time.equals("alipay")) {
+                    viewHolder.tvPayType.setText("阿里支付");
+                } else if (time.equals("offpay")) {
+                    viewHolder.tvPayType.setText("线下支付");
+                } else {
+                    viewHolder.tvPayType.setText(mDataList.get(position).getPayType());
+                }
+                time = mDataList.get(position).getOrderTime();
                 if (!time.isEmpty()) {
                     viewHolder.tvTime.setText(ToolsUtils.getStrTime(time));
                 }
-                viewHolder.tvAddress.setText(mDataList.get(position).getOrderAddress());
-                String payStatus = mDataList.get(position).getOrderPayStatus();
-                if (payStatus.equals("00") || payStatus.equals("02")) {
-                    viewHolder.tvPayStatus.setText("未付款");
-                    viewHolder.ivPayStatus.setImageResource(R.mipmap.circle_delete_72px);
-                } else if (payStatus.equals("01")) {
-                    viewHolder.tvPayStatus.setText("已付款");
-                    viewHolder.ivPayStatus.setImageResource(R.mipmap.circle_checked_72px);
-                }
+                viewHolder.tvPrice.setText(mDataList.get(position).getOrderPrice());
+                viewHolder.tvOrderNum.setText(mDataList.get(position).getOrderId());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -299,16 +291,14 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
 
         private class ViewHolder extends RecyclerView.ViewHolder {
 
-            private TextView tvTime, tvContent, tvAddress, tvPayStatus;
-            private ImageView ivPayStatus;
+            private TextView tvTime, tvPrice, tvOrderNum, tvPayType;
 
             public ViewHolder(View view) {
                 super(view);
-                tvContent = (TextView) view.findViewById(R.id.tv_order_no);
+                tvPayType = (TextView) view.findViewById(R.id.tv_order_pay_type);
                 tvTime = (TextView) view.findViewById(R.id.tv_order_time);
-                tvAddress = (TextView) view.findViewById(R.id.tv_order_address);
-                tvPayStatus = (TextView) view.findViewById(R.id.tv_pay_status);
-                ivPayStatus = (ImageView) view.findViewById(R.id.iv_pay_status);
+                tvPrice = (TextView) view.findViewById(R.id.tv_order_price);
+                tvOrderNum = (TextView) view.findViewById(R.id.tv_order_num);
             }
         }
     }
@@ -322,7 +312,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
      *
      * @param list 需要增加的数据集合
      */
-    private void addItems(ArrayList<SendOrder> list) {
+    private void addItems(ArrayList<IncomeInfo> list) {
         mDataAdapter.addAll(list);
         mCurrentCounter += list.size();
     }

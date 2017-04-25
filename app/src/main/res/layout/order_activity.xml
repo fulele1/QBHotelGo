@@ -203,7 +203,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#ffffff"
             android:gravity="center"
@@ -211,7 +211,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/margin_edge"
                 android:gravity="center"
@@ -221,7 +221,7 @@
             <EditText
                 android:id="@+id/et_unlock_address"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
                 android:drawableLeft="@mipmap/little_star"
@@ -229,6 +229,7 @@
                 android:gravity="center_vertical"
                 android:hint="请输入开锁地址"
                 android:maxLength="40"
+                android:maxLines="3"
                 android:paddingLeft="10px"
                 android:textColor="@color/textColor"
                 android:textSize="@dimen/textview_small_size" />
@@ -375,7 +376,14 @@
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
             android:src="@mipmap/zm" />
-
+        <TextView
+            android:id="@+id/tv_read_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/textColor"
+            android:textSize="@dimen/textview_small_size"
+            />
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -425,14 +433,7 @@
 
         </TableLayout>
 
-        <TextView
-            android:id="@+id/tv_read_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/textColor"
-            android:textSize="@dimen/textview_small_size"
-            android:visibility="gone" />
+
 
         <Button
             android:id="@+id/bt_complete"

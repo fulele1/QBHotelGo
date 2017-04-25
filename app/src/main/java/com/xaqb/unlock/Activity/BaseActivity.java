@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Views.LoadingDialog;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         try {
+            ActivityController.addActivity(this);
             loadingDialog = new LoadingDialog(this);
             setupViews();
             initTitleBar();
@@ -291,6 +293,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public void onPause() {
         super.onPause();
         MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityController.removeActivity(this);
     }
 
 }

@@ -19,9 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xaqb.unlock.Activity.AdviseActivity;
+import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.MainActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
+import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
+import com.xaqb.unlock.Activity.SendDataActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
@@ -80,29 +83,33 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 //                String title = null;
                 switch (i) {
                     case 0: // 我的订单
-//                        startActivity(new Intent(getActivity(), MyWalletActivity.class));
+                        startActivity(new Intent(getActivity(), SendDataActivity.class));
                         break;
-                    case 1:// 修改密码
+                    case 1: // 收入明细
+                        startActivity(new Intent(getActivity(), IncomeActivity.class));
+                        break;
+                    case 2:// 修改密码
 //                        startActivity(new Intent(getActivity(), OrderListActivity.class));
                         startActivity(new Intent(getActivity(), ResetPswActivity.class));
                         break;
-                    case 2: // 意见反馈
+                    case 3: // 意见反馈
                         startActivity(new Intent(getActivity(), AdviseActivity.class));
                         break;
-                    case 3: // 使用帮助
+                    case 4: // 使用帮助
 //                        startActivity(new Intent(getActivity(), AdviseActivity.class));
                         break;
-                    case 4: // 实名认证
+                    case 5: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                             startActivity(new Intent(getActivity(), RealNameActivity.class));
                         } else if (status.equals(Globals.staffIsRealSuc)) {
-                            Toast.makeText(getActivity(), "已经认证成功！", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "已经认证成功！", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getActivity(), RealNameInfoActivity.class));
                         } else if (status.equals(Globals.staffIsRealIng)) {
                             Toast.makeText(getActivity(), "正在认证中！", Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case 5: // 关于我们
+                    case 6: // 关于我们
 //                        startActivity(new Intent(getActivity(), AboutActivity.class));
                         break;
                     default:
@@ -162,7 +169,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
         } else if (!url.equals("")) {
             loadUserPic(url);
         } else {
-            ivPic.setImageResource(R.mipmap.ic_launcher);
+            ivPic.setImageResource(R.mipmap.user);
         }
     }
 
