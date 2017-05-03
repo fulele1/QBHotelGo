@@ -172,6 +172,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 sm.toggle();
                 break;
             case R.id.iv_message:
+
                 Toast.makeText(instance,"正在研发中...",Toast.LENGTH_SHORT).show();
                 break;
 //                //测试更新
@@ -203,6 +204,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 startActivity(i);
                 break;
             case R.id.iv_nearby_order:
+//                AnimationUtil.playButtonAnimation(ivNearby);
                 Toast.makeText(instance,"正在研发中...",Toast.LENGTH_SHORT).show();
 //                i = new Intent(instance, NearbyOrderActivity.class);
 //                startActivity(i);

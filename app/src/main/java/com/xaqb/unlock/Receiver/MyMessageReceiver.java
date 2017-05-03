@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
+import com.xaqb.unlock.Utils.GsonUtil;
+import com.xaqb.unlock.Utils.LogUtils;
 
 import java.util.Map;
 
@@ -27,7 +29,18 @@ public class MyMessageReceiver extends MessageReceiver {
 
     @Override
     public void onMessage(Context context, CPushMessage cPushMessage) {
-        Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
+//        Log.e("MyMessageReceiver", "onMessage, messageId: " + cPushMessage.getMessageId() + ", title: " + cPushMessage.getTitle() + ", content:" + cPushMessage.getContent());
+
+        //MyMessageReceiver: onMessage, messageId: f__-pE1twmsXyDiR|20170428111940154ufy|V4i2SIhM3zcDALCoPUmjHeN1, title: 0428MessageTest-1, content:{"title":"biaoti","message":"neirong","good":"good"}
+        try {
+            Map<?, ?> map = GsonUtil.JsonToMap(cPushMessage.getContent());
+            LogUtils.i(map.toString());
+            if (map.get("status").toString().equals("1")) {
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -54,8 +67,8 @@ public class MyMessageReceiver extends MessageReceiver {
 //            Intent[] intents = {mainIntent, detailIntent};
 //            context.startActivities(intents);
 //        }else {
-            //如果app进程已经被杀死，先重新启动app，将DetailActivity的启动参数传入Intent中，参数经过
-            //SplashActivity传入MainActivity，此时app的初始化已经完成，在MainActivity中就可以根据传入             //参数跳转到DetailActivity中去了
+        //如果app进程已经被杀死，先重新启动app，将DetailActivity的启动参数传入Intent中，参数经过
+        //SplashActivity传入MainActivity，此时app的初始化已经完成，在MainActivity中就可以根据传入             //参数跳转到DetailActivity中去了
 //            Log.i("NotificationReceiver", "the app process is dead");
 //            Intent launchIntent = context.getPackageManager().
 //                    getLaunchIntentForPackage("com.xaqianbai.unlock");

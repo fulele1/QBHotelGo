@@ -76,6 +76,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
     private MyAdapter mDataAdapter;
 
     private ImageView ivNoData;
+
     @Override
     public void initTitleBar() {
         setTitle("我的订单");
@@ -138,7 +139,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                 if (index <= TOTAL_COUNTER) {
                     // loading more
                     LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.Loading, null);
-                    initData();
+                    setData();
                 } else {
                     //the end
                     LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.TheEnd, null);
@@ -150,6 +151,10 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
 
     @Override
     public void initData() {
+
+    }
+
+    public void setData() {
         if (!checkNetwork()) {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
@@ -247,6 +252,12 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
+
     /**
      * 刷新数据
      */
@@ -256,7 +267,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
         isRefresh = true;
         index = 1;
         mSwipeRefreshLayout.setRefreshing(true);
-        initData();
+        setData();
     }
 
 

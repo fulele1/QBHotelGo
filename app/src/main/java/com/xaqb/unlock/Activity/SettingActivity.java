@@ -3,9 +3,11 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.AnimationUtil;
 import com.xaqb.unlock.Utils.SPUtils;
 
 
@@ -35,6 +37,12 @@ public class SettingActivity extends BaseActivity {
         btQuit = (Button) findViewById(R.id.bt_quit_login);
         llResetPsw = (LinearLayout) findViewById(R.id.ll_reset_psw);
 
+        //////////////////////////////////test
+        bt1 = (Button) findViewById(R.id.bt_share);
+        bt1.setOnClickListener(instance);
+        iv1 = (ImageView) findViewById(R.id.iv1);
+        iv2 = (ImageView) findViewById(R.id.iv2);
+        iv3 = (ImageView) findViewById(R.id.iv3);
 
     }
 
@@ -58,6 +66,12 @@ public class SettingActivity extends BaseActivity {
             case R.id.ll_reset_psw:
                 startActivity(new Intent(instance, ResetPswActivity.class));
                 break;
+            case R.id.bt_share:
+                iv1.setVisibility(View.VISIBLE);
+                iv2.setVisibility(View.VISIBLE);
+                iv3.setVisibility(View.VISIBLE);
+                AnimationUtil.playTest5(bt1, iv1, iv2, iv3);
+                break;
         }
     }
 
@@ -70,4 +84,10 @@ public class SettingActivity extends BaseActivity {
         startActivity(new Intent(instance, LoginActivity.class));
         finish();
     }
+
+
+    ////////////////////////////////test
+
+    private ImageView iv1, iv2, iv3;
+    private Button bt1;
 }

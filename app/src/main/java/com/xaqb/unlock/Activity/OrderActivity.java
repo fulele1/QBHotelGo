@@ -1,9 +1,11 @@
 package com.xaqb.unlock.Activity;
 
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,6 +15,8 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -67,6 +71,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 
@@ -86,7 +92,7 @@ public class OrderActivity extends BaseActivity {
     private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
     private ImageView ivCertPic, ivFacePic, ivLockPic, ivZxing, ivCertScan;
     private RelativeLayout rlPicFromSdcard, rlTakePic, rlCancle;
-    private String userName, userPhone, userCertNum,userSex,idAddress,userNation, unlockAddress, lockType, unlockPay, unlockTime, imagePath1, imagePath2;
+    private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress, lockType, unlockPay, unlockTime, imagePath1, imagePath2;
     private Intent intent;
     private int requestCoede;
     private File temp;
@@ -95,7 +101,7 @@ public class OrderActivity extends BaseActivity {
     private Spinner lockTypeSpinner;
     private String goodsType;
     private boolean isReadCard, isConfigFace;
-
+    private ProgressDialog progressDialog;
     /**
      * 高德地图相关
      */
@@ -133,6 +139,15 @@ public class OrderActivity extends BaseActivity {
     }
 
     private void assignViews() {
+        progressDialog = new ProgressDialog(instance);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("正在读取，请将身份证放置到扫描区域");
+        progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                stopTimerTask();
+            }
+        });
         btComplete = (Button) findViewById(R.id.bt_complete);
         etUserName = (EditText) findViewById(R.id.et_user_name);
         etUserPhone = (EditText) findViewById(R.id.et_user_phone);
@@ -418,16 +433,16 @@ public class OrderActivity extends BaseActivity {
                     int score = data.getIntExtra("back_info", -3);
                     ToastUtil.showToast(instance, "识别分数: " + score);
                     if (score == -1) {
-                        sStatus += "人脸识别超时";
+                        sStatus = "人脸识别超时";
                         isConfigFace = false;
                         tvReadResult.setTextColor(Color.RED);
                     } else if (score >= 55) {   //50可自定义（推荐45,55,70，分别对应宽松、正常、严格）
-                        sStatus += "人脸识别成功(" + score + "分)";
+                        sStatus = "人脸识别成功(" + score + "分)";
                         tvReadResult.setTextColor(Color.BLUE);
                         isConfigFace = true;
                     } else {
                         isConfigFace = false;
-                        sStatus += "人脸识别失败(" + score + "分)";
+                        sStatus = "人脸识别失败(" + score + "分)";
                         tvReadResult.setTextColor(Color.RED);
                     }
                     tvReadResult.setText(sStatus);
@@ -668,6 +683,7 @@ public class OrderActivity extends BaseActivity {
                     startActivityForResult(intent, 0);
                     break;
                 case R.id.iv_cert_scan:
+
                     readIDCard();
 //                intent = new Intent(instance, CertCaptureActivity.class);
 //                startActivityForResult(intent, 100);
@@ -897,23 +913,22 @@ public class OrderActivity extends BaseActivity {
         }
     }
 
+    private Handler cardHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                LogUtils.i("执行一次身份证读取");
+                idCardInfo = idReader.ReadAllCardInfo(new String[1]);
 
-    //读卡
-    private void readIDCard() {
-        if (idReader == null) return;
-        sStatus = "";
-//        if (!idReader.InitReader(bt2)) {
-//            ToastUtil.showToast(MainActivity.this, "授权失败");
-//            return;
-//        }
-        idCardInfo = idReader.ReadAllCardInfo(new String[1]);
-
-        if (idCardInfo != null) {
-            isReadCard = true;
-            sStatus += "读卡成功\n";
+                if (idCardInfo != null) {
+                    isReadCard = true;
+                    sStatus += "读卡成功\n";
 //            ivCertPic.setImageBitmap(idCardInfo.getPhotos());
-            try {
-                etUserName.setText(idCardInfo.getName());
+                    try {
+//                        timer.cancel();
+                        progressDialog.dismiss();
+                        etUserName.setText(idCardInfo.getName());
 //                recordData.setCertName(idCardInfo.getName());
 //                recordData.setCertGender(idCardInfo.getGender());
 //                recordData.setCertNational(idCardInfo.getNation());
@@ -925,32 +940,87 @@ public class OrderActivity extends BaseActivity {
 //                    bitmap.recycle();
 //                    bitmap = null;
 //                }
-                bitmapCert = new CertImgDisposeUtils(instance).creatBitmap(idCardInfo);
-                bitmapFace = idCardInfo.getPhoto();
-                if (bitmapCert != null) {
-                    bitmapCert = ToolsUtils.drawText(bitmapCert, getString(R.string.logo), 50);
-                    ivCertPic.setImageBitmap(bitmapCert);
+                        bitmapCert = new CertImgDisposeUtils(instance).creatBitmap(idCardInfo, true);
+                        bitmapFace = idCardInfo.getPhoto();
+                        if (bitmapCert != null) {
+                            bitmapCert = ToolsUtils.drawText(bitmapCert, getString(R.string.logo), 50);
+                            ivCertPic.setImageBitmap(bitmapCert);
 //                    recordData.setCertPhoto(FuncUtils.photoToBase64(bitmap, 40));
-                }
-                userCertNum = idCardInfo.getCardNum();
-                userSex = idCardInfo.getGender();
-                if(userSex.equals("男")){
-                    userSex = "1";
-                }else{
-                    userSex = "0";
-                }
-                idAddress = idCardInfo.getAddress();
-                userNation = idCardInfo.getNation();
-                etUserCertNum.setText(ToolsUtils.certNumEncryption(userCertNum));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
+                        }
+                        bitmapCert = new CertImgDisposeUtils(instance).creatBitmap(idCardInfo, false);
+                        if (bitmapCert != null) {
+                            bitmapCert = ToolsUtils.drawText(bitmapCert, getString(R.string.logo), 50);
+                        }
+                        userCertNum = idCardInfo.getCardNum();
+                        userSex = idCardInfo.getGender();
+                        if (userSex.equals("男")) {
+                            userSex = "1";
+                        } else {
+                            userSex = "0";
+                        }
+                        idAddress = idCardInfo.getAddress();
+                        userNation = idCardInfo.getNation();
+                        etUserCertNum.setText(ToolsUtils.certNumEncryption(userCertNum));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
 //            sStatus += "请将身份证贴于背面区域";
-            ToastUtil.showToast(instance, "请将身份证贴于背面区域");
+//                    ToastUtil.showToast(instance, "请将身份证贴于背面区域");
+                    if (!isReadCard) {
+                        if (!progressDialog.isShowing())
+                            progressDialog.show();
+                    }
+                }
+                tvReadResult.setTextColor(Color.BLUE);
+                tvReadResult.setText(sStatus);
+            }
         }
-        tvReadResult.setTextColor(Color.BLUE);
-        tvReadResult.setText(sStatus);
+
+    };
+    private Timer timer;
+
+    //任务
+    private TimerTask task;
+
+    //停止timertask任务运行
+    private void stopTimerTask() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        if (task != null) {
+            task.cancel();
+            task = null;
+        }
+    }
+
+    //开始timertask任务运行
+    private void startTimerTask() {
+        timer = new Timer(true);
+        task = new TimerTask() {
+            public void run() {
+                Message msg = new Message();
+                msg.what = 1;
+                cardHandler.sendMessage(msg);
+            }
+        };
+        timer.schedule(task, 0, 1000);
+    }
+
+    //读卡
+    private void readIDCard() {
+        if (idReader == null) return;
+        sStatus = "";
+        if (!isReadCard) {
+            startTimerTask();
+        } else {
+            showDialog("提示", "重新扫描身份证吗？", "确定", "取消", 0);
+        }
+//        if (!idReader.InitReader(bt2)) {
+//            ToastUtil.showToast(MainActivity.this, "授权失败");
+//            return;
+//        }
     }
 
     private BroadcastReceiver addressBroadcastReceiver = new BroadcastReceiver() {
@@ -978,7 +1048,6 @@ public class OrderActivity extends BaseActivity {
     @Override
     public void onResume() {
         super.onResume();
-
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         etUnlcokTime.setText(df.format(new Date()));
 
@@ -988,8 +1057,14 @@ public class OrderActivity extends BaseActivity {
     protected void onDestroy() {
         releaseCardReader(true);// 释放读卡
         super.onDestroy();
+        stopTimerTask();
 //        unregisterReceiver(addressBroadcastReceiver);
     }
 
-
+    @Override
+    protected void dialogOk() {
+        super.dialogOk();
+        isReadCard = false;
+        startTimerTask();
+    }
 }

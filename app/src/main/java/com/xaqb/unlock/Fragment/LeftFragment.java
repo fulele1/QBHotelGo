@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.xaqb.unlock.Activity.AboutActivity;
 import com.xaqb.unlock.Activity.AdviseActivity;
 import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.MainActivity;
@@ -25,6 +26,7 @@ import com.xaqb.unlock.Activity.RealNameActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
 import com.xaqb.unlock.Activity.SendDataActivity;
+import com.xaqb.unlock.Activity.SettingActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
@@ -74,7 +76,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
         llSetting.setOnClickListener(this);
         llCustomer.setOnClickListener(this);
 
-        lvLeftMenu.setAdapter(new LeftMenuListAdapter(getActivity()));
+
         lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -96,7 +98,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
                         startActivity(new Intent(getActivity(), AdviseActivity.class));
                         break;
                     case 4: // 使用帮助
-//                        startActivity(new Intent(getActivity(), AdviseActivity.class));
+                        startActivity(new Intent(getActivity(), SettingActivity.class));
                         break;
                     case 5: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
@@ -110,7 +112,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
                         }
                         break;
                     case 6: // 关于我们
-//                        startActivity(new Intent(getActivity(), AboutActivity.class));
+                        startActivity(new Intent(getActivity(), AboutActivity.class));
                         break;
                     default:
                         break;
@@ -156,6 +158,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        lvLeftMenu.setAdapter(new LeftMenuListAdapter(getActivity()));
         url = SPUtils.get(getActivity(), "staff_headpic", "").toString();
         nickname = SPUtils.get(getActivity(), "staff_nickname", "").toString();
         if (nickname != null && !nickname.equals(""))

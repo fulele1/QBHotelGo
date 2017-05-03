@@ -141,6 +141,7 @@ public class OrderDetailActivity extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
+        loadingDialog.show("加载中...");
         LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -148,12 +149,14 @@ public class OrderDetailActivity extends BaseActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
+                        loadingDialog.dismiss();
                         e.printStackTrace();
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
                         try {
+                            loadingDialog.dismiss();
 //                            LogUtils.i(s);
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             LogUtils.i(map.toString());
@@ -435,8 +438,6 @@ public class OrderDetailActivity extends BaseActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 });
     }

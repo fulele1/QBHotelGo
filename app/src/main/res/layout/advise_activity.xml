@@ -4,6 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Spinner
+        android:id="@+id/sp_advise_type"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_marginTop="20dp"
+        android:entries="@array/advise"
+        android:layout_height="wrap_content">
+
+
+    </Spinner>
+
     <EditText
         android:id="@+id/et_advise_title"
         android:layout_width="match_parent"
@@ -24,10 +36,10 @@
         android:layout_marginLeft="@dimen/margin_edge"
         android:layout_marginRight="@dimen/margin_edge"
         android:layout_marginTop="20dp"
-        android:maxLength="100"
         android:background="@drawable/bg_edittext"
         android:hint="请输入您宝贵的意见(少于100字)"
         android:inputType="textMultiLine"
+        android:maxLength="100"
         android:minLines="5"
         android:padding="@dimen/margin_edge" />
 

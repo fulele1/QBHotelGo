@@ -82,6 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:src="@mipmap/upload_128" />
 
             <ImageView
@@ -89,6 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:src="@mipmap/download_128" />
 
             <ImageView
@@ -96,6 +98,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:padding="10dp"
                 android:src="@mipmap/map_128" />
 
         </TableRow>

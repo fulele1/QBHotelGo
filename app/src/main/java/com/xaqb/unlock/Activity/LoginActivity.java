@@ -142,6 +142,7 @@ public class LoginActivity extends BaseActivity {
                                     SPUtils.put(instance, "userid", map.get("id").toString());
                                     SPUtils.put(instance, "access_token", map.get("access_token"));
                                     SPUtils.put(instance, "tokenTime", System.currentTimeMillis());
+                                    SPUtils.put(instance, "refreshTokenTime", System.currentTimeMillis());
                                     SPUtils.put(instance, "refresh_token", map.get("refresh_token"));
                                     SPUtils.put(instance, "staff_headpic", map.get("staff_headpic"));
                                     SPUtils.put(instance, "staff_nickname", map.get("staff_nickname"));

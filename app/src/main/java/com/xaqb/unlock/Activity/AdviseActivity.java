@@ -2,22 +2,22 @@ package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
-import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.QBCallback;
+import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Call;
 
 
 /**
@@ -28,7 +28,8 @@ public class AdviseActivity extends BaseActivity {
     private AdviseActivity instance;
     private EditText etTitle, etAdvise;
     private Button btComplete;
-    private String title, advise;
+    private String title, advise, type;
+    private Spinner spType;
 
     @Override
     public void initTitleBar() {
@@ -47,6 +48,7 @@ public class AdviseActivity extends BaseActivity {
         etTitle = (EditText) findViewById(R.id.et_advise_title);
         etAdvise = (EditText) findViewById(R.id.et_advise_content);
         btComplete = (Button) findViewById(R.id.bt_complete);
+        spType = (Spinner) findViewById(R.id.sp_advise_type);
     }
 
     @Override
@@ -57,6 +59,21 @@ public class AdviseActivity extends BaseActivity {
     @Override
     public void addListener() {
         btComplete.setOnClickListener(instance);
+        spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) {
+                    type = "0";
+                } else {
+                    type = "1";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                type = "0";
+            }
+        });
     }
 
     @Override
@@ -83,27 +100,21 @@ public class AdviseActivity extends BaseActivity {
             LogUtils.i(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在提交");
             try {
-                OkHttpUtils
-                        .post()
-                        .url(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-                        .addParams("title", title)
-                        .addParams("content", advise)
-                        .addParams("uid", SPUtils.get(instance, "userid", "").toString())
-                        .addParams("utype", "2")
-                        .addParams("type", "0")
-                        .build()
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onError(Call call, Exception e, int i) {
-                                e.printStackTrace();
-                                loadingDialog.dismiss();
-                            }
+                Map<String, Object> map = new HashMap<>();
+                map.put("title", title);
+                map.put("content", advise);
+                map.put("uid", SPUtils.get(instance, "userid", "").toString());
+                map.put("utype", "2");
+                map.put("type", type);
 
+                QBHttp.post(instance,
+                        HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", "")
+                        , map
+                        , new QBCallback() {
                             @Override
-                            public void onResponse(String s, int i) {
+                            public void doWork(Map<?, ?> map) {
                                 loadingDialog.dismiss();
                                 try {
-                                    Map<String, Object> map = GsonUtil.JsonToMap(s);
                                     if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                         showToast("提交意见成功");
                                         finish();
@@ -119,7 +130,56 @@ public class AdviseActivity extends BaseActivity {
                                     e.printStackTrace();
                                 }
                             }
+
+                            @Override
+                            public void doError() {
+                                loadingDialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void reDoWork() {
+
+                            }
                         });
+
+//                OkHttpUtils
+//                        .post()
+//                        .url(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+//                        .addParams("title", title)
+//                        .addParams("content", advise)
+//                        .addParams("uid", SPUtils.get(instance, "userid", "").toString())
+//                        .addParams("utype", "2")
+//                        .addParams("type", "0")
+//                        .build()
+//                        .execute(new StringCallback() {
+//                            @Override
+//                            public void onError(Call call, Exception e, int i) {
+//                                e.printStackTrace();
+//                                loadingDialog.dismiss();
+//                            }
+//
+//                            @Override
+//                            public void onResponse(String s, int i) {
+//                                loadingDialog.dismiss();
+//                                try {
+//                                    Map<String, Object> map = GsonUtil.JsonToMap(s);
+//                                    if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+//                                        showToast("提交意见成功");
+//                                        finish();
+//                                    } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+//                                        ActivityController.finishAll();
+//                                        showToast("登录失效，请重新登录");
+//                                        startActivity(new Intent(instance, LoginActivity.class));
+//                                    } else {
+//                                        showToast(map.get("mess").toString());
+//                                        return;
+//                                    }
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        });
             } catch (Exception e) {
                 e.printStackTrace();
             }

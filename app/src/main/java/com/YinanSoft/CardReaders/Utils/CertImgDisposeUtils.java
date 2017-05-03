@@ -53,7 +53,7 @@ public class CertImgDisposeUtils {
      * @throws IOException 错误
      */
     @SuppressLint("NewApi")
-    public Bitmap creatBitmap(IDCardInfo idCardInfo)
+    public Bitmap creatBitmap(IDCardInfo idCardInfo, boolean isEncryption)
             throws IOException {
         Bitmap bitmap = null;
         Paint mPaint = new Paint();
@@ -165,8 +165,11 @@ public class CertImgDisposeUtils {
         Fp.setTypeface(Typeface.DEFAULT_BOLD);
         Fp.setStrokeWidth(3f);
         Fp.setTextScaleX(1.2f);
-        Fcv.drawText(ToolsUtils.certNumEncryption(idCardInfo.getCardNum()), 139 * xMultF, 230 * yMultF, Fp);
-
+        if (isEncryption) {
+            Fcv.drawText(ToolsUtils.certNumEncryption(idCardInfo.getCardNum()), 139 * xMultF, 230 * yMultF, Fp);
+        } else {
+            Fcv.drawText(idCardInfo.getCardNum(), 139 * xMultF, 230 * yMultF, Fp);
+        }
         Fcv.save(Canvas.ALL_SAVE_FLAG);
         Fcv.restore();
         Fcv.save(Canvas.ALL_SAVE_FLAG);
