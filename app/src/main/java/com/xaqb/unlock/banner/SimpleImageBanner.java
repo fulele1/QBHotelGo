@@ -53,10 +53,10 @@ public class SimpleImageBanner extends BaseIndicatorBanner<BannerItem, SimpleIma
         String imgUrl = item.imgUrl;
 
         //使用本地图片显示广告
-        int[] images = {R.mipmap.news_test1,
-                R.mipmap.news_test2,
-                R.mipmap.news_test3,
-                R.mipmap.news_test4,
+        int[] images = {R.mipmap.news_test5,
+                R.mipmap.news_test6,
+                R.mipmap.news_test7,
+                R.mipmap.news_test8,
         };
 
         if (!TextUtils.isEmpty(imgUrl)) {

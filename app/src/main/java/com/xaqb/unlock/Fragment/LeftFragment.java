@@ -26,7 +26,6 @@ import com.xaqb.unlock.Activity.RealNameActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
 import com.xaqb.unlock.Activity.SendDataActivity;
-import com.xaqb.unlock.Activity.SettingActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
@@ -97,10 +96,10 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
                     case 3: // 意见反馈
                         startActivity(new Intent(getActivity(), AdviseActivity.class));
                         break;
-                    case 4: // 使用帮助
-                        startActivity(new Intent(getActivity(), SettingActivity.class));
-                        break;
-                    case 5: // 实名认证
+//                    case 4: // 使用帮助
+//                        startActivity(new Intent(getActivity(), HelpActivity.class));
+//                        break;
+                    case 4: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                             startActivity(new Intent(getActivity(), RealNameActivity.class));
@@ -111,7 +110,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getActivity(), "正在认证中！", Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case 6: // 关于我们
+                    case 5: // 关于我们
                         startActivity(new Intent(getActivity(), AboutActivity.class));
                         break;
                     default:

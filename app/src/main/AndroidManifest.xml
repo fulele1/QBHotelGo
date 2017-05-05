@@ -177,6 +177,12 @@
         <activity
             android:name=".Activity.AboutActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.HelpActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

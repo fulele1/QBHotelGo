@@ -750,60 +750,86 @@ public class OrderActivity extends BaseActivity {
     private void order() {
 
         btComplete.setEnabled(false);
-//        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-//        loadingDialog.show("正在下单");
-//        StringBuffer imageString = new StringBuffer("");
-//        for (int i = 0; i < images.size(); i++) {
-//            imageString.append(Base64Utils.photoToBase64(BitmapFactory.decodeFile(images.get(i)), 80) + ",");
-//        }
-//        if (imageString.toString().endsWith(",")) {
-//            imageString.deleteCharAt(imageString.length() - 1);
-//        }
-//        LogUtils.i(imageString.toString());
-//        OkHttpUtils
-//                .post()
-//                .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .addParams("longitude", longitude + "")
-//                .addParams("latitude", latitude + "")
-//                .addParams("price", unlockPay)
-//                .addParams("remark", "")
-//                .addParams("staffid", SPUtils.get(instance, "userid", "").toString())
-//                .addParams("username", userName)
-//                .addParams("usertel", userPhone)
-//                .addParams("useraddress", unlockAddress)
-//                .addParams("locktype", lockType)
-//                .addParams("certcode", userCertNum)
-//                .addParams("certimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80))
-//                .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80))
-//                .addParams("province", "陕西")
-//                .addParams("city", "西安")
-//                .addParams("district", "碑林区")
-//                .build()
-//
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        loadingDialog.dismiss();
-//                        showToast("网络访问异常");
-//                        btComplete.setEnabled(true);
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        loadingDialog.dismiss();
-//                        btComplete.setEnabled(true);
-//                        Map<String, Object> map = GsonUtil.GsonToMaps(s);
-//                        LogUtils.i(map.toString());
-//                        if (map.get("state").toString().equals("0.0")) {
-//                            showToast("下单成功");
-//                            finish();
-//                        } else {
-//                            showToast(map.get("mess").toString());
-//                            return;
-//                        }
-//                    }
-//                });
+        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+        loadingDialog.show("正在下单");
+        StringBuffer imageString = new StringBuffer("");
+        for (int i = 0; i < images.size(); i++) {
+            imageString.append(Base64Utils.photoToBase64(BitmapFactory.decodeFile(images.get(i)), 80) + ",");
+        }
+        if (imageString.toString().endsWith(",")) {
+            imageString.deleteCharAt(imageString.length() - 1);
+        }
+        LogUtils.i(imageString.toString());
+        OkHttpUtils
+                .post()
+                .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+                .addParams("longitude", longitude + "")
+                .addParams("latitude", latitude + "")
+                .addParams("price", unlockPay)
+                .addParams("remark", "")
+                .addParams("staffid", SPUtils.get(instance, "userid", "").toString())
+                .addParams("username", userName)
+                .addParams("usertel", userPhone)
+                .addParams("useraddress", unlockAddress)
+                .addParams("locktype", lockType)
+                .addParams("certcode", userCertNum)
+                .addParams("certimg", Base64Utils.photoToBase64(bitmapCert, 80))
+                .addParams("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80))
+                .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80))
+                .addParams("usersex", userSex)
+                .addParams("idaddress", idAddress)
+                .addParams("usernation", userNation)
+                .addParams("province", "")
+                .addParams("city", "")
+                .addParams("district", "")
+                .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))
+                .addParams("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80))
+                .build()
 
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        e.printStackTrace();
+                        loadingDialog.dismiss();
+                        showToast("网络访问异常");
+                        btComplete.setEnabled(true);
+                        saveJson();
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        try {
+                            loadingDialog.dismiss();
+                            btComplete.setEnabled(true);
+                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+                            LogUtils.i(map.toString());
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                showToast("下单成功");
+                                Intent intent = new Intent(instance,PayActivity.class);
+                                intent.putExtra("or_id",map.get("table").toString());
+                                intent.putExtra("price",unlockPay);
+                                startActivity(intent);
+//                                LogUtils.i(map.get("table").toString());
+                                finish();
+                            } else {
+//                            showToast(map.get("mess").toString());
+                                saveJson();
+                                return;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
+    }
+
+
+    /**
+     * 以文件形式保存json字符串
+     */
+    private void saveJson() {
         //0330增加生成文件上传文件方法
         Map<String, Object> datas = new HashMap<>();
         datas.put("longitude", longitude + "");
@@ -823,21 +849,11 @@ public class OrderActivity extends BaseActivity {
         datas.put("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80));
         datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80));
         datas.put("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()));
-        datas.put("province", "陕西");
-        datas.put("city", "西安");
-        datas.put("district", "碑林区");
+        datas.put("province", "");
+        datas.put("city", "");
+        datas.put("district", "");
         String jsonStr = GsonUtil.GsonString(datas);
         LogUtils.i(jsonStr);
-        saveJson(jsonStr);
-
-    }
-
-    /**
-     * 以文件形式保存json字符串
-     *
-     * @param jsonStr json字符串
-     */
-    private void saveJson(String jsonStr) {
         String fileName = "咚咚开锁 -" + userName + "-" + unlockAddress + "-" + etUnlcokTime.getText().toString() + ".txt";
         if (SDCardUtils.writeNewFile(instance.getFilesDir().getAbsolutePath() + "/" + fileName, jsonStr)) {
             showToast("保存数据成功，等待上传");

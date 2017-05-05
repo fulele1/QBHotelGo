@@ -1,6 +1,8 @@
 package com.xaqb.unlock.Activity;
 
+import android.content.pm.PackageInfo;
 import android.view.View;
+import android.widget.TextView;
 
 import com.xaqb.unlock.R;
 
@@ -11,6 +13,7 @@ import com.xaqb.unlock.R;
  */
 public class AboutActivity extends BaseActivity {
     private AboutActivity instance;
+    private TextView tvVersion;
 
     @Override
     public void initTitleBar() {
@@ -26,41 +29,18 @@ public class AboutActivity extends BaseActivity {
     }
 
     private void assignViews() {
-
+        tvVersion = (TextView) findViewById(R.id.tv_version);
     }
 
     @Override
     public void initData() {
-//        if (!checkNetwork()) return;
-//        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "")+ "&p=0" + "&access_token=" + SPUtils.get(instance, "access_token", ""));
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=0" + "&access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                LogUtils.i("senddata", "" + map.toString());
-//                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                    }
-//                });
+        try {
+            PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+            // 当前应用的版本名称
+            tvVersion.setText("咚咚开锁"+info.versionName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
