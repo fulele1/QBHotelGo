@@ -17,8 +17,8 @@ public class ImageDispose {
     /**
      * 旋转图片
      *
-     * @param angle
-     * @param bitmap
+     * @param angle  旋转角度
+     * @param bitmap 图片
      * @return Bitmap
      */
     public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
@@ -103,7 +103,7 @@ public class ImageDispose {
      * @return
      */
     public static Bitmap caculateInSampleSize(String path, int reqWidth,
-                                              int reqHeight) {
+                                              int reqHeight)  {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, options);

@@ -34,7 +34,6 @@ import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
 import java.util.HashMap;
@@ -95,6 +94,7 @@ public class UserInfoActivity extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
+        loadingDialog.show("加载中...");
         QBHttp.get(instance,
                 HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "")
                 , null,
@@ -102,6 +102,7 @@ public class UserInfoActivity extends BaseActivity {
                     @Override
                     public void doWork(Map<?, ?> map) {
                         try {
+                            loadingDialog.dismiss();
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 url = map.get("staff_headpic").toString();
@@ -139,8 +140,9 @@ public class UserInfoActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void doError() {
-
+                    public void doError(Exception e) {
+                        e.printStackTrace();
+                        loadingDialog.dismiss();
                     }
 
                     @Override
@@ -386,24 +388,14 @@ public class UserInfoActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("headpic", s);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), GsonUtil.GsonString(map));
-        OkHttpUtils
-                .put()
-                .url(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
-                .requestBody(body)
-                .build()
-                .execute(new StringCallback() {
+        QBHttp.put(instance,
+                HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()
+                , body
+                , new QBCallback() {
                     @Override
-                    public void onError(Call call, Exception e, int i) {
-                        loadingDialog.dismiss();
-                        showToast("网络访问异常");
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(String s, int i) {
+                    public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            Map<String, Object> map = GsonUtil.JsonToMap(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 ivPic.setImageBitmap(head);// 用ImageView显示出来
@@ -422,7 +414,54 @@ public class UserInfoActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                     }
+
+                    @Override
+                    public void doError(Exception e) {
+
+                    }
+
+                    @Override
+                    public void reDoWork() {
+
+                    }
                 });
+//        OkHttpUtils
+//                .put()
+//                .url(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
+//                .requestBody(body)
+//                .build()
+//                .execute(new StringCallback() {
+//                    @Override
+//                    public void onError(Call call, Exception e, int i) {
+//                        loadingDialog.dismiss();
+//                        showToast("网络访问异常");
+//                        e.printStackTrace();
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String s, int i) {
+//                        try {
+//                            loadingDialog.dismiss();
+//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+//                            LogUtils.i(map.toString());
+//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+//                                ivPic.setImageBitmap(head);// 用ImageView显示出来
+//                                PermissionUtils.requestPermission(instance, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
+//                                isPicChange = true;
+////                        Map<String, Object> map1 = GsonUtil.GsonToMaps(GsonUtil.GsonString(map.get("mess")));
+////                        SPUtils.put(instance, "userheadpic", map1.get("userheadpic"));
+////                        showToast("同步头像到服务器成功");
+//                                //再次请求网络，重新获取最新的头像和昵称
+//                                initData();
+//                            } else {
+//                                showToast(map.get("mess").toString());
+//                                return;
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
     }
 
 

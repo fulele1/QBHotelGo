@@ -11,14 +11,13 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.QBCallback;
+import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -93,25 +92,16 @@ public class ResetNickNameActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("nickname", nickName);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), GsonUtil.GsonString(map));
-//        OkHttpUtils.post().
-        OkHttpUtils
-                .put()
-                .url(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "").toString() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
-                .requestBody(body)
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int i) {
-                        loadingDialog.dismiss();
-                        showToast("网络访问异常");
-                        e.printStackTrace();
-                    }
 
+        QBHttp.put(
+                instance
+                , HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "")
+                , body
+                , new QBCallback() {
                     @Override
-                    public void onResponse(String s, int i) {
+                    public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            Map<String, Object> map = GsonUtil.JsonToMap(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 SPUtils.put(instance, "staff_nickname", nickName);
@@ -128,11 +118,62 @@ public class ResetNickNameActivity extends BaseActivity {
                         }catch (Exception e){
                             e.printStackTrace();
                         }
-//                        int id = (int) SPUtils.get(instance, "userInfoId", 1);
-//                        UserInfo userInfo = DataSupport.find(UserInfo.class, id);
-//                        Map<String, Object> map1 = GsonUtil.GsonToMaps(GsonUtil.GsonString(map.get("mess")));
                     }
-                });
+
+                    @Override
+                    public void doError(Exception e) {
+                        e.printStackTrace();
+                        loadingDialog.dismiss();
+                        showToast("网络访问异常");
+                    }
+
+                    @Override
+                    public void reDoWork() {
+
+                    }
+                }
+        );
+
+//        OkHttpUtils.post().
+//        OkHttpUtils
+//                .put()
+//                .url(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "").toString() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
+//                .requestBody(body)
+//                .build()
+//                .execute(new StringCallback() {
+//                    @Override
+//                    public void onError(Call call, Exception e, int i) {
+//                        loadingDialog.dismiss();
+//                        showToast("网络访问异常");
+//                        e.printStackTrace();
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String s, int i) {
+//                        try {
+//                            loadingDialog.dismiss();
+//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+//                            LogUtils.i(map.toString());
+//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+//                                SPUtils.put(instance, "staff_nickname", nickName);
+//                                showToast("修改昵称成功");
+//                                finish();
+//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+//                                ActivityController.finishAll();
+//                                showToast("登录失效，请重新登录");
+//                                startActivity(new Intent(instance, LoginActivity.class));
+//                            } else {
+//                                showToast(map.get("mess").toString());
+//                                return;
+//                            }
+//                        }catch (Exception e){
+//                            e.printStackTrace();
+//                        }
+////                        int id = (int) SPUtils.get(instance, "userInfoId", 1);
+////                        UserInfo userInfo = DataSupport.find(UserInfo.class, id);
+////                        Map<String, Object> map1 = GsonUtil.GsonToMaps(GsonUtil.GsonString(map.get("mess")));
+//                    }
+//                });
     }
 }
 

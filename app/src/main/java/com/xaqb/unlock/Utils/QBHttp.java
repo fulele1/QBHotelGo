@@ -8,19 +8,23 @@ import com.xaqb.unlock.Activity.LoginActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.builder.GetBuilder;
 import com.zhy.http.okhttp.builder.OkHttpRequestBuilder;
+import com.zhy.http.okhttp.builder.OtherRequestBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.RequestBody;
 
 /**
  * Created by lenovo on 2017/4/19.
  * 网络请求封装
  */
 public class QBHttp {
+    //token管理者
     protected static TokenManager tokenManager;
+    //自动登录次数
     protected static int count;
 //    private void request(String method, String httpUrl, Map<String, Object> params, final QBCallback callback) {
 //
@@ -60,6 +64,13 @@ public class QBHttp {
 //                });
 //    }
 
+    /**
+     * 网络请求
+     *
+     * @param context  上下文
+     * @param builder  网络访问builder
+     * @param callback 回调方法
+     */
     private static void request(final Context context, final OkHttpRequestBuilder builder, final QBCallback callback) {
         tokenManager = new TokenManager(context);
         //根据时间判断token是否失效
@@ -73,8 +84,8 @@ public class QBHttp {
                     }
 
                     @Override
-                    public void doError() {
-
+                    public void doError(Exception e) {
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -90,7 +101,7 @@ public class QBHttp {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        callback.doError();
+                        callback.doError(e);
                     }
 
                     @Override
@@ -109,7 +120,7 @@ public class QBHttp {
                                     }
 
                                     @Override
-                                    public void doError() {
+                                    public void doError(Exception e) {
 
                                     }
 
@@ -126,6 +137,14 @@ public class QBHttp {
                 });
     }
 
+    /**
+     * 普通的post请求
+     *
+     * @param context  上下文
+     * @param httpUrl  访问链接
+     * @param params   参数
+     * @param callback 回调方法
+     */
     public static void post(Context context, String httpUrl, Map<String, Object> params, QBCallback callback) {
         PostFormBuilder builder = OkHttpUtils.post();
         builder = builder.url(httpUrl);
@@ -137,7 +156,31 @@ public class QBHttp {
         request(context, builder, callback);
     }
 
+    /**
+     * 普通的put请求
+     *
+     * @param context  上下文
+     * @param httpUrl  访问链接
+     * @param body     参数
+     * @param callback 回调方法
+     */
+    public static void put(Context context, String httpUrl, RequestBody body, QBCallback callback) {
+        OtherRequestBuilder builder = OkHttpUtils.put();
+        builder = builder.url(httpUrl);
+        if (body != null) {
+            builder = builder.requestBody(body);
+        }
+        request(context, builder, callback);
+    }
 
+    /**
+     * 普通的get请求
+     *
+     * @param context  上下文
+     * @param httpUrl  访问链接
+     * @param params   参数
+     * @param callback 回调方法
+     */
     public static void get(Context context, String httpUrl, Map<String, Object> params, QBCallback callback) {
         GetBuilder builder = OkHttpUtils.get();
         builder = builder.url(httpUrl);
@@ -149,6 +192,12 @@ public class QBHttp {
         request(context, builder, callback);
     }
 
+    /**
+     * 刷新token
+     *
+     * @param context  上下文
+     * @param callback 回调方法
+     */
     private static void refreshToken(final Context context, final QBCallback callback) {
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getrefreshToken() + tokenManager.getAccessToken())
@@ -180,6 +229,12 @@ public class QBHttp {
 
     }
 
+    /**
+     * 自动登录方法
+     *
+     * @param context  上下文
+     * @param callback 回调方法
+     */
     protected static void autoLogin(final Context context, final QBCallback callback) {
         //增加计数，访问多次则取消访问
         count++;

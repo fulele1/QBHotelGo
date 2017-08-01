@@ -163,6 +163,8 @@ public class LoginActivity extends BaseActivity {
                                     }
                                     finish();
                                     startActivity(new Intent(instance, MainActivity.class));
+                                    //0516测试使用
+//                                    startActivity(new Intent(instance, RealNameActivityNew.class));
                                 } else {
                                     showToast(map.get("mess").toString());
                                     return;

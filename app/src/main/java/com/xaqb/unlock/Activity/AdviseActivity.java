@@ -132,8 +132,9 @@ public class AdviseActivity extends BaseActivity {
                             }
 
                             @Override
-                            public void doError() {
+                            public void doError(Exception e) {
                                 loadingDialog.dismiss();
+                                e.printStackTrace();
 
                             }
 

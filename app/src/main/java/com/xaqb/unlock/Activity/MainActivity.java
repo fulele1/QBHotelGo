@@ -46,7 +46,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private String[] titles = {
             "广告测试1", "广告测试2", "广告测试3", "广告测试4"
     };
-    private boolean isQuit =false;
+    private boolean isQuit = false;
 
     private ImageView ivUser, ivMessage, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName;
     private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
@@ -61,6 +61,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             isQuit = false;
         }
     };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +174,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.iv_message:
 
-                Toast.makeText(instance,"正在研发中...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(instance, "正在研发中...", Toast.LENGTH_SHORT).show();
                 break;
 //                //测试更新
 ////                /**
@@ -205,7 +206,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.iv_nearby_order:
 //                AnimationUtil.playButtonAnimation(ivNearby);
-                Toast.makeText(instance,"正在研发中...",Toast.LENGTH_SHORT).show();
+                Toast.makeText(instance, "正在研发中...", Toast.LENGTH_SHORT).show();
 //                i = new Intent(instance, NearbyOrderActivity.class);
 //                startActivity(i);
                 break;
@@ -221,10 +222,12 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             case R.id.iv_real_name:
                 String status = SPUtils.get(instance, "staff_is_real", "").toString();
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
-                    startActivity(new Intent(instance, RealNameActivity.class));
+//                    startActivity(new Intent(instance, RealNameActivity.class));
+                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
 //                    Toast.makeText(instance, "已经认证成功！", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, RealNameInfoActivity.class));
+//                    startActivity(new Intent(instance, RealNameInfoActivity.class));
+                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！", Toast.LENGTH_SHORT).show();
                 }
@@ -235,7 +238,9 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         }
     }
 
-    //设置新闻数据
+    /**
+     * 设置新闻数据
+     */
     private void setNewsTabData() {
         sib
                 /** methods in BaseIndicatorBanner */

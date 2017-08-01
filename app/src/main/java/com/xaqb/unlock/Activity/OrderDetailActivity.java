@@ -167,7 +167,7 @@ public class OrderDetailActivity extends BaseActivity {
                                 tvOrderPhone.setText(map.get("or_usertel").toString());
                                 tvOrderAddress.setText(map.get("or_useraddress").toString());
                                 tvOrderPay.setText(map.get("or_price").toString());
-                                tvOrderLockType.setText(map.get("or_locktype").toString());
+                                tvOrderLockType.setText(ToolsUtils.getLockType(map.get("or_locktype").toString()));
                                 tvOrderTime.setText(ToolsUtils.getStrTime(map.get("or_createtime").toString()));
                                 payStatus = map.get("or_paystatus").toString();
                                 if (payStatus.equals("01")) {

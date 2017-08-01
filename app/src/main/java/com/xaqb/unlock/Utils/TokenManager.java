@@ -4,18 +4,19 @@ import android.content.Context;
 
 /**
  * Created by lenovo on 2017/4/21.
+ * token管理者
  */
 public class TokenManager {
 
-//    private String accessToken;
+    //    private String accessToken;
 //    private String refreshToken;
-    private Context context;
-//    private String tokenTime = "";
+    private Context context;//上下文
+    //    private String tokenTime = "";
 //    private String refreshTokenTime = "";
-    private String ACCESSTOKEN = "access_token";
-    private String REFRESHTOKEN = "refresh_token";
-    private String TOKENTIME = "tokenTime";
-    private String REFRESHTOKENTIME = "refreshTokenTime";
+    private String ACCESSTOKEN = "access_token";//正常token
+    private String REFRESHTOKEN = "refresh_token";//刷新token
+    private String TOKENTIME = "tokenTime";//正常token有效时间
+    private String REFRESHTOKENTIME = "refreshTokenTime";//刷新token有效时间
 
 
     public TokenManager(Context context) {
@@ -26,7 +27,7 @@ public class TokenManager {
         return SPUtils.get(context, ACCESSTOKEN, "").toString();
     }
 
-    public void setAccessToken( String accessToken) {
+    public void setAccessToken(String accessToken) {
         SPUtils.put(context, ACCESSTOKEN, accessToken);
     }
 
@@ -34,7 +35,7 @@ public class TokenManager {
         return SPUtils.get(context, REFRESHTOKEN, "").toString();
     }
 
-    public void setRefreshToken( String refreshToken) {
+    public void setRefreshToken(String refreshToken) {
         SPUtils.put(context, REFRESHTOKEN, refreshToken);
     }
 
@@ -54,6 +55,11 @@ public class TokenManager {
         SPUtils.put(context, REFRESHTOKENTIME, refreshTokenTime);
     }
 
+    /**
+     * 检查token是否过时
+     *
+     * @return 是否过时
+     */
     public boolean checkToken() {
         if (System.currentTimeMillis() - Long.parseLong(getTokenTime()) > 7000) {
             return false;
@@ -61,6 +67,11 @@ public class TokenManager {
         return true;
     }
 
+    /**
+     * 检查刷新token是否过时
+     *
+     * @return 是否过时
+     */
     public boolean checkRefreshToken() {
         if (System.currentTimeMillis() - Long.parseLong(getRefreshTokenTime()) < 7200) {
             return true;

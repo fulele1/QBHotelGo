@@ -26,17 +26,15 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.QBCallback;
+import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.LuRecycleView1229.ListBaseAdapter;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.Call;
 
 
 /**
@@ -161,22 +159,15 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
         }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("加载中...");
-        OkHttpUtils.get()
-                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""))
-                .build()
-                .execute(new StringCallback() {
+        QBHttp.get(
+                instance,
+                HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", "")
+                , null
+                , new QBCallback() {
                     @Override
-                    public void onError(Call call, Exception e, int i) {
-                        e.printStackTrace();
-                        loadingDialog.dismiss();
-                        showToast("网络访问异常");
-                    }
-
-                    @Override
-                    public void onResponse(String s, int i) {
+                    public void doWork(Map<?, ?> map) {
                         loadingDialog.dismiss();
                         try {
-                            Map<String, Object> map = GsonUtil.JsonToMap(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 LogUtils.i("senddata", "" + map.toString());
@@ -237,7 +228,98 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                             e.printStackTrace();
                         }
                     }
-                });
+
+                    @Override
+                    public void doError(Exception e) {
+                        e.printStackTrace();
+                        loadingDialog.dismiss();
+                        showToast("网络访问异常");
+                    }
+
+                    @Override
+                    public void reDoWork() {
+
+                    }
+                }
+
+        );
+//        OkHttpUtils.get()
+//                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""))
+//                .build()
+//                .execute(new StringCallback() {
+//                    @Override
+//                    public void onError(Call call, Exception e, int i) {
+//                        e.printStackTrace();
+//                        loadingDialog.dismiss();
+//                        showToast("网络访问异常");
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String s, int i) {
+//                        loadingDialog.dismiss();
+//                        try {
+//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+//                            LogUtils.i(map.toString());
+//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+//                                LogUtils.i("senddata", "" + map.toString());
+//                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
+//                                if (data == null || data.size() == 0) {
+//                                    addItems(sendOrders);
+//                                    notifyDataSetChanged();
+//                                    ivNoData.setVisibility(View.VISIBLE);
+//                                    mSwipeRefreshLayout.setRefreshing(false);
+//                                    LogUtils.i("暂无数据");
+//                                    return;
+//                                }
+//                                LogUtils.i("curr = ", map.get("curr").toString());
+//                                LogUtils.i("data = ", data.toString());
+//                                TOTAL_COUNTER = Integer.parseInt(map.get("page").toString());
+//                                sendOrders = new ArrayList<>();
+//                                SendOrder sendOrder;
+//                                for (int j = 0; j < data.size(); j++) {
+//                                    sendOrder = new SendOrder();
+//                                    sendOrder.setOrderNo(data.get(j).get("or_orderno").toString());
+//                                    sendOrder.setOrderAddress(data.get(j).get("or_useraddress").toString());
+//                                    sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
+//                                    sendOrder.setOrderID(data.get(j).get("or_id").toString());
+//                                    sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
+//                                    sendOrders.add(sendOrder);
+//                                }
+//                                if (sendOrders.size() == 0) {
+////                                    ivNoData.setVisibility(View.VISIBLE);
+//                                    return;
+//                                }
+//
+//                                if (isRefresh) {
+//                                    mDataAdapter.clear();
+//                                    mCurrentCounter = 0;
+//                                }
+//                                int currentSize = mDataAdapter.getItemCount();
+//                                if (currentSize == currentSize + sendOrders.size()) {
+//                                    LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.TheEnd, null);
+//                                    return;
+//                                }
+//                                addItems(sendOrders);
+//                                if (isRefresh) {
+//                                    isRefresh = false;
+//                                    mSwipeRefreshLayout.setRefreshing(false);
+//                                }
+//                                LuRecyclerViewStateUtils.setFooterViewState(mRecyclerView, LoadingFooter.State.Normal);
+//                                notifyDataSetChanged();
+//                                needRefresh = false;
+//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+//                                ActivityController.finishAll();
+//                                showToast("登录失效，请重新登录");
+//                                startActivity(new Intent(instance, LoginActivity.class));
+//                            } else {
+//                                showToast(map.get("mess").toString());
+//                                return;
+//                            }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
     }
 
     @Override

@@ -31,7 +31,14 @@ public class ToolsUtils {
         return re_StrTime;
     }
 
-
+    /**
+     * 图片加文字水印
+     *
+     * @param oBack 图片
+     * @param sText 文字
+     * @param size  文字大小
+     * @return
+     */
     public static Bitmap drawText(Bitmap oBack, String sText, int size) {
         if (sText.length() == 0) return oBack;
         Bitmap oBmp = Bitmap.createBitmap(oBack.getWidth(), oBack.getHeight(), Bitmap.Config.ARGB_8888);
@@ -57,6 +64,12 @@ public class ToolsUtils {
         return oBmp;
     }
 
+    /**
+     * 身份证号码加密
+     *
+     * @param certNum 身份证号码
+     * @return 加密后的身份证号码
+     */
     public static String certNumEncryption(String certNum) {
         if (certNum != null && !certNum.isEmpty()) {
             if (certNum.length() == 18 || certNum.length() == 15) {
@@ -66,4 +79,46 @@ public class ToolsUtils {
         }
         return certNum;
     }
+
+    /**
+     * 回收bitmap资源占用的内存空间
+     *
+     * @param bitmap 图片文件
+     */
+    public static void recycleBitmap(Bitmap bitmap) {
+        // 先判断是否已经回收
+        if (bitmap != null && !bitmap.isRecycled()) {
+            // 回收并且置为null
+            bitmap.recycle();
+            bitmap = null;
+        }
+        System.gc();
+    }
+
+
+    /**
+     * 获取锁具类型
+     */
+    public static String getLockType(String type) {
+        switch (type) {
+            case "01":
+                type = "门锁";
+                break;
+            case "02":
+                type = "保险柜锁";
+                break;
+            case "03":
+                type = "汽车锁";
+                break;
+            case "04":
+                type = "电子锁";
+                break;
+            case "05":
+                type = "汽车芯片";
+                break;
+        }
+        return type;
+    }
+
+
 }

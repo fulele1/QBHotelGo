@@ -8,16 +8,14 @@ import android.widget.EditText;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
-import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.QBCallback;
+import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import okhttp3.Call;
 
 /**
  * Created by lenovo on 2016/11/22.
@@ -93,25 +91,18 @@ public class ResetPswActivity extends BaseActivity {
         } else {
             LogUtils.i(HttpUrlUtils.getHttpUrl().getResetPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在修改");
-            OkHttpUtils
-                    .post()
-                    .url(HttpUrlUtils.getHttpUrl().getResetPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-                    .addParams("old_pwd", oldPsw)
-                    .addParams("new_pwd", confirmPsw)
-                    .build()
-                    .execute(new StringCallback() {
+            Map<String, Object> params = new HashMap<>();
+            params.put("old_pwd", oldPsw);
+            params.put("new_pwd", confirmPsw);
+            QBHttp.post(
+                    instance
+                    , HttpUrlUtils.getHttpUrl().getResetPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "")
+                    , params
+                    , new QBCallback() {
                         @Override
-                        public void onError(Call call, Exception e, int i) {
-                            e.printStackTrace();
-                            loadingDialog.dismiss();
-                            showToast("网络访问异常");
-                        }
-
-                        @Override
-                        public void onResponse(String s, int i) {
+                        public void doWork(Map<?, ?> map) {
                             try {
                                 loadingDialog.dismiss();
-                                Map<String, Object> map = GsonUtil.JsonToMap(s);
                                 if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                     showToast("修改密码成功");
                                     finish();
@@ -127,7 +118,55 @@ public class ResetPswActivity extends BaseActivity {
                                 e.printStackTrace();
                             }
                         }
-                    });
+
+                        @Override
+                        public void doError(Exception e) {
+                            e.printStackTrace();
+                            loadingDialog.dismiss();
+                            showToast("网络访问异常");
+                        }
+
+                        @Override
+                        public void reDoWork() {
+
+                        }
+                    }
+            );
+//            OkHttpUtils
+//                    .post()
+//                    .url(HttpUrlUtils.getHttpUrl().getResetPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+//                    .addParams("old_pwd", oldPsw)
+//                    .addParams("new_pwd", confirmPsw)
+//                    .build()
+//                    .execute(new StringCallback() {
+//                        @Override
+//                        public void onError(Call call, Exception e, int i) {
+//                            e.printStackTrace();
+//                            loadingDialog.dismiss();
+//                            showToast("网络访问异常");
+//                        }
+//
+//                        @Override
+//                        public void onResponse(String s, int i) {
+//                            try {
+//                                loadingDialog.dismiss();
+//                                Map<String, Object> map = GsonUtil.JsonToMap(s);
+//                                if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+//                                    showToast("修改密码成功");
+//                                    finish();
+//                                } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
+//                                    ActivityController.finishAll();
+//                                    showToast("登录失效，请重新登录");
+//                                    startActivity(new Intent(instance, LoginActivity.class));
+//                                } else {
+//                                    showToast(map.get("mess").toString());
+//                                    return;
+//                                }
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    });
         }
     }
 

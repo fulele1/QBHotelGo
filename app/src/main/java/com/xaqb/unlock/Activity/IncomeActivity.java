@@ -268,7 +268,7 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
             try {
                 ViewHolder viewHolder = (ViewHolder) holder;
                 String time = mDataList.get(position).getPayType();
-                if (time.equals("wxplay")) {
+                if (time.equals("wxpay")) {
                     viewHolder.tvPayType.setText("微信支付");
                 } else if (time.equals("alipay")) {
                     viewHolder.tvPayType.setText("阿里支付");

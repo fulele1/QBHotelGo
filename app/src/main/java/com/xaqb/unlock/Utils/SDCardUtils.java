@@ -110,6 +110,13 @@ public class SDCardUtils {
         }
     }
 
+    /**
+     * 复制文件到sd卡
+     *
+     * @param context  上下文
+     * @param path     路径
+     * @param filename 文件名
+     */
     public static void copyDBToSD(Context context, String path, String filename) {
         //获取资源管理者
         AssetManager am = context.getAssets();

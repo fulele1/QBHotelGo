@@ -48,8 +48,12 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <!-- 配置阿里云 -->
-        <meta-data android:name="com.alibaba.app.appkey" android:value="23727669"/> <!-- 请填写你自己的- appKey -->
-        <meta-data android:name="com.alibaba.app.appsecret" android:value="f004995197fdd1d78900968960859370"/> <!-- 请填写你自己的appSecret -->
+        <meta-data
+            android:name="com.alibaba.app.appkey"
+            android:value="23727669" /> <!-- 请填写你自己的- appKey -->
+        <meta-data
+            android:name="com.alibaba.app.appsecret"
+            android:value="f004995197fdd1d78900968960859370" /> <!-- 请填写你自己的appSecret -->
         <receiver
             android:name=".Receiver.MyMessageReceiver"
             android:exported="true">
@@ -183,6 +187,9 @@
         <activity
             android:name=".Activity.HelpActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.RealNameActivityNew"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -190,9 +197,9 @@
 
         <service android:name="com.amap.api.location.APSService" />
         <!--<service-->
-            <!--android:name=".Service.UploadService"-->
-            <!--android:enabled="true"-->
-            <!--android:exported="true" />-->
+        <!--android:name=".Service.UploadService"-->
+        <!--android:enabled="true"-->
+        <!--android:exported="true" />-->
         <service
             android:name=".Service.FileService"
             android:enabled="true"

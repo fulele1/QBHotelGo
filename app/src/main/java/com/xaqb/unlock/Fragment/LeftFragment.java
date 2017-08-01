@@ -166,7 +166,8 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
         if (SPUtils.get(getActivity(), "userPicLocal", "").toString().equals(Environment.getExternalStorageDirectory() + "/userHead/" + SPUtils.get(getActivity(), "userid", "").toString() + "userHead.jpg")) {
             File f = new File(Environment.getExternalStorageDirectory() + "/userHead/" + SPUtils.get(getActivity(), "userid", "").toString() + "userHead.jpg");
             if (f.exists()) {
-                ivPic.setImageBitmap(BitmapFactory.decodeFile(SPUtils.get(getActivity(), "userPicLocal", "").toString()));
+                Bitmap bitmap = BitmapFactory.decodeFile(SPUtils.get(getActivity(), "userPicLocal", "").toString());
+                ivPic.setImageBitmap(bitmap);
             }
         } else if (!url.equals("")) {
             loadUserPic(url);
