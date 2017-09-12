@@ -190,6 +190,15 @@
         <activity
             android:name=".Activity.RealNameActivityNew"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.OrderNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.PayActivityNew"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.OrderDetailActivityNew"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"

@@ -119,9 +119,9 @@ public class FileService extends Service {
             String address = GsonUtil.getString(inputStream);
             Map<String, Object> maps = GsonUtil.JsonToMap(address);
 //            LogUtils.i("上传的文件file参数==", maps.toString());
-            LogUtils.i(maps.get("usersex").toString());
-            LogUtils.i(maps.get("idaddress").toString());
-            LogUtils.i(maps.get("usernation").toString());
+//            LogUtils.i(maps.get("usersex").toString());
+//            LogUtils.i(maps.get("idaddress").toString());
+//            LogUtils.i(maps.get("usernation").toString());
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(FileService.this, "access_token", ""))

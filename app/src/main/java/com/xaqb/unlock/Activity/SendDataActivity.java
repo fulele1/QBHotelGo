@@ -112,7 +112,8 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                 SendOrder item = mDataAdapter.getDataList().get(position);
 //                item.getOrderID();
 //                showToast(item.toString());
-                Intent intent = new Intent(instance, OrderDetailActivity.class);
+//                Intent intent = new Intent(instance, OrderDetailActivity.class);
+                Intent intent = new Intent(instance, OrderDetailActivityNew.class);
                 intent.putExtra("or_id", item.getOrderID());
                 startActivity(intent);
             }
@@ -157,7 +158,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
+//        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "&p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("加载中...");
         QBHttp.get(
                 instance,
@@ -168,7 +169,7 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                     public void doWork(Map<?, ?> map) {
                         loadingDialog.dismiss();
                         try {
-                            LogUtils.i(map.toString());
+//                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
@@ -379,10 +380,13 @@ public class SendDataActivity extends BaseActivity implements SwipeRefreshLayout
                 String payStatus = mDataList.get(position).getOrderPayStatus();
                 if (payStatus.equals("00") || payStatus.equals("02")) {
                     viewHolder.tvPayStatus.setText("未付款");
-                    viewHolder.ivPayStatus.setImageResource(R.mipmap.circle_delete_72px);
+                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
                 } else if (payStatus.equals("01")) {
                     viewHolder.tvPayStatus.setText("已付款");
-                    viewHolder.ivPayStatus.setImageResource(R.mipmap.circle_checked_72px);
+                    viewHolder.ivPayStatus.setImageResource(R.mipmap.success);
+                }else if(payStatus.equals("03")){
+                    viewHolder.tvPayStatus.setText("未付清");
+                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

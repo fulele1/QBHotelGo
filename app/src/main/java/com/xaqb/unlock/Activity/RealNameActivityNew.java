@@ -174,18 +174,18 @@ public class RealNameActivityNew extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_card_pic:
-                if (!isShow) {
-                    // 弹出照片选择
-                    params.alpha = 0.7f;
-                    getWindow().setAttributes(params);
-                    popupWindow.showAtLocation(findViewById(R.id.ll_approve_main), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
-                            0, 0);
-                } else {
-                    dialogType = 0;
-                    showDialog("提示", "重新选择照片吗？", "确定", "取消", 0);
-                }
-                break;
+//            case R.id.iv_card_pic:
+//                if (!isShow) {
+//                    // 弹出照片选择
+//                    params.alpha = 0.7f;
+//                    getWindow().setAttributes(params);
+//                    popupWindow.showAtLocation(findViewById(R.id.ll_approve_main), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
+//                            0, 0);
+//                } else {
+//                    dialogType = 0;
+//                    showDialog("提示", "重新选择照片吗？", "确定", "取消", 0);
+//                }
+//                break;
             case R.id.bt_submit:
 
                 if (!isReadCard) {

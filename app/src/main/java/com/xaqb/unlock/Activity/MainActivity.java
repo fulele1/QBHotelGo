@@ -216,18 +216,18 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.iv_setting:
                 stopService(new Intent(instance, FileService.class));
-                i = new Intent(instance, OrderActivity.class);
+                i = new Intent(instance, OrderNewActivity.class);
                 startActivity(i);
                 break;
             case R.id.iv_real_name:
                 String status = SPUtils.get(instance, "staff_is_real", "").toString();
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
-//                    startActivity(new Intent(instance, RealNameActivity.class));
-                    startActivity(new Intent(instance, RealNameActivityNew.class));
+                    startActivity(new Intent(instance, RealNameActivity.class));
+//                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
 //                    Toast.makeText(instance, "已经认证成功！", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(instance, RealNameInfoActivity.class));
-                    startActivity(new Intent(instance, RealNameActivityNew.class));
+                    startActivity(new Intent(instance, RealNameInfoActivity.class));
+//                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！", Toast.LENGTH_SHORT).show();
                 }

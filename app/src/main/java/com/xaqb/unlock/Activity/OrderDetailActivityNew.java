@@ -11,19 +11,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.xaqb.unlock.Adapter.PayRecordAdapter;
+import com.xaqb.unlock.Entity.IncomeInfo;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
+import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
+import com.xaqb.unlock.Views.ListViewForScroollView;
 import com.xaqb.unlock.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.BitmapCallback;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -33,18 +39,21 @@ import okhttp3.Call;
  * Created by chengeng on 2017/04/06.
  * 订单详情activity
  */
-public class OrderDetailActivity extends BaseActivity {
-    private OrderDetailActivity instance;
+public class OrderDetailActivityNew extends BaseActivity {
+    private OrderDetailActivityNew instance;
     private TextView tvOrderId, tvOrderName, tvOrderPhone, tvOrderAddress, tvOrderLockType, tvOrderPay, tvOrderTime;
     private ImageView ivFace, ivLock;
-    private Button btPayOnline, btPayCash, btPayStatus;
-    private String payStatus, orderId, scanResult;
+    //    private Button btPayOnline, btPayCash,
+    private Button btPayStatus;
+    private String payStatus, orderId, scanResult, price, payPrice;
     private int dialogType;
     private ProgressDialog progressDialog;
     //是否支付成功
     private boolean isPaySuc = false, isFirstGetPayStatus = false, isQuery = false;
     private int payNetWordTimes = 0;
     private Thread payStatusThread;
+    private ListViewForScroollView lvPayRecord;
+    private ArrayList<IncomeInfo> incomeInfos;
     private Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -77,7 +86,7 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        setContentView(R.layout.order_detail_activity);
+        setContentView(R.layout.order_detail_activity_new);
         instance = this;
         assignViews();
     }
@@ -96,9 +105,10 @@ public class OrderDetailActivity extends BaseActivity {
         tvOrderTime = (TextView) findViewById(R.id.tv_order_time);
         ivFace = (ImageView) findViewById(R.id.iv_user_face);
         ivLock = (ImageView) findViewById(R.id.iv_lock_pic);
-        btPayOnline = (Button) findViewById(R.id.bt_pay_online);
-        btPayCash = (Button) findViewById(R.id.bt_pay_money);
+//        btPayOnline = (Button) findViewById(R.id.bt_pay_online);
+//        btPayCash = (Button) findViewById(R.id.bt_pay_money);
         btPayStatus = (Button) findViewById(R.id.bt_pay_status);
+        lvPayRecord = (ListViewForScroollView) findViewById(R.id.lv_pay_record);
 
         /**
          * 5秒后自动查询下一次，查询30秒后，仍然失败的话，显示支付失败，等待用户手动刷新订单查看支付结果
@@ -154,20 +164,50 @@ public class OrderDetailActivity extends BaseActivity {
 //                            LogUtils.i(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
+                                List<Map<String, Object>> paydetail = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("paydetail")));
                                 tvOrderId.setText(map.get("or_orderno").toString());
                                 tvOrderName.setText(map.get("or_username").toString());
                                 tvOrderPhone.setText(map.get("or_usertel").toString());
                                 tvOrderAddress.setText(map.get("or_useraddress").toString());
-                                tvOrderPay.setText(map.get("or_price").toString());
+                                price = map.get("or_price").toString();
+                                payPrice = map.get("or_cash").toString();
+                                tvOrderPay.setText(price);
                                 tvOrderLockType.setText(ToolsUtils.getLockType(map.get("or_locktype").toString()));
                                 tvOrderTime.setText(ToolsUtils.getStrTime(map.get("or_createtime").toString()));
                                 payStatus = map.get("or_paystatus").toString();
-                                if (payStatus.equals("01")) {
-                                    btPayCash.setVisibility(View.GONE);
-                                    btPayOnline.setText("已经支付");
-                                    btPayOnline.setEnabled(false);
+
+
+                                //支付记录listview
+                                incomeInfos = new ArrayList<>();
+                                IncomeInfo info;
+                                for (int j = 0; j < paydetail.size(); j++) {
+                                    info = new IncomeInfo();
+                                    info.setId(paydetail.get(j).get("op_id").toString());
+                                    info.setOrderTime(paydetail.get(j).get("op_createtime").toString());
+                                    info.setOrderPrice(paydetail.get(j).get("op_price").toString());
+                                    info.setPayStatus(paydetail.get(j).get("op_paystatus").toString());
+                                    info.setOrderId(paydetail.get(j).get("op_pid").toString());
+                                    info.setPayType(paydetail.get(j).get("op_paytype").toString());
+                                    info.setSerialNumber(paydetail.get(j).get("op_serialnum").toString());
+                                    incomeInfos.add(info);
                                 }
+                                if (incomeInfos.size() != 0) {
+                                    PayRecordAdapter adapter = new PayRecordAdapter(instance, incomeInfos);
+                                    lvPayRecord.setAdapter(adapter);
+                                }
+                                LogUtils.i("incomeinfo == ", incomeInfos.toString());
+
+                                if (payStatus.equals("00")) {
+                                    payStatus = "00";
+                                    btPayStatus.setText("未支付");
+                                } else if (payStatus.equals("01")) {
+                                    payStatus = "01";
+                                    btPayStatus.setText("已经支付");
+                                } else if (payStatus.equals("03")) {
+                                    payStatus = "03";
+                                    btPayStatus.setText("未付清");
+                                }
+
                                 String imageUrl = map.get("or_faceimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivFace, imageUrl);
@@ -282,9 +322,24 @@ public class OrderDetailActivity extends BaseActivity {
 
     @Override
     public void addListener() {
-        btPayCash.setOnClickListener(instance);
-        btPayOnline.setOnClickListener(instance);
+//        btPayCash.setOnClickListener(instance);
+//        btPayOnline.setOnClickListener(instance);
         btPayStatus.setOnClickListener(instance);
+//        lvPayRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                String payStatus = incomeInfos.get(i).getPayStatus();
+//                if (payStatus.equals("01")) {
+//                    return;
+//                }
+//                String payPrice = incomeInfos.get(i).getOrderPrice();
+//                Intent intent = new Intent(instance, PayActivityNew.class);
+//                intent.putExtra("or_id", orderId);
+//                intent.putExtra("total_price", price);
+//                intent.putExtra("pay_price", payPrice);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
@@ -303,12 +358,29 @@ public class OrderDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.bt_pay_status:
-                isFirstGetPayStatus = false;
-                progressDialog.setMessage("正在支付，请稍后...");
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
-                isQuery = true;
-                getPayResult();
+                Intent intent = new Intent(instance, PayActivityNew.class);
+                intent.putExtra("or_id", orderId);
+                intent.putExtra("total_price", price);
+                intent.putExtra("pay_price", payPrice);
+                switch (payStatus) {
+                    case "00":
+                        startActivity(intent);
+                        break;
+                    case "01":
+                        showToast("已经支付成功");
+                        btPayStatus.setClickable(false);
+                        break;
+                    case "03":
+                        startActivity(intent);
+                        break;
+                }
+
+//                isFirstGetPayStatus = false;
+//                progressDialog.setMessage("正在支付，请稍后...");
+//                progressDialog.setCanceledOnTouchOutside(false);
+//                progressDialog.show();
+//                isQuery = true;
+//                getPayResult();
                 break;
         }
     }
@@ -353,7 +425,6 @@ public class OrderDetailActivity extends BaseActivity {
             return;
         }
         LogUtils.i(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-
         QBHttp.get(instance,
                 HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""),
                 null,
@@ -458,9 +529,9 @@ public class OrderDetailActivity extends BaseActivity {
                         try {
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                btPayCash.setVisibility(View.GONE);
-                                btPayOnline.setText("已经支付");
-                                btPayOnline.setEnabled(false);
+//                                btPayCash.setVisibility(View.GONE);
+//                                btPayOnline.setText("已经支付");
+//                                btPayOnline.setEnabled(false);
                                 myHandler.sendEmptyMessage(101);
                                 progressDialog.dismiss();
                                 dialogType = 1;
@@ -584,9 +655,9 @@ public class OrderDetailActivity extends BaseActivity {
                         try {
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                btPayCash.setVisibility(View.GONE);
-                                btPayOnline.setText("已经支付");
-                                btPayOnline.setEnabled(false);
+//                                btPayCash.setVisibility(View.GONE);
+//                                btPayOnline.setText("已经支付");
+//                                btPayOnline.setEnabled(false);
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");

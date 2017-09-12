@@ -28,17 +28,22 @@ public class IncomeInfo extends Entity {
      * 支付流水号
      */
     private String serialNumber;
+    /**
+     * 支付状态
+     */
+    private String payStatus;
 
     public IncomeInfo() {
     }
 
-    public IncomeInfo(String id, String orderId, String orderTime, String orderPrice, String payType, String serialNumber) {
+    public IncomeInfo(String id, String orderId, String orderTime, String orderPrice, String payType, String serialNumber,String payStatus) {
         this.id = id;
         this.orderId = orderId;
         this.orderTime = orderTime;
         this.orderPrice = orderPrice;
         this.payType = payType;
         this.serialNumber = serialNumber;
+        this.payStatus = payStatus;
     }
 
     public String getId() {
@@ -89,6 +94,14 @@ public class IncomeInfo extends Entity {
         this.serialNumber = serialNumber;
     }
 
+    public String getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
+    }
+
     @Override
     public String toString() {
         return "IncomeInfo{" +
@@ -98,6 +111,7 @@ public class IncomeInfo extends Entity {
                 ", orderTime='" + orderTime + '\'' +
                 ", orderId='" + orderId + '\'' +
                 ", id='" + id + '\'' +
+                ", payStatus='" + payStatus + '\'' +
                 '}';
     }
 }

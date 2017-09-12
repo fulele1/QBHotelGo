@@ -164,6 +164,7 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
                     public void onResponse(String s, int i) {
                         loadingDialog.dismiss();
                         try {
+                            LogUtils.i(s);
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
@@ -184,12 +185,12 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
                                 IncomeInfo info;
                                 for (int j = 0; j < data.size(); j++) {
                                     info = new IncomeInfo();
-                                    info.setId(data.get(j).get("sp_id").toString());
-                                    info.setOrderTime(data.get(j).get("sp_createtime").toString());
-                                    info.setOrderPrice(data.get(j).get("sp_price").toString());
+                                    info.setId(data.get(j).get("op_id").toString());
+                                    info.setOrderTime(data.get(j).get("op_createtime").toString());
+                                    info.setOrderPrice(data.get(j).get("op_price").toString());
                                     info.setOrderId(data.get(j).get("or_orderno").toString());
-                                    info.setPayType(data.get(j).get("sp_paytype").toString());
-                                    info.setSerialNumber(data.get(j).get("sp_serialnum").toString());
+                                    info.setPayType(data.get(j).get("op_paytype").toString());
+                                    info.setSerialNumber(data.get(j).get("op_serialnum").toString());
                                     incomeInfos.add(info);
                                 }
                                 if (incomeInfos.size() == 0) {

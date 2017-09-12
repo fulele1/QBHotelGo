@@ -785,7 +785,6 @@ public class OrderActivity extends BaseActivity {
                 .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))
                 .addParams("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80))
                 .build()
-
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
@@ -821,7 +820,6 @@ public class OrderActivity extends BaseActivity {
                         }
                     }
                 });
-
 
     }
 

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
+import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Views.LoadingDialog;
 
 import java.io.File;
@@ -51,6 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             initViews();
             initData();
             addListener();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,6 +84,23 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     public void setTitleBarVisible(int visibility) {
         layout_titlebar.setVisibility(visibility);
+    }
+
+    /**
+     * 是否显示提交按钮
+     *
+     * @param show true则显示
+     */
+    protected void showForwardView(boolean show, String str) {
+        if (tv_forward != null) {
+            if (show) {
+//                mBackwardbButton.setText(backwardResid);
+                tv_forward.setVisibility(View.VISIBLE);
+                tv_forward.setText(str);
+            } else {
+                tv_forward.setVisibility(View.INVISIBLE);
+            }
+        } // else ignored
     }
 
     /**
@@ -265,9 +285,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         return oDialog;
     }
 
-    protected void showToast(String sMess) {
+    public void showToast(String sMess) {
         Toast.makeText(this, sMess, Toast.LENGTH_SHORT).show();
     }
+
 
     //app的私有存储空间路径
     protected String appPath() {
@@ -301,4 +322,28 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         ActivityController.removeActivity(this);
     }
 
+    protected void checkPer(int requestCode) {
+        PermissionUtils.requestPermission(this, requestCode, mPermissionGrant);
+    }
+
+    /**
+     * Callback received when a permissions request has been completed.
+     */
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
+    }
+
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            requestPerPass(requestCode);
+        }
+    };
+
+    //申请权限成功后执行的方法
+    protected void requestPerPass(int requestCode) {
+
+    }
 }
