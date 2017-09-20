@@ -13,128 +13,165 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@mipmap/acq_side"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin_edge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="订单信息"
+                android:textColor="@color/result_view"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/padding"
+                android:textSize="@dimen/textview_normal_size"
+                />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/point_line"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="订单编号："
-                android:textSize="@dimen/textview_normal_size" />
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
 
-            <TextView
-                android:id="@+id/tv_order_id"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@null"
-                android:drawablePadding="10px"
-                android:gravity="center_vertical"
-                android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="订单编号："
+                    android:textSize="@dimen/textview_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_order_id"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="10px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10px"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:paddingRight="@dimen/padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="下单时间："
+                    android:textSize="@dimen/textview_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_order_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="10px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10px"
+                    android:textSize="@dimen/textview_small_size" />
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/main"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin_edge"
-                android:gravity="center"
-                android:text="客户姓名："
-                android:textSize="@dimen/textview_normal_size" />
+                android:layout_height="wrap_content"
+                android:text="@string/information"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:textColor="@color/result_view"
+                android:textSize="@dimen/textview_normal_size"
 
-            <TextView
-                android:id="@+id/tv_order_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@null"
-                android:drawablePadding="10px"
-                android:gravity="center_vertical"
-                android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                />
 
         </LinearLayout>
 
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-        <LinearLayout
-            android:id="@+id/ll_receiver_info"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/point_line"
+            />
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginTop="@dimen/activity_horizontal_margin"
+    >
+    <TextView
+        android:id="@+id/tv_order_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="@null"
+        android:drawablePadding="10px"
+        android:gravity="left|center_vertical"
+        android:textSize="@dimen/activity_title"
+        android:text="张三"
+        android:textColor="@color/result_view"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_order_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:gravity="right|center_vertical"
+        android:text="4654564845"
+        android:textColor="@color/main"
+        android:textSize="@dimen/textview_small_size"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"/>
+
+</LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_order_address"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/margin_edge"
-                android:gravity="center"
-                android:text="客户电话："
-                android:textSize="@dimen/textview_normal_size" />
-
-            <TextView
-                android:id="@+id/tv_order_phone"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
-
-        </LinearLayout>
-
-
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:gravity="center"
-            android:paddingRight="@dimen/padding">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/margin_edge"
-                android:gravity="center"
-                android:text="客户地址："
-                android:textSize="@dimen/textview_normal_size" />
-
-
-            <TextView
-                android:id="@+id/tv_order_address"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
-
-        </LinearLayout>
-
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/textview_small_size"
+            android:text="其实我也不知道会飞的撒娇陈女士的家伙可视对讲覅就U盾恢复的后代撒谎"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,11 +199,12 @@
                 android:drawablePadding="10px"
                 android:gravity="center_vertical"
                 android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:textColor="@color/main"
+                />
 
         </LinearLayout>
 
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
 
 
         <LinearLayout
@@ -195,51 +233,78 @@
                 android:drawablePadding="10px"
                 android:gravity="center_vertical"
                 android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:textColor="#e55b55"
+                />
         </LinearLayout>
 
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
-
+        <LinearLayout style="@style/common_horizontal_match_blod_line_style"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="#ffffff"
-            android:gravity="center"
-            android:paddingRight="@dimen/padding">
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/main"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/margin_edge"
-                android:gravity="center"
-                android:text="下单时间："
-                android:textSize="@dimen/textview_normal_size" />
+                android:layout_height="wrap_content"
+                android:text="@string/post_pic"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:textColor="@color/result_view"
+                android:textSize="@dimen/textview_normal_size"
 
-            <TextView
-                android:id="@+id/tv_order_time"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:drawablePadding="10px"
-                android:gravity="center_vertical"
-                android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                />
+
         </LinearLayout>
 
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
 
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@mipmap/acq_side_3"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            >
+
+
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+                <ImageView
+                    android:id="@+id/iv_user_face"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_lock_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:padding="3dp"
+                    />
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+
+
 
                 <TextView
                     android:layout_width="0dp"
@@ -248,7 +313,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="人脸照片"
-                    android:textSize="@dimen/textview_small_size" />
+                    android:textSize="@dimen/textview_small_size"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -260,74 +325,8 @@
                     android:textSize="@dimen/textview_small_size" />
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_user_face"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:src="@mipmap/pictrue_256" />
-
-                <ImageView
-                    android:id="@+id/iv_lock_pic"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:src="@mipmap/pictrue_256" />
-            </TableRow>
-
         </TableLayout>
 
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal">-->
-
-
-        <!--<Button-->
-        <!--android:id="@+id/bt_pay_money"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginLeft="@dimen/margin_edge"-->
-        <!--android:layout_marginRight="@dimen/margin_edge"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/bg_button_selector"-->
-        <!--android:text="现金支付"-->
-        <!--android:textColor="#ffffff"-->
-        <!--android:textSize="@dimen/textview_normal_size" />-->
-
-        <!--<Button-->
-        <!--android:id="@+id/bt_pay_online"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginLeft="@dimen/margin_edge"-->
-        <!--android:layout_marginRight="@dimen/margin_edge"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/bg_button_selector"-->
-        <!--android:text="在线支付"-->
-        <!--android:textColor="#ffffff"-->
-        <!--android:textSize="@dimen/textview_normal_size" />-->
-
-        <!--<Button-->
-        <!--android:id="@+id/bt_pay_status"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginLeft="@dimen/margin_edge"-->
-        <!--android:layout_marginRight="@dimen/margin_edge"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@drawable/bg_button_selector"-->
-        <!--android:text="支付查询"-->
-        <!--android:textColor="#ffffff"-->
-        <!--android:textSize="@dimen/textview_normal_size" />-->
-        <!--</LinearLayout>-->
 
         <com.xaqb.unlock.Views.ListViewForScroollView
             android:id="@+id/lv_pay_record"
@@ -335,22 +334,74 @@
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/bt_pay_status"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:background="@drawable/bg_button_selector"
-            android:text="支付查询"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/textview_normal_size" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/main"
+            >
+
+
+        <Button
+        android:id="@+id/bt_pay_money"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_weight="1"
+        android:background="@null"
+        android:text="现金支付"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textview_normal_size"
+            android:visibility="gone"
+            />
+
+        <Button
+        android:id="@+id/bt_pay_online"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_weight="1"
+        android:background="@null"
+        android:text="在线支付"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textview_normal_size"
+            android:visibility="gone"
+            />
+
+        <Button
+        android:id="@+id/bt_pay_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:layout_weight="1"
+        android:background="@null"
+        android:text="支付查询"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textview_normal_size" />
+        </LinearLayout>
+
+
+
+        <!--<Button-->
+            <!--android:id="@+id/bt_pay_status"-->
+            <!--android:layout_width="150dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:layout_marginLeft="@dimen/margin_edge"-->
+            <!--android:layout_marginRight="@dimen/margin_edge"-->
+            <!--android:background="@drawable/bg_button_selector"-->
+            <!--android:text="支付查询"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="@dimen/textview_normal_size" />-->
+
     </LinearLayout>
 </ScrollView>

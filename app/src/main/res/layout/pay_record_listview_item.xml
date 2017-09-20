@@ -6,131 +6,150 @@
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#cfcfcf"
-        android:paddingBottom="5dp"
-        android:paddingLeft="@dimen/margin_edge"
-        android:paddingTop="5dp"
-        android:text="收款凭证"
-        android:textColor="#312520"
-        android:textSize="@dimen/textview_small_size" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingLeft="@dimen/margin_edge"
-        android:paddingTop="5dp"
-        android:text="支付金额"
-        android:textColor="#444"
-        android:textSize="@dimen/textview_small_size" />
-
-    <TextView
-        android:id="@+id/tv_pay_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingLeft="@dimen/margin_edge"
-        android:paddingTop="5dp"
-        android:textColor="#312520"
-        android:textSize="@dimen/textview_small_size" />
-
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TableRow>
+        <ImageView
+            android:layout_width="3dp"
+            android:layout_height="match_parent"
+            android:background="@color/main"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收款凭证"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:textColor="@color/result_view"
+            android:textSize="@dimen/textview_normal_size"
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:paddingBottom="5dp"
-                android:paddingLeft="@dimen/margin_edge"
-                android:paddingTop="5dp"
-                android:text="支付方式："
-                android:textColor="#312520"
-                android:textSize="@dimen/textview_small_size"
+            />
 
-                />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_pay_type"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:textColor="#312520"
-                android:textSize="@dimen/textview_small_size" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@mipmap/acq_side_3"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/margin_edge"
+            android:paddingTop="5dp"
+            android:text="支付金额"
+            android:textColor="#444"
+            android:textSize="@dimen/textview_small_size" />
 
-        </TableRow>
+        <TextView
+            android:id="@+id/tv_pay_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingLeft="@dimen/margin_edge"
+            android:paddingTop="5dp"
+            android:textColor="#312520"
+            android:textSize="@dimen/textview_small_size" />
 
-        <TableRow>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingLeft="@dimen/margin_edge"
-                android:paddingTop="5dp"
-                android:text="支付时间："
-                android:textColor="#312520"
-                android:textSize="@dimen/textview_small_size"
+            <TableRow>
 
-                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/margin_edge"
+                    android:paddingTop="5dp"
+                    android:text="支付方式："
+                    android:textColor="#312520"
+                    android:textSize="@dimen/textview_small_size"
 
-            <TextView
-                android:id="@+id/tv_pay_time"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center_vertical|left"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:textColor="#312520"
-                android:textSize="@dimen/textview_small_size" />
+                    />
 
-        </TableRow>
+                <TextView
+                    android:id="@+id/tv_pay_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#312520"
+                    android:textSize="@dimen/textview_small_size" />
 
-        <!--<TableRow>-->
+            </TableRow>
 
-        <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:paddingBottom="5dp"-->
-        <!--android:paddingLeft="@dimen/margin_edge"-->
-        <!--android:paddingTop="5dp"-->
-        <!--android:text="托运人电话："-->
-        <!--android:textColor="#312520"-->
-        <!--android:textSize="@dimen/textview_small_size"-->
+            <TableRow>
 
-        <!--/>-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/margin_edge"
+                    android:paddingTop="5dp"
+                    android:text="支付时间："
+                    android:textColor="#312520"
+                    android:textSize="@dimen/textview_small_size"
 
-        <!--<TextView-->
-        <!--android:id="@+id/tv_man_phone"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_weight="1"-->
-        <!--android:paddingBottom="5dp"-->
-        <!--android:paddingTop="5dp"-->
-        <!--android:textColor="#312520"-->
-        <!--android:textSize="@dimen/textview_small_size" />-->
+                    />
 
-        <!--</TableRow>-->
+                <TextView
+                    android:id="@+id/tv_pay_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#312520"
+                    android:textSize="@dimen/textview_small_size" />
 
-        <!--<TableRow>-->
+            </TableRow>
+
+            <!--<TableRow>-->
+
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:paddingLeft="@dimen/margin_edge"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:text="托运人电话："-->
+            <!--android:textColor="#312520"-->
+            <!--android:textSize="@dimen/textview_small_size"-->
+
+            <!--/>-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/tv_man_phone"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:textColor="#312520"-->
+            <!--android:textSize="@dimen/textview_small_size" />-->
+
+            <!--</TableRow>-->
+
+            <!--<TableRow>-->
 
             <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
             <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
@@ -138,68 +157,66 @@
             <!--&lt;!&ndash;android:src="@mipmap/arrow_left_64" />&ndash;&gt;-->
 
             <!--<TextView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:paddingBottom="5dp"-->
-                <!--android:paddingLeft="@dimen/margin_edge"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:text="运单号："-->
-                <!--android:textColor="#312520"-->
-                <!--android:textSize="@dimen/textview_small_size"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:paddingLeft="@dimen/margin_edge"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:text="运单号："-->
+            <!--android:textColor="#312520"-->
+            <!--android:textSize="@dimen/textview_small_size"-->
 
-                <!--/>-->
+            <!--/>-->
 
             <!--<TextView-->
-                <!--android:id="@+id/tv_order_id"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_weight="1"-->
-                <!--android:paddingBottom="5dp"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:textColor="#312520"-->
-                <!--android:textSize="@dimen/textview_small_size" />-->
-
-        <!--</TableRow>-->
-
-        <TableRow>
-
-            <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
+            <!--android:id="@+id/tv_order_id"-->
+            <!--android:layout_width="0dp"-->
             <!--android:layout_height="wrap_content"-->
-            <!--android:src="@mipmap/arrow_left_64" />-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:textColor="#312520"-->
+            <!--android:textSize="@dimen/textview_small_size" />-->
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingLeft="@dimen/margin_edge"
-                android:paddingTop="5dp"
-                android:text="备注："
-                android:textColor="#312520"
-                android:textSize="@dimen/textview_small_size"
+            <!--</TableRow>-->
 
-                />
+            <TableRow>
 
-            <TextView
-                android:id="@+id/tv_pay_status"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:textColor="#312520"
-                android:textSize="@dimen/textview_small_size" />
+                <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@mipmap/arrow_left_64" />-->
 
-        </TableRow>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="@dimen/margin_edge"
+                    android:paddingTop="5dp"
+                    android:text="备注："
+                    android:textColor="#312520"
+                    android:textSize="@dimen/textview_small_size"
 
-    </TableLayout>
+                    />
+
+                <TextView
+                    android:id="@+id/tv_pay_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:textColor="#312520"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </TableRow>
+
+        </TableLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#cfcfcf" />
+    </LinearLayout>
+
 
 </LinearLayout>

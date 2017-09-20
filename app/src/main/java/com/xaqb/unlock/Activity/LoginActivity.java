@@ -3,6 +3,7 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.os.Environment;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
+import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -38,13 +40,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initTitleBar() {
-        setTitle(R.string.login);
-        showBackwardView(false);
+        setTitleBarVisible(View.GONE);
     }
 
     @Override
     public void initViews() {
-
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();
@@ -75,6 +78,12 @@ public class LoginActivity extends BaseActivity {
                 etPsw.setText(psw);
             }
         }
+        checkPer(PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    protected void requestPerPass(int requestCode) {
+        super.requestPerPass(requestCode);
         SDCardUtils.copyDBToSD(this, Environment.getExternalStorageDirectory().getAbsolutePath() + "/unlock/tessdata", "number.traineddata");
     }
 

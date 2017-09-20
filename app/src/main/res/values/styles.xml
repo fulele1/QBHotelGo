@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,13 +10,7 @@
     <style name="transparentFrameWindowStyle" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@drawable/photo_choose_bg</item>
     </style>
-    <!--侵入式状态栏-->
-    <style name="immersion_status">
-        <item name="android:clipToPadding">true</item>
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
+
 
     <!--水平分割线Style-->
     <style name="common_horizontal_division_line_style">
@@ -28,9 +22,25 @@
         <item name="android:layout_marginRight">12dp</item>
     </style>
 
+    <!--水平分割线Style-->
+    <style name="common_horizontal_match_line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">#bbbbbb</item>
+    </style>
+
+    <!--水平分割线Style-->
+    <style name="common_horizontal_match_blod_line_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">#f5f5f5</item>
+    </style>
+
     <style name="pop_updateuserinfo_anim_style">
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
-        <item name="android:background">#dddddd</item>
+        <item name="android:background">#f4f4f4</item>
     </style>
 </resources>

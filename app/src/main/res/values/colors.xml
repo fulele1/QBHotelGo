@@ -3,15 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="main">#5c74f2</color>
 
     <color name="white">#ffffff</color>
+    <color name="per_bag">#a7dde9</color>
 
     <color name="viewfinder_frame">#ff000000</color>
     <color name="viewfinder_laser">#ffff0000</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#00000000</color>
-    <color name="textColor">#303030</color>
-    <color name="color_00">#8A000000</color>
+    <color name="textColor">#dadada</color>
+    <color name="color_00">#3e3e3e3e</color>
+    <color name="bag">#fafafafa</color>
+    <color name="text">#bcbcbc</color>
+    <color name="redio_text">#bbbbbb</color>
 
 </resources>

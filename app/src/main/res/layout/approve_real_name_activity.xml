@@ -319,14 +319,14 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:src="@mipmap/pictrue_256" />
+                android:src="@mipmap/acq_lock" />
 
             <ImageView
                 android:id="@+id/iv_face_pic"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_weight="1"
-                android:src="@mipmap/pictrue_256" />
+                android:src="@mipmap/acq_per" />
         </TableRow>
 
     </TableLayout>

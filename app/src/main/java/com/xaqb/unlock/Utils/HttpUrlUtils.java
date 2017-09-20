@@ -65,12 +65,12 @@ public class HttpUrlUtils {
 
     // TODO: 2017/3/15 获得锁具类型接口
     public String getLockType() {
-        return getBaseUrl() + "/v1/common/dict_data/101";
+        return getBaseUrl() + "/dict_data/101";
     }
 
     // TODO: 2017/3/15 获得订单列表接口
     public String getOrderList() {
-        return getBaseUrl() + "/v1/staff/order";
+        return getBaseUrl() + "v1/staff/order";
     }
 
     // TODO: 2017/3/15 获得订单详情接口
@@ -106,6 +106,5 @@ public class HttpUrlUtils {
     public String getrefreshToken() {
         return getBaseUrl() + "/v1/index/token/refresh_token/";
     }
-
 
 }

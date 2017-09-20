@@ -25,7 +25,7 @@ import com.xaqb.unlock.Activity.MainActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
-import com.xaqb.unlock.Activity.SendDataActivity;
+import com.xaqb.unlock.Activity.OrderListActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
@@ -64,6 +64,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 
     public void initViews(View view) {
         lvLeftMenu = (ListView) view.findViewById(R.id.lv_left_menu);
+        lvLeftMenu.setDividerHeight(0);
         ivPic = (ImageView) view.findViewById(R.id.iv_user_pic);
         ivEditor = (ImageView) view.findViewById(R.id.iv_editor);
         llSetting = (LinearLayout) view.findViewById(R.id.ll_setting);
@@ -84,7 +85,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 //                String title = null;
                 switch (i) {
                     case 0: // 我的订单
-                        startActivity(new Intent(getActivity(), SendDataActivity.class));
+                        startActivity(new Intent(getActivity(), OrderListActivity.class));
                         break;
                     case 1: // 收入明细
                         startActivity(new Intent(getActivity(), IncomeActivity.class));
@@ -172,7 +173,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
         } else if (!url.equals("")) {
             loadUserPic(url);
         } else {
-            ivPic.setImageResource(R.mipmap.user);
+            ivPic.setImageResource(R.mipmap.main_user);
         }
     }
 

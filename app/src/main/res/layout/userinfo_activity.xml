@@ -4,287 +4,282 @@
     android:id="@+id/ll_main_my_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white"
+    >
 
-    <LinearLayout
-        android:id="@+id/ll_user_pic"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ll_background_no_radius"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="用户头像"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <View
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3" />
+            android:orientation="vertical"
+            >
 
-        <com.xaqb.unlock.Views.RoundImageView
-            android:id="@+id/iv_user_pic"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:padding="3dp"
-            android:src="@mipmap/user" />
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp"
-            android:src="@mipmap/right_arrow" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
+            <com.xaqb.unlock.Views.RoundImageView
+                android:id="@+id/iv_user_pic"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/shadow_width"
+                />
 
 
-    <LinearLayout
-        android:id="@+id/ll_myinfo_nick_name"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/ll_background_no_radius"
-        android:gravity="center">
+            <LinearLayout
+                android:id="@+id/ll_user_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="用户姓名"
-            android:textSize="@dimen/textview_normal_size" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="用户头像"
+                    android:textSize="@dimen/textview_normal_size" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
 
-        <TextView
-            android:id="@+id/tv_userinfo_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:gravity="center"
-            android:textSize="@dimen/textview_small_size" />
+                <!--<com.xaqb.unlock.Views.RoundImageView-->
+                <!--android:id="@+id/iv_user_pic"-->
+                <!--android:layout_width="64dp"-->
+                <!--android:layout_height="64dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:layout_margin="5dp"-->
+                <!--android:padding="3dp"-->
+                <!--android:src="@mipmap/main_user" />-->
 
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp"
-            android:src="@mipmap/right_arrow" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="联系电话"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tv_userinfo_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:gravity="center"
-            android:textSize="@dimen/textview_small_size" />
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp"
-            android:src="@mipmap/right_arrow"
-            android:visibility="invisible" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/right_arrow" />
+            </LinearLayout>
 
 
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center">
+            <LinearLayout
+                android:id="@+id/ll_myinfo_nick_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="所属企业"
-            android:textSize="@dimen/textview_normal_size" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="用户姓名:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    />
 
-        <TextView
-            android:id="@+id/tv_userinfo_company"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:gravity="center"
-            android:textSize="@dimen/textview_small_size" />
+                <TextView
+                    android:id="@+id/tv_userinfo_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/textview_small_size"
+                    android:text="@string/app_name"
+                    android:background="@color/bag"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    />
 
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp"
-            android:src="@mipmap/right_arrow"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="详细地址"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tv_userinfo_address"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:gravity="center|right"
-            android:maxLines="2"
-            android:textSize="@dimen/textview_small_size" />
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp"
-            android:src="@mipmap/right_arrow"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:visibility="gone"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="备注"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/tv_userinfo_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:gravity="center"
-            android:textSize="@dimen/textview_small_size" />
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="14dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp"
-            android:src="@mipmap/right_arrow"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/right_arrow" />
+            </LinearLayout>
 
 
-    <!--<LinearLayout-->
-    <!--android:id="@+id/ll_reset_psw"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="@drawable/ll_background_no_radius"-->
-    <!--android:gravity="center_vertical">-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                >
 
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="@dimen/margin_edge"-->
-    <!--android:gravity="center"-->
-    <!--android:text="@string/reset_password"-->
-    <!--android:textSize="@dimen/textview_normal_size" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="联系电话:"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:layout_marginBottom="@dimen/padding"
+                    />
 
-    <!--</LinearLayout>-->
+                <TextView
+                    android:id="@+id/tv_userinfo_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_edge"
+                    android:textSize="@dimen/textview_small_size"
+                    android:text="@string/app_name"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:background="@color/bag"
 
-    <!--<LinearLayout style="@style/common_horizontal_division_line_style" />-->
+                    />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/right_arrow"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="所属企业:"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:layout_marginBottom="@dimen/padding"
+
+                    />
+
+                <TextView
+                    android:id="@+id/tv_userinfo_company"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_edge"
+                    android:textSize="@dimen/textview_small_size"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:background="@color/bag"
+                    android:text="@string/app_name"
+                    />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/right_arrow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="详细地址:"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:layout_marginBottom="@dimen/padding"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_userinfo_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_edge"
+                    android:maxLines="2"
+                    android:textSize="@dimen/textview_small_size"
+                    android:text="@string/app_name"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:background="@color/bag"
+                    />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/right_arrow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="#ffffff"
+                android:visibility="gone"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="备注"
+                    android:textSize="@dimen/textview_normal_size" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_userinfo_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:layout_marginRight="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:src="@mipmap/right_arrow"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+
+
 </LinearLayout>

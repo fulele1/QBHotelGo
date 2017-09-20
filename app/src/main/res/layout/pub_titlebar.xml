@@ -3,7 +3,7 @@
     android:id="@+id/layout_titlebar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_height"
-    android:background="#66B2FF"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <TextView
@@ -16,7 +16,7 @@
         android:gravity="center_horizontal|center"
         android:singleLine="true"
         android:text="标题栏"
-        android:textColor="#ffffff"
+        android:textColor="@color/result_view"
         android:textSize="@dimen/activity_title" />
 
     <ImageView
@@ -28,8 +28,9 @@
         android:onClick="onBackward"
         android:padding="10px"
         android:scaleType="fitCenter"
-        android:src="@mipmap/back"
-        android:visibility="visible" />
+        android:src="@mipmap/title_back"
+        android:visibility="visible"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
 
     <TextView
         android:id="@+id/tv_forward"

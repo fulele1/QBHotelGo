@@ -270,7 +270,7 @@
                     android:layout_height="150dp"
                     android:layout_weight="1"
                     android:padding="3dp"
-                    android:src="@mipmap/pictrue_256" />
+                    android:src="@mipmap/ic_launcher" />
 
                 <ImageView
                     android:id="@+id/iv_lock_pic"
@@ -278,7 +278,7 @@
                     android:layout_height="150dp"
                     android:layout_weight="1"
                     android:padding="3dp"
-                    android:src="@mipmap/pictrue_256" />
+                    android:src="@mipmap/ic_launcher" />
             </TableRow>
 
         </TableLayout>
