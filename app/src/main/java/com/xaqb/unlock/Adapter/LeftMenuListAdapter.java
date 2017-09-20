@@ -75,7 +75,7 @@ public class LeftMenuListAdapter extends BaseAdapter {
             } else if (status.equals(Globals.staffIsRealSuc)) {
                 holder.ivStatus.setImageResource(R.mipmap.ok);
             } else if (status.equals(Globals.staffIsRealIng)) {
-                holder.ivStatus.setImageResource(R.mipmap.warning);
+                holder.ivStatus.setImageResource(R.mipmap.waring);
             }
             holder.ivStatus.setVisibility(View.VISIBLE);
         }

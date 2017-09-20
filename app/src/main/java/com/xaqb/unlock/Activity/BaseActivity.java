@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         try {
             ActivityController.addActivity(this);
@@ -233,6 +234,49 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             mLyStatus.setBackgroundColor(color);
         }
     }
+
+    /**
+     * 自定义对话框
+     * @param context
+     * @param title
+     * @param message
+     * @param ok
+     * @param no
+     * @return
+     */
+    AlertDialog alertDialog;
+    public AlertDialog showAdialog(final Context context, String title, String message, String ok,int view){
+        alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setContentView(R.layout.loading_my_layout);
+        TextView tvTitle = (TextView) window.findViewById(R.id.tv_dialog_title);
+        tvTitle.setText(title);
+        TextView tvMessage = (TextView) window.findViewById(R.id.tv_dialog_message);
+        tvMessage.setText(message);
+        Button btOk = (Button) window.findViewById(R.id.btn_dia_ok);
+        btOk.setText(ok);
+        btOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BaseActivity.this.dialogOk();
+                alertDialog.dismiss();
+
+            }
+        });
+        Button btNo = (Button) window.findViewById(R.id.btn_dia_no);
+        btNo.setVisibility(view);
+        btNo.setText("取消");
+        btNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        return alertDialog;
+    }
+
+
 
 
     //判断字符串是否为空

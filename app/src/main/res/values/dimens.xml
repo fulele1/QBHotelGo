@@ -7,6 +7,7 @@
     <dimen name="textview_small_size">16sp</dimen>
     <dimen name="textview_smallss_size">10sp</dimen>
     <dimen name="textview_smalls_size">14sp</dimen>
+    <dimen name="textview_smallx_size">12sp</dimen>
     <dimen name="margin_edge">15dp</dimen>
     <dimen name="title_height">50dp</dimen>
     <dimen name="padding">10dp</dimen>

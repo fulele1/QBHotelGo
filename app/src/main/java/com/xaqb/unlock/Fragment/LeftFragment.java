@@ -22,6 +22,7 @@ import com.xaqb.unlock.Activity.AboutActivity;
 import com.xaqb.unlock.Activity.AdviseActivity;
 import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.MainActivity;
+import com.xaqb.unlock.Activity.MyOrderActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
@@ -42,7 +43,7 @@ import okhttp3.Call;
  * 左滑菜单
  * Created by lenovo on 2016/11/28.
  */
-public class LeftFragment extends Fragment implements View.OnClickListener {
+public class LeftFragment extends BaseFragment implements View.OnClickListener {
     private ListView lvLeftMenu;
     private ImageView ivPic, ivEditor;
     private LinearLayout llSetting, llCustomer;
@@ -85,7 +86,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 //                String title = null;
                 switch (i) {
                     case 0: // 我的订单
-                        startActivity(new Intent(getActivity(), OrderListActivity.class));
+                        startActivity(new Intent(getActivity(), MyOrderActivity.class));
                         break;
                     case 1: // 收入明细
                         startActivity(new Intent(getActivity(), IncomeActivity.class));
@@ -197,28 +198,14 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 //                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.ll_setting:
-//                startActivity(new Intent(getActivity(), SettingActivity.class));
-                final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("提示")
-                        .setMessage("确定要退出登录吗？")
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                SPUtils.put(getActivity(), "userName", "");
-                                SPUtils.put(getActivity(), "userPsw", "");
-                                SPUtils.put(getActivity(), "rememberPsw", false);
-                                getActivity().finish();
-                            }
-                        })
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        });
-                builder.create().show();
+                showAdialog(LeftFragment.this.getActivity(),"提示","确定要退出登录吗?","确定",View.VISIBLE);
                 break;
         }
+    }
+
+    @Override
+    protected void dialogOk() {
+        getActivity().finish();
     }
 
     /**
