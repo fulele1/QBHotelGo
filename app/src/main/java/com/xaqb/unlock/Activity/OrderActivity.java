@@ -122,7 +122,7 @@ public class OrderActivity extends BaseActivity {
 
     @Override
     public void initTitleBar() {
-        setTitle("订单");
+        setTitle("信息采集");
         showBackwardView(true);
     }
 

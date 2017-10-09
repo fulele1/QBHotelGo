@@ -1,12 +1,15 @@
 package com.xaqb.unlock.Activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -14,9 +17,9 @@ import android.widget.Toast;
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
 import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
-import com.flyco.banner.anim.select.ZoomInEnter;
-import com.flyco.banner.transform.ZoomOutSlideTransformer;
-import com.flyco.banner.widget.Banner.base.BaseBanner;
+import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.holder.Holder;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -26,26 +29,27 @@ import com.xaqb.unlock.Service.FileService;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.SPUtils;
-import com.xaqb.unlock.banner.BannerItem;
-import com.xaqb.unlock.banner.SimpleImageBanner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 主页面
  */
 public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener {
     private MainActivity instance;
-    private SimpleImageBanner sib;
-    private String[] imgUrl = {
-            "http://pic39.nipic.com/20140312/10606030_144828215306_2.jpg",
-            "http://p0.so.qhmsg.com/bdr/_240_/t017eb457951f1a17e0.jpg",
-            "http://img.sootuu.com/Exchange/2009-11/20091120233536281.jpg",
-            "http://pic4.nipic.com/20090919/3372381_123043464790_2.jpg"
-    };
-    private String[] titles = {
-            "广告测试1", "广告测试2", "广告测试3", "广告测试4"
-    };
+    private ConvenientBanner mCb;
+
+    //    private SimpleImageBanner sib;
+//    private String[] imgUrl = {
+//            "http://pic39.nipic.com/20140312/10606030_144828215306_2.jpg",
+//            "http://p0.so.qhmsg.com/bdr/_240_/t017eb457951f1a17e0.jpg",
+//            "http://img.sootuu.com/Exchange/2009-11/20091120233536281.jpg",
+//            "http://pic4.nipic.com/20090919/3372381_123043464790_2.jpg"
+//    };
+//    private String[] titles = {
+//            "广告测试1", "广告测试2", "广告测试3", "广告测试4"
+//    };
     private boolean isQuit = false;
 
     private ImageView ivUser, ivMessage, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName;
@@ -65,6 +69,9 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.main_menu);
         instance = this;
         ActivityController.addActivity(instance);
@@ -115,9 +122,14 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         // 设置滑动阴影的宽度
         sm.setShadowWidthRes(R.dimen.shadow_width);
         // 设置滑动菜单阴影的图像资源
-        sm.setShadowDrawable(R.drawable.ll_pressed);
+        sm.setShadowDrawable(R.mipmap.left_shadow);
         // 设置滑动菜单视图的宽度
-        sm.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+
+        WindowManager manager = (WindowManager) instance.getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        int width = display.getWidth();
+
+        sm.setBehindOffsetRes(R.dimen.slidingmenu_width);
         // 设置渐入渐出效果的值
         sm.setFadeDegree(0.35f);
         sm.setFadeEnabled(true);
@@ -125,19 +137,19 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         sm.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
         // 设置下方视图的在滚动时的缩放比例
         sm.setBehindScrollScale(0.2f);
-        sm.addIgnoredView(sib);
+//        sm.addIgnoredView(sib);
     }
 
 
     private void assignViews() {
-        sib = (SimpleImageBanner) findViewById(R.id.sib_the_most_comlex_usage);
-        sib.setOnItemClickL(new BaseBanner.OnItemClickL() {
-            @Override
-            public void onItemClick(int position) {
-                Log.i("ccc", position + "");
-            }
-        });
-        setNewsTabData();
+//        sib = (SimpleImageBanner) findViewById(R.id.sib_the_most_comlex_usage);
+//        sib.setOnItemClickL(new BaseBanner.OnItemClickL() {
+//            @Override
+//            public void onItemClick(int position) {
+//                Log.i("ccc", position + "");
+//            }
+//        });
+//        setNewsTabData();
         ivUser = (ImageView) findViewById(R.id.iv_user);
         ivMessage = (ImageView) findViewById(R.id.iv_message);
         ivSend = (ImageView) findViewById(R.id.iv_send_data);
@@ -148,9 +160,71 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         ivRealName = (ImageView) findViewById(R.id.iv_real_name);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
 //        btOrder = (Button) findViewById(R.id.bt_order);
+        mCb = (ConvenientBanner) findViewById(R.id.cb_main);
+
     }
 
+    private List<Integer> mImageList;
+
     public void initData() {
+        mImageList = new ArrayList();
+        mImageList.add(R.mipmap.main_pic1);
+        mImageList.add(R.mipmap.main_pic2);
+        mImageList.add(R.mipmap.main_pic3);
+        cbSetPage();
+        mCb.startTurning(2000);
+    }
+
+
+    /**
+     * 轮播图holder
+     */
+    public class CbHolder implements Holder<Integer> {
+
+        private ImageView pImg;
+
+        @Override
+        public View createView(Context context) {
+            pImg = new ImageView(context);
+            pImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            return pImg;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, Integer data) {
+            pImg.setImageResource(data);
+        }
+    }
+
+    //设置状态栏和导航栏沉浸式
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
+
+    /**
+     * 轮播图设置图片
+     */
+    public void cbSetPage() {
+        mCb.setPages(new CBViewHolderCreator<CbHolder>() {
+            @Override
+            public CbHolder createHolder() {
+                return new CbHolder();
+            }
+        }, mImageList)
+//                .setPageIndicator(new int[] {R.mipmap.pointn,R.mipmap.pointc})
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
     }
 
     public void addListener() {
@@ -238,45 +312,45 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         }
     }
 
-    /**
-     * 设置新闻数据
-     */
-    private void setNewsTabData() {
-        sib
-                /** methods in BaseIndicatorBanner */
-//              .setIndicatorStyle(BaseIndicaorBanner.STYLE_CORNER_RECTANGLE)//set indicator style
-//              .setIndicatorWidth(6)                               //set indicator width
-//              .setIndicatorHeight(6)                              //set indicator height
-//              .setIndicatorGap(8)                                 //set gap btween two indicators
-//              .setIndicatorCornerRadius(3)                        //set indicator corner raduis
-                .setSelectAnimClass(ZoomInEnter.class)              //se//t indicator select anim
-                /** methods in BaseBanner */
-//              .setBarColor(Color.parseColor("#88000000"))         //set bootom bar color
-//              .barPadding(5, 2, 5, 2)                             //set bottom bar padding
-//              .setBarShowWhenLast(true)                           //set bottom bar show or not when the position is the last
-//              .setTextColor(Color.parseColor("#ffffff"))          //set title text color
-//              .setTextSize(12.5f)                                 //set title text size
-//              .setTitleShow(true)                                 //set title show or not
-//              .setIndicatorShow(true)                             //set indicator show or not
-//              .setDelay(2)                                        //setDelay before start scroll
-                .setPeriod(5)                                      //scroll setPeriod
-//                .setSource(DataProvider.getList())                  //data source list
-                .setSource(getList())                  //data source list
-                .setTransformerClass(ZoomOutSlideTransformer.class) //set page transformer
-                .startScroll();                                     //start scroll,the last method to call
-    }
-
-    //设置数据
-    private ArrayList<BannerItem> getList() {
-        ArrayList<BannerItem> list = new ArrayList<>();
-        for (int i = 0; i < imgUrl.length; i++) {
-            BannerItem item = new BannerItem();
-            item.imgUrl = imgUrl[i];
-            item.title = titles[i];
-            list.add(item);
-        }
-        return list;
-    }
+//    /**
+//     * 设置新闻数据
+//     */
+//    private void setNewsTabData() {
+//        sib
+//                /** methods in BaseIndicatorBanner */
+////              .setIndicatorStyle(BaseIndicaorBanner.STYLE_CORNER_RECTANGLE)//set indicator style
+////              .setIndicatorWidth(6)                               //set indicator width
+////              .setIndicatorHeight(6)                              //set indicator height
+////              .setIndicatorGap(8)                                 //set gap btween two indicators
+////              .setIndicatorCornerRadius(3)                        //set indicator corner raduis
+//                .setSelectAnimClass(ZoomInEnter.class)              //se//t indicator select anim
+//                /** methods in BaseBanner */
+////              .setBarColor(Color.parseColor("#88000000"))         //set bootom bar color
+////              .barPadding(5, 2, 5, 2)                             //set bottom bar padding
+////              .setBarShowWhenLast(true)                           //set bottom bar show or not when the position is the last
+////              .setTextColor(Color.parseColor("#ffffff"))          //set title text color
+////              .setTextSize(12.5f)                                 //set title text size
+////              .setTitleShow(true)                                 //set title show or not
+////              .setIndicatorShow(true)                             //set indicator show or not
+////              .setDelay(2)                                        //setDelay before start scroll
+//                .setPeriod(5)                                      //scroll setPeriod
+////                .setSource(DataProvider.getList())                  //data source list
+//                .setSource(getList())                  //data source list
+//                .setTransformerClass(ZoomOutSlideTransformer.class) //set page transformer
+//                .startScroll();                                     //start scroll,the last method to call
+//    }
+//
+//    //设置数据
+//    private ArrayList<BannerItem> getList() {
+//        ArrayList<BannerItem> list = new ArrayList<>();
+//        for (int i = 0; i < imgUrl.length; i++) {
+//            BannerItem item = new BannerItem();
+//            item.imgUrl = imgUrl[i];
+//            item.title = titles[i];
+//            list.add(item);
+//        }
+//        return list;
+//    }
 
     @Override
     public void onBackPressed() {

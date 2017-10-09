@@ -42,7 +42,7 @@
     <application
         android:name=".Utils.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/lock_open"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -83,6 +83,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
@@ -113,7 +114,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -205,14 +205,15 @@
             android:value="d527989c59a1fee043cce36a43f687b0" />
 
         <service android:name="com.amap.api.location.APSService" />
-        <!--<service-->
-        <!--android:name=".Service.UploadService"-->
-        <!--android:enabled="true"-->
-        <!--android:exported="true" />-->
+        <!-- <service -->
+        <!-- android:name=".Service.UploadService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" /> -->
         <service
             android:name=".Service.FileService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
     </application>
 
 </manifest>

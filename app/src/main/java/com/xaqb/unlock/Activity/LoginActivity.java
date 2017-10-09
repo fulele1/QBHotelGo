@@ -3,6 +3,7 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.os.Environment;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -38,13 +39,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initTitleBar() {
-        setTitle(R.string.login);
-        showBackwardView(false);
+        setTitleBarVisible(View.GONE);
     }
 
     @Override
     public void initViews() {
-
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();

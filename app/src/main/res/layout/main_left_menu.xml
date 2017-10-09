@@ -4,36 +4,36 @@
     android:id="@+id/left_menu"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:orientation="vertical"
+
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/slidingmenu_offset"
+   >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
-        android:background="#66B2FF"
         android:paddingLeft="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="@dimen/title_height">
 
         <com.xaqb.unlock.Views.RoundImageView
             android:id="@+id/iv_user_pic"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/left_user" />
 
         <TextView
             android:id="@+id/tv_left_nick_name"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_gravity="center"
-            android:layout_weight="1"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
-            android:text="XXX"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
             android:textSize="@dimen/textview_normal_size" />
 
         <ImageView
@@ -43,14 +43,16 @@
             android:layout_gravity="center"
             android:layout_marginRight="30dp"
             android:padding="5dp"
-            android:src="@mipmap/compose_64" />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:src="@mipmap/left_edit" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/lv_left_menu"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        >
 
     </ListView>
 
@@ -59,7 +61,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:background="#66B2FF"
         >
 
         <LinearLayout
@@ -69,13 +70,14 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:padding="@dimen/padding"
-            android:background="@drawable/bg_button_selector">
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/dialog_logout64" />
+                android:src="@mipmap/left_exit" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -85,7 +87,6 @@
                 android:gravity="center_vertical"
                 android:text="注销登录"
                 android:paddingLeft="@dimen/margin_edge"
-                android:textColor="@color/white"
                 android:textSize="@dimen/textview_small_size" />
         </LinearLayout>
         <LinearLayout

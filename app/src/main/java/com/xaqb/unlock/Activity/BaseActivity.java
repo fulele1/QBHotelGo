@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,6 +39,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private FrameLayout layout_titlebar;
     protected String FsAppPath = "";
     protected String[] FaDialogList = {};//对话列表框列表的内容
+    private LinearLayout mLyStatus;//状态栏
+    private Boolean iskitkat;
 
 
     // 加载数据对话框
@@ -44,7 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        this.requestWindowFeature(Window.FEATURE_NO_TITLE);//去掉标题栏
-//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         try {
             ActivityController.addActivity(this);
             loadingDialog = new LoadingDialog(this);
@@ -59,6 +65,10 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+
+
+
+
     /**
      * 加载 activity_title 布局 ，并获取标题及两侧按钮
      */
@@ -70,6 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         mContentLayout = (FrameLayout) findViewById(R.id.layout_content);
         iv_backward = (ImageView) findViewById(R.id.iv_backward);
         tv_forward = (TextView) findViewById(R.id.tv_forward);
+        mLyStatus = (LinearLayout) findViewById(R.id.status_bar);//状态栏
+
     }
 
     /**
@@ -196,6 +208,30 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         mContentLayout.removeAllViews();
         mContentLayout.addView(view, params);
         onContentChanged();
+    }
+
+
+    /**
+     * 设置透明状态栏以及状态栏的颜色
+     * @param color
+     * @param visible
+     */
+    public void setStatusColorB(int color,int visible,boolean kitkat){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            // Translucent status bar
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // Translucent navigation bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            iskitkat = kitkat;
+        }
+        if (iskitkat){
+            mLyStatus.setVisibility(visible);
+            mLyStatus.setBackgroundColor(color);
+        }
     }
 
 
@@ -345,5 +381,21 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     //申请权限成功后执行的方法
     protected void requestPerPass(int requestCode) {
 
+    }
+
+    //设置状态栏和导航栏沉浸式
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 }

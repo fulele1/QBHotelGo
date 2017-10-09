@@ -24,13 +24,13 @@ public class LeftMenuListAdapter extends BaseAdapter {
             "实名认证", "关于我们"
     };
     private int[] icons = {
-            R.mipmap.upload_64,
-            R.mipmap.map_64,
-            R.mipmap.gear_64,
-            R.mipmap.document_64,
-//            R.mipmap.flag_64,
-            R.mipmap.user_info,
-            R.mipmap.globe_64
+            R.mipmap.left_order,
+            R.mipmap.left_revenue,
+            R.mipmap.left_mpsw,
+            R.mipmap.left_option,
+//            R.mipmap.left_help,
+            R.mipmap.left_recg,
+            R.mipmap.left_about
     };
     private ViewHolder holder;
 

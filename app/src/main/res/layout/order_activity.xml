@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/zxing" />
+                android:src="@mipmap/acq_scanner" />
         </LinearLayout>
 
         <LinearLayout style="@style/common_horizontal_division_line_style" />
@@ -124,6 +124,10 @@
 
         <LinearLayout style="@style/common_horizontal_division_line_style" />
 
+
+
+        <LinearLayout style="@style/common_horizontal_division_line_style" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="45dp"
@@ -158,6 +162,7 @@
                 android:textSize="@dimen/textview_small_size" />
 
         </LinearLayout>
+
 
         <LinearLayout style="@style/common_horizontal_division_line_style" />
 
@@ -196,7 +201,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/zxing" />
+                android:src="@mipmap/acq_scanner" />
         </LinearLayout>
 
         <LinearLayout style="@style/common_horizontal_division_line_style" />
@@ -358,6 +363,8 @@
 
         </LinearLayout>
 
+
+
         <LinearLayout style="@style/common_horizontal_division_line_style" />
 
         <TextView
@@ -375,7 +382,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
             android:padding="10dp"
-            android:src="@mipmap/zm" />
+            android:src="@mipmap/acq_iden" />
         <TextView
             android:id="@+id/tv_read_result"
             android:layout_width="wrap_content"
@@ -387,6 +394,34 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_user_face"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher" />
+                <ImageView
+                    android:id="@+id/iv_other_face"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher" />
+
+                <ImageView
+                    android:id="@+id/iv_lock_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="150dp"
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher" />
+            </TableRow>
+
 
             <TableRow
                 android:layout_width="match_parent"
@@ -408,27 +443,17 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:text="第三方照片"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:text="门锁照片"
                     android:textSize="@dimen/textview_small_size" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_user_face"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:src="@mipmap/pictrue_256" />
-
-                <ImageView
-                    android:id="@+id/iv_lock_pic"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:src="@mipmap/pictrue_256" />
             </TableRow>
 
         </TableLayout>

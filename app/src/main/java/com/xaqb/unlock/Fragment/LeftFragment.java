@@ -64,6 +64,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 
     public void initViews(View view) {
         lvLeftMenu = (ListView) view.findViewById(R.id.lv_left_menu);
+        lvLeftMenu.setDividerHeight(0);
         ivPic = (ImageView) view.findViewById(R.id.iv_user_pic);
         ivEditor = (ImageView) view.findViewById(R.id.iv_editor);
         llSetting = (LinearLayout) view.findViewById(R.id.ll_setting);
@@ -172,7 +173,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
         } else if (!url.equals("")) {
             loadUserPic(url);
         } else {
-            ivPic.setImageResource(R.mipmap.user);
+            ivPic.setImageResource(R.mipmap.main_user);
         }
     }
 

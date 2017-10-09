@@ -3,6 +3,7 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.xaqb.unlock.R;
@@ -24,6 +25,9 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initViews() {
 
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
         assignViews();
     }

@@ -1,200 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:banner="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/ll_main_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="#fafafa"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20px"
-        android:layout_marginRight="20px"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1.2"
+        >
 
-        <ImageView
-            android:id="@+id/iv_user"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@mipmap/user" />
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            >
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/iv_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:src="@mipmap/main_user"
+                android:layout_gravity="center"
+                />
 
-        <ImageView
-            android:id="@+id/iv_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:src="@mipmap/message" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textSize="@dimen/button_normal_size"
+                android:textStyle="bold"
+                />
+
+
+            <ImageView
+                android:id="@+id/iv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/main_msg"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/common_horizontal_match_line_style"></LinearLayout>
+
+
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/cb_main"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            app:canLoop="true"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            />
 
     </LinearLayout>
 
-    <com.xaqb.unlock.banner.SimpleImageBanner
-        android:id="@+id/sib_the_most_comlex_usage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        banner:bb_barColor="#88000000"
-        banner:bb_barPaddingBottom="5dp"
-        banner:bb_barPaddingLeft="10dp"
-        banner:bb_barPaddingRight="10dp"
-        banner:bb_barPaddingTop="5dp"
-        banner:bb_delay="2"
-        banner:bb_indicatorCornerRadius="3dp"
-        banner:bb_indicatorGap="8dp"
-        banner:bb_indicatorGravity="RIGHT"
-        banner:bb_indicatorHeight="6dp"
-        banner:bb_indicatorSelectColor="#ffffff"
-        banner:bb_indicatorStyle="CORNER_RECTANGLE"
-        banner:bb_indicatorUnselectColor="#88ffffff"
-        banner:bb_indicatorWidth="6dp"
-        banner:bb_isAutoScrollEnable="true"
-        banner:bb_isBarShowWhenLast="true"
-        banner:bb_isIndicatorShow="true"
-        banner:bb_isLoopEnable="true"
-        banner:bb_isTitleShow="true"
-        banner:bb_period="10"
-        banner:bb_scale="0.5625"
-        banner:bb_textColor="#ffffff"
-        banner:bb_textSize="13.5sp" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="0.5" />
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
 
-        <TableRow
-            android:id="@+id/tr1_1"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/main"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/function"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/activity_horizontal_margin"
+
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/function_english"
+                android:padding="@dimen/shadow_width"
+                android:textSize="@dimen/activity_horizontal_margin"
+                android:textColor="@color/text"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
-            <ImageView
-                android:id="@+id/iv_send_data"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:src="@mipmap/upload_128" />
-
-            <ImageView
-                android:id="@+id/iv_will_send"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:src="@mipmap/download_128" />
-
-            <ImageView
-                android:id="@+id/iv_nearby_order"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="10dp"
-                android:src="@mipmap/map_128" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tr1_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="我的订单" />
+                >
 
-            <TextView
-                android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/iv_send_data"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@mipmap/main_order_t" />
+
+                <ImageView
+                    android:id="@+id/iv_will_send"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@mipmap/main_wait_t" />
+
+                <ImageView
+                    android:id="@+id/iv_nearby_order"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@mipmap/main_neary_t" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="待发数据" />
+                >
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="附近订单" />
-        </TableRow>
-    </TableLayout>
 
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/iv_user_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@mipmap/main_personal_t" />
 
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/iv_setting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:src="@mipmap/main_acq_t" />
 
-            <ImageView
-                android:id="@+id/iv_user_info"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/profle_128" />
+                <ImageView
+                    android:id="@+id/iv_real_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@mipmap/main_auth_t"
+                    android:padding="10dp"
+                    />
 
-            <ImageView
-                android:id="@+id/iv_setting"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/gear_128" />
+            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_real_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@mipmap/creditcard_128" />
+        </LinearLayout>
+    </LinearLayout>
 
-        </TableRow>
 
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="个人信息" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="信息采集" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="实名认证" />
-        </TableRow>
-    </TableLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_weight="0.5" />
 </LinearLayout>

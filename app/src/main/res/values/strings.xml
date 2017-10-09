@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">实名开锁</string>
+    <string name="app_name">咚咚开锁</string>
     <string name="login_user">账　号：</string>
     <string name="input_account">请输入账号</string>
     <string name="password">密　码：</string>
@@ -9,6 +9,9 @@
     <string name="confirm_psw">请确认密码</string>
     <string name="login_check_text">记住用户名</string>
     <string name="login">登　录</string>
+    <string name="logo">标志</string>
+    <string name="function">功能模块</string>
+    <string name="function_english">Function module</string>
 
     <string-array name="permissions">
         <item>@string/permission_recode_audio_hint</item>

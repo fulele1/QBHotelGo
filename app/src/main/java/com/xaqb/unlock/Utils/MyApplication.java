@@ -2,6 +2,7 @@ package com.xaqb.unlock.Utils;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
@@ -38,6 +39,10 @@ public class MyApplication extends Application {
                 .cookieJar(cookieJar)
                 .build();
         OkHttpUtils.initClient(okHttpClient);
+
+        //7.0以上相机问题
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
     }
 
     /**

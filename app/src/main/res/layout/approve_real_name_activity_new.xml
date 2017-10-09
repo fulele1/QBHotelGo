@@ -13,7 +13,7 @@
         android:layout_gravity="center_horizontal"
         android:padding="10dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/zm" />
+        android:src="@mipmap/acq_iden" />
 
     <LinearLayout
         android:id="@+id/linear_card"

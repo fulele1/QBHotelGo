@@ -65,7 +65,7 @@ public class HttpUrlUtils {
 
     // TODO: 2017/3/15 获得锁具类型接口
     public String getLockType() {
-        return getBaseUrl() + "/v1/common/dict_data/101";
+        return getBaseUrl() + "/dict_data/101";
     }
 
     // TODO: 2017/3/15 获得订单列表接口

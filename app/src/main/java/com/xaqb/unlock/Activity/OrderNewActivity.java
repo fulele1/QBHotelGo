@@ -62,11 +62,12 @@ public class OrderNewActivity extends BaseActivity {
 //    private LayoutInflater inflater;
     private Button btComplete;
     //    private String username, psw;
-    private EditText etUserName, etUserPhone, etUnlockPay, etUnlockAddress;
+    private EditText etUserName, etUserPhone,etOtherName, etOtherPhone,etOtherRemark,etUnlockPay, etUnlockAddress;
     private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
-    private ImageView ivCertPic, ivFacePic, ivLockPic, ivZxing, ivCertScan;
+    private ImageView ivCertPic, ivFacePic, ivOtherFacePic,ivLockPic, ivZxing, ivCertScan;
     //    private RelativeLayout rlPicFromSdcard, rlTakePic, rlCancle;
-    private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress, lockType, unlockPay, unlockTime, imagePath1, imagePath2;
+    private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress,
+            lockType, unlockPay, unlockTime, imagePath1, imagePath2,imagePath3,otherName,otherPhone,otherRemark;
     private Intent intent;
     private int requestCoede;
     private File temp;
@@ -98,7 +99,7 @@ public class OrderNewActivity extends BaseActivity {
 
     @Override
     public void initTitleBar() {
-        setTitle("订单");
+        setTitle("信息采集");
         showBackwardView(true);
     }
 
@@ -109,10 +110,14 @@ public class OrderNewActivity extends BaseActivity {
         assignViews();
     }
 
+
     private void assignViews() {
         btComplete = (Button) findViewById(R.id.bt_complete);
         etUserName = (EditText) findViewById(R.id.et_user_name);
         etUserPhone = (EditText) findViewById(R.id.et_user_phone);
+        etOtherName = (EditText) findViewById(R.id.et_other_name);
+        etOtherPhone = (EditText) findViewById(R.id.et_other_phone);
+        etOtherRemark = (EditText) findViewById(R.id.et_other_remark);
         etUserCertNum = (TextView) findViewById(R.id.et_cert_num);
         etUnlockAddress = (EditText) findViewById(R.id.et_unlock_address);
 //        etLockType = (TextView) findViewById(R.id.et_unlock_type);
@@ -121,6 +126,7 @@ public class OrderNewActivity extends BaseActivity {
         tvReadResult = (TextView) findViewById(R.id.tv_read_result);
         ivCertPic = (ImageView) findViewById(R.id.iv_cert_pic);
         ivFacePic = (ImageView) findViewById(R.id.iv_user_face);
+        ivOtherFacePic = (ImageView) findViewById(R.id.iv_other_face);
         ivLockPic = (ImageView) findViewById(R.id.iv_lock_pic);
 //        ivZxing = (ImageView) findViewById(R.id.iv_zxing);
         ivCertScan = (ImageView) findViewById(R.id.iv_cert_scan);
@@ -298,6 +304,11 @@ public class OrderNewActivity extends BaseActivity {
                 images.add(path);
                 ivLockPic.setImageBitmap(BitmapFactory.decodeFile(path));
                 break;
+            case 3:
+                imagePath3 = path;
+                images.add(path);
+                ivOtherFacePic.setImageBitmap(BitmapFactory.decodeFile(path));
+                break;
         }
 //        canclePopwindow();
     }
@@ -356,6 +367,7 @@ public class OrderNewActivity extends BaseActivity {
         btComplete.setOnClickListener(instance);
         ivCertPic.setOnClickListener(instance);
         ivFacePic.setOnClickListener(instance);
+        ivOtherFacePic.setOnClickListener(instance);
         ivLockPic.setOnClickListener(instance);
 //        ivZxing.setOnClickListener(instance);
         ivCertScan.setOnClickListener(instance);
@@ -406,7 +418,7 @@ public class OrderNewActivity extends BaseActivity {
     public void onClick(View v) {
         try {
             switch (v.getId()) {
-                case R.id.iv_user_face:
+                case R.id.iv_user_face://客户照片
                     requestCoede = 1;
                     permissionCode = 0;
                     checkPer(PermissionUtils.CODE_CAMERA);
@@ -437,12 +449,17 @@ public class OrderNewActivity extends BaseActivity {
 //                        return;
 //                    }
                     break;
-                case R.id.iv_cert_pic:
+                case R.id.iv_other_face://第三方照片
+                    requestCoede = 3;
+                    permissionCode = 0;
+                    checkPer(PermissionUtils.CODE_CAMERA);
+                    break;
+                case R.id.iv_cert_pic://身份证照片
 //                    readIDCard();
                     //0801修改身份证读取方法
                     scanCert();
                     break;
-                case R.id.iv_lock_pic:
+                case R.id.iv_lock_pic://锁具照片
                     requestCoede = 2;
 //                showPopwindow();
                     permissionCode = 0;
@@ -453,7 +470,7 @@ public class OrderNewActivity extends BaseActivity {
 //                    intent = new Intent(instance, CaptureActivity.class);
 //                    startActivityForResult(intent, 100);
 //                    break;
-                case R.id.iv_cert_scan:
+                case R.id.iv_cert_scan://读取身份证
 //                    readIDCard();
                     scanCert();
 //                intent = new Intent(instance, CertCaptureActivity.class);
@@ -469,6 +486,9 @@ public class OrderNewActivity extends BaseActivity {
                     String weightPoint = "";
                     userName = etUserName.getText().toString().trim();
                     userPhone = etUserPhone.getText().toString().trim();
+                    otherName = etOtherName.getText().toString().trim();
+                    otherPhone = etOtherPhone.getText().toString().trim();
+                    otherRemark = etOtherRemark.getText().toString().trim();
 //                    userCertNum = etUserCertNum.getText().toString().trim();
                     unlockAddress = etUnlockAddress.getText().toString().trim();
 
@@ -489,7 +509,15 @@ public class OrderNewActivity extends BaseActivity {
                         showToast("请输入客户姓名");
                     } else if (!textNotEmpty(userPhone)) {
                         showToast("请输入客户电话");
-                    } else if (!textNotEmpty(userCertNum)) {
+                    }
+//                    else if (!textNotEmpty(otherName)) {
+//                        showToast("请输入第三方姓名");
+//                    } else if (!textNotEmpty(otherPhone)) {
+//                        showToast("请输入第三方电话");
+//                    } else if (!textNotEmpty(otherRemark)) {
+//                        showToast("请输入第三方备注");
+//                    }
+                    else if (!textNotEmpty(userCertNum)) {
                         showToast("请输入客户身份证号码");
                     } else if (!textNotEmpty(unlockAddress)) {
                         showToast("请输入开锁地址");
@@ -503,6 +531,8 @@ public class OrderNewActivity extends BaseActivity {
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {
                         showToast("请拍摄门锁照片");
+                    }else if (!textNotEmpty(imagePath3)) {
+                        showToast("请拍摄人脸照片");
                     } else {
                         try {
                             order();
@@ -542,9 +572,12 @@ public class OrderNewActivity extends BaseActivity {
                     .addParams("longitude", longitude + "")
                     .addParams("latitude", latitude + "")
                     .addParams("price", unlockPay)
-                    .addParams("remark", "")
+//                    .addParams("remark", "")
                     .addParams("staffid", SPUtils.get(instance, "userid", "").toString())
                     .addParams("username", userName)
+                    .addParams("tpname", otherName)//第三方姓名
+                    .addParams("tptel", otherPhone)//第三方电话
+                    .addParams("remark", otherRemark)//第三方备注
                     .addParams("usertel", userPhone)
                     .addParams("useraddress", unlockAddress)
                     .addParams("locktype", lockType)
@@ -552,6 +585,7 @@ public class OrderNewActivity extends BaseActivity {
                     .addParams("certimg", Base64Utils.photoToBase64(bitmapCert, 80))
                     .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80))
                     .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80))
+                    .addParams("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 80))//第三方照片
                     .addParams("usersex", "")
                     .addParams("idaddress", "")
                     .addParams("usernation", "")
@@ -559,6 +593,7 @@ public class OrderNewActivity extends BaseActivity {
                     .addParams("city", "")
                     .addParams("district", "")
                     .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))
+
 //                .addParams("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80))
                     .build()
 
@@ -605,7 +640,6 @@ public class OrderNewActivity extends BaseActivity {
             btComplete.setEnabled(true);
             e.printStackTrace();
         }
-
     }
 
 
@@ -618,10 +652,12 @@ public class OrderNewActivity extends BaseActivity {
         datas.put("longitude", longitude + "");
         datas.put("latitude", latitude + "");
         datas.put("price", unlockPay);
-        datas.put("remark", "");
         datas.put("staffid", SPUtils.get(instance, "userid", "").toString());
         datas.put("username", userName);
         datas.put("usertel", userPhone);
+        datas.put("tpname", otherName);
+        datas.put("tptel", otherPhone);
+        datas.put("remark", otherRemark);
         datas.put("useraddress", unlockAddress);
         datas.put("locktype", lockType);
         datas.put("certcode", userCertNum);
@@ -633,6 +669,7 @@ public class OrderNewActivity extends BaseActivity {
 
         datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
         datas.put("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80));
+        datas.put("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 80));
         datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80));
         datas.put("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()));
         datas.put("province", "");
@@ -649,7 +686,6 @@ public class OrderNewActivity extends BaseActivity {
         }
 
     }
-
 
     @Override
     public void onResume() {
