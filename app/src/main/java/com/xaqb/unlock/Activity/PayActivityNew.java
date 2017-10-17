@@ -63,7 +63,7 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                 case 103:
                     progressDialog.dismiss();
                     dialogType = 1;
-                    showDialog("提示", "支付异常，请重新支付或在刷新支付状态", "确定", "", 0);
+                    showAdialog(PayActivityNew.this,"提示", "支付异常，请重新支付或在刷新支付状态", "确定", View.GONE);
                     break;
             }
             super.handleMessage(msg);
@@ -281,7 +281,7 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                     startActivityForResult(intent, 0);
                 } else if (payType == 1) {
                     dialogType = 3;
-                    showDialog("提示", "确定用户支付" + price + "元吗？", "确定", "取消", 0);
+                    showAdialog(instance,"提示", "确定用户支付" + price + "元吗？", "确定", View.VISIBLE);
                 }
 //                } else {
 //                    payOnline();

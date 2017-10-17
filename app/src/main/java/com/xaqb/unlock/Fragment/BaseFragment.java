@@ -211,36 +211,41 @@ public class BaseFragment extends Fragment {
      * @param title
      * @param message
      * @param ok
-     * @param no
+     * @param
      * @return
      */
-    public AlertDialog showAdialog(final Context context, String title, String message, String ok, String no){
-//        alertDialog = new AlertDialog.Builder(context).create();
-//        alertDialog.show();
-//        Window window = alertDialog.getWindow();
-//        window.setContentView(R.layout.loading_my_layout);
-//        TextView tvTitle = (TextView) window.findViewById(R.id.tv_dialog_title);
-//        tvTitle.setText(title);
-//        TextView tvMessage = (TextView) window.findViewById(R.id.tv_dialog_message);
-//        tvMessage.setText(message);
-//        Button btOk = (Button) window.findViewById(R.id.btn_dia_ok);
-//        btOk.setText(ok);
-//        btOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//            }
-//        });
-//        Button btNo = (Button) window.findViewById(R.id.btn_dia_no);
-//        btNo.setText(no);
-//        btNo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                alertDialog.dismiss();
-//            }
-//        });
+    public AlertDialog showAdialog(final Context context, String title, String message, String ok,int view){
+        alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setContentView(R.layout.loading_my_layout);
+        TextView tvTitle = (TextView) window.findViewById(R.id.tv_dialog_title);
+        tvTitle.setText(title);
+        TextView tvMessage = (TextView) window.findViewById(R.id.tv_dialog_message);
+        tvMessage.setText(message);
+        Button btOk = (Button) window.findViewById(R.id.btn_dia_ok);
+        btOk.setText(ok);
+        btOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogOk();
+
+            }
+        });
+        Button btNo = (Button) window.findViewById(R.id.btn_dia_no);
+        btNo.setVisibility(view);
+        btNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
         return alertDialog;
+    }
+
+    //对话框单击确定按钮处理
+    protected void dialogOk() {
+
     }
 
 

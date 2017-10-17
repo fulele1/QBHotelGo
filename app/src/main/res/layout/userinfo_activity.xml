@@ -101,8 +101,10 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textview_small_size"
                     android:text="@string/app_name"
-                    android:background="@color/bag"
+                    android:background="@drawable/bg_edittext"
                     android:padding="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     />
 
                 <ImageView
@@ -135,12 +137,12 @@
                     android:id="@+id/tv_userinfo_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_edge"
                     android:textSize="@dimen/textview_small_size"
                     android:text="@string/app_name"
                     android:padding="@dimen/activity_horizontal_margin"
-                    android:background="@color/bag"
-
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     />
 
                 <ImageView
@@ -176,11 +178,12 @@
                     android:id="@+id/tv_userinfo_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_edge"
                     android:textSize="@dimen/textview_small_size"
                     android:padding="@dimen/activity_horizontal_margin"
-                    android:background="@color/bag"
                     android:text="@string/app_name"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     />
 
                 <ImageView
@@ -214,12 +217,13 @@
                     android:id="@+id/tv_userinfo_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_edge"
                     android:maxLines="2"
                     android:textSize="@dimen/textview_small_size"
                     android:text="@string/app_name"
                     android:padding="@dimen/activity_horizontal_margin"
-                    android:background="@color/bag"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     />
 
                 <ImageView

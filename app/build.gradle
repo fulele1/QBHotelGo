@@ -5,11 +5,15 @@ android {
         config {
             keyAlias 'unlock'
             keyPassword '84858896'
-            storeFile file('E:/2016-12-05_sign/xaqb-unlock_sign0314.jks')
+            storeFile file('G:/signing/xaqb-unlock_sign0314.jks')
             storePassword '84858896'
         }
     }
+<<<<<<< HEAD
     compileSdkVersion 25
+=======
+    compileSdkVersion 23
+>>>>>>> adf7b5bfad0af4fed8fbdabe11b16d2955644b95
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.xaqianbai.unlock"
@@ -37,6 +41,13 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+//添加如下配置就ok了
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
 }
 allprojects {
     repositories {
@@ -71,6 +82,11 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-push:3.0.1@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
+<<<<<<< HEAD
     //轮播图
     compile 'com.bigkoo:convenientbanner:2.0.5'
+=======
+    compile 'com.bigkoo:convenientbanner:2.0.5'
+    //轮播图
+>>>>>>> adf7b5bfad0af4fed8fbdabe11b16d2955644b95
 }

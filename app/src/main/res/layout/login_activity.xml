@@ -118,18 +118,7 @@
     </LinearLayout>
 
 
-        <Button
-            android:id="@+id/bt_login"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/slidingmenu_offset"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:background="@drawable/bg_button_selector"
-            android:text="@string/login"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/textview_small_size" />
+
 
         <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
@@ -159,5 +148,17 @@
 
 </LinearLayout>
 
-
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/margin_edge"
+        android:layout_marginRight="@dimen/margin_edge"
+        android:background="@drawable/bg_button_selector"
+        android:text="@string/login"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textview_small_size"
+        android:layout_marginBottom="@dimen/title_height"
+        />
 </LinearLayout>
