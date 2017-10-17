@@ -647,22 +647,9 @@
 
         </LinearLayout>
 
-<<<<<<< HEAD
 
     </LinearLayout>
-=======
-        <Button
-            android:id="@+id/bt_complete"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:background="@drawable/bg_str_bt_selector"
-            android:layout_marginTop="@dimen/shadow_width"
-            android:text="提交"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/button_normal_size" />
-        </LinearLayout>
->>>>>>> adf7b5bfad0af4fed8fbdabe11b16d2955644b95
+
 
 
 </ScrollView>
