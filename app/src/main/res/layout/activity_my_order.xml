@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_my_order"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.xaqb.unlock.Activity.MyOrderActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+        <TextView
+            android:id="@+id/tv_back_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/title_back"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:onClick="myClick"
+            />
+
+        <TextView
+            android:id="@+id/tv_title_tilte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textview_normal_size"
+            android:textColor="@color/result_view"
+            android:text="我的订单"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="咚咚"
+            android:drawableLeft="@mipmap/title_back"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+
+
+    <RadioGroup
+        android:id="@+id/rp_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        >
+        <RadioButton
+            android:id="@+id/rb_all_m_order"
+            android:text="@string/order_all"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@color/main"
+            android:textSize="@dimen/textview_small_size"
+            android:checked="true"/>
+            <!--android:background="@drawable/bg_redio_check"-->
+            />
+
+        <RadioButton
+            android:id="@+id/rb_wait_m_order"
+            android:text="@string/order_wait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@color/redio_text"
+            android:textSize="@dimen/textview_small_size"/>
+            <!--android:background="@drawable/bg_redio_check"-->
+
+            />
+        <RadioButton
+            android:id="@+id/rb_pay_m_order"
+            android:text="@string/order_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@color/redio_text"
+            android:textSize="@dimen/textview_small_size"/>
+            <!--android:background="@drawable/bg_redio_check"-->
+            />
+        <RadioButton
+            android:id="@+id/rb_got_m_order"
+            android:text="@string/order_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:button="@null"
+            android:textColor="@color/redio_text"
+            android:textSize="@dimen/textview_small_size"/>
+            <!--android:background="@drawable/bg_redio_check"-->
+            />
+
+    </RadioGroup>
+
+    <LinearLayout style="@style/common_horizontal_match_line_style"></LinearLayout>
+
+
+    <com.xaqb.unlock.Views.NoScrollViewPager
+        android:id="@+id/vpg_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

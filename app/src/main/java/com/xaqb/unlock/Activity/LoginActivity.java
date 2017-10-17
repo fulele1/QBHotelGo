@@ -14,6 +14,7 @@ import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
+import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -77,6 +78,12 @@ public class LoginActivity extends BaseActivity {
                 etPsw.setText(psw);
             }
         }
+        checkPer(PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE);
+    }
+
+    @Override
+    protected void requestPerPass(int requestCode) {
+        super.requestPerPass(requestCode);
         SDCardUtils.copyDBToSD(this, Environment.getExternalStorageDirectory().getAbsolutePath() + "/unlock/tessdata", "number.traineddata");
     }
 

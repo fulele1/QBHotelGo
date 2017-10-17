@@ -25,7 +25,7 @@ import com.xaqb.unlock.Activity.MainActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
-import com.xaqb.unlock.Activity.SendDataActivity;
+import com.xaqb.unlock.Activity.OrderListActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
@@ -85,7 +85,7 @@ public class LeftFragment extends Fragment implements View.OnClickListener {
 //                String title = null;
                 switch (i) {
                     case 0: // 我的订单
-                        startActivity(new Intent(getActivity(), SendDataActivity.class));
+                        startActivity(new Intent(getActivity(), OrderListActivity.class));
                         break;
                     case 1: // 收入明细
                         startActivity(new Intent(getActivity(), IncomeActivity.class));

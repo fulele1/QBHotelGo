@@ -60,7 +60,7 @@ public class CameraUtils {
     }
 
     //0302新增身份证号码读取方法
-    static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/fy8848/";
+    static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/unlock/";
     //识别数字
     static final String DEFAULT_LANGUAGE = "number";
 
