@@ -71,6 +71,6 @@ dependencies {
     compile 'com.aliyun.ams:alicloud-android-push:3.0.1@aar'
     compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
     compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
-    compile 'com.bigkoo:convenientbanner:2.0.5'
     //轮播图
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }

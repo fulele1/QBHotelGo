@@ -33,6 +33,7 @@ import com.xaqb.unlock.Utils.SPUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 主页面
  */
@@ -271,7 +272,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 //                startActivity(new Intent(instance, MessageActivity.class));
 //                break;
             case R.id.iv_send_data:
-                i = new Intent(instance, SendDataActivity.class);
+                i = new Intent(instance, OrderListActivity.class);
                 startActivity(i);
                 break;
             case R.id.iv_will_send:
@@ -290,7 +291,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.iv_setting:
                 stopService(new Intent(instance, FileService.class));
-                i = new Intent(instance, OrderNewActivity.class);
+                i = new Intent(instance, CollectionInfoActivity.class);
                 startActivity(i);
                 break;
             case R.id.iv_real_name:

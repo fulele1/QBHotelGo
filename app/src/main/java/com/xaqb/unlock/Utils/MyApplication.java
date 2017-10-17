@@ -50,12 +50,12 @@ public class MyApplication extends Application {
      *
      * @param applicationContext
      */
-    private void initCloudChannel(Context applicationContext) {
+    private void   initCloudChannel(Context applicationContext) {
         PushServiceFactory.init(applicationContext);
         String[] tags = {"dongdongkaisuo", "xianqianbai"};
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         deviceId = pushService.getDeviceId();
-//        LogUtils.i("deviceid------", deviceid);
+        LogUtils.i("deviceid------", deviceId);
         pushService.bindTag(CloudPushService.DEVICE_TARGET, tags, "xaqb", new CommonCallback() {
             @Override
             public void onSuccess(String s) {
