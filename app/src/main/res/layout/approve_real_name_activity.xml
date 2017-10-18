@@ -1,351 +1,332 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_approve_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/bag"
+    >
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="证件类型"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <!--<EditText-->
-        <!--android:id="@+id/et_card_type"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@null"-->
-        <!--android:drawablePadding="10px"-->
-        <!--android:hint="@string/identity_card"-->
-        <!--android:paddingLeft="10px"-->
-        <!--android:textSize="@dimen/textview_small_size" />-->
-        <Spinner
-
-            android:id="@+id/sp_type"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:layout_weight="1"
-            android:gravity="left" />
-
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="真实姓名"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <EditText
-            android:id="@+id/et_real_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawableLeft="@mipmap/little_star"
-            android:drawablePadding="10px"
-            android:hint="请输入真实姓名"
-            android:paddingLeft="12dp"
-            android:textSize="@dimen/textview_small_size" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="证件号码"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <EditText
-            android:id="@+id/et_card_num"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawableLeft="@mipmap/little_star"
-            android:drawablePadding="10px"
-            android:hint="请输入身份证号"
-            android:inputType="number"
-            android:paddingLeft="12dp"
-            android:textSize="@dimen/textview_small_size" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="性　　别"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <Spinner
-            android:id="@+id/sp_sex"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:layout_marginRight="@dimen/margin_edge"
-            android:layout_weight="1"
-            android:entries="@array/sex"
-            android:gravity="left" />
-        <!--<EditText-->
-        <!--android:id="@+id/et_card_sex"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginRight="15dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:background="@null"-->
-        <!--android:drawableLeft="@mipmap/little_star"-->
-        <!--android:drawablePadding="10px"-->
-        <!--android:hint="请输入性别"-->
-        <!--android:inputType="text"-->
-        <!--android:paddingLeft="12dp"-->
-        <!--android:textSize="@dimen/textview_small_size" />-->
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="民　　族"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <EditText
-            android:id="@+id/et_card_nation"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawableLeft="@mipmap/little_star"
-            android:drawablePadding="10px"
-            android:hint="请输入民族"
-            android:inputType="text"
-            android:paddingLeft="12dp"
-            android:textSize="@dimen/textview_small_size" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#ffffff"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_edge"
-            android:gravity="center"
-            android:text="年　　龄"
-            android:textSize="@dimen/textview_normal_size" />
-
-        <EditText
-            android:id="@+id/et_card_age"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="15dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawableLeft="@mipmap/little_star"
-            android:drawablePadding="10px"
-            android:hint="请输入年龄"
-            android:inputType="number"
-            android:paddingLeft="12dp"
-            android:textSize="@dimen/textview_small_size" />
-    </LinearLayout>
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="#ffffff"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="@dimen/margin_edge"-->
-    <!--android:gravity="center"-->
-    <!--android:text="身份证照片"-->
-    <!--android:textSize="@dimen/textview_normal_size" />-->
-
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_card_pic"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="@dimen/margin_edge"-->
-    <!--android:src="@drawable/bg_imageview_add_pic" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout style="@style/common_horizontal_division_line_style" />-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="#ffffff"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="@dimen/margin_edge"-->
-    <!--android:gravity="center"-->
-    <!--android:text="图片示例"-->
-    <!--android:textSize="@dimen/textview_normal_size" />-->
-
-    <!--<ImageView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:layout_marginLeft="12dp"-->
-    <!--android:src="@mipmap/card_pic" />-->
-    <!--</LinearLayout>-->
-
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content">
-
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="证件类型:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    android:drawableLeft="@mipmap/little_star"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_userinfo_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/textview_small_size"
+                        android:text="身份证"
+                        android:padding="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1"
+                        />
+
+                    <Spinner
+                        android:id="@+id/sp_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="@dimen/margin_edge"
+                        android:layout_marginRight="@dimen/margin_edge"
+                        android:gravity="left" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="真实姓名:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    android:drawableLeft="@mipmap/little_star"
+                    android:id="@+id/textView5" />
+
+                <EditText
+                    android:id="@+id/et_real_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="10px"
+                    android:hint="请输入真实姓名"
+                    android:paddingLeft="12dp"
+                    android:textSize="@dimen/textview_small_size"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="证件号码:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    android:drawableLeft="@mipmap/little_star"
+                    />
+
+
+                <EditText
+                    android:id="@+id/et_card_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="10px"
+                    android:hint="请输入证件号码"
+                    android:paddingLeft="12dp"
+                    android:textSize="@dimen/textview_small_size"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+                    />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="性        别:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    android:drawableLeft="@mipmap/little_star"
+
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/textview_small_size"
+                        android:text="男"
+                        android:padding="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1"
+                        />
+
+                    <Spinner
+                        android:id="@+id/sp_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|center_vertical"
+                        android:layout_marginLeft="@dimen/margin_edge"
+                        android:layout_marginRight="@dimen/margin_edge"
+                        android:gravity="left" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="民　　族:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    android:drawableLeft="@mipmap/little_star"
+                    />
+
+                <EditText
+                    android:id="@+id/et_card_nation"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="10px"
+                    android:hint="请输入民族"
+                    android:paddingLeft="12dp"
+                    android:textSize="@dimen/textview_small_size"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="年　　龄:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    android:drawableLeft="@mipmap/little_star"
+                    android:id="@+id/textView" />
+                <EditText
+                    android:id="@+id/et_card_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="10px"
+                    android:hint="请输入年龄"
+                    android:paddingLeft="12dp"
+                    android:textSize="@dimen/textview_small_size"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    />
+
+            </LinearLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="证件照片"
+                        android:textSize="@dimen/textview_small_size" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="人脸照片"
+                        android:textSize="@dimen/textview_small_size" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_cert_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/iden_per" />
+
+                    <ImageView
+                        android:id="@+id/iv_face_pic"
+                        android:layout_width="0dp"
+                        android:layout_height="150dp"
+                        android:layout_weight="1"
+                        android:src="@mipmap/acq_per" />
+                </TableRow>
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/bt_submit"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="证件照片"
-                android:textSize="@dimen/textview_small_size" />
+                android:layout_marginTop="30px"
+                android:background="@drawable/bg_str_bt_selector"
+                android:text="提交认证"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/button_normal_size" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="人脸照片"
-                android:textSize="@dimen/textview_small_size" />
-        </TableRow>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_cert_pic"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:src="@mipmap/acq_lock" />
+    </ScrollView>
 
-            <ImageView
-                android:id="@+id/iv_face_pic"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"
-                android:src="@mipmap/acq_per" />
-        </TableRow>
-
-    </TableLayout>
-
-    <Button
-        android:id="@+id/bt_submit"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/margin_edge"
-        android:layout_marginRight="@dimen/margin_edge"
-        android:layout_marginTop="30px"
-        android:background="@drawable/bg_button_selector"
-        android:text="提交认证"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/button_normal_size" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5" />
 </LinearLayout>

@@ -2,7 +2,6 @@ package com.xaqb.unlock.Utils;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.StrictMode;
 
 import com.alibaba.sdk.android.push.CloudPushService;
 import com.alibaba.sdk.android.push.CommonCallback;
@@ -39,10 +38,6 @@ public class MyApplication extends Application {
                 .cookieJar(cookieJar)
                 .build();
         OkHttpUtils.initClient(okHttpClient);
-
-        //7.0以上相机问题
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
     }
 
     /**
@@ -50,12 +45,12 @@ public class MyApplication extends Application {
      *
      * @param applicationContext
      */
-    private void   initCloudChannel(Context applicationContext) {
+    private void initCloudChannel(Context applicationContext) {
         PushServiceFactory.init(applicationContext);
         String[] tags = {"dongdongkaisuo", "xianqianbai"};
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         deviceId = pushService.getDeviceId();
-        LogUtils.i("deviceid------", deviceId);
+//        LogUtils.i("deviceid------", deviceid);
         pushService.bindTag(CloudPushService.DEVICE_TARGET, tags, "xaqb", new CommonCallback() {
             @Override
             public void onSuccess(String s) {

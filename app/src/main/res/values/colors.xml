@@ -7,6 +7,7 @@
 
     <color name="white">#ffffff</color>
     <color name="per_bag">#a7dde9</color>
+    <color name="per_bag_">#e4b3cf</color>
 
     <color name="viewfinder_frame">#ff000000</color>
     <color name="viewfinder_laser">#ffff0000</color>

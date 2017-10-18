@@ -105,7 +105,7 @@ public class CollectionInfoActivity extends BaseActivity {
 
     @Override
     public void initViews() {
-        setContentView(R.layout.order_activity_new);
+        setContentView(R.layout.activity_collection_info);
         instance = this;
         assignViews();
     }
@@ -509,12 +509,12 @@ public class CollectionInfoActivity extends BaseActivity {
                         showToast("请输入客户姓名");
                     } else if (!textNotEmpty(userPhone)) {
                         showToast("请输入客户电话");
-                    } else if (!textNotEmpty(otherName)) {
-                        showToast("请输入第三方姓名");
-                    } else if (!textNotEmpty(otherPhone)) {
-                        showToast("请输入第三方电话");
-                    } else if (!textNotEmpty(otherRemark)) {
-                        showToast("请输入第三方备注");
+//                    } else if (!textNotEmpty(otherName)) {
+//                        showToast("请输入第三方姓名");
+//                    } else if (!textNotEmpty(otherPhone)) {
+//                        showToast("请输入第三方电话");
+//                    } else if (!textNotEmpty(otherRemark)) {
+//                        showToast("请输入第三方备注");
                     } else if (!textNotEmpty(userCertNum)) {
                         showToast("请输入客户身份证号码");
                     } else if (!textNotEmpty(unlockAddress)) {
@@ -529,8 +529,8 @@ public class CollectionInfoActivity extends BaseActivity {
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {
                         showToast("请拍摄门锁照片");
-                    }else if (!textNotEmpty(imagePath3)) {
-                        showToast("请拍摄人脸照片");
+//                    }else if (!textNotEmpty(imagePath3)) {
+//                        showToast("请拍摄人脸照片");
                     } else {
                         try {
                             order();

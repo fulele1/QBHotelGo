@@ -33,7 +33,6 @@ import com.xaqb.unlock.Utils.SPUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * 主页面
  */
@@ -70,6 +69,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //取消状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -164,9 +164,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         mCb = (ConvenientBanner) findViewById(R.id.cb_main);
 
     }
-
-    private List<Integer> mImageList;
-
+private List <Integer> mImageList;
     public void initData() {
         mImageList = new ArrayList();
         mImageList.add(R.mipmap.main_pic1);
@@ -183,7 +181,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     public class CbHolder implements Holder<Integer> {
 
         private ImageView pImg;
-
         @Override
         public View createView(Context context) {
             pImg = new ImageView(context);
@@ -217,13 +214,13 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     /**
      * 轮播图设置图片
      */
-    public void cbSetPage() {
+    public void cbSetPage(){
         mCb.setPages(new CBViewHolderCreator<CbHolder>() {
             @Override
             public CbHolder createHolder() {
                 return new CbHolder();
             }
-        }, mImageList)
+        },mImageList)
 //                .setPageIndicator(new int[] {R.mipmap.pointn,R.mipmap.pointc})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
     }
@@ -272,7 +269,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 //                startActivity(new Intent(instance, MessageActivity.class));
 //                break;
             case R.id.iv_send_data:
-                i = new Intent(instance, OrderListActivity.class);
+                i = new Intent(instance, MyOrderActivity.class);
                 startActivity(i);
                 break;
             case R.id.iv_will_send:
@@ -305,6 +302,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 //                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(instance, RealNameActivity.class));
+
                 }
                 break;
 //            case R.id.bt_order:

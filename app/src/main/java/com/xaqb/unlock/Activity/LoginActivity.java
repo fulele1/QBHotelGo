@@ -1,6 +1,7 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
 import android.view.View;
 import android.view.WindowManager;
@@ -45,9 +46,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initViews() {
+
         //取消状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();
@@ -55,9 +58,7 @@ public class LoginActivity extends BaseActivity {
 
     private void assignViews() {
 
-//        iv = (ImageView) findViewById(R.id.iv);
         tvForgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
-//        tvRegister = (TextView) findViewById(R.id.tv_register);
         btLogin = (Button) findViewById(R.id.bt_login);
         etUsername = (EditText) findViewById(R.id.et_username);
         etPsw = (EditText) findViewById(R.id.et_password);

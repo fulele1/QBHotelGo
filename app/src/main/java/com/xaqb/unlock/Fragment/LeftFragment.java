@@ -1,5 +1,7 @@
 package com.xaqb.unlock.Fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +24,7 @@ import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.MainActivity;
 import com.xaqb.unlock.Activity.MyOrderActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
-import com.xaqb.unlock.Activity.RealNameInfoActivity;
+import com.xaqb.unlock.Activity.RealNameActivityNew;
 import com.xaqb.unlock.Activity.ResetPswActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
@@ -104,7 +106,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                             startActivity(new Intent(getActivity(), RealNameActivity.class));
                         } else if (status.equals(Globals.staffIsRealSuc)) {
 //                            Toast.makeText(getActivity(), "已经认证成功！", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), RealNameInfoActivity.class));
+                            startActivity(new Intent(getActivity(), RealNameActivityNew.class));
                         } else if (status.equals(Globals.staffIsRealIng)) {
                             Toast.makeText(getActivity(), "正在认证中！", Toast.LENGTH_SHORT).show();
                         }
