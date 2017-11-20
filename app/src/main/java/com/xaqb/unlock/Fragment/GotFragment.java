@@ -27,10 +27,9 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Activity.LoginActivity;
-import com.xaqb.unlock.Activity.OrderDetailActivity;
 import com.xaqb.unlock.Activity.OrderDetailActivityNew;
-import com.xaqb.unlock.Entity.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,12 +175,11 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
             showToastB(getResources().getString(R.string.network_not_alive));
             return;
         }
-//        mLoadingDialog.show("加载中...");
         QBHttp.get(
                 instance,
                 HttpUrlUtils.getHttpUrl().getOrderList() +
                         "?p=" + index +
-                        "&paystatus=" + "02" +
+                        "&paystatus=" + "01" +
                         "&access_token=" + SPUtils.get(instance, "access_token", "")
                 , null
                 , new QBCallback() {
@@ -189,7 +187,6 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                     public void doWork(Map<?, ?> map) {
 //                        mLoadingDialog.dismiss();
                         try {
-//                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
@@ -198,7 +195,6 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                                     notifyDataSetChanged();
                                     ivNoData.setVisibility(View.VISIBLE);
                                     mSwipeRefreshLayout.setRefreshing(false);
-                                    LogUtils.i("暂无数据");
                                     return;
                                 }
                                 LogUtils.i("curr = ", map.get("curr").toString());
@@ -213,6 +209,7 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                                     sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
                                     sendOrder.setOrderID(data.get(j).get("or_id").toString());
                                     sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
+                                    sendOrder.setPicUrl(HttpUrlUtils.getHttpUrl().getBaseUrl()+data.get(j).get("or_lockimg").toString());
                                     sendOrders.add(sendOrder);
                                 }
                                 if (sendOrders.size() == 0) {
@@ -303,17 +300,14 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 }
                 //地址
                 viewHolder.tvAddress.setText(mDataList.get(position).getOrderAddress());
-//                String payStatus = mDataList.get(position).getOrderPayStatus();
-//                if (payStatus.equals("00") || payStatus.equals("02")) {
-//                    viewHolder.tvPayStatus.setText("未付款");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
-//                } else if (payStatus.equals("01")) {
-//                    viewHolder.tvPayStatus.setText("已付款");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.success);
-//                }else if(payStatus.equals("03")){
-//                    viewHolder.tvPayStatus.setText("未付清");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
-//                }
+
+                //图片
+                if (mDataList.get(position).getPicUrl() != null && !mDataList.get(position).getPicUrl().equals(""))
+                    Picasso.with(getContext())
+                            .load(mDataList.get(position).getPicUrl())
+                            .placeholder(R.mipmap.nothing_pic)
+                            .error(R.mipmap.failed_pic)
+                            .into(viewHolder.ivPic);
             } catch (Exception e) {
                 e.printStackTrace();
             }

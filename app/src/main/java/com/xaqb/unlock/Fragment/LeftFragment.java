@@ -1,6 +1,7 @@
 package com.xaqb.unlock.Fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,25 +19,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Activity.AboutActivity;
 import com.xaqb.unlock.Activity.AdviseActivity;
 import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.MainActivity;
 import com.xaqb.unlock.Activity.MyOrderActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
-import com.xaqb.unlock.Activity.RealNameActivityNew;
 import com.xaqb.unlock.Activity.ResetPswActivity;
+import com.xaqb.unlock.Activity.UpdateActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Globals;
+import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.BitmapCallback;
-
 import java.io.File;
-
-import okhttp3.Call;
 
 /**
  * 左滑菜单
@@ -91,7 +90,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         startActivity(new Intent(getActivity(), IncomeActivity.class));
                         break;
                     case 2:// 修改密码
-//                        startActivity(new Intent(getActivity(), OrderListActivity.class));
                         startActivity(new Intent(getActivity(), ResetPswActivity.class));
                         break;
                     case 3: // 意见反馈
@@ -102,11 +100,13 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
 //                        break;
                     case 4: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
+                        LogUtils.e("状态"+status);
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
+                        Toast.makeText(getActivity(), "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), RealNameActivity.class));
                         } else if (status.equals(Globals.staffIsRealSuc)) {
-//                            Toast.makeText(getActivity(), "已经认证成功！", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), RealNameActivityNew.class));
+                            Toast.makeText(getActivity(), "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
+//                            startActivity(new Intent(getActivity(), RealNameActivity.class));
                         } else if (status.equals(Globals.staffIsRealIng)) {
                             Toast.makeText(getActivity(), "正在认证中！", Toast.LENGTH_SHORT).show();
                         }
@@ -114,6 +114,12 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                     case 5: // 关于我们
                         startActivity(new Intent(getActivity(), AboutActivity.class));
                         break;
+                    case 6://检查更新
+                        if (readConfig("late").equals("yes")){
+                            Toast.makeText(getContext(),"已是最新版本",Toast.LENGTH_SHORT).show();
+                        }else{
+                            startActivity(new Intent(getActivity(), UpdateActivity.class));
+                        }
                     default:
                         break;
                 }
@@ -133,33 +139,18 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
      */
     private void loadUserPic(String url) {
         if (url != null && !url.equals(""))
-            OkHttpUtils
-                    .get()
-                    .url(url)
-                    .build()
-                    .execute(new BitmapCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int i) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Bitmap bitmap, int i) {
-                            try {
-                                ivPic.setImageBitmap(bitmap);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-
+            Picasso.with(getContext())
+                    .load(url)
+                    .placeholder(R.mipmap.nothing_pic)
+                    .error(R.mipmap.failed_pic)
+                    .into(ivPic);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         lvLeftMenu.setAdapter(new LeftMenuListAdapter(getActivity()));
-        url = SPUtils.get(getActivity(), "staff_headpic", "").toString();
+        url = HttpUrlUtils.getHttpUrl().getBaseUrl()+SPUtils.get(getActivity(), "staff_headpic", "").toString();
         nickname = SPUtils.get(getActivity(), "staff_nickname", "").toString();
         if (nickname != null && !nickname.equals(""))
             tvNickName.setText(nickname);

@@ -3,6 +3,7 @@ package com.xaqb.unlock.Fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Activity.LoginActivity;
 import com.xaqb.unlock.Activity.OrderDetailActivityNew;
 import com.xaqb.unlock.Entity.Order;
@@ -42,10 +44,14 @@ import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.LuRecycleView1229.ListBaseAdapter;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
 
 /**
  * Created by fl on 2017/4/20.
@@ -211,6 +217,7 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                                     sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
                                     sendOrder.setOrderID(data.get(j).get("or_id").toString());
                                     sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
+                                    sendOrder.setPicUrl(HttpUrlUtils.getHttpUrl().getBaseUrl()+data.get(j).get("or_lockimg").toString());
                                     sendOrders.add(sendOrder);
                                 }
                                 if (sendOrders.size() == 0) {
@@ -291,7 +298,7 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             try {
-                WaitFragment.MyAdapter.ViewHolder viewHolder = (WaitFragment.MyAdapter.ViewHolder) holder;
+                final WaitFragment.MyAdapter.ViewHolder viewHolder = (WaitFragment.MyAdapter.ViewHolder) holder;
                 //订单号
                 viewHolder.tvContent.setText(mDataList.get(position).getOrderNo());
                 //时间
@@ -301,20 +308,17 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
                 //地址
                 viewHolder.tvAddress.setText(mDataList.get(position).getOrderAddress());
-//                String payStatus = mDataList.get(position).getOrderPayStatus();
-//                if (payStatus.equals("00") || payStatus.equals("02")) {
-//                    viewHolder.tvPayStatus.setText("未付款");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
-//                } else if (payStatus.equals("01")) {
-//                    viewHolder.tvPayStatus.setText("已付款");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.success);
-//                }else if(payStatus.equals("03")){
-//                    viewHolder.tvPayStatus.setText("未付清");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
-//                }
+                //图片
+                if (mDataList.get(position).getPicUrl() != null && !mDataList.get(position).getPicUrl().equals(""))
+                Picasso.with(getContext())
+                        .load(mDataList.get(position).getPicUrl())
+                        .placeholder(R.mipmap.nothing_pic)
+                        .error(R.mipmap.failed_pic)
+                        .into(viewHolder.ivPic);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
 
 

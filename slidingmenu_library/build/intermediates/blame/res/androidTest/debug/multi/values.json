@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "E:\\project\\qbunlock-android\\slidingmenu_library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "G:\\as\\qbunlock-android\\slidingmenu_library\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 1046
                 },
                 "from": {
-                    "file": "E:\\project\\qbunlock-android\\slidingmenu_library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "G:\\as\\qbunlock-android\\slidingmenu_library\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,

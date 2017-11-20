@@ -1,8 +1,10 @@
 package com.xaqb.unlock.Fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -80,6 +82,21 @@ public class BaseFragment extends Fragment {
         mIntent = new Intent(context, cla);
         startActivityForResult(mIntent,code);
     }
+
+    public String readConfig(String sName) {
+
+        SharedPreferences oConfig = getActivity().getSharedPreferences("config", Activity.MODE_PRIVATE);
+        return oConfig.getString(sName, "");
+    }
+
+    public void writeConfig(String sName, String sValue) {
+        SharedPreferences oConfig = getActivity().getSharedPreferences("config", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor oEdit = oConfig.edit();//获得编辑器
+        oEdit.putString(sName, sValue);
+        oEdit.commit();//提交内容
+
+    }
+
 
 
     /**

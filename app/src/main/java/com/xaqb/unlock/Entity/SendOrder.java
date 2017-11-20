@@ -1,5 +1,7 @@
 package com.xaqb.unlock.Entity;
 
+import android.graphics.Bitmap;
+
 /**
  * 已发数据订单实体类
  * Created by lenovo on 2017/4/1.
@@ -15,6 +17,17 @@ public class SendOrder extends Entity {
     private String orderID;
     //订单支付状态
     private String orderPayStatus;
+
+    //订单图片连接
+    private  String picUrl;
+
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
 
     public SendOrder() {
     }

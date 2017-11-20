@@ -1,9 +1,12 @@
 package com.xaqb.unlock.Activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -44,20 +47,46 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     private Boolean iskitkat;
 
 
+    public String readConfig(String sName) {
+
+        SharedPreferences oConfig = getSharedPreferences("config", Activity.MODE_PRIVATE);
+        return oConfig.getString(sName, "");
+    }
+
+    public void writeConfig(String sName, String sValue) {
+        SharedPreferences oConfig = getSharedPreferences("config", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor oEdit = oConfig.edit();//获得编辑器
+        oEdit.putString(sName, sValue);
+        oEdit.commit();//提交内容
+
+    }
+
+
+
     // 加载数据对话框
     public LoadingDialog loadingDialog;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT&&Build.VERSION.SDK_INT > 21) {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             // 透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }else if (Build.VERSION.SDK_INT >= 21){
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setNavigationBarColor(Color.TRANSPARENT);//设置底下导航栏的背景色，当前设置透明色
+            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置顶部状态栏颜色，当前设置透明色
         }
 
-        try {
+            try {
             ActivityController.addActivity(this);
             loadingDialog = new LoadingDialog(this);
             setupViews();
@@ -132,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             } else {
                 iv_backward.setVisibility(View.INVISIBLE);
             }
-        } // else ignored
+        }
     }
 
     /**
@@ -430,19 +459,4 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
-//    //设置状态栏和导航栏沉浸式
-//    @Override
-//    public void onWindowFocusChanged(boolean hasFocus) {
-//        super.onWindowFocusChanged(hasFocus);
-//        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
-//            View decorView = getWindow().getDecorView();
-//            decorView.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-//        }
-//    }
 }

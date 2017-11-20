@@ -26,43 +26,6 @@ public class QBHttp {
     protected static TokenManager tokenManager;
     //自动登录次数
     protected static int count;
-//    private void request(String method, String httpUrl, Map<String, Object> params, final QBCallback callback) {
-//
-//
-//        if (method.equals("get")) {
-//            GetBuilder builder = OkHttpUtils.get();
-//
-//        } else if (method.equals("post")) {
-//            builder = OkHttpUtils.post();
-//        }
-//
-//        if (params != null) {
-//            for (int i = 0; i < params.size(); i++) {
-//
-//            }
-//        } else {
-//        }
-//        builder = builder.url(httpUrl);
-//
-//        builder.url(httpUrl)
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        callback.doError();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            Map<?, ?> map = GsonUtil.JsonToMap(s);
-//                            callback.doWork(map);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//    }
 
     /**
      * 网络请求

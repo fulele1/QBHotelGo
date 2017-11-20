@@ -102,6 +102,7 @@ public class OrderActivity extends BaseActivity {
     private String goodsType;
     private boolean isReadCard, isConfigFace;
     private ProgressDialog progressDialog;
+
     /**
      * 高德地图相关
      */

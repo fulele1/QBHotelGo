@@ -50,7 +50,7 @@ import okhttp3.RequestBody;
  */
 public class UserInfoActivity extends BaseActivity {
     private UserInfoActivity instance;
-    private ImageView ivPic;
+    private ImageView ivPic,ivScanner;
     private TextView tvPhone, tvNickName, tvCompany, tvAddress, tvMessage;
     private LinearLayout llUserPic, llNickName;
     private WindowManager.LayoutParams params;
@@ -78,6 +78,7 @@ public class UserInfoActivity extends BaseActivity {
     private void assignViews() {
         params = getWindow().getAttributes();
         ivPic = (ImageView) findViewById(R.id.iv_user_pic);
+        ivScanner = (ImageView) findViewById(R.id.iv_scanner_user_info);
         tvPhone = (TextView) findViewById(R.id.tv_userinfo_phone);
         tvNickName = (TextView) findViewById(R.id.tv_userinfo_name);
         tvCompany = (TextView) findViewById(R.id.tv_userinfo_company);
@@ -105,7 +106,7 @@ public class UserInfoActivity extends BaseActivity {
                             loadingDialog.dismiss();
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                url = map.get("staff_headpic").toString();
+                                url = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("staff_headpic").toString();
                                 nickname = map.get("staff_nickname").toString();
                                 phone = map.get("staff_mp").toString();
                                 company = map.get("staff_company").toString();
@@ -232,6 +233,7 @@ public class UserInfoActivity extends BaseActivity {
     public void addListener() {
         llUserPic.setOnClickListener(instance);
         llNickName.setOnClickListener(instance);
+        ivScanner.setOnClickListener(instance);
     }
 
     @Override
@@ -248,6 +250,9 @@ public class UserInfoActivity extends BaseActivity {
                 Intent i = new Intent(instance, ResetNickNameActivity.class);
                 i.putExtra("nickName", nickname);
                 startActivity(i);
+                break;
+            case R.id.iv_scanner_user_info://二维码显示信息   http://www.ddkaisuo.net/home/staff/index?id=2
+                startActivity(new Intent(instance, QRCodeActivity.class));
                 break;
         }
     }
@@ -396,7 +401,7 @@ public class UserInfoActivity extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            LogUtils.i(map.toString());
+                            LogUtils.e(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 ivPic.setImageBitmap(head);// 用ImageView显示出来
                                 PermissionUtils.requestPermission(instance, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);

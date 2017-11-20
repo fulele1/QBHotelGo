@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Adapter.PayRecordAdapter;
 import com.xaqb.unlock.Entity.IncomeInfo;
 import com.xaqb.unlock.R;
@@ -105,8 +106,6 @@ public class OrderDetailActivityNew extends BaseActivity {
         tvOrderTime = (TextView) findViewById(R.id.tv_order_time);
         ivFace = (ImageView) findViewById(R.id.iv_user_face);
         ivLock = (ImageView) findViewById(R.id.iv_lock_pic);
-//        btPayOnline = (Button) findViewById(R.id.bt_pay_online);
-//        btPayCash = (Button) findViewById(R.id.bt_pay_money);
         btPayStatus = (Button) findViewById(R.id.bt_pay_status);
         lvPayRecord = (ListViewForScroollView) findViewById(R.id.lv_pay_record);
 
@@ -161,7 +160,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-//                            LogUtils.i(s);
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 List<Map<String, Object>> paydetail = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("paydetail")));
@@ -208,11 +206,11 @@ public class OrderDetailActivityNew extends BaseActivity {
                                     btPayStatus.setText("未付清");
                                 }
 
-                                String imageUrl = map.get("or_faceimg").toString();
+                                String imageUrl = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("or_faceimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivFace, imageUrl);
                                 }
-                                imageUrl = map.get("or_lockimg").toString();
+                                imageUrl = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("or_lockimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivLock, imageUrl);
                                 }
@@ -242,104 +240,21 @@ public class OrderDetailActivityNew extends BaseActivity {
                 }
 
         );
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        loadingDialog.dismiss();
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            loadingDialog.dismiss();
-////                            LogUtils.i(s);
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-////                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
-//                                tvOrderId.setText(map.get("or_orderno").toString());
-//                                tvOrderName.setText(map.get("or_username").toString());
-//                                tvOrderPhone.setText(map.get("or_usertel").toString());
-//                                tvOrderAddress.setText(map.get("or_useraddress").toString());
-//                                tvOrderPay.setText(map.get("or_price").toString());
-//                                tvOrderLockType.setText(ToolsUtils.getLockType(map.get("or_locktype").toString()));
-//                                tvOrderTime.setText(ToolsUtils.getStrTime(map.get("or_createtime").toString()));
-//                                payStatus = map.get("or_paystatus").toString();
-//                                if (payStatus.equals("01")) {
-//                                    btPayCash.setVisibility(View.GONE);
-//                                    btPayOnline.setText("已经支付");
-//                                    btPayOnline.setEnabled(false);
-//                                }
-//                                String imageUrl = map.get("or_faceimg").toString();
-//                                if (textNotEmpty(imageUrl)) {
-//                                    loadImg(ivFace, imageUrl);
-//                                }
-//                                imageUrl = map.get("or_lockimg").toString();
-//                                if (textNotEmpty(imageUrl)) {
-//                                    loadImg(ivLock, imageUrl);
-//                                }
-//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                ActivityController.finishAll();
-//                                showToast("登录失效，请重新登录");
-//                                startActivity(new Intent(instance, LoginActivity.class));
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
     }
 
     private void loadImg(final ImageView iv, String url) {
-        if (url != null && !url.equals(""))
-            OkHttpUtils
-                    .get()
-                    .url(url)
-                    .build()
-                    .execute(new BitmapCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int i) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Bitmap bitmap, int i) {
-                            try {
-                                iv.setImageBitmap(bitmap);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+        if (url != null && !url.equals("")){
+            Picasso.with(instance)
+                    .load(url)
+                    .placeholder(R.mipmap.nothing_pic)
+                    .error(R.mipmap.failed_pic)
+                    .into(iv);
+        }
     }
 
     @Override
     public void addListener() {
-//        btPayCash.setOnClickListener(instance);
-//        btPayOnline.setOnClickListener(instance);
         btPayStatus.setOnClickListener(instance);
-//        lvPayRecord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String payStatus = incomeInfos.get(i).getPayStatus();
-//                if (payStatus.equals("01")) {
-//                    return;
-//                }
-//                String payPrice = incomeInfos.get(i).getOrderPrice();
-//                Intent intent = new Intent(instance, PayActivityNew.class);
-//                intent.putExtra("or_id", orderId);
-//                intent.putExtra("total_price", price);
-//                intent.putExtra("pay_price", payPrice);
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -374,13 +289,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                         startActivity(intent);
                         break;
                 }
-
-//                isFirstGetPayStatus = false;
-//                progressDialog.setMessage("正在支付，请稍后...");
-//                progressDialog.setCanceledOnTouchOutside(false);
-//                progressDialog.show();
-//                isQuery = true;
-//                getPayResult();
                 break;
         }
     }
@@ -470,44 +378,6 @@ public class OrderDetailActivityNew extends BaseActivity {
 
         );
 
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-////                                btPayCash.setVisibility(View.GONE);
-////                                btPayOnline.setText("已经支付");
-////                                btPayOnline.setEnabled(false);
-//                                isFirstGetPayStatus = true;
-//                                isQuery = false;
-//                                getPayResult();
-//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                progressDialog.dismiss();
-//                                ActivityController.finishAll();
-//                                showToast("登录失效，请重新登录");
-//                                startActivity(new Intent(instance, LoginActivity.class));
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                progressDialog.dismiss();
-//                                dialogType = 1;
-//                                showDialog("提示", "支付失败，请稍后再试", "确定", "", 0);
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
 
     }
 
@@ -529,9 +399,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                         try {
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
                                 myHandler.sendEmptyMessage(101);
                                 progressDialog.dismiss();
                                 dialogType = 1;
@@ -580,61 +447,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     }
                 }
         );
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getPayResult() + "opid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        if (isFirstGetPayStatus) {
-//                            myHandler.sendEmptyMessage(102);
-//                        } else if (isQuery) {
-//                            progressDialog.dismiss();
-//                            dialogType = 1;
-//                            showDialog("提示", "支付失败", "确定", "", 0);
-//                        }
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
-//                                myHandler.sendEmptyMessage(101);
-//                                progressDialog.dismiss();
-//                                dialogType = 1;
-//                                showDialog("提示", "支付成功", "确定", "", 0);
-//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                ActivityController.finishAll();
-//                                showToast("登录失效，请重新登录");
-//                                startActivity(new Intent(instance, LoginActivity.class));
-//                            } else {
-//                                if (isFirstGetPayStatus) {
-//                                    myHandler.sendEmptyMessage(102);
-//                                } else if (isQuery) {
-//                                    progressDialog.dismiss();
-//                                    dialogType = 1;
-//                                    showDialog("提示", map.get("mess").toString(), "确定", "", 0);
-//                                }
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            if (isFirstGetPayStatus) {
-//                                myHandler.sendEmptyMessage(102);
-//                            } else if (isQuery) {
-//                                progressDialog.dismiss();
-//                                dialogType = 1;
-//                                showDialog("提示", "支付失败", "确定", "", 0);
-//                            }
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
     }
 
     /**
@@ -655,9 +467,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                         try {
                             LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
@@ -684,36 +493,5 @@ public class OrderDetailActivityNew extends BaseActivity {
 
 
         );
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
-//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                ActivityController.finishAll();
-//                                showToast("登录失效，请重新登录");
-//                                startActivity(new Intent(instance, LoginActivity.class));
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
     }
 }

@@ -33,7 +33,6 @@
                 android:layout_gravity="center"
                 />
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +44,6 @@
                 android:textStyle="bold"
                 />
 
-
             <ImageView
                 android:id="@+id/iv_message"
                 android:layout_width="wrap_content"
@@ -53,12 +51,12 @@
                 android:src="@mipmap/main_msg"
                 android:layout_gravity="center"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:visibility="gone"
                 />
 
         </LinearLayout>
 
-        <LinearLayout
-            style="@style/common_horizontal_match_line_style"></LinearLayout>
+        <LinearLayout style="@style/common_horizontal_match_line_style"></LinearLayout>
 
 
         <com.bigkoo.convenientbanner.ConvenientBanner
@@ -130,13 +128,14 @@
                     android:padding="10dp"
                     android:src="@mipmap/main_order_t" />
 
+
                 <ImageView
-                    android:id="@+id/iv_will_send"
+                    android:id="@+id/iv_setting"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    android:src="@mipmap/main_wait_t" />
+                    android:src="@mipmap/main_acq_t" />
 
                 <ImageView
                     android:id="@+id/iv_nearby_order"
@@ -144,7 +143,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    android:src="@mipmap/main_neary_t" />
+                    android:src="@mipmap/main_neary_t"
+                    android:visibility="gone"
+                    />
 
             </LinearLayout>
 
@@ -163,13 +164,16 @@
                     android:padding="10dp"
                     android:src="@mipmap/main_personal_t" />
 
+
+
+
                 <ImageView
-                    android:id="@+id/iv_setting"
+                    android:id="@+id/iv_will_send"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    android:src="@mipmap/main_acq_t" />
+                    android:src="@mipmap/main_wait_t" />
 
                 <ImageView
                     android:id="@+id/iv_real_name"

@@ -22,11 +22,14 @@ import okhttp3.OkHttpClient;
 public class MyApplication extends Application {
     public static Context instance;
     public static String deviceId;
+    public static String versionName;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
         initCloudChannel(this);
+        versionName = ProcUnit.getVersionName(getApplicationContext());
         CrashReport.initCrashReport(getApplicationContext());
         instance = getApplicationContext();
         CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
@@ -50,8 +53,8 @@ public class MyApplication extends Application {
         String[] tags = {"dongdongkaisuo", "xianqianbai"};
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         deviceId = pushService.getDeviceId();
-//        LogUtils.i("deviceid------", deviceid);
-        pushService.bindTag(CloudPushService.DEVICE_TARGET, tags, "xaqb", new CommonCallback() {
+//        LogUtils.i("deviceid------", deviceId);
+          pushService.bindTag(CloudPushService.DEVICE_TARGET, tags, "xaqb", new CommonCallback() {
             @Override
             public void onSuccess(String s) {
 //                LogUtils.i("onSuccess------", "onSuccess");

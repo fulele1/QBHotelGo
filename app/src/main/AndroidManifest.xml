@@ -210,21 +210,25 @@
         <!-- android:name=".Service.UploadService" -->
         <!-- android:enabled="true" -->
         <!-- android:exported="true" /> -->
-		
-		
+
+
         <!-- 通道保持服务 -->
-        <service android:name="com.alibaba.sdk.android.push.ChannelService"
-            android:exported="true" android:process=":channel">
+        <service
+            android:name="com.alibaba.sdk.android.push.ChannelService"
+            android:exported="true"
+            android:process=":channel">
             <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.SERVICE"/>
+                <action android:name="com.taobao.accs.intent.action.SERVICE" />
             </intent-filter>
             <intent-filter>
                 <action android:name="org.agoo.android.intent.action.PING_V4" />
+
                 <category android:name="taobao" />
             </intent-filter>
         </service>
         <!-- 消息接收服务 -->
-        <service android:name="com.alibaba.sdk.android.push.MsgService"
+        <service
+            android:name="com.alibaba.sdk.android.push.MsgService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.taobao.accs.intent.action.RECEIVE" />
@@ -233,19 +237,22 @@
                 <action android:name="com.alibaba.sdk.android.push.NOTIFY_ACTION" />
             </intent-filter>
         </service>
-        <!-- 消息接收增强服务（可提高通知/消息达到率）-->
-        <service android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService" android:exported="true">
+        <!-- 消息接收增强服务（可提高通知/消息达到率） -->
+        <service
+            android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
+            android:exported="true">
             <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService"/>
+                <action android:name="org.android.agoo.client.MessageReceiverService" />
             </intent-filter>
         </service>
-
         <service
             android:name=".Service.FileService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".Activity.MyOrderActivity"></activity>
+        <activity android:name=".Activity.MyOrderActivity" />
+        <activity android:name=".Activity.QRCodeActivity" />
+        <activity android:name=".Activity.UpdateActivity"></activity>
     </application>
 
 </manifest>

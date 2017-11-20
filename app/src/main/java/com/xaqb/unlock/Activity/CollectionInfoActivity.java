@@ -21,6 +21,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.CameraTool.CertCaptureActivity;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -48,6 +49,8 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+
+import static com.xaqb.unlock.R.id.iv;
 
 
 /**
@@ -86,16 +89,7 @@ public class CollectionInfoActivity extends BaseActivity {
     public AMapLocationClientOption mLocationOption = null;
     private AMapLocationClient mlocationClient;
     private double longitude, latitude;
-
-    //
-//    /**
-//     * 身份证读取相关
-//     */
-//    private IDCardReader idReader = null;
-//    private IDCardInfo idCardInfo;
     private Bitmap bitmapCert;
-//    private Bitmap bitmapFace;
-//    private Bitmap bitmapRealFace;
 
     @Override
     public void initTitleBar() {
@@ -120,7 +114,6 @@ public class CollectionInfoActivity extends BaseActivity {
         etOtherRemark = (EditText) findViewById(R.id.et_other_remark);
         etUserCertNum = (TextView) findViewById(R.id.et_cert_num);
         etUnlockAddress = (EditText) findViewById(R.id.et_unlock_address);
-//        etLockType = (TextView) findViewById(R.id.et_unlock_type);
         etUnlockPay = (EditText) findViewById(R.id.et_unlock_money);
         etUnlcokTime = (TextView) findViewById(R.id.et_unlock_time);
         tvReadResult = (TextView) findViewById(R.id.tv_read_result);
@@ -128,12 +121,8 @@ public class CollectionInfoActivity extends BaseActivity {
         ivFacePic = (ImageView) findViewById(R.id.iv_user_face);
         ivOtherFacePic = (ImageView) findViewById(R.id.iv_other_face);
         ivLockPic = (ImageView) findViewById(R.id.iv_lock_pic);
-//        ivZxing = (ImageView) findViewById(R.id.iv_zxing);
         ivCertScan = (ImageView) findViewById(R.id.iv_cert_scan);
         lockTypeSpinner = (Spinner) findViewById(R.id.sp_lock_type);
-
-//
-
         /**
          * 初始化高德地图控件
          */
@@ -191,15 +180,6 @@ public class CollectionInfoActivity extends BaseActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-//            case 0:
-//                if (resultCode == RESULT_OK) {
-//                    Bundle bundle = data.getExtras();
-//                    if (bundle != null) {
-//                        String scanResult = bundle.getString("result");
-////                        et.setText(scanResult);
-//                    }
-//                }
-//                break;
             case 2:
                 if (resultCode == RESULT_OK) {
                     // 从相机返回的数据
@@ -224,6 +204,8 @@ public class CollectionInfoActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    //设置身份证照片并加水印
     public void onReadCert(String sNo, Bitmap oCert) {
         userCertNum = sNo;
         etUserCertNum.setText(sNo);
@@ -265,8 +247,6 @@ public class CollectionInfoActivity extends BaseActivity {
         /**
          * 把图片旋转为正的方向
          */
-//        bitmap = ImageDispose.rotaingImageView(degree, bitmap);
-//        Bitmap new_bitmap = ImageDispose.compressImage(bitmap);
         ImageDispose.saveBitmapFile(PHOTO_COMM_NAME, bitmap);
 
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -285,35 +265,32 @@ public class CollectionInfoActivity extends BaseActivity {
             instance.sendBroadcast(intent_delete);//这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
         }
         getImage(PHOTO_COMM_NAME);
-//        if (file.length() / 1024 / 1024 >= 5) {
-//            showToast("文件不能大于5M");
-//            return;
-//        }
 
     }
+
 
     public void getImage(String path) {
         switch (requestCoede) {
             case 1:
                 imagePath1 = path;
                 images.add(path);
-                ivFacePic.setImageBitmap(BitmapFactory.decodeFile(path));
+                ivFacePic.setImageBitmap(ToolsUtils.drawText(BitmapFactory.decodeFile(path), getString(R.string.logo), 50));
                 break;
             case 2:
                 imagePath2 = path;
                 images.add(path);
-                ivLockPic.setImageBitmap(BitmapFactory.decodeFile(path));
+                ivLockPic.setImageBitmap(ToolsUtils.drawText(BitmapFactory.decodeFile(path), getString(R.string.logo), 50));
                 break;
             case 3:
                 imagePath3 = path;
                 images.add(path);
-                ivOtherFacePic.setImageBitmap(BitmapFactory.decodeFile(path));
+                ivOtherFacePic.setImageBitmap(ToolsUtils.drawText(BitmapFactory.decodeFile(path), getString(R.string.logo), 50));
                 break;
         }
-//        canclePopwindow();
     }
 
-    //    private String[] typeNum = {"01", "02", "03", "04", "05"};
+
+
     private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
 
     @Override
@@ -422,32 +399,6 @@ public class CollectionInfoActivity extends BaseActivity {
                     requestCoede = 1;
                     permissionCode = 0;
                     checkPer(PermissionUtils.CODE_CAMERA);
-//                    if (!isReadCard) {
-//                        ToastUtil.showToast(instance, "请先读卡");
-//                        return;
-//                    }
-//                    if (bitmapFace == null) {
-//                        ToastUtil.showToast(instance, "获取身份图片错误...");
-//                        return;
-//                    }
-//                    try {
-//                        ComponentName componetName = new ComponentName(
-//                                //这个是另外一个应用程序的包名
-//                                "com.yinan.facerecognition",
-//                                //这个参数是要启动的Activity
-//                                "com.yinan.facerecognition.activity.FaceTestActivity");
-//                        Intent intent = new Intent();
-//                        intent.putExtra("send_picture", CertImgDisposeUtils.bitmaptoString(bitmapFace));
-//                        intent.putExtra("camera_id", 0);
-//                        intent.setComponent(componetName);
-//                        startActivityForResult(intent, 1111);
-//                    } catch (ActivityNotFoundException e) {
-//                        ToastUtil.showToast(instance, "请安装人脸识别应用。");
-//                        return;
-//                    } catch (Exception e) {
-//                        ToastUtil.showToast(instance, "打开应用错误。");
-//                        return;
-//                    }
                     break;
                 case R.id.iv_other_face://第三方照片
                     requestCoede = 3;
@@ -461,38 +412,20 @@ public class CollectionInfoActivity extends BaseActivity {
                     break;
                 case R.id.iv_lock_pic://锁具照片
                     requestCoede = 2;
-//                showPopwindow();
                     permissionCode = 0;
                     checkPer(PermissionUtils.CODE_CAMERA);
                     break;
-//                case R.id.iv_zxing:
-//
-//                    intent = new Intent(instance, CaptureActivity.class);
-//                    startActivityForResult(intent, 100);
-//                    break;
                 case R.id.iv_cert_scan://读取身份证
-//                    readIDCard();
                     scanCert();
-//                intent = new Intent(instance, CertCaptureActivity.class);
-//                startActivityForResult(intent, 100);
                     break;
-//            case R.id.ll_receiver_info:
-//                intent = new Intent(instance, AddressListActivity.class);
-//                intent.putExtra("isChose", true);
-//                intent.putExtra("isSender", false);
-//                startActivity(intent);
-//                break;
                 case R.id.bt_complete:
-                    String weightPoint = "";
                     userName = etUserName.getText().toString().trim();
                     userPhone = etUserPhone.getText().toString().trim();
                     otherName = etOtherName.getText().toString().trim();
                     otherPhone = etOtherPhone.getText().toString().trim();
                     otherRemark = etOtherRemark.getText().toString().trim();
-//                    userCertNum = etUserCertNum.getText().toString().trim();
                     unlockAddress = etUnlockAddress.getText().toString().trim();
 
-//                lockType = etLockType.getText().toString().trim();
 
                     lockType = lockTypeSpinner.getSelectedItem().toString();
                     if (lockType != null && lockType.contains("-")) {
@@ -501,20 +434,10 @@ public class CollectionInfoActivity extends BaseActivity {
                     unlockPay = etUnlockPay.getText().toString().trim();
                     unlockTime = etUnlcokTime.getText().toString().trim();
 
-//                if (goodsWeight.contains(".")) {
-//                    weightPoint = goodsWeight.substring(goodsWeight.indexOf("."), goodsWeight.length());
-//                }
-//                message = etLeavingMessage.getText().toString().trim();
                     if (!textNotEmpty(userName)) {
                         showToast("请输入客户姓名");
                     } else if (!textNotEmpty(userPhone)) {
                         showToast("请输入客户电话");
-//                    } else if (!textNotEmpty(otherName)) {
-//                        showToast("请输入第三方姓名");
-//                    } else if (!textNotEmpty(otherPhone)) {
-//                        showToast("请输入第三方电话");
-//                    } else if (!textNotEmpty(otherRemark)) {
-//                        showToast("请输入第三方备注");
                     } else if (!textNotEmpty(userCertNum)) {
                         showToast("请输入客户身份证号码");
                     } else if (!textNotEmpty(unlockAddress)) {
@@ -664,7 +587,6 @@ public class CollectionInfoActivity extends BaseActivity {
         datas.put("usernation", "");
 //        datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
 //        datas.put("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80));
-
         datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
         datas.put("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80));
         datas.put("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 80));
@@ -723,6 +645,6 @@ public class CollectionInfoActivity extends BaseActivity {
         } else if (requestCode == PermissionUtils.CODE_ACCESS_COARSE_LOCATION) {
             mlocationClient.startLocation();
         }
-
     }
+
 }

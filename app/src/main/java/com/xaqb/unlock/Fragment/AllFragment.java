@@ -3,6 +3,7 @@ package com.xaqb.unlock.Fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Activity.LoginActivity;
 import com.xaqb.unlock.Activity.OrderDetailActivityNew;
 import com.xaqb.unlock.Entity.SendOrder;
@@ -38,10 +40,14 @@ import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.LuRecycleView1229.ListBaseAdapter;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Call;
 
 
 /**
@@ -186,9 +192,7 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 , new QBCallback() {
                     @Override
                     public void doWork(Map<?, ?> map) {
-//                        mLoadingDialog.dismiss();
                         try {
-//                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
@@ -212,6 +216,7 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                                     sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
                                     sendOrder.setOrderID(data.get(j).get("or_id").toString());
                                     sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
+                                    sendOrder.setPicUrl(HttpUrlUtils.getHttpUrl().getBaseUrl()+data.get(j).get("or_lockimg").toString());
                                     sendOrders.add(sendOrder);
                                 }
                                 if (sendOrders.size() == 0) {
@@ -292,7 +297,7 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             try {
-                AllFragment.MyAdapter.ViewHolder viewHolder = (AllFragment.MyAdapter.ViewHolder) holder;
+                final AllFragment.MyAdapter.ViewHolder viewHolder = (AllFragment.MyAdapter.ViewHolder) holder;
                 //订单号
                 viewHolder.tvContent.setText(mDataList.get(position).getOrderNo());
                 //时间
@@ -300,19 +305,17 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 if (!time.isEmpty()) {
                     viewHolder.tvTime.setText(ToolsUtils.getStrTime(time));
                 }
+
                 //地址
                 viewHolder.tvAddress.setText(mDataList.get(position).getOrderAddress());
-//                String payStatus = mDataList.get(position).getOrderPayStatus();
-//                if (payStatus.equals("00") || payStatus.equals("02")) {
-//                    viewHolder.tvPayStatus.setText("未付款");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
-//                } else if (payStatus.equals("01")) {
-//                    viewHolder.tvPayStatus.setText("已付款");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.success);
-//                }else if(payStatus.equals("03")){
-//                    viewHolder.tvPayStatus.setText("未付清");
-//                    viewHolder.ivPayStatus.setImageResource(R.mipmap.failure);
-//                }
+
+                //图片
+                if (mDataList.get(position).getPicUrl() != null && !mDataList.get(position).getPicUrl().equals(""))
+                    Picasso.with(getContext())
+                            .load(mDataList.get(position).getPicUrl())
+                            .placeholder(R.mipmap.nothing_pic)
+                            .error(R.mipmap.failed_pic)
+                            .into(viewHolder.ivPic);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -329,8 +332,8 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 tvContent = (TextView) view.findViewById(R.id.tv_order_no_item_order);
                 tvTime = (TextView) view.findViewById(R.id.tv_time_item_order);
                 tvAddress = (TextView) view.findViewById(R.id.tv_address_item_order);
-                tvprice = (TextView) view.findViewById(R.id.tv_price_item_order);//TODO
-                ivPic = (ImageView) view.findViewById(R.id.img_pic_item_order);//TODO
+                tvprice = (TextView) view.findViewById(R.id.tv_price_item_order);
+                ivPic = (ImageView) view.findViewById(R.id.img_pic_item_order);
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Environment;
 import android.view.View;
@@ -50,6 +51,7 @@ public class LoginActivity extends BaseActivity {
         //取消状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
 
         setContentView(R.layout.login_activity);
         instance = this;
@@ -132,7 +134,7 @@ public class LoginActivity extends BaseActivity {
                     .url(HttpUrlUtils.getHttpUrl().getLoginUrl())
                     .addParams("name", username)
                     .addParams("pwd", psw)
-                    .addParams("deviceid", MyApplication.deviceId)
+                    .addParams("deviceid", MyApplication.deviceId)//阿里云设备标识
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -143,6 +145,7 @@ public class LoginActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String s, int i) {
+
                             try {
                                 loadingDialog.dismiss();
                                 Map<?, ?> map = GsonUtil.JsonToMap(s);

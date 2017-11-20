@@ -107,4 +107,8 @@ public class HttpUrlUtils {
         return getBaseUrl() + "/v1/index/token/refresh_token/";
     }
 
+    public String get_updata() {
+        return "http://xawl.qbdongdong.com/governor/police/statistics/";
+    }
+
 }

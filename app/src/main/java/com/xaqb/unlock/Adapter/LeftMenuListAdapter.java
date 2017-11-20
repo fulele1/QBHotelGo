@@ -22,6 +22,7 @@ public class LeftMenuListAdapter extends BaseAdapter {
             "我的订单","收入明细", "修改密码", "意见反馈",
 //            "使用帮助",
             "实名认证", "关于我们"
+            ,"检查更新"
     };
     private int[] icons = {
             R.mipmap.left_order,
@@ -30,7 +31,8 @@ public class LeftMenuListAdapter extends BaseAdapter {
             R.mipmap.left_option,
 //            R.mipmap.left_help,
             R.mipmap.left_recg,
-            R.mipmap.left_about
+            R.mipmap.left_about,
+            R.mipmap.left_help
     };
     private ViewHolder holder;
 

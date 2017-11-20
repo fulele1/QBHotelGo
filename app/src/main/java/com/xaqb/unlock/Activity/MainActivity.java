@@ -1,17 +1,26 @@
 package com.xaqb.unlock.Activity;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.alibaba.sdk.android.push.CloudPushService;
@@ -27,11 +36,25 @@ import com.xaqb.unlock.Fragment.LeftFragment;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Service.FileService;
 import com.xaqb.unlock.Utils.ActivityController;
+import com.xaqb.unlock.Utils.CheckNetwork;
 import com.xaqb.unlock.Utils.Globals;
+import com.xaqb.unlock.Utils.GsonUtil;
+import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.MyApplication;
+import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Call;
+
+import static com.amap.api.maps.MapsInitializer.getVersion;
 
 /**
  * 主页面
@@ -39,6 +62,149 @@ import java.util.List;
 public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener {
     private MainActivity instance;
     private ConvenientBanner mCb;
+    private String au_version;
+    protected String FsUrl = "";
+    protected String FsUser = "";
+    protected String FsRet = "";
+    protected AlertDialog FoWait = null;
+    protected String FsFile = "";
+    protected ProgressBar FoBar = null;
+    protected String FsVersion = "";
+    protected boolean FbUpdate = false;
+    protected boolean FbForceUpdate = false;
+public String late;
+
+    Handler FoHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0: //获取版本号
+                    String sVersion = getVersionName();
+                    String[] aData = FsRet.split(",");
+
+                    LogUtils.e(au_version.equals(getVersionName()) + "");
+
+                    if (au_version.equals(getVersionName())) {
+                        late ="yes";
+                        writeConfig("late",late);
+                        if (FbUpdate){
+                            showDialog("提示", "已经是最新版本", "确定", "", 0);
+                        }
+                    } else {
+                        aData[0] = aData[0].trim();
+                        if (sVersion.compareTo(aData[0]) < 0) {
+                            FsVersion = aData[0];
+                            if (aData.length > 1) {
+                                aData[1] = aData[1].trim();
+                                if (aData[1].compareTo("1") == 0) FbForceUpdate = true;
+                            }
+                        }
+                        late ="no";
+                        writeConfig("late",late);
+                        showDialog("更新提示", "检测到新版本，是否更新", "立刻更新", "以后再说", 0);
+                    }
+                    break;
+
+                case 1://下载完成
+                    if (FoWait != null) FoWait.dismiss();
+                    File oFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "/" + FsFile);
+                    if (!oFile.exists()) {
+                        showDialog("错误", "下载文件不存在", "关闭", "", 0);
+                        return;
+                    }
+                    Intent oInt = new Intent(Intent.ACTION_VIEW);
+                    oInt.setDataAndType(Uri.fromFile(oFile), "application/vnd.android.package-archive");
+                    MainActivity.this.startActivity(oInt);
+                    break;
+                case 3://显示进度
+                    if (FoBar != null)
+                        FoBar.setProgress(msg.arg1);
+                    break;
+
+                case 10:
+                    if (FoWait != null) FoWait.dismiss();
+                    showDialog("错误", FsRet, "确定", "", 0);
+                    showMess(FsRet, true);
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+    //获取版本信息
+    public void getVersion() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    LogUtils.e("fsurl==", FsUrl);
+                    String sRet = ProcUnit.httpGetMore(FsUrl);
+                    if (!au_version.equals(null)) {
+                        FsRet = sRet.substring(1);
+                        FoHandler.sendMessage(M(0));
+                    }
+//                    if (sRet.substring(0, 1).equals("0")) {
+//                        FsRet = sRet.substring(1);
+//                        FoHandler.sendMessage(M(0));
+//                    }
+                    else {
+                        //FsRet=sRet.substring(1);
+                        FsRet = "获取版本信息错误，请与管理员联系！";
+                        FoHandler.sendMessage(M(10));
+                    }
+                } catch (Exception E) {
+                    FsRet = E.getMessage();
+                    FoHandler.sendMessage(M(10));
+                }
+            }
+
+            protected Message M(int iWhat) {
+                Message oMess = new Message();
+                oMess.what = iWhat;
+                return oMess;
+            }
+        }).start();
+
+
+        //网络访问看是否需要有
+        LogUtils.e(FsUrl.length() + "getVersion");
+        if (FsUrl.length() < 6) {
+            showMess("地址错误，请在系统设置中设置上传地址。", true);
+            return;
+        }
+        if (!CheckNetwork.isNetworkAvailable(MyApplication.instance)) {
+//            showMess("网络未连接", false);
+            return;
+        }
+    }
+
+    /**
+     * 获取版本号
+     * @return
+     */
+    public String getVersionName() {
+        try {
+            PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+
+            // 当前应用的版本名称
+            return info.versionName;
+
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    /**
+     *下载新版本
+     */
+    protected void downVersion() {
+            Intent oInt = new Intent();
+            oInt.setClass(this, UpdateActivity.class);
+            oInt.putExtra("url", HttpUrlUtils.getHttpUrl().get_updata() + au_filename);
+            oInt.putExtra("file", au_filename);
+            LogUtils.e(au_filename);
+            startActivity(oInt);
+    }
+
 
     //    private SimpleImageBanner sib;
 //    private String[] imgUrl = {
@@ -52,7 +218,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 //    };
     private boolean isQuit = false;
 
-    private ImageView ivUser, ivMessage, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName;
+    private ImageView ivUser,ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName,ivMessage;
     private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
     //    private Button btOrder;
     private Fragment mContent;
@@ -95,7 +261,113 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 //                LogUtils.i("bindAccount------", "onFailed");
             }
         });
+        checkVerdion();//检查更新
     }
+
+    /**
+     * 检查是否要进行更新
+     */
+    private String au_last_version;
+    private String au_filename;
+    private String au_info;
+    private String au_id;
+    private void checkVerdion() {
+        //  请求连接网络 解析后 拿到版本号和版本名
+        OkHttpUtils.get()
+//                .url(HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
+                .url(HttpUrlUtils.getHttpUrl().getPayDetail() + "?p=" + 1 + "&access_token=" + SPUtils.get(instance, "access_token", ""))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        LogUtils.e("sssss" + e.toString());
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+
+                        s = "{\"state\":0,\"mess\":\"\",\"table\":{\"au_id\":8,\"au_version\":\"1.4\"," +
+                                "\"au_last_version\":\"1.2\",\"au_is_constraint\":1,\"au_createtime\":1509958607," +
+                                "\"au_info\":\"优化数据，增减检查日志界面\",\"au_type\":2,\"au_filename\":\"police.apk\"}}\n";
+                        LogUtils.e("sss" + s);
+                        Map<String, Object> map = GsonUtil.GsonToMaps(s);
+                        if (map.get("state").toString().equals("1.0")) {
+                            showMess(map.get("mess").toString(),true);
+                            return;
+                        } else if (map.get("state").toString().equals("0.0")) {
+                            Map<String, Object> data = GsonUtil.JsonToMap(GsonUtil.GsonString(map.get("table")));
+                            au_version = data.get("au_version").toString();
+                            au_last_version = data.get("au_last_version").toString();
+                            au_filename = data.get("au_filename").toString();
+                            au_info = data.get("au_info").toString();
+                            au_id = data.get("au_id").toString();
+                            FsUrl = readConfig("url");
+                            if (FsUrl.length() == 0) {
+                                FsUrl = HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" +
+                                        SPUtils.get(instance, "access_token", "").toString();
+                                writeConfig("url", FsUrl);
+                            }
+                            FsUrl = readConfig("url");
+                            FsUser = readConfig("user");
+                            FsFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + au_filename;
+                            FbUpdate = false;
+                            getVersion();
+                            checkRight();
+
+                        }}
+                });
+
+
+
+    }
+
+
+    protected String readConfig(String sName) {
+
+        SharedPreferences oConfig = getSharedPreferences("config", Activity.MODE_PRIVATE);
+        return oConfig.getString(sName, "");
+    }
+
+    protected void writeConfig(String sName, String sValue) {
+        SharedPreferences oConfig = getSharedPreferences("config", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor oEdit = oConfig.edit();//获得编辑器
+        oEdit.putString(sName, sValue);
+        oEdit.commit();//提交内容
+
+    }
+
+
+    /**
+     * 检查用户验证状态
+     */
+    static boolean FbForceRight = false;
+    private void checkRight() {
+        if (!CheckNetwork
+                .isNetworkAvailable(MyApplication.instance)) {
+//            showMess("网络未连接", false);
+            return;
+        }
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    String sRet = ProcUnit.httpCheckRight(FsUrl, FsUser, readConfig("right"));
+                    if (sRet.equals("0ok")) {
+                        FbForceRight = false;
+                    } else if (sRet.startsWith("2")) {
+                        FbForceRight = false;
+                    } else {
+                        FbForceRight = true;
+                    }
+                } catch (Exception E) {
+                    FbForceRight = false;
+                }
+            }
+        }).start();
+    }
+
+
+
+
 
     /**
      * 初始化侧边栏
@@ -234,7 +506,6 @@ private List <Integer> mImageList;
         ivUserInfo.setOnClickListener(instance);
         ivSetting.setOnClickListener(instance);
         ivRealName.setOnClickListener(instance);
-//        btOrder.setOnClickListener(instance);
     }
 
     @Override
@@ -245,29 +516,8 @@ private List <Integer> mImageList;
                 sm.toggle();
                 break;
             case R.id.iv_message:
-
                 Toast.makeText(instance, "正在研发中...", Toast.LENGTH_SHORT).show();
                 break;
-//                //测试更新
-////                /**
-////                 * 2016-12-02 add register and service
-////                 */
-////                ProgressDialog
-////                        progBar = new ProgressDialog(instance);
-////                progBar.setTitle("下载");
-////                progBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-////                progBar.setIcon(R.mipmap.app_logo);
-////                progBar.setIndeterminate(false);
-////                progBar.setCanceledOnTouchOutside(false);
-////                progBar.setButton("取消", new DialogInterface.OnClickListener() {
-////                    @Override
-////                    public void onClick(DialogInterface dialogInterface, int i) {
-////                        LogUtils.i("点击取消下载");
-////                    }
-////                });
-////                progBar.show();
-//                startActivity(new Intent(instance, MessageActivity.class));
-//                break;
             case R.id.iv_send_data:
                 i = new Intent(instance, MyOrderActivity.class);
                 startActivity(i);
@@ -279,10 +529,8 @@ private List <Integer> mImageList;
             case R.id.iv_nearby_order:
 //                AnimationUtil.playButtonAnimation(ivNearby);
                 Toast.makeText(instance, "正在研发中...", Toast.LENGTH_SHORT).show();
-//                i = new Intent(instance, NearbyOrderActivity.class);
-//                startActivity(i);
                 break;
-            case R.id.iv_user_info:
+            case R.id.iv_user_info://个人信息
                 i = new Intent(instance, UserInfoActivity.class);
                 startActivity(i);
                 break;
@@ -294,14 +542,14 @@ private List <Integer> mImageList;
             case R.id.iv_real_name:
                 String status = SPUtils.get(instance, "staff_is_real", "").toString();
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
+                    Toast.makeText(instance, status, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, RealNameActivity.class));
 //                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
-//                    Toast.makeText(instance, "已经认证成功！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, status, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
-//                    startActivity(new Intent(instance, RealNameActivityNew.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
-                    Toast.makeText(instance, "正在认证中！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, status, Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, RealNameActivity.class));
 
                 }
@@ -372,6 +620,7 @@ private List <Integer> mImageList;
         super.onResume();
         startService(new Intent(instance, FileService.class));
         MobclickAgent.onResume(this);
+        checkVerdion();//检查更新
     }
 
     @Override
@@ -385,4 +634,67 @@ private List <Integer> mImageList;
         super.onDestroy();
         ActivityController.removeActivity(instance);
     }
+
+    protected AlertDialog showDialog(String sCaption,
+                                     String sText,
+                                     String sOk,
+                                     String sCancel,
+                                     int iLayout) {
+        AlertDialog.Builder oBuilder = new AlertDialog.Builder(this);
+        if (iLayout > 0) {
+            LayoutInflater oInflater = getLayoutInflater();
+            View oLayout = oInflater.inflate(iLayout, null, false);
+            oBuilder.setView(oLayout);
+
+        } else
+            oBuilder.setMessage(sText);
+        oBuilder.setTitle(sCaption);
+        if (sOk.length() > 0) {
+            oBuilder.setPositiveButton(sOk, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    instance.dialogOk();
+                    dialog.dismiss();
+                }
+            });
+        }
+        if (sCancel.length() > 0) {
+            oBuilder.setNegativeButton(sCancel, new DialogInterface.OnClickListener() {
+                @Override
+
+
+                public void onClick(DialogInterface dialog, int which) {
+                    instance.dialogCancel();
+                    dialog.dismiss();
+                }
+            });
+
+        }
+        AlertDialog oDialog = oBuilder.create();
+        oDialog.show();
+        return oDialog;
+    }
+
+    /**
+     * 对话框单击确定按钮处理
+     */
+    protected void dialogOk() {
+        downVersion();
+    }
+
+    /**
+     * 对话框单击取消按钮处理
+     */
+    protected void dialogCancel() {
+    }
+
+    /**
+     * 吐司
+     * @param sMess
+     * @param bLong
+     */
+    protected void showMess(String sMess, boolean bLong) {
+        Toast.makeText(this, sMess, bLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+    }
+
 }
