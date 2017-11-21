@@ -8,7 +8,6 @@ import android.util.Log;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -155,7 +154,6 @@ public class FileService extends Service {
                         @Override
                         public void onResponse(String s, int i) {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i("上传返回的map==", map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 file.delete();
                             } else {

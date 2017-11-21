@@ -9,7 +9,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -29,7 +28,7 @@ public class RealNameInfoActivity extends BaseActivity {
 
     @Override
     public void initTitleBar() {
-        setTitle("实名认证");
+        setTitle("实名认证信息");
         showBackwardView(true);
     }
 
@@ -52,7 +51,6 @@ public class RealNameInfoActivity extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getRealNameInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("加载中...");
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getRealNameInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -70,7 +68,6 @@ public class RealNameInfoActivity extends BaseActivity {
                         loadingDialog.dismiss();
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
 //                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 tvCertName.setText(map.get("ra_name").toString());

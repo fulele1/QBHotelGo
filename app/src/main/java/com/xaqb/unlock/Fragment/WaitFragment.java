@@ -17,9 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnItemLongClickListener;
@@ -51,6 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import okhttp3.Call;
 
 /**
@@ -259,7 +263,9 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     public void doError(Exception e) {
                         e.printStackTrace();
 //                        mLoadingDialog.dismiss();
-                        showToastB("网络访问异常");
+//                        showToastB("网络访问异常");
+                        Toast.makeText(instance, "网络访问异常", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override
@@ -267,7 +273,6 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                     }
                 }
-
         );
     }
 

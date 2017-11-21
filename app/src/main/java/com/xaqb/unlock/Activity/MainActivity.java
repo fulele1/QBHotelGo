@@ -40,7 +40,6 @@ import com.xaqb.unlock.Utils.CheckNetwork;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -82,7 +81,6 @@ public String late;
                     String sVersion = getVersionName();
                     String[] aData = FsRet.split(",");
 
-                    LogUtils.e(au_version.equals(getVersionName()) + "");
 
                     if (au_version.equals(getVersionName())) {
                         late ="yes";
@@ -136,16 +134,11 @@ public String late;
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    LogUtils.e("fsurl==", FsUrl);
                     String sRet = ProcUnit.httpGetMore(FsUrl);
                     if (!au_version.equals(null)) {
                         FsRet = sRet.substring(1);
                         FoHandler.sendMessage(M(0));
                     }
-//                    if (sRet.substring(0, 1).equals("0")) {
-//                        FsRet = sRet.substring(1);
-//                        FoHandler.sendMessage(M(0));
-//                    }
                     else {
                         //FsRet=sRet.substring(1);
                         FsRet = "获取版本信息错误，请与管理员联系！";
@@ -166,7 +159,6 @@ public String late;
 
 
         //网络访问看是否需要有
-        LogUtils.e(FsUrl.length() + "getVersion");
         if (FsUrl.length() < 6) {
             showMess("地址错误，请在系统设置中设置上传地址。", true);
             return;
@@ -201,21 +193,9 @@ public String late;
             oInt.setClass(this, UpdateActivity.class);
             oInt.putExtra("url", HttpUrlUtils.getHttpUrl().get_updata() + au_filename);
             oInt.putExtra("file", au_filename);
-            LogUtils.e(au_filename);
             startActivity(oInt);
     }
 
-
-    //    private SimpleImageBanner sib;
-//    private String[] imgUrl = {
-//            "http://pic39.nipic.com/20140312/10606030_144828215306_2.jpg",
-//            "http://p0.so.qhmsg.com/bdr/_240_/t017eb457951f1a17e0.jpg",
-//            "http://img.sootuu.com/Exchange/2009-11/20091120233536281.jpg",
-//            "http://pic4.nipic.com/20090919/3372381_123043464790_2.jpg"
-//    };
-//    private String[] titles = {
-//            "广告测试1", "广告测试2", "广告测试3", "广告测试4"
-//    };
     private boolean isQuit = false;
 
     private ImageView ivUser,ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName,ivMessage;
@@ -245,20 +225,16 @@ public String late;
         assignViews();
         initData();
         addListener();
-//        List<UserInfo> da = DataSupport.findAll(UserInfo.class);
-//        LogUtils.i(da.toString());
         initSlidingMenu(savedInstanceState);
         //阿里云推送绑定手机账号
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         pushService.bindAccount(SPUtils.get(instance, "userAccount", "").toString(), new CommonCallback() {
             @Override
             public void onSuccess(String s) {
-//                LogUtils.i("bindAccount------", "onSuccess");
             }
 
             @Override
             public void onFailed(String s, String s1) {
-//                LogUtils.i("bindAccount------", "onFailed");
             }
         });
         checkVerdion();//检查更新
@@ -274,22 +250,15 @@ public String late;
     private void checkVerdion() {
         //  请求连接网络 解析后 拿到版本号和版本名
         OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
-                .url(HttpUrlUtils.getHttpUrl().getPayDetail() + "?p=" + 1 + "&access_token=" + SPUtils.get(instance, "access_token", ""))
+                .url(HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        LogUtils.e("sssss" + e.toString());
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
-
-                        s = "{\"state\":0,\"mess\":\"\",\"table\":{\"au_id\":8,\"au_version\":\"1.4\"," +
-                                "\"au_last_version\":\"1.2\",\"au_is_constraint\":1,\"au_createtime\":1509958607," +
-                                "\"au_info\":\"优化数据，增减检查日志界面\",\"au_type\":2,\"au_filename\":\"police.apk\"}}\n";
-                        LogUtils.e("sss" + s);
                         Map<String, Object> map = GsonUtil.GsonToMaps(s);
                         if (map.get("state").toString().equals("1.0")) {
                             showMess(map.get("mess").toString(),true);
@@ -298,7 +267,8 @@ public String late;
                             Map<String, Object> data = GsonUtil.JsonToMap(GsonUtil.GsonString(map.get("table")));
                             au_version = data.get("au_version").toString();
                             au_last_version = data.get("au_last_version").toString();
-                            au_filename = data.get("au_filename").toString();
+                            au_filename = data.get("au_file_path").toString();//下载链接
+                            SPUtils.put(instance,"au_file_path",au_filename);
                             au_info = data.get("au_info").toString();
                             au_id = data.get("au_id").toString();
                             FsUrl = readConfig("url");
@@ -316,8 +286,6 @@ public String late;
 
                         }}
                 });
-
-
 
     }
 
@@ -344,7 +312,6 @@ public String late;
     private void checkRight() {
         if (!CheckNetwork
                 .isNetworkAvailable(MyApplication.instance)) {
-//            showMess("网络未连接", false);
             return;
         }
         new Thread(new Runnable() {
@@ -415,14 +382,6 @@ public String late;
 
 
     private void assignViews() {
-//        sib = (SimpleImageBanner) findViewById(R.id.sib_the_most_comlex_usage);
-//        sib.setOnItemClickL(new BaseBanner.OnItemClickL() {
-//            @Override
-//            public void onItemClick(int position) {
-//                Log.i("ccc", position + "");
-//            }
-//        });
-//        setNewsTabData();
         ivUser = (ImageView) findViewById(R.id.iv_user);
         ivMessage = (ImageView) findViewById(R.id.iv_message);
         ivSend = (ImageView) findViewById(R.id.iv_send_data);
@@ -432,7 +391,6 @@ public String late;
         ivSetting = (ImageView) findViewById(R.id.iv_setting);
         ivRealName = (ImageView) findViewById(R.id.iv_real_name);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
-//        btOrder = (Button) findViewById(R.id.bt_order);
         mCb = (ConvenientBanner) findViewById(R.id.cb_main);
 
     }
@@ -493,7 +451,6 @@ private List <Integer> mImageList;
                 return new CbHolder();
             }
         },mImageList)
-//                .setPageIndicator(new int[] {R.mipmap.pointn,R.mipmap.pointc})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
     }
 
@@ -526,37 +483,31 @@ private List <Integer> mImageList;
                 i = new Intent(instance, WillSendActivity.class);
                 startActivity(i);
                 break;
-            case R.id.iv_nearby_order:
-//                AnimationUtil.playButtonAnimation(ivNearby);
+            case R.id.iv_nearby_order://附近订单
                 Toast.makeText(instance, "正在研发中...", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_user_info://个人信息
                 i = new Intent(instance, UserInfoActivity.class);
                 startActivity(i);
                 break;
-            case R.id.iv_setting:
+            case R.id.iv_setting://信息采集
                 stopService(new Intent(instance, FileService.class));
                 i = new Intent(instance, CollectionInfoActivity.class);
                 startActivity(i);
                 break;
-            case R.id.iv_real_name:
+            case R.id.iv_real_name://实名认证
                 String status = SPUtils.get(instance, "staff_is_real", "").toString();
-                if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
-                    Toast.makeText(instance, status, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, RealNameActivity.class));
-//                    startActivity(new Intent(instance, RealNameActivityNew.class));
-                } else if (status.equals(Globals.staffIsRealSuc)) {
-                    Toast.makeText(instance, status, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, RealNameInfoActivity.class));
-                } else if (status.equals(Globals.staffIsRealIng)) {
-                    Toast.makeText(instance, status, Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, RealNameActivity.class));
 
+                if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
+                    Toast.makeText(instance, "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(instance, RealNameActivity.class));
+                } else if (status.equals(Globals.staffIsRealSuc)) {
+                    Toast.makeText(instance, "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(instance, RealNameInfoActivity.class));
+                } else if (status.equals(Globals.staffIsRealIng)) {
+                    Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
                 }
                 break;
-//            case R.id.bt_order:
-//                startActivity(new Intent(instance, OrderActivity.class));
-//                break;
         }
     }
 
@@ -620,7 +571,7 @@ private List <Integer> mImageList;
         super.onResume();
         startService(new Intent(instance, FileService.class));
         MobclickAgent.onResume(this);
-        checkVerdion();//检查更新
+//        checkVerdion();//检查更新
     }
 
     @Override

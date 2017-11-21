@@ -6,7 +6,6 @@ import android.util.Log;
 import com.alibaba.sdk.android.push.MessageReceiver;
 import com.alibaba.sdk.android.push.notification.CPushMessage;
 import com.xaqb.unlock.Utils.GsonUtil;
-import com.xaqb.unlock.Utils.LogUtils;
 
 import java.util.Map;
 
@@ -34,7 +33,6 @@ public class MyMessageReceiver extends MessageReceiver {
         //MyMessageReceiver: onMessage, messageId: f__-pE1twmsXyDiR|20170428111940154ufy|V4i2SIhM3zcDALCoPUmjHeN1, title: 0428MessageTest-1, content:{"title":"biaoti","message":"neirong","good":"good"}
         try {
             Map<?, ?> map = GsonUtil.JsonToMap(cPushMessage.getContent());
-            LogUtils.i(map.toString());
             if (map.get("status").toString().equals("1")) {
 
             }

@@ -17,7 +17,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -131,7 +130,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
             public void run() {
                 while (!isPaySuc) {
                     try {
-                        LogUtils.i("查询支付返回结果第-" + payNetWordTimes + "-次");
                         //访问接口次数大于5，认为支付失败，待用户手动刷新订单信息
                         if (payNetWordTimes > 5) {
                             isPaySuc = true;
@@ -301,7 +299,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                     Bundle bundle = data.getExtras();
                     if (bundle != null) {
                         scanResult = bundle.getString("result");
-                        LogUtils.i(scanResult);
 //                        et.setText(scanResult);
                         progressDialog.setMessage("正在支付，请稍后...");
                         progressDialog.setCanceledOnTouchOutside(false);
@@ -337,7 +334,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "/cash/" + price + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "/cash/" + price + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
@@ -351,7 +347,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                     public void onResponse(String s, int i) {
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
 //                                btPayCash.setVisibility(View.GONE);
 //                                btPayOnline.setText("已经支付");
@@ -387,7 +382,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayResult() + "opid/" + apId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayResult() + "opid/" + apId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
@@ -408,7 +402,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                     public void onResponse(String s, int i) {
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
 //                                btPayCash.setVisibility(View.GONE);
 //                                btPayOnline.setVisibility(View.GONE);
@@ -457,7 +450,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
             return;
         }
         loadingDialog.show("正在支付...");
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "/cash/" + price + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "/cash/" + price + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
@@ -474,7 +466,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                         try {
                             loadingDialog.dismiss();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 showToast("支付成功");
                                 finish();

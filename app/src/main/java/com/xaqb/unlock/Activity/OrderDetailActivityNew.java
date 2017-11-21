@@ -19,7 +19,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -117,7 +116,6 @@ public class OrderDetailActivityNew extends BaseActivity {
             public void run() {
                 while (!isPaySuc) {
                     try {
-                        LogUtils.i("查询支付返回结果第-" + payNetWordTimes + "-次");
                         //访问接口次数大于5，认为支付失败，待用户手动刷新订单信息
                         if (payNetWordTimes > 5) {
                             isPaySuc = true;
@@ -151,7 +149,6 @@ public class OrderDetailActivityNew extends BaseActivity {
             return;
         }
         loadingDialog.show("加载中...");
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         QBHttp.get(instance,
                 HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""),
                 null,
@@ -160,7 +157,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 List<Map<String, Object>> paydetail = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("paydetail")));
                                 tvOrderId.setText(map.get("or_orderno").toString());
@@ -193,7 +189,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                                     PayRecordAdapter adapter = new PayRecordAdapter(instance, incomeInfos);
                                     lvPayRecord.setAdapter(adapter);
                                 }
-                                LogUtils.i("incomeinfo == ", incomeInfos.toString());
 
                                 if (payStatus.equals("00")) {
                                     payStatus = "00";
@@ -312,7 +307,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     Bundle bundle = data.getExtras();
                     if (bundle != null) {
                         scanResult = bundle.getString("result");
-                        LogUtils.i(scanResult);
 //                        et.setText(scanResult);
                         progressDialog.setMessage("正在支付，请稍后...");
                         progressDialog.setCanceledOnTouchOutside(false);
@@ -332,7 +326,6 @@ public class OrderDetailActivityNew extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         QBHttp.get(instance,
                 HttpUrlUtils.getHttpUrl().getPayOnline() + "orderid/" + orderId + "/barcode/" + scanResult + "?access_token=" + SPUtils.get(instance, "access_token", ""),
                 null,
@@ -340,7 +333,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     @Override
                     public void doWork(Map<?, ?> map) {
                         try {
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
 //                                btPayCash.setVisibility(View.GONE);
 //                                btPayOnline.setText("已经支付");
@@ -389,7 +381,6 @@ public class OrderDetailActivityNew extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayResult() + "opid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         QBHttp.get(instance,
                 HttpUrlUtils.getHttpUrl().getPayResult() + "opid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""),
                 null,
@@ -397,7 +388,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     @Override
                     public void doWork(Map<?, ?> map) {
                         try {
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 myHandler.sendEmptyMessage(101);
                                 progressDialog.dismiss();
@@ -457,7 +447,6 @@ public class OrderDetailActivityNew extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         QBHttp.get(instance,
                 HttpUrlUtils.getHttpUrl().getPayCash() + "orderid/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""),
                 null,
@@ -465,7 +454,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     @Override
                     public void doWork(Map<?, ?> map) {
                         try {
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();

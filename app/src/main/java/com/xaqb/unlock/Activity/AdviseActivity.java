@@ -11,7 +11,6 @@ import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -97,7 +96,6 @@ public class AdviseActivity extends BaseActivity {
         } else if (advise == null || advise.equals("")) {
             showToast("请输入意见或建议后再提交");
         } else {
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在提交");
             try {
                 Map<String, Object> map = new HashMap<>();

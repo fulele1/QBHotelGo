@@ -19,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnItemLongClickListener;
@@ -188,7 +189,6 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
 //                        mLoadingDialog.dismiss();
                         try {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 if (data == null || data.size() == 0) {
                                     addItems(sendOrders);
@@ -197,8 +197,6 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                                     mSwipeRefreshLayout.setRefreshing(false);
                                     return;
                                 }
-                                LogUtils.i("curr = ", map.get("curr").toString());
-                                LogUtils.i("data = ", data.toString());
                                 TOTAL_COUNTER = Integer.parseInt(map.get("page").toString());
                                 sendOrders = new ArrayList<>();
                                 SendOrder sendOrder;
@@ -251,7 +249,9 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                     public void doError(Exception e) {
                         e.printStackTrace();
 //                        mLoadingDialog.dismiss();
-                        showToastB("网络访问异常");
+//                        showToastB("网络访问异常");
+                        Toast.makeText(instance, "网络访问异常", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override

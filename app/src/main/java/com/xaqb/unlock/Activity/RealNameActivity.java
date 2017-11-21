@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xaqb.unlock.R;
@@ -27,7 +27,6 @@ import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.IDCardUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -35,9 +34,13 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
+import butterknife.ButterKnife;
 import okhttp3.Call;
 
 
@@ -46,26 +49,26 @@ import okhttp3.Call;
  * 实名认证页面
  */
 public class RealNameActivity extends BaseActivity {
+    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
+    String[] types = {"身份证", "驾照", "户口本", "军官证", "士兵证", "警官证", "国内护照", "港澳通行证", "其他"};
+    String[] sex = {"男", "女"};
+    String[] nations = {"汉族"};
+
     private RealNameActivity instance;
-    private EditText etRealName, etCardNum, etCardNation, etAge;
-    //    private ImageView ivCardPic;
+    private EditText etRealName, etCardNum,etAge;
     private ImageView ivCertPic, ivFacePic;
     private Button btSubmit;
     private WindowManager.LayoutParams params;
-    //    private PopupWindow popupWindow;
     private View layout, vPart; // pop的布局
     private LayoutInflater inflater;
     private Bitmap head;
     private RelativeLayout rlName, rlPicFromSdcard, rlTakePic, rlCancle;
     private boolean isShow;
-    private String type, realName, cardNum, cardSex, cardNation, cardAge, certPicPath="", facePicPath="",sexx;
-    private Spinner spType, spSex;
-    private ArrayAdapter spinnerAdapter,spinnerSexAdapter;
-    String[] types = {"身份证", "驾照", "户口本", "军官证", "士兵证", "警官证", "国内护照", "港澳通行证", "其他"};
-    String[] sex = {"男", "女"};
+    private String type, realName, cardNum, cardSex, cardNation, cardAge, certPicPath = "", facePicPath = "", sexx;
+    private Spinner spType, spSex,spNation;
+    private ArrayAdapter spinnerAdapter, spinnerSexAdapter,spinnerNationAdapter;
     private int requestCoede = 0;
     private File temp;
-    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
 
     @Override
     public void initTitleBar() {
@@ -86,17 +89,18 @@ public class RealNameActivity extends BaseActivity {
         etCardNum = (EditText) findViewById(R.id.et_card_num);
         spSex = (Spinner) findViewById(R.id.sp_sex);
         etAge = (EditText) findViewById(R.id.et_card_age);
-        etCardNation = (EditText) findViewById(R.id.et_card_nation);
         ivCertPic = (ImageView) findViewById(R.id.iv_cert_pic);
         ivFacePic = (ImageView) findViewById(R.id.iv_face_pic);
         btSubmit = (Button) findViewById(R.id.bt_submit);
         spType = (Spinner) findViewById(R.id.sp_type);
+        spNation = (Spinner) findViewById(R.id.sp_nation);//选择民族
     }
 
     @Override
     public void initData() {
         spinnerAdapter = new ArrayAdapter(instance, R.layout.item_spinner, types);
         spinnerSexAdapter = new ArrayAdapter(instance, R.layout.item_spinner, sex);
+        spinnerNationAdapter = new ArrayAdapter(instance, R.layout.item_spinner, nations);
         spType.setAdapter(spinnerAdapter);
         spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -126,7 +130,20 @@ public class RealNameActivity extends BaseActivity {
             }
         });
 
+        spNation.setAdapter(spinnerNationAdapter);
+        spNation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ArrayAdapter<String> adapter = (ArrayAdapter<String>) adapterView.getAdapter();
+//                cardNation = adapter.getItem(i);
+                cardNation = "01";
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                cardNation = "";
+            }
+        });
     }
 
     @Override
@@ -139,17 +156,6 @@ public class RealNameActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.iv_card_pic:
-//                if (!isShow) {
-//                    // 弹出照片选择
-//                    params.alpha = 0.7f;
-//                    getWindow().setAttributes(params);
-//                    popupWindow.showAtLocation(findViewById(R.id.ll_approve_main), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
-//                            0, 0);
-//                } else {
-//                    showDialog("提示", "重新选择照片吗？", "确定", "取消", 0);
-//                }
-//                break;
             case R.id.iv_cert_pic:
                 requestCoede = 0;
                 checkPer(PermissionUtils.CODE_CAMERA);
@@ -163,8 +169,7 @@ public class RealNameActivity extends BaseActivity {
                 realName = etRealName.getText().toString().trim();
                 cardNum = etCardNum.getText().toString().trim();
                 cardSex = spSex.getSelectedItem().toString().trim();
-                cardNation = etCardNation.getText().toString().trim();
-                cardAge = etCardNation.getText().toString().trim();
+                cardAge = etAge.getText().toString().trim();
                 if (type == null || type.equals("")) {
                     showToast("请选择证件类型");
                 } else if (realName == null || realName.equals("")) {
@@ -237,7 +242,6 @@ public class RealNameActivity extends BaseActivity {
             cardSex = "0";
         }
         btSubmit.setEnabled(false);
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getRealNameUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("正在提交");
         OkHttpUtils
                 .post()
@@ -267,7 +271,6 @@ public class RealNameActivity extends BaseActivity {
                             loadingDialog.dismiss();
                             btSubmit.setEnabled(true);
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 switch (map.get("state").toString()) {
                                     case "0":
@@ -315,7 +318,6 @@ public class RealNameActivity extends BaseActivity {
         intent2.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(temp));
         startActivityForResult(intent2, 2);// 采用ForResult打开
     }
-
 
     /**
      * 判断sdcard是否被挂载
@@ -424,7 +426,6 @@ public class RealNameActivity extends BaseActivity {
         if (f.exists()) {
             f.delete();
         }
-
         super.onDestroy();
     }
 }

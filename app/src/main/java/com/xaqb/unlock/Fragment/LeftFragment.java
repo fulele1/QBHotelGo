@@ -26,6 +26,7 @@ import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.MainActivity;
 import com.xaqb.unlock.Activity.MyOrderActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
+import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
 import com.xaqb.unlock.Activity.UpdateActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
@@ -100,15 +101,14 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
 //                        break;
                     case 4: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
-                        LogUtils.e("状态"+status);
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                         Toast.makeText(getActivity(), "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), RealNameActivity.class));
                         } else if (status.equals(Globals.staffIsRealSuc)) {
                             Toast.makeText(getActivity(), "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(getActivity(), RealNameActivity.class));
+                            startActivity(new Intent(getActivity(), RealNameInfoActivity.class));
                         } else if (status.equals(Globals.staffIsRealIng)) {
-                            Toast.makeText(getActivity(), "正在认证中！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 5: // 关于我们

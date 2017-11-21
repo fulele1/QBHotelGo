@@ -50,7 +50,6 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -253,7 +252,6 @@ public class OrderActivity extends BaseActivity {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date(amapLocation.getTime());
                     df.format(date);//定位时间
-                    LogUtils.i("定位", "经度---" + longitude + "纬度---" + latitude);
                     etUnlockAddress.setText(amapLocation.getAddress());
                     etUnlockAddress.setEnabled(false);
                     if (mlocationClient.isStarted())
@@ -751,7 +749,6 @@ public class OrderActivity extends BaseActivity {
     private void order() {
 
         btComplete.setEnabled(false);
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("正在下单");
         StringBuffer imageString = new StringBuffer("");
         for (int i = 0; i < images.size(); i++) {
@@ -760,7 +757,6 @@ public class OrderActivity extends BaseActivity {
         if (imageString.toString().endsWith(",")) {
             imageString.deleteCharAt(imageString.length() - 1);
         }
-        LogUtils.i(imageString.toString());
         OkHttpUtils
                 .post()
                 .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -802,7 +798,6 @@ public class OrderActivity extends BaseActivity {
                             loadingDialog.dismiss();
                             btComplete.setEnabled(true);
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 showToast("下单成功");
                                 Intent intent = new Intent(instance,PayActivity.class);
@@ -852,7 +847,6 @@ public class OrderActivity extends BaseActivity {
         datas.put("city", "");
         datas.put("district", "");
         String jsonStr = GsonUtil.GsonString(datas);
-        LogUtils.i(jsonStr);
         String fileName = "咚咚开锁 -" + userName + "-" + unlockAddress + "-" + etUnlcokTime.getText().toString() + ".txt";
         if (SDCardUtils.writeNewFile(instance.getFilesDir().getAbsolutePath() + "/" + fileName, jsonStr)) {
             showToast("保存数据成功，等待上传");
@@ -933,7 +927,6 @@ public class OrderActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
-                LogUtils.i("执行一次身份证读取");
                 idCardInfo = idReader.ReadAllCardInfo(new String[1]);
 
                 if (idCardInfo != null) {

@@ -34,7 +34,7 @@ public class MyApplication extends Application {
         instance = getApplicationContext();
         CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new LoggerInterceptor("unlock"))
+                .addInterceptor(new LoggerInterceptor("qbunlock"))
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 //其他配置

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.github.jdsjlzx.interfaces.OnItemLongClickListener;
@@ -34,14 +35,11 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.LuRecycleView1229.ListBaseAdapter;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,18 +192,14 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                     public void doWork(Map<?, ?> map) {
                         try {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 if (data == null || data.size() == 0) {
                                     addItems(sendOrders);
                                     notifyDataSetChanged();
                                     ivNoData.setVisibility(View.VISIBLE);
                                     mSwipeRefreshLayout.setRefreshing(false);
-                                    LogUtils.i("暂无数据");
                                     return;
                                 }
-                                LogUtils.i("curr = ", map.get("curr").toString());
-                                LogUtils.i("data = ", data.toString());
                                 TOTAL_COUNTER = Integer.parseInt(map.get("page").toString());
                                 sendOrders = new ArrayList<>();
                                 SendOrder sendOrder;
@@ -258,7 +252,9 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                     public void doError(Exception e) {
                         e.printStackTrace();
 //                        mLoadingDialog.dismiss();
-                        showToastB("网络访问异常");
+
+                        Toast.makeText(instance, "网络访问异常", Toast.LENGTH_SHORT).show();
+//                        showToastB("网络访问异常");
                     }
 
                     @Override

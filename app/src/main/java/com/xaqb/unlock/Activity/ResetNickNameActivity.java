@@ -10,7 +10,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -87,7 +86,6 @@ public class ResetNickNameActivity extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "").toString() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
         loadingDialog.show("正在修改");
         Map<String, String> map = new HashMap<>();
         map.put("nickname", nickName);
@@ -102,7 +100,6 @@ public class ResetNickNameActivity extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 SPUtils.put(instance, "staff_nickname", nickName);
                                 showToast("修改昵称成功");

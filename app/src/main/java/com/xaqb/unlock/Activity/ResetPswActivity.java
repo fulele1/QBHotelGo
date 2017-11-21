@@ -9,7 +9,6 @@ import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -89,7 +88,6 @@ public class ResetPswActivity extends BaseActivity {
         } else if (!newPsw.equals(confirmPsw)) {
             showToast("两次输入的密码不一致");
         } else {
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getResetPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在修改");
             Map<String, Object> params = new HashMap<>();
             params.put("old_pwd", oldPsw);

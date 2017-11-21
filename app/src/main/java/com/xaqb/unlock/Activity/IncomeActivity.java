@@ -22,7 +22,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.LuRecycleView1229.ListBaseAdapter;
@@ -148,7 +147,6 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getPayDetail() + "?p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""));
         loadingDialog.show("加载中...");
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().getPayDetail() + "?p=" + index + "&access_token=" + SPUtils.get(instance, "access_token", ""))
@@ -164,22 +162,16 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
                     public void onResponse(String s, int i) {
                         loadingDialog.dismiss();
                         try {
-                            LogUtils.i(s);
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 if (data == null || data.size() == 0) {
                                     addItems(incomeInfos);
                                     notifyDataSetChanged();
                                     ivNoData.setVisibility(View.VISIBLE);
                                     mSwipeRefreshLayout.setRefreshing(false);
-                                    LogUtils.i("暂无数据");
                                     return;
                                 }
-                                LogUtils.i("curr = ", map.get("curr").toString());
-                                LogUtils.i("data = ", data.toString());
                                 TOTAL_COUNTER = Integer.parseInt(map.get("page").toString());
                                 incomeInfos = new ArrayList<>();
                                 IncomeInfo info;

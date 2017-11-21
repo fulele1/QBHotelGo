@@ -10,7 +10,6 @@ import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -98,12 +97,10 @@ public class BackPswActivity extends BaseActivity {
         } else if (!psw.equals(confirmPsw)) {
             showToast("两次输入的密码不一致");
         } else {
-            LogUtils.i(codeKey);
             if (codeKey == null || codeKey.equals("")) {
                 showToast("验证码失效，请重新获取验证码");
                 return;
             }
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getBackPswUrl());
             loadingDialog.show("正在修改");
             OkHttpUtils
                     .post()
@@ -124,7 +121,6 @@ public class BackPswActivity extends BaseActivity {
                         public void onResponse(String s, int i) {
                             try {
                                 loadingDialog.dismiss();
-                                LogUtils.i(s);
                                 Map<String, Object> map = GsonUtil.JsonToMap(s);
                                 if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                     showToast("找回密码成功");
@@ -150,7 +146,6 @@ public class BackPswActivity extends BaseActivity {
         if (phone == null || phone.equals("")) {
             showToast("请输入手机号码");
         } else {
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getVerCode() + "/" + phone);
             loadingDialog.show("正在获取验证码");
             OkHttpUtils
                     .post()
@@ -173,7 +168,6 @@ public class BackPswActivity extends BaseActivity {
                                     return;
                                 }
                                 time.start();
-                                LogUtils.i(GsonUtil.GsonString(map.get("table")).toString());
                                 codeKey = map.get("table").toString();
                                 if (codeKey.contains("\"")) {
                                     codeKey = codeKey.substring(1, codeKey.length() - 1).toString();

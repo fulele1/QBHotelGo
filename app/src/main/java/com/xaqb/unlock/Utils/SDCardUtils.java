@@ -106,7 +106,6 @@ public class SDCardUtils {
 
         } catch (Exception e) {
             e.printStackTrace();
-            LogUtils.i("saveBmp", e.getMessage());
         }
     }
 

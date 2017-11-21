@@ -29,7 +29,6 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -161,7 +160,6 @@ public class CollectionInfoActivity extends BaseActivity {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     Date date = new Date(amapLocation.getTime());
                     df.format(date);//定位时间
-                    LogUtils.i("定位", "经度---" + longitude + "纬度---" + latitude);
                     etUnlockAddress.setText(amapLocation.getAddress());
                     etUnlockAddress.setEnabled(false);
                     if (mlocationClient.isStarted())
@@ -241,7 +239,6 @@ public class CollectionInfoActivity extends BaseActivity {
         if (!dir.exists()) {
             dir.mkdir();
         }
-
         Bitmap bitmap = ImageDispose.caculateInSampleSize(path, 480, 800); //将图片的长和宽缩小
 
         /**
@@ -258,7 +255,6 @@ public class CollectionInfoActivity extends BaseActivity {
         }
         File oldFile = new File(path);
         if (oldFile.exists()) {
-//            Logger.d(" oldFile.delete()=" + oldFile.delete());
             Intent intent_delete = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri uri_delete = Uri.fromFile(oldFile);
             intent.setData(uri_delete);
@@ -267,7 +263,6 @@ public class CollectionInfoActivity extends BaseActivity {
         getImage(PHOTO_COMM_NAME);
 
     }
-
 
     public void getImage(String path) {
         switch (requestCoede) {
@@ -289,8 +284,6 @@ public class CollectionInfoActivity extends BaseActivity {
         }
     }
 
-
-
     private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
 
     @Override
@@ -309,9 +302,7 @@ public class CollectionInfoActivity extends BaseActivity {
                     public void onResponse(String s, int i) {
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                LogUtils.i("login===", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 //然后通过比较器来实现排序
                                 Collections.sort(data, new Comparator<Map<String, Object>>() {
@@ -320,10 +311,7 @@ public class CollectionInfoActivity extends BaseActivity {
                                         return t1.get("lt_code").toString().compareTo(t2.get("lt_code").toString());
                                     }
                                 });
-//                                LogUtils.i(data.toString());
                                 for (int j = 0; j < data.size(); j++) {
-//                                LogUtils.i(data.get(j).toString());
-//                                    typeNum[j] = data.get(j).get("lt_code").toString();
                                     lockTypes[j] = data.get(j).get("lt_code").toString() + "-" + data.get(j).get("lt_name").toString();
 
                                 }
@@ -346,9 +334,7 @@ public class CollectionInfoActivity extends BaseActivity {
         ivFacePic.setOnClickListener(instance);
         ivOtherFacePic.setOnClickListener(instance);
         ivLockPic.setOnClickListener(instance);
-//        ivZxing.setOnClickListener(instance);
         ivCertScan.setOnClickListener(instance);
-//        llReceiverInfo.setOnClickListener(instance);
 
         lockTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -373,7 +359,6 @@ public class CollectionInfoActivity extends BaseActivity {
                     default:
                         break;
                 }
-//                etLockType.setText(goodsType);
             }
 
             @Override
@@ -382,14 +367,6 @@ public class CollectionInfoActivity extends BaseActivity {
             }
         });
     }
-
-//    // 弹出照片选择框
-//    private void showPopwindow() {
-//        params.alpha = 0.7f;
-//        getWindow().setAttributes(params);
-//        popupWindow.showAtLocation(findViewById(R.id.ll_order_main), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
-//                0, 0);
-//    }
 
     @Override
     public void onClick(View v) {
@@ -407,7 +384,6 @@ public class CollectionInfoActivity extends BaseActivity {
                     break;
                 case R.id.iv_cert_pic://身份证照片
 //                    readIDCard();
-                    //0801修改身份证读取方法
                     scanCert();
                     break;
                 case R.id.iv_lock_pic://锁具照片
@@ -425,8 +401,6 @@ public class CollectionInfoActivity extends BaseActivity {
                     otherPhone = etOtherPhone.getText().toString().trim();
                     otherRemark = etOtherRemark.getText().toString().trim();
                     unlockAddress = etUnlockAddress.getText().toString().trim();
-
-
                     lockType = lockTypeSpinner.getSelectedItem().toString();
                     if (lockType != null && lockType.contains("-")) {
                         lockType = lockType.substring(0, lockType.indexOf("-"));
@@ -452,8 +426,6 @@ public class CollectionInfoActivity extends BaseActivity {
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {
                         showToast("请拍摄门锁照片");
-//                    }else if (!textNotEmpty(imagePath3)) {
-//                        showToast("请拍摄人脸照片");
                     } else {
                         try {
                             order();
@@ -477,7 +449,6 @@ public class CollectionInfoActivity extends BaseActivity {
     private void order() {
         try {
             btComplete.setEnabled(false);
-            LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
             loadingDialog.show("正在下单");
             StringBuffer imageString = new StringBuffer("");
             for (int i = 0; i < images.size(); i++) {
@@ -486,14 +457,12 @@ public class CollectionInfoActivity extends BaseActivity {
             if (imageString.toString().endsWith(",")) {
                 imageString.deleteCharAt(imageString.length() - 1);
             }
-            LogUtils.i(imageString.toString());
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                     .addParams("longitude", longitude + "")
                     .addParams("latitude", latitude + "")
                     .addParams("price", unlockPay)
-//                    .addParams("remark", "")
                     .addParams("staffid", SPUtils.get(instance, "userid", "").toString())
                     .addParams("username", userName)
                     .addParams("tpname", otherName)//第三方姓名
@@ -514,10 +483,7 @@ public class CollectionInfoActivity extends BaseActivity {
                     .addParams("city", "")
                     .addParams("district", "")
                     .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))
-
-//                .addParams("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80))
                     .build()
-
                     .execute(new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int i) {
@@ -534,19 +500,15 @@ public class CollectionInfoActivity extends BaseActivity {
                                 loadingDialog.dismiss();
                                 btComplete.setEnabled(true);
                                 Map<String, Object> map = GsonUtil.JsonToMap(s);
-                                LogUtils.i(map.toString());
                                 if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                     showToast("下单成功");
-//                                    Intent intent = new Intent(instance, PayActivity.class);
                                     Intent intent = new Intent(instance, PayActivityNew.class);
                                     intent.putExtra("or_id", map.get("table").toString());
                                     intent.putExtra("total_price", unlockPay);
                                     intent.putExtra("pay_price", "0");
                                     startActivity(intent);
-//                                LogUtils.i(map.get("table").toString());
                                     finish();
                                 } else {
-//                            showToast(map.get("mess").toString());
                                     saveJson();
                                     return;
                                 }
@@ -585,8 +547,6 @@ public class CollectionInfoActivity extends BaseActivity {
         datas.put("usersex", "");
         datas.put("idaddress", "");
         datas.put("usernation", "");
-//        datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
-//        datas.put("faceimg", Base64Utils.photoToBase64(bitmapRealFace, 80));
         datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
         datas.put("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80));
         datas.put("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 80));
@@ -596,7 +556,6 @@ public class CollectionInfoActivity extends BaseActivity {
         datas.put("city", "");
         datas.put("district", "");
         String jsonStr = GsonUtil.GsonString(datas);
-        LogUtils.i(jsonStr);
         String fileName = "咚咚开锁 -" + userName + "-" + unlockAddress + "-" + etUnlcokTime.getText().toString() + ".txt";
         if (SDCardUtils.writeNewFile(instance.getFilesDir().getAbsolutePath() + "/" + fileName, jsonStr)) {
             showToast("保存数据成功，等待上传");
@@ -604,7 +563,6 @@ public class CollectionInfoActivity extends BaseActivity {
         } else {
             showToast("保存数据失败");
         }
-
     }
 
     @Override
@@ -617,17 +575,13 @@ public class CollectionInfoActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-//        releaseCardReader(true);// 释放读卡
         super.onDestroy();
-//        stopTimerTask();
-//        unregisterReceiver(addressBroadcastReceiver);
     }
 
     @Override
     protected void dialogOk() {
         super.dialogOk();
         isReadCard = false;
-//        startTimerTask();
     }
 
     @Override

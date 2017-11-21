@@ -26,7 +26,6 @@ import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
@@ -104,7 +103,6 @@ public class UserInfoActivity extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 url = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("staff_headpic").toString();
                                 nickname = map.get("staff_nickname").toString();
@@ -388,7 +386,6 @@ public class UserInfoActivity extends BaseActivity {
             showToast(getResources().getString(R.string.network_not_alive));
             return;
         }
-        LogUtils.i(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "").toString() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
         loadingDialog.show("正在修改");
         Map<String, String> map = new HashMap<>();
         map.put("headpic", s);
@@ -401,7 +398,6 @@ public class UserInfoActivity extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             loadingDialog.dismiss();
-                            LogUtils.e(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 ivPic.setImageBitmap(head);// 用ImageView显示出来
                                 PermissionUtils.requestPermission(instance, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
