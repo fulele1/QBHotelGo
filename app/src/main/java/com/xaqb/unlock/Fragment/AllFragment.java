@@ -210,7 +210,7 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                                     sendOrder.setOrderTime(data.get(j).get("or_createtime").toString());
                                     sendOrder.setOrderID(data.get(j).get("or_id").toString());
                                     sendOrder.setOrderPayStatus(data.get(j).get("or_paystatus").toString());
-                                    sendOrder.setPicUrl(HttpUrlUtils.getHttpUrl().getBaseUrl()+data.get(j).get("or_lockimg").toString());
+                                    sendOrder.setPicUrl(data.get(j).get("or_lockimg").toString());
                                     sendOrders.add(sendOrder);
                                 }
                                 if (sendOrders.size() == 0) {

@@ -359,7 +359,9 @@ public class CollectionInfoActivity extends BaseActivity {
                     default:
                         break;
                 }
+
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -472,10 +474,10 @@ public class CollectionInfoActivity extends BaseActivity {
                     .addParams("useraddress", unlockAddress)
                     .addParams("locktype", lockType)
                     .addParams("certcode", userCertNum)
-                    .addParams("certimg", Base64Utils.photoToBase64(bitmapCert, 80))
-                    .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80))
-                    .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80))
-                    .addParams("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 80))//第三方照片
+                    .addParams("certimg", Base64Utils.photoToBase64(bitmapCert, 60))
+                    .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 60))
+                    .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 60))
+                    .addParams("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 60))//第三方照片
                     .addParams("usersex", "")
                     .addParams("idaddress", "")
                     .addParams("usernation", "")

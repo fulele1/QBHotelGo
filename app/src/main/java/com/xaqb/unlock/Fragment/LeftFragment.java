@@ -150,7 +150,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         lvLeftMenu.setAdapter(new LeftMenuListAdapter(getActivity()));
-        url = HttpUrlUtils.getHttpUrl().getBaseUrl()+SPUtils.get(getActivity(), "staff_headpic", "").toString();
+        url = SPUtils.get(getActivity(), "staff_headpic", "").toString();
         nickname = SPUtils.get(getActivity(), "staff_nickname", "").toString();
         if (nickname != null && !nickname.equals(""))
             tvNickName.setText(nickname);

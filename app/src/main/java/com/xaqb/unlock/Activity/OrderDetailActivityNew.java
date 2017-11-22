@@ -201,11 +201,11 @@ public class OrderDetailActivityNew extends BaseActivity {
                                     btPayStatus.setText("未付清");
                                 }
 
-                                String imageUrl = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("or_faceimg").toString();
+                                String imageUrl = map.get("or_faceimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivFace, imageUrl);
                                 }
-                                imageUrl = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("or_lockimg").toString();
+                                imageUrl = map.get("or_lockimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivLock, imageUrl);
                                 }

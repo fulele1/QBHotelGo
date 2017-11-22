@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -104,7 +105,7 @@ public class UserInfoActivity extends BaseActivity {
                         try {
                             loadingDialog.dismiss();
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                url = HttpUrlUtils.getHttpUrl().getBaseUrl()+map.get("staff_headpic").toString();
+                                url = map.get("staff_headpic").toString();
                                 nickname = map.get("staff_nickname").toString();
                                 phone = map.get("staff_mp").toString();
                                 company = map.get("staff_company").toString();
@@ -255,31 +256,18 @@ public class UserInfoActivity extends BaseActivity {
         }
     }
 
-
+    /**
+     * 加载图片
+     */
     private void loadUserPic() {
         if (!checkNetwork()) return;
-        if (url != null && !url.equals(""))
-            OkHttpUtils
-                    .get()
-                    .url(url)
-                    .build()
-                    .execute(new BitmapCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int i) {
-                            e.printStackTrace();
-                        }
-
-                        @Override
-                        public void onResponse(Bitmap bitmap, int i) {
-                            try {
-                                ivPic.setImageBitmap(bitmap);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                ivPic.setImageResource(R.mipmap.ic_launcher);
-                            }
-                        }
-                    });
-
+        if (url != null && !url.equals("")){
+            Picasso.with(instance)
+                    .load(url)
+                    .placeholder(R.mipmap.nothing_pic)
+                    .error(R.mipmap.failed_pic)
+                    .into(ivPic);
+        }
     }
 
     /**
@@ -426,43 +414,6 @@ public class UserInfoActivity extends BaseActivity {
 
                     }
                 });
-//        OkHttpUtils
-//                .put()
-//                .url(HttpUrlUtils.getHttpUrl().getUpdataUserinfoUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
-//                .requestBody(body)
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        loadingDialog.dismiss();
-//                        showToast("网络访问异常");
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            loadingDialog.dismiss();
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                ivPic.setImageBitmap(head);// 用ImageView显示出来
-//                                PermissionUtils.requestPermission(instance, PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE, mPermissionGrant);
-//                                isPicChange = true;
-////                        Map<String, Object> map1 = GsonUtil.GsonToMaps(GsonUtil.GsonString(map.get("mess")));
-////                        SPUtils.put(instance, "userheadpic", map1.get("userheadpic"));
-////                        showToast("同步头像到服务器成功");
-//                                //再次请求网络，重新获取最新的头像和昵称
-//                                initData();
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
     }
 
 
@@ -471,13 +422,10 @@ public class UserInfoActivity extends BaseActivity {
         public void onPermissionGranted(int requestCode) {
             switch (requestCode) {
                 case PermissionUtils.CODE_RECORD_AUDIO:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_RECORD_AUDIO", Toast.LENGTH_SHORT).show();
                     break;
                 case PermissionUtils.CODE_GET_ACCOUNTS:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_GET_ACCOUNTS", Toast.LENGTH_SHORT).show();
                     break;
                 case PermissionUtils.CODE_READ_PHONE_STATE:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_READ_PHONE_STATE", Toast.LENGTH_SHORT).show();
                     break;
                 case PermissionUtils.CODE_CALL_PHONE:
 //                    Toast.makeText(instance, "Result Permission Grant CODE_CALL_PHONE", Toast.LENGTH_SHORT).show();
