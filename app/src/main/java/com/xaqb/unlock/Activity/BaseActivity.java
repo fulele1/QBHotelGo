@@ -35,17 +35,35 @@ import java.io.File;
 
 
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+    // 加载数据对话框
+    public LoadingDialog loadingDialog;
+    protected String FsAppPath = "";
+    protected String[] FaDialogList = {};//对话列表框列表的内容
+    /**
+     * 自定义对话框
+     *
+     * @param context
+     * @param title
+     * @param message
+     * @param ok
+     * @param no
+     * @return
+     */
+    AlertDialog alertDialog;
     private TextView tv_title;
     private ImageView iv_backward;
     private TextView tv_forward;
     private FrameLayout mContentLayout;
     private LinearLayout llRoot;
     private FrameLayout layout_titlebar;
-    protected String FsAppPath = "";
-    protected String[] FaDialogList = {};//对话列表框列表的内容
     private LinearLayout mLyStatus;//状态栏
     private Boolean iskitkat;
-
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            requestPerPass(requestCode);
+        }
+    };
 
     public String readConfig(String sName) {
 
@@ -61,22 +79,16 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     }
 
-
-
-    // 加载数据对话框
-    public LoadingDialog loadingDialog;
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT&&Build.VERSION.SDK_INT > 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT > 21) {
             // 透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             // 透明导航栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }else if (Build.VERSION.SDK_INT >= 21){
+        } else if (Build.VERSION.SDK_INT >= 21) {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -86,7 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             getWindow().setStatusBarColor(Color.TRANSPARENT);//设置顶部状态栏颜色，当前设置透明色
         }
 
-            try {
+        try {
             ActivityController.addActivity(this);
             loadingDialog = new LoadingDialog(this);
             setupViews();
@@ -99,8 +111,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             e.printStackTrace();
         }
     }
-
-
 
     /**
      * 加载 activity_title 布局 ，并获取标题及两侧按钮
@@ -179,7 +189,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     public abstract void addListener() throws Exception;
 
-
     /**
      * 返回按钮点击后触发
      *
@@ -217,7 +226,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         tv_title.setTextColor(textColor);
     }
 
-
     //取出FrameLayout并调用父类removeAllViews()方法
     @Override
     public void setContentView(int layoutResID) {
@@ -243,13 +251,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         onContentChanged();
     }
 
-
     /**
      * 设置透明状态栏以及状态栏的颜色
+     *
      * @param color
      * @param visible
      */
-    public void setStatusColorB(int color,int visible,boolean kitkat){
+    public void setStatusColorB(int color, int visible, boolean kitkat) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window window = getWindow();
             // Translucent status bar
@@ -261,23 +269,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             iskitkat = kitkat;
         }
-        if (iskitkat){
+        if (iskitkat) {
             mLyStatus.setVisibility(visible);
             mLyStatus.setBackgroundColor(color);
         }
     }
 
-    /**
-     * 自定义对话框
-     * @param context
-     * @param title
-     * @param message
-     * @param ok
-     * @param no
-     * @return
-     */
-    AlertDialog alertDialog;
-    public AlertDialog showAdialog(final Context context, String title, String message, String ok,int view){
+    public AlertDialog showAdialog(final Context context, String title, String message, String ok, int view) {
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.show();
         Window window = alertDialog.getWindow();
@@ -308,9 +306,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         return alertDialog;
     }
 
-
-
-
     //判断字符串是否为空
     protected boolean textNotEmpty(String text) {
         return text != null && !text.equals("");
@@ -326,7 +321,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         }
         return false;
     }
-
 
     //对话框单击确定按钮处理
     protected void dialogOk() {
@@ -401,7 +395,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         Toast.makeText(this, sMess, Toast.LENGTH_SHORT).show();
     }
 
-
     //app的私有存储空间路径
     protected String appPath() {
         if (FsAppPath.length() == 0) {
@@ -446,13 +439,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                                            @NonNull int[] grantResults) {
         PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
     }
-
-    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
-        @Override
-        public void onPermissionGranted(int requestCode) {
-            requestPerPass(requestCode);
-        }
-    };
 
     //申请权限成功后执行的方法
     protected void requestPerPass(int requestCode) {

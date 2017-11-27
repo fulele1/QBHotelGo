@@ -42,25 +42,22 @@ import java.util.Map;
  */
 public class OrderListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private OrderListActivity instance;
-    private ArrayList<SendOrder> sendOrders = new ArrayList<>();
-    public static boolean needRefresh;//是否需要刷新列表
-
     private static final String TAG = "lzx";
-    /**
-     * 服务器端一共多少条数据
-     */
-    private int TOTAL_COUNTER = 34;
-
     /**
      * 每一页展示多少条数据
      */
     private static final int REQUEST_COUNT = 10;
-
+    public static boolean needRefresh;//是否需要刷新列表
     /**
      * 已经获取到多少条数据了
      */
     private static int mCurrentCounter = 0;
+    private OrderListActivity instance;
+    private ArrayList<SendOrder> sendOrders = new ArrayList<>();
+    /**
+     * 服务器端一共多少条数据
+     */
+    private int TOTAL_COUNTER = 34;
     /**
      * 当前页数
      */
@@ -73,6 +70,13 @@ public class OrderListActivity extends BaseActivity implements SwipeRefreshLayou
     private MyAdapter mDataAdapter;
 
     private ImageView ivNoData;
+    private View.OnClickListener mFooterClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.Loading, null);
+//            requestData();
+        }
+    };
 
     @Override
     public void initTitleBar() {
@@ -163,7 +167,7 @@ public class OrderListActivity extends BaseActivity implements SwipeRefreshLayou
                 HttpUrlUtils.getHttpUrl().getOrderList() +
 //                        "?id=" + SPUtils.get(instance, "userid", "") +
                         "?p=" + index +
-                        "&paystatus="+"04"+
+                        "&paystatus=" + "04" +
                         "&access_token=" + SPUtils.get(instance, "access_token", "")
                 , null
                 , new QBCallback() {
@@ -274,6 +278,19 @@ public class OrderListActivity extends BaseActivity implements SwipeRefreshLayou
         setData();
     }
 
+    private void notifyDataSetChanged() {
+        mLuRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 增加数据到集合
+     *
+     * @param list 需要增加的数据集合
+     */
+    private void addItems(ArrayList<SendOrder> list) {
+        mDataAdapter.addAll(list);
+        mCurrentCounter += list.size();
+    }
 
     private class MyAdapter extends ListBaseAdapter<SendOrder> {
 
@@ -328,27 +345,5 @@ public class OrderListActivity extends BaseActivity implements SwipeRefreshLayou
             }
         }
     }
-
-    private void notifyDataSetChanged() {
-        mLuRecyclerViewAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 增加数据到集合
-     *
-     * @param list 需要增加的数据集合
-     */
-    private void addItems(ArrayList<SendOrder> list) {
-        mDataAdapter.addAll(list);
-        mCurrentCounter += list.size();
-    }
-
-    private View.OnClickListener mFooterClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.Loading, null);
-//            requestData();
-        }
-    };
 
 }

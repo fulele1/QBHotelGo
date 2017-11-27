@@ -21,7 +21,6 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.CameraTool.CertCaptureActivity;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -49,14 +48,18 @@ import java.util.Map;
 
 import okhttp3.Call;
 
-import static com.xaqb.unlock.R.id.iv;
-
 
 /**
  * Created by chengeng on 2016/12/2.
  * 0801新建信息采集页面//修改读取身份证功能为扫描身份证
  */
 public class CollectionInfoActivity extends BaseActivity {
+    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
+    /**
+     * 高德地图相关
+     */
+    //声明mLocationOption对象
+    public AMapLocationClientOption mLocationOption = null;
     private CollectionInfoActivity instance;
     //    private WindowManager.LayoutParams params;
     //    private PopupWindow popupWindow;
@@ -64,31 +67,53 @@ public class CollectionInfoActivity extends BaseActivity {
 //    private LayoutInflater inflater;
     private Button btComplete;
     //    private String username, psw;
-    private EditText etUserName, etUserPhone,etOtherName, etOtherPhone,etOtherRemark,etUnlockPay, etUnlockAddress;
+    private EditText etUserName, etUserPhone, etOtherName, etOtherPhone, etOtherRemark, etUnlockPay, etUnlockAddress;
     private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
-    private ImageView ivCertPic, ivFacePic, ivOtherFacePic,ivLockPic, ivZxing, ivCertScan;
+    private ImageView ivCertPic, ivFacePic, ivOtherFacePic, ivLockPic, ivZxing, ivCertScan;
     //    private RelativeLayout rlPicFromSdcard, rlTakePic, rlCancle;
     private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress,
-            lockType, unlockPay, unlockTime, imagePath1, imagePath2,imagePath3,otherName,otherPhone,otherRemark;
+            lockType, unlockPay, unlockTime, imagePath1, imagePath2, imagePath3, otherName, otherPhone, otherRemark;
     private Intent intent;
     private int requestCoede;
     private File temp;
-    private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     private List<String> images = new ArrayList<>();
     private Spinner lockTypeSpinner;
     private String goodsType;
     private boolean isReadCard, isConfigFace;
-
     private int permissionCode = 0;
-
-    /**
-     * 高德地图相关
-     */
-    //声明mLocationOption对象
-    public AMapLocationClientOption mLocationOption = null;
     private AMapLocationClient mlocationClient;
     private double longitude, latitude;
+    /**
+     * 定位监听
+     */
+    AMapLocationListener locationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+                    //定位成功回调信息，设置相关消息
+                    amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                    latitude = amapLocation.getLatitude();//获取纬度
+                    longitude = amapLocation.getLongitude();//获取经度
+                    amapLocation.getAccuracy();//获取精度信息
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(amapLocation.getTime());
+                    df.format(date);//定位时间
+                    etUnlockAddress.setText(amapLocation.getAddress());
+                    if (mlocationClient.isStarted())
+                        mlocationClient.stopLocation();
+                } else {
+                    etUnlockAddress.setText("定位失败，请手动输入地址");
+                    //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+            }
+        }
+    };
     private Bitmap bitmapCert;
+    private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
 
     @Override
     public void initTitleBar() {
@@ -102,7 +127,6 @@ public class CollectionInfoActivity extends BaseActivity {
         instance = this;
         assignViews();
     }
-
 
     private void assignViews() {
         btComplete = (Button) findViewById(R.id.bt_complete);
@@ -144,38 +168,6 @@ public class CollectionInfoActivity extends BaseActivity {
         checkPer(PermissionUtils.CODE_ACCESS_COARSE_LOCATION);
     }
 
-    /**
-     * 定位监听
-     */
-    AMapLocationListener locationListener = new AMapLocationListener() {
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            if (amapLocation != null) {
-                if (amapLocation.getErrorCode() == 0) {
-                    //定位成功回调信息，设置相关消息
-                    amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                    latitude = amapLocation.getLatitude();//获取纬度
-                    longitude = amapLocation.getLongitude();//获取经度
-                    amapLocation.getAccuracy();//获取精度信息
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date date = new Date(amapLocation.getTime());
-                    df.format(date);//定位时间
-                    etUnlockAddress.setText(amapLocation.getAddress());
-                    etUnlockAddress.setEnabled(false);
-                    if (mlocationClient.isStarted())
-                        mlocationClient.stopLocation();
-                } else {
-                    etUnlockAddress.setText("定位失败，请手动输入地址");
-                    //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                    Log.e("AmapError", "location Error, ErrCode:"
-                            + amapLocation.getErrorCode() + ", errInfo:"
-                            + amapLocation.getErrorInfo());
-                }
-            }
-        }
-    };
-
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 2:
@@ -201,7 +193,6 @@ public class CollectionInfoActivity extends BaseActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
     //设置身份证照片并加水印
     public void onReadCert(String sNo, Bitmap oCert) {
@@ -283,8 +274,6 @@ public class CollectionInfoActivity extends BaseActivity {
                 break;
         }
     }
-
-    private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
 
     @Override
     public void initData() {
@@ -403,6 +392,7 @@ public class CollectionInfoActivity extends BaseActivity {
                     otherPhone = etOtherPhone.getText().toString().trim();
                     otherRemark = etOtherRemark.getText().toString().trim();
                     unlockAddress = etUnlockAddress.getText().toString().trim();
+                    userCertNum = etUserCertNum.getText().toString().trim();//身份证号码
                     lockType = lockTypeSpinner.getSelectedItem().toString();
                     if (lockType != null && lockType.contains("-")) {
                         lockType = lockType.substring(0, lockType.indexOf("-"));
@@ -422,8 +412,6 @@ public class CollectionInfoActivity extends BaseActivity {
                         showToast("请输入锁具类型");
                     } else if (!textNotEmpty(unlockPay)) {
                         showToast("请输入开锁费用");
-                    } else if (bitmapCert == null) {
-                        showToast("请拍摄身份证照片");
                     } else if (!textNotEmpty(imagePath1)) {
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {

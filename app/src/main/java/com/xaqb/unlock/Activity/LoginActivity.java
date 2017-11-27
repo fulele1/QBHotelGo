@@ -31,7 +31,7 @@ import okhttp3.Call;
  */
 public class LoginActivity extends BaseActivity {
 
-    private TextView tvForgetPsw, tvRegister;
+    private TextView tvForgetPsw;
     private LoginActivity instance;
     private Button btLogin;
     private String username, psw;
@@ -92,7 +92,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void addListener() {
         tvForgetPsw.setOnClickListener(instance);
-//        tvRegister.setOnClickListener(instance);
         btLogin.setOnClickListener(instance);
     }
 
@@ -102,9 +101,6 @@ public class LoginActivity extends BaseActivity {
             case R.id.tv_forgetPsw:
                 startActivity(new Intent(instance, BackPswActivity.class));
                 break;
-//            case R.id.tv_register:
-//                startActivity(new Intent(instance, RegisterActivity.class));
-//                break;
             case R.id.bt_login:
                 login();
                 break;
@@ -140,18 +136,6 @@ public class LoginActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String s, int i) {
-                            /*
-                            *  登录返回数据{"state":0,"mess":"",
-                            *  "table":{"token":{
-                            *  "access_token":"ffd12a9dcbd8f9194e3118e6c805b316",
-                            *  "refresh_token":"624dcc2db9d869864283d242f9bb49f5",
-                            *  "expire_in":7200},
-                            *  "staff":{"staff_headpic":"\/uploads\/20171120\/f721c3c7939bfa91a88d47d89d2ef910.jpg",
-                            *  "staff_nickname":"金毛",
-                            *  "staff_qq":"","staff_mp":"13666666666",
-                            *  "staff_company":"祖传老锁匠","staff_is_real":2,
-                            *  "address":"陕西省西安市雁塔区曲江街道秦园西路","id":4}}
-                            * */
                             try {
                                 loadingDialog.dismiss();
                                 Map<?, ?> map = GsonUtil.JsonToMap(s);
@@ -186,7 +170,6 @@ public class LoginActivity extends BaseActivity {
                                 e.printStackTrace();
                             }
                         }
-
                     });
         }
     }

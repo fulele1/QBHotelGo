@@ -49,8 +49,6 @@ public class ResetPswActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
-
     }
 
     @Override
@@ -130,41 +128,6 @@ public class ResetPswActivity extends BaseActivity {
                         }
                     }
             );
-//            OkHttpUtils
-//                    .post()
-//                    .url(HttpUrlUtils.getHttpUrl().getResetPswUrl() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                    .addParams("old_pwd", oldPsw)
-//                    .addParams("new_pwd", confirmPsw)
-//                    .build()
-//                    .execute(new StringCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int i) {
-//                            e.printStackTrace();
-//                            loadingDialog.dismiss();
-//                            showToast("网络访问异常");
-//                        }
-//
-//                        @Override
-//                        public void onResponse(String s, int i) {
-//                            try {
-//                                loadingDialog.dismiss();
-//                                Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                                if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                    showToast("修改密码成功");
-//                                    finish();
-//                                } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                    ActivityController.finishAll();
-//                                    showToast("登录失效，请重新登录");
-//                                    startActivity(new Intent(instance, LoginActivity.class));
-//                                } else {
-//                                    showToast(map.get("mess").toString());
-//                                    return;
-//                                }
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
         }
     }
 

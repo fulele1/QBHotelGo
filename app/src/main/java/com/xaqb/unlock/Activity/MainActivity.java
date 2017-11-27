@@ -40,6 +40,7 @@ import com.xaqb.unlock.Utils.CheckNetwork;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -53,15 +54,15 @@ import java.util.Map;
 
 import okhttp3.Call;
 
-import static com.amap.api.maps.MapsInitializer.getVersion;
-
 /**
  * 主页面
  */
 public class MainActivity extends SlidingFragmentActivity implements View.OnClickListener {
-    private MainActivity instance;
-    private ConvenientBanner mCb;
-    private String au_version;
+    /**
+     * 检查用户验证状态
+     */
+    static boolean FbForceRight = false;
+    public String late;
     protected String FsUrl = "";
     protected String FsUser = "";
     protected String FsRet = "";
@@ -71,8 +72,29 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     protected String FsVersion = "";
     protected boolean FbUpdate = false;
     protected boolean FbForceUpdate = false;
-public String late;
+    private MainActivity instance;
+    private ConvenientBanner mCb;
+    private String au_version;
+    private String status;
+    private boolean isQuit = false;
+    private ImageView ivUser, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName, ivMessage;
+    private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
+    //    private Button btOrder;
+    private Fragment mContent;
+    private SlidingMenu sm;
+    private Handler mHandler = new Handler() {
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isQuit = false;
+        }
+    };
+    /**
+     * 检查是否要进行更新
+     */
+    private String au_last_version;
+    private String au_filename;
     Handler FoHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -83,9 +105,9 @@ public String late;
 
 
                     if (au_version.equals(getVersionName())) {
-                        late ="yes";
-                        writeConfig("late",late);
-                        if (FbUpdate){
+                        late = "yes";
+                        writeConfig("late", late);
+                        if (FbUpdate) {
                             showDialog("提示", "已经是最新版本", "确定", "", 0);
                         }
                     } else {
@@ -97,8 +119,9 @@ public String late;
                                 if (aData[1].compareTo("1") == 0) FbForceUpdate = true;
                             }
                         }
-                        late ="no";
-                        writeConfig("late",late);
+
+                        late = "no";
+                        writeConfig("late", late);
                         showDialog("更新提示", "检测到新版本，是否更新", "立刻更新", "以后再说", 0);
                     }
                     break;
@@ -128,6 +151,9 @@ public String late;
             super.handleMessage(msg);
         }
     };
+    private String au_info;
+    private String au_id;
+    private List<Integer> mImageList;
 
     //获取版本信息
     public void getVersion() {
@@ -138,8 +164,7 @@ public String late;
                     if (!au_version.equals(null)) {
                         FsRet = sRet.substring(1);
                         FoHandler.sendMessage(M(0));
-                    }
-                    else {
+                    } else {
                         //FsRet=sRet.substring(1);
                         FsRet = "获取版本信息错误，请与管理员联系！";
                         FoHandler.sendMessage(M(10));
@@ -171,6 +196,7 @@ public String late;
 
     /**
      * 获取版本号
+     *
      * @return
      */
     public String getVersionName() {
@@ -186,31 +212,15 @@ public String late;
     }
 
     /**
-     *下载新版本
+     * 下载新版本
      */
     protected void downVersion() {
-            Intent oInt = new Intent();
-            oInt.setClass(this, UpdateActivity.class);
-            oInt.putExtra("url", HttpUrlUtils.getHttpUrl().get_updata() + au_filename);
-            oInt.putExtra("file", au_filename);
-            startActivity(oInt);
+        Intent oInt = new Intent();
+        oInt.setClass(this, UpdateActivity.class);
+        oInt.putExtra("url", HttpUrlUtils.getHttpUrl().get_updata() + au_filename);
+        oInt.putExtra("file", au_filename);
+        startActivity(oInt);
     }
-
-    private boolean isQuit = false;
-
-    private ImageView ivUser,ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName,ivMessage;
-    private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
-    //    private Button btOrder;
-    private Fragment mContent;
-    private SlidingMenu sm;
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isQuit = false;
-        }
-    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -240,13 +250,6 @@ public String late;
         checkVerdion();//检查更新
     }
 
-    /**
-     * 检查是否要进行更新
-     */
-    private String au_last_version;
-    private String au_filename;
-    private String au_info;
-    private String au_id;
     private void checkVerdion() {
         //  请求连接网络 解析后 拿到版本号和版本名
         OkHttpUtils.get()
@@ -259,16 +262,17 @@ public String late;
 
                     @Override
                     public void onResponse(String s, int i) {
+                        LogUtils.e("检查更新" + s);
                         Map<String, Object> map = GsonUtil.GsonToMaps(s);
                         if (map.get("state").toString().equals("1.0")) {
-                            showMess(map.get("mess").toString(),true);
+                            showMess(map.get("mess").toString(), true);
                             return;
                         } else if (map.get("state").toString().equals("0.0")) {
                             Map<String, Object> data = GsonUtil.JsonToMap(GsonUtil.GsonString(map.get("table")));
                             au_version = data.get("au_version").toString();
                             au_last_version = data.get("au_last_version").toString();
                             au_filename = data.get("au_file_path").toString();//下载链接
-                            SPUtils.put(instance,"au_file_path",au_filename);
+                            SPUtils.put(instance, "au_file_path", au_filename);
                             au_info = data.get("au_info").toString();
                             au_id = data.get("au_id").toString();
                             FsUrl = readConfig("url");
@@ -284,11 +288,11 @@ public String late;
                             getVersion();
                             checkRight();
 
-                        }}
+                        }
+                    }
                 });
 
     }
-
 
     protected String readConfig(String sName) {
 
@@ -304,11 +308,6 @@ public String late;
 
     }
 
-
-    /**
-     * 检查用户验证状态
-     */
-    static boolean FbForceRight = false;
     private void checkRight() {
         if (!CheckNetwork
                 .isNetworkAvailable(MyApplication.instance)) {
@@ -331,10 +330,6 @@ public String late;
             }
         }).start();
     }
-
-
-
-
 
     /**
      * 初始化侧边栏
@@ -380,7 +375,6 @@ public String late;
 //        sm.addIgnoredView(sib);
     }
 
-
     private void assignViews() {
         ivUser = (ImageView) findViewById(R.id.iv_user);
         ivMessage = (ImageView) findViewById(R.id.iv_message);
@@ -392,9 +386,8 @@ public String late;
         ivRealName = (ImageView) findViewById(R.id.iv_real_name);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         mCb = (ConvenientBanner) findViewById(R.id.cb_main);
-
     }
-private List <Integer> mImageList;
+
     public void initData() {
         mImageList = new ArrayList();
         mImageList.add(R.mipmap.main_pic1);
@@ -402,26 +395,6 @@ private List <Integer> mImageList;
         mImageList.add(R.mipmap.main_pic3);
         cbSetPage();
         mCb.startTurning(2000);
-    }
-
-
-    /**
-     * 轮播图holder
-     */
-    public class CbHolder implements Holder<Integer> {
-
-        private ImageView pImg;
-        @Override
-        public View createView(Context context) {
-            pImg = new ImageView(context);
-            pImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            return pImg;
-        }
-
-        @Override
-        public void UpdateUI(Context context, int position, Integer data) {
-            pImg.setImageResource(data);
-        }
     }
 
     //设置状态栏和导航栏沉浸式
@@ -440,17 +413,16 @@ private List <Integer> mImageList;
         }
     }
 
-
     /**
      * 轮播图设置图片
      */
-    public void cbSetPage(){
+    public void cbSetPage() {
         mCb.setPages(new CBViewHolderCreator<CbHolder>() {
             @Override
             public CbHolder createHolder() {
                 return new CbHolder();
             }
-        },mImageList)
+        }, mImageList)
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
     }
 
@@ -496,60 +468,19 @@ private List <Integer> mImageList;
                 startActivity(i);
                 break;
             case R.id.iv_real_name://实名认证
-                String status = SPUtils.get(instance, "staff_is_real", "").toString();
-
+                status = SPUtils.get(instance, "staff_is_real", "").toString();
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                     Toast.makeText(instance, "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, RealNameActivity.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
                     Toast.makeText(instance, "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(instance, RealNameInfoActivity.class));
+                    startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
     }
-
-//    /**
-//     * 设置新闻数据
-//     */
-//    private void setNewsTabData() {
-//        sib
-//                /** methods in BaseIndicatorBanner */
-////              .setIndicatorStyle(BaseIndicaorBanner.STYLE_CORNER_RECTANGLE)//set indicator style
-////              .setIndicatorWidth(6)                               //set indicator width
-////              .setIndicatorHeight(6)                              //set indicator height
-////              .setIndicatorGap(8)                                 //set gap btween two indicators
-////              .setIndicatorCornerRadius(3)                        //set indicator corner raduis
-//                .setSelectAnimClass(ZoomInEnter.class)              //se//t indicator select anim
-//                /** methods in BaseBanner */
-////              .setBarColor(Color.parseColor("#88000000"))         //set bootom bar color
-////              .barPadding(5, 2, 5, 2)                             //set bottom bar padding
-////              .setBarShowWhenLast(true)                           //set bottom bar show or not when the position is the last
-////              .setTextColor(Color.parseColor("#ffffff"))          //set title text color
-////              .setTextSize(12.5f)                                 //set title text size
-////              .setTitleShow(true)                                 //set title show or not
-////              .setIndicatorShow(true)                             //set indicator show or not
-////              .setDelay(2)                                        //setDelay before start scroll
-//                .setPeriod(5)                                      //scroll setPeriod
-////                .setSource(DataProvider.getList())                  //data source list
-//                .setSource(getList())                  //data source list
-//                .setTransformerClass(ZoomOutSlideTransformer.class) //set page transformer
-//                .startScroll();                                     //start scroll,the last method to call
-//    }
-//
-//    //设置数据
-//    private ArrayList<BannerItem> getList() {
-//        ArrayList<BannerItem> list = new ArrayList<>();
-//        for (int i = 0; i < imgUrl.length; i++) {
-//            BannerItem item = new BannerItem();
-//            item.imgUrl = imgUrl[i];
-//            item.title = titles[i];
-//            list.add(item);
-//        }
-//        return list;
-//    }
 
     @Override
     public void onBackPressed() {
@@ -563,7 +494,6 @@ private List <Integer> mImageList;
             finish();
             System.exit(0);
         }
-//        super.onBackPressed();
     }
 
     @Override
@@ -571,7 +501,7 @@ private List <Integer> mImageList;
         super.onResume();
         startService(new Intent(instance, FileService.class));
         MobclickAgent.onResume(this);
-//        checkVerdion();//检查更新
+        status = SPUtils.get(instance, "staff_is_real", "").toString();
     }
 
     @Override
@@ -641,11 +571,32 @@ private List <Integer> mImageList;
 
     /**
      * 吐司
+     *
      * @param sMess
      * @param bLong
      */
     protected void showMess(String sMess, boolean bLong) {
         Toast.makeText(this, sMess, bLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 轮播图holder
+     */
+    public class CbHolder implements Holder<Integer> {
+
+        private ImageView pImg;
+
+        @Override
+        public View createView(Context context) {
+            pImg = new ImageView(context);
+            pImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            return pImg;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, Integer data) {
+            pImg.setImageResource(data);
+        }
     }
 
 }

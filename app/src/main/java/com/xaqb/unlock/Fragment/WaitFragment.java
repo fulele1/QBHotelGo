@@ -318,6 +318,7 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         .load(mDataList.get(position).getPicUrl())
                         .placeholder(R.mipmap.nothing_pic)
                         .error(R.mipmap.failed_pic)
+                        .fit()
                         .into(viewHolder.ivPic);
             } catch (Exception e) {
                 e.printStackTrace();

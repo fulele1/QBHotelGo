@@ -138,54 +138,6 @@ public final class ProcUnit {
     }
 
 
-//    //照片转换成base64
-//    public static String photoToBase64(Bitmap oSrc, int iQuality) {
-//
-//        ByteArrayOutputStream oStream = null;
-//        if (iQuality > 100) iQuality = 100;
-//        if (iQuality < 0) iQuality = 0;
-//        try {
-//            if (oSrc != null) {
-//                oStream = new ByteArrayOutputStream();
-//                oSrc.compress(Bitmap.CompressFormat.JPEG, iQuality, oStream);
-//                Log.i("oStream==", "" + oStream.size());
-////                while(oStream.toByteArray().length / 1024 > 10){
-////                    oStream.reset();
-////                    iQuality -= 10;// 每次都减少10
-////                    oSrc.compress(Bitmap.CompressFormat.JPEG, iQuality, oStream);
-////                }
-//                Log.i("oStream==", "" + oStream.size());
-//                oStream.flush();
-//                oStream.close();
-//
-//                byte[] aBmp = oStream.toByteArray();
-//                return Base64.encodeToString(aBmp, Base64.DEFAULT);
-//            }
-//        } catch (Exception e) {
-//            return "";
-//        } finally {
-//            try {
-//                if (oStream != null) {
-//                    oStream.flush();
-//                    oStream.close();
-//                }
-//            } catch (Exception e) {
-//                return "";
-//            }
-//        }
-//        return "";
-//    }
-
-//    ///载入base64图像
-//    public static Bitmap base64ToBitmap(String sBase) {
-//        try {
-//            byte[] aJpg = Base64.decode(sBase, Base64.DEFAULT);
-//            return BitmapFactory.decodeByteArray(aJpg, 0, aJpg.length);
-//        } catch (Exception E) {
-//            return null;
-//        }
-//
-//    }
 
     //------------------------------------------
     public static Bitmap certPhoto(Bitmap oBmp, EditText oCert) {
@@ -249,14 +201,6 @@ public final class ProcUnit {
         }
         return scalePhoto(oBmp, 800);
 
-		/*
-        Bitmap oFace=getFace(oTmp);
-		int iAngle=0;
-		if(oFace!=null)
-			iAngle=faceAngle(oFace);
-		if(iAngle!=0) return cropCert(rotatePhoto(oTmp,-1*iAngle));
-		else return cropCert(oTmp);
-		//return oFace!=null?blackWhite(oFace):rotateRect(oTmp);*/
 
     }
 

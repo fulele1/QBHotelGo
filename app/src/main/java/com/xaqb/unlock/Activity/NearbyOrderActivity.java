@@ -30,6 +30,27 @@ public class NearbyOrderActivity extends BaseActivity {
     private AMapLocationClientOption mLocationOption;
     private AMap aMap;
     private double lon, lat;
+    /**
+     * 定位监听
+     */
+    AMapLocationListener locationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (mListener != null && amapLocation != null) {
+                if (amapLocation != null
+                        && amapLocation.getErrorCode() == 0) {
+                    mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+                    amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                    lat = amapLocation.getLatitude();//获取纬度
+                    lon = amapLocation.getLongitude();//获取经度
+                    amapLocation.getAccuracy();//获取精度信息
+                } else {
+                    String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
+                    Log.e("AmapErr", errText);
+                }
+            }
+        }
+    };
 
     @Override
     public void initTitleBar() {
@@ -99,28 +120,6 @@ public class NearbyOrderActivity extends BaseActivity {
             }
         });
     }
-
-    /**
-     * 定位监听
-     */
-    AMapLocationListener locationListener = new AMapLocationListener() {
-        @Override
-        public void onLocationChanged(AMapLocation amapLocation) {
-            if (mListener != null && amapLocation != null) {
-                if (amapLocation != null
-                        && amapLocation.getErrorCode() == 0) {
-                    mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                    amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                    lat = amapLocation.getLatitude();//获取纬度
-                    lon = amapLocation.getLongitude();//获取经度
-                    amapLocation.getAccuracy();//获取精度信息
-                } else {
-                    String errText = "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo();
-                    Log.e("AmapErr", errText);
-                }
-            }
-        }
-    };
 
     @Override
     public void onResume() {

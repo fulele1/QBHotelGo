@@ -119,8 +119,8 @@ public class BackPswActivity extends BaseActivity {
 
                         @Override
                         public void onResponse(String s, int i) {
+                            loadingDialog.dismiss();
                             try {
-                                loadingDialog.dismiss();
                                 Map<String, Object> map = GsonUtil.JsonToMap(s);
                                 if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                     showToast("找回密码成功");

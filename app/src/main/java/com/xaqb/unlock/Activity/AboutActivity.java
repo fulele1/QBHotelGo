@@ -36,12 +36,10 @@ public class AboutActivity extends BaseActivity {
     public void initData() {
         try {
             PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
-            // 当前应用的版本名称
             tvVersion.setText("咚咚开锁"+info.versionName);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

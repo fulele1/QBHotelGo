@@ -142,43 +142,6 @@ public class AdviseActivity extends BaseActivity {
                             }
                         });
 
-//                OkHttpUtils
-//                        .post()
-//                        .url(HttpUrlUtils.getHttpUrl().getUploadAdvise() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                        .addParams("title", title)
-//                        .addParams("content", advise)
-//                        .addParams("uid", SPUtils.get(instance, "userid", "").toString())
-//                        .addParams("utype", "2")
-//                        .addParams("type", "0")
-//                        .build()
-//                        .execute(new StringCallback() {
-//                            @Override
-//                            public void onError(Call call, Exception e, int i) {
-//                                e.printStackTrace();
-//                                loadingDialog.dismiss();
-//                            }
-//
-//                            @Override
-//                            public void onResponse(String s, int i) {
-//                                loadingDialog.dismiss();
-//                                try {
-//                                    Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                                    if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                        showToast("提交意见成功");
-//                                        finish();
-//                                    } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                        ActivityController.finishAll();
-//                                        showToast("登录失效，请重新登录");
-//                                        startActivity(new Intent(instance, LoginActivity.class));
-//                                    } else {
-//                                        showToast(map.get("mess").toString());
-//                                        return;
-//                                    }
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        });
             } catch (Exception e) {
                 e.printStackTrace();
             }

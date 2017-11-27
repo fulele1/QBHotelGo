@@ -2,8 +2,10 @@ package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -24,7 +26,8 @@ import okhttp3.Call;
  */
 public class RealNameInfoActivity extends BaseActivity {
     private RealNameInfoActivity instance;
-    private TextView tvCertName, tvCertType, tvCertNum;
+    private TextView tvCertName, tvCertType, tvCertNum, tvSex, tvNation;
+    private ImageView ivCert, ivFace;
 
     @Override
     public void initTitleBar() {
@@ -43,6 +46,10 @@ public class RealNameInfoActivity extends BaseActivity {
         tvCertName = (TextView) findViewById(R.id.tv_cert_name);
         tvCertType = (TextView) findViewById(R.id.tv_cert_type);
         tvCertNum = (TextView) findViewById(R.id.tv_cert_num);
+        ivCert = (ImageView) findViewById(R.id.iv_cert_info);
+        ivFace = (ImageView) findViewById(R.id.iv_face_info);
+        tvSex = (TextView) findViewById(R.id.tv_sex_info);
+        tvNation = (TextView) findViewById(R.id.tv_nation_info);
     }
 
     @Override
@@ -69,10 +76,25 @@ public class RealNameInfoActivity extends BaseActivity {
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 tvCertName.setText(map.get("ra_name").toString());
                                 tvCertType.setText(map.get("ct_name").toString());
                                 tvCertNum.setText(map.get("ra_certcode").toString());
+                                tvSex.setText(map.get("ra_sex").toString());
+                                tvNation.setText(map.get("ra_nation").toString());
+                                Picasso.with(instance)
+                                        .load(map.get("ra_certimg").toString() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+                                        .fit()
+                                        .placeholder(R.mipmap.nothing_pic)
+                                        .error(R.mipmap.failed_pic)
+                                        .into(ivCert);
+
+                                Picasso.with(instance)
+                                        .load(map.get("ra_faceimg").toString() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+                                        .fit()
+                                        .placeholder(R.mipmap.nothing_pic)
+                                        .error(R.mipmap.failed_pic)
+                                        .into(ivFace);
+
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
@@ -84,8 +106,6 @@ public class RealNameInfoActivity extends BaseActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 });
 

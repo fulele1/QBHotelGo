@@ -60,7 +60,7 @@ public class WillSendActivity extends BaseActivity {
                 oList.setAdapter(oAdapter);
             } else {
                 dialogType = 2;
-                showAdialog(this,"提示", "没有将要发送的数据", "确定",View.GONE);
+                showAdialog(this, "提示", "没有将要发送的数据", "确定", View.GONE);
             }
         } catch (Exception e) {
             showDialog("", e.getMessage(), "", "", 0);

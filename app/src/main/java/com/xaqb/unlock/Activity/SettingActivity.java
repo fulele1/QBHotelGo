@@ -19,6 +19,8 @@ public class SettingActivity extends BaseActivity {
     private SettingActivity instance;
     private Button btQuit;
     private LinearLayout llResetPsw;
+    private ImageView iv1, iv2, iv3;
+    private Button bt1;
 
     @Override
     public void initTitleBar() {
@@ -57,6 +59,9 @@ public class SettingActivity extends BaseActivity {
         llResetPsw.setOnClickListener(instance);
     }
 
+
+    ////////////////////////////////test
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -84,10 +89,4 @@ public class SettingActivity extends BaseActivity {
         startActivity(new Intent(instance, LoginActivity.class));
         finish();
     }
-
-
-    ////////////////////////////////test
-
-    private ImageView iv1, iv2, iv3;
-    private Button bt1;
 }

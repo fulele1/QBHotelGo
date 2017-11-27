@@ -38,6 +38,12 @@ public class UpdateActivity extends BaseActivity {
     protected int FiDialogType = 0;//0：下载完成 1：发生错误 2：用户中断
     protected boolean FbRun = false;
     protected DownFileThread FoThread;
+    @BindView(R.id.pbprogress)
+    ProgressBar FoBar;
+    @BindView(R.id.tvmessage)
+    TextView FoText;
+    @BindView(R.id.buttonok)
+    Button FoBtn;
     //0:下载成功  1：发生错误
     Handler FoHandler = new Handler() {
         @Override
@@ -83,12 +89,12 @@ public class UpdateActivity extends BaseActivity {
         }
     };
     private UpdateActivity instance;
+    private Unbinder unbinder;
 
     @Override
     public void initTitleBar() {
         setTitle("检查更新");
     }
-
 
     @Override
     public void initViews() throws Exception {
@@ -97,7 +103,7 @@ public class UpdateActivity extends BaseActivity {
         unbinder = ButterKnife.bind(instance);
         Intent oInt = getIntent();
         FsUrl = "http://api.ddkaisuo.net";
-        FsFile = SPUtils.get(instance,"au_file_path","")+"";
+        FsFile = SPUtils.get(instance, "au_file_path", "") + "";
         if (FsFile.equals(null)) {
             Toast.makeText(instance, "已是最新版本", Toast.LENGTH_SHORT).show();
             return;
@@ -109,12 +115,6 @@ public class UpdateActivity extends BaseActivity {
         super.onDestroy();
         unbinder.unbind();
     }
-
-    private Unbinder unbinder ;
-    @BindView(R.id.pbprogress) ProgressBar FoBar;
-    @BindView(R.id.tvmessage) TextView FoText;
-    @BindView(R.id.buttonok) Button FoBtn;
-
 
     @Override
     public void initData() throws Exception {

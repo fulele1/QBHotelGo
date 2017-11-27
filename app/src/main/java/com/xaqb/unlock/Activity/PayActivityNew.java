@@ -73,7 +73,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
     public void initTitleBar() {
         setTitle("订单支付");
         showBackwardView(true);
-//        showForwardView(true, "跳过");
     }
 
     @Override
@@ -82,14 +81,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
         instance = this;
         assignViews();
     }
-
-//    @Override
-//    public void onForward(View forwardView) {
-////        super.onForward(forwardView);
-//        dialogType = 0;
-//        showDialog("提示", "确定跳过支付吗？", "确定", "取消", 0);
-////        finish();
-//    }
 
     private void assignViews() {
         tv = new TextView[13];
@@ -118,9 +109,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
 
         btPayOnline = (Button) findViewById(R.id.bt_pay_online);
         rbPayType = (RadioGroup) findViewById(R.id.rg_pay_type);
-//        btPayCash = (Button) findViewById(R.id.bt_pay_money);
-//        btYes = (Button) findViewById(R.id.bt_yes);
-//        etPrice = (EditText) findViewById(R.id.et_price);
 
         /**
          * 5秒后自动查询下一次，查询30秒后，仍然失败的话，显示支付失败，等待用户手动刷新订单查看支付结果
@@ -269,11 +257,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                     return;
                 }
                 price = inputPrice;
-//                char[] chars = price.toCharArray();
-//                if (chars[0] == 0) {
-//
-//                }
-//                if (scanResult == null) {
                 if (payType == 0) {
                     Intent intent = new Intent(instance, CaptureActivity.class);
                     startActivityForResult(intent, 0);
@@ -281,9 +264,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                     dialogType = 3;
                     showAdialog(instance,"提示", "确定用户支付" + price + "元吗？", "确定", View.VISIBLE);
                 }
-//                } else {
-//                    payOnline();
-//                }
                 break;
             case R.id.pay_keyboard_del:
                 deleteStr();
@@ -320,8 +300,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
 
     public void getPass(String str) {
         strResult = strResult + str;
-//        currentIndex = sbResult.length();
-//        if (currentIndex >= -1 && currentIndex < 10) {
         tvResult.setText(strResult);
 //        }
     }
@@ -348,9 +326,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
                                 apId = map.get("id").toString();
                                 isFirstGetPayStatus = true;
                                 isQuery = false;
@@ -403,12 +378,6 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
-//                                btYes.setVisibility(View.VISIBLE);
-//                                tvPrice.setText("支付成功");
                                 myHandler.sendEmptyMessage(101);
                                 progressDialog.dismiss();
                                 dialogType = 2;

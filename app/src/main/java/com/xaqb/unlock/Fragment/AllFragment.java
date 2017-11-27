@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 import com.xaqb.unlock.Activity.LoginActivity;
 import com.xaqb.unlock.Activity.OrderDetailActivityNew;
 import com.xaqb.unlock.Entity.SendOrder;
@@ -309,13 +313,18 @@ public class AllFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 if (mDataList.get(position).getPicUrl() != null && !mDataList.get(position).getPicUrl().equals(""))
                     Picasso.with(getContext())
                             .load(mDataList.get(position).getPicUrl())
-                            .placeholder(R.mipmap.nothing_pic)
-                            .error(R.mipmap.failed_pic)
+                            .placeholder(R.mipmap.nothing_pic)//占位图
+                            .error(R.mipmap.failed_pic)//加载失败图片
+                            .fit()//充满整个布局
                             .into(viewHolder.ivPic);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+
+
+
 
 
         private class ViewHolder extends RecyclerView.ViewHolder {

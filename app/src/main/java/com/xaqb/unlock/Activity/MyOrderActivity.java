@@ -15,17 +15,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.xaqb.unlock.Adapter.OrderFragmentAdapter;
-import com.xaqb.unlock.Fragment.GotFragment;
 import com.xaqb.unlock.Fragment.AllFragment;
-import com.xaqb.unlock.Fragment.WaitFragment;
+import com.xaqb.unlock.Fragment.GotFragment;
 import com.xaqb.unlock.Fragment.PayFragment;
+import com.xaqb.unlock.Fragment.WaitFragment;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Views.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyOrderActivity extends FragmentActivity implements View.OnClickListener{
+public class MyOrderActivity extends FragmentActivity implements View.OnClickListener {
 
     private NoScrollViewPager mVpg;
     private List<Fragment> mFrags;
@@ -58,7 +58,7 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
      * 初始化事件
      */
     private void initEvent() {
-        mVpg.setAdapter(new OrderFragmentAdapter(mFragmentManager,mFrags));
+        mVpg.setAdapter(new OrderFragmentAdapter(mFragmentManager, mFrags));
         mRgp.setOnCheckedChangeListener(new CheckedChange());
         mVpg.setOnPageChangeListener(new pageChange());
         mTvBack.setOnClickListener(this);
@@ -94,7 +94,7 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_back_order://返回键
                 MyOrderActivity.this.finish();
                 break;
@@ -111,11 +111,12 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
         }
+
         @Override
         public void onPageSelected(int position) {
             int mainColor = getResources().getColor(R.color.main);
             int redioTextColor = getResources().getColor(R.color.redio_text);
-            switch (position){
+            switch (position) {
                 case 0:
                     mRbAll.setChecked(true);
                     mRbAll.setTextColor(mainColor);
@@ -159,7 +160,7 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
 
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
-            switch (checkedId){
+            switch (checkedId) {
                 case R.id.rb_all_m_order://全部
                     mVpg.setCurrentItem(0);
                     break;

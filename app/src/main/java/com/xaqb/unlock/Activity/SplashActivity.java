@@ -38,10 +38,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void initData() {
-
-//        final AnimationDrawable animationDrawable = (AnimationDrawable) iv.getDrawable();
-//        animationDrawable.start();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

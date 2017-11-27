@@ -19,7 +19,7 @@
         android:paddingLeft="10dp"
         android:paddingTop="@dimen/title_height">
 
-        <com.xaqb.unlock.Views.RoundImageView
+        <ImageView
             android:id="@+id/iv_user_pic"
             android:layout_width="60dp"
             android:layout_height="60dp"

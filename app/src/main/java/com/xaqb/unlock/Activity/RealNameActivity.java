@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,13 +33,9 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
-import butterknife.ButterKnife;
 import okhttp3.Call;
 
 
@@ -55,7 +50,7 @@ public class RealNameActivity extends BaseActivity {
     String[] nations = {"汉族"};
 
     private RealNameActivity instance;
-    private EditText etRealName, etCardNum,etAge;
+    private EditText etRealName, etCardNum, etAge;
     private ImageView ivCertPic, ivFacePic;
     private Button btSubmit;
     private WindowManager.LayoutParams params;
@@ -65,8 +60,8 @@ public class RealNameActivity extends BaseActivity {
     private RelativeLayout rlName, rlPicFromSdcard, rlTakePic, rlCancle;
     private boolean isShow;
     private String type, realName, cardNum, cardSex, cardNation, cardAge, certPicPath = "", facePicPath = "", sexx;
-    private Spinner spType, spSex,spNation;
-    private ArrayAdapter spinnerAdapter, spinnerSexAdapter,spinnerNationAdapter;
+    private Spinner spType, spSex, spNation;
+    private ArrayAdapter spinnerAdapter, spinnerSexAdapter, spinnerNationAdapter;
     private int requestCoede = 0;
     private File temp;
 

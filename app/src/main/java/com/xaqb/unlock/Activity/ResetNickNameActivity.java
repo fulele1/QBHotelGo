@@ -112,7 +112,7 @@ public class ResetNickNameActivity extends BaseActivity {
                                 showToast(map.get("mess").toString());
                                 return;
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Base64Utils;
+import com.xaqb.unlock.Utils.CircleTransform;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -32,14 +33,11 @@ import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -50,7 +48,7 @@ import okhttp3.RequestBody;
  */
 public class UserInfoActivity extends BaseActivity {
     private UserInfoActivity instance;
-    private ImageView ivPic,ivScanner;
+    private ImageView ivPic, ivScanner;
     private TextView tvPhone, tvNickName, tvCompany, tvAddress, tvMessage;
     private LinearLayout llUserPic, llNickName;
     private WindowManager.LayoutParams params;
@@ -61,6 +59,46 @@ public class UserInfoActivity extends BaseActivity {
     private RelativeLayout rlName, rlPicFromSdcard, rlTakePic, rlCancle;
     private String nickname, url, phone, company, address, message;
     private boolean isPicChange = false;
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            switch (requestCode) {
+                case PermissionUtils.CODE_RECORD_AUDIO:
+                    break;
+                case PermissionUtils.CODE_GET_ACCOUNTS:
+                    break;
+                case PermissionUtils.CODE_READ_PHONE_STATE:
+                    break;
+                case PermissionUtils.CODE_CALL_PHONE:
+//                    Toast.makeText(instance, "Result Permission Grant CODE_CALL_PHONE", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_CAMERA:
+                    Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    intent2.putExtra(MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
+                    startActivityForResult(intent2, 2);// 采用ForResult打开
+//                    Toast.makeText(instance, "Result Permission Grant CODE_CAMERA", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_ACCESS_FINE_LOCATION:
+//                    Toast.makeText(instance, "Result Permission Grant CODE_ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_ACCESS_COARSE_LOCATION:
+//                    Toast.makeText(instance, "Result Permission Grant CODE_ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_READ_EXTERNAL_STORAGE:
+//                    Toast.makeText(instance, "Result Permission Grant CODE_READ_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE:
+                    SDCardUtils.saveBmp(head, SPUtils.get(instance, "userid", "").toString() + "userHead");
+//                    SDCardUtils.saveImageToGallery(instance, head);
+                    SPUtils.put(instance, "userPicLocal", Environment.getExternalStorageDirectory() + "/userHead/" + SPUtils.get(instance, "userid", "").toString() + "userHead.jpg");
+//                    Toast.makeText(instance, "Result Permission Grant CODE_WRITE_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void initTitleBar() {
@@ -261,12 +299,13 @@ public class UserInfoActivity extends BaseActivity {
      */
     private void loadUserPic() {
         if (!checkNetwork()) return;
-        if (url != null && !url.equals("")){
+        if (url != null && !url.equals("")) {
             Picasso.with(instance)
-                    .load(url)
-                    .placeholder(R.mipmap.nothing_pic)
-                    .error(R.mipmap.failed_pic)
-                    .into(ivPic);
+                    .load(url)//图片链接
+                    .transform(new CircleTransform())//设置为圆形图片
+                    .placeholder(R.mipmap.nothing_pic)//占位图
+                    .error(R.mipmap.failed_pic)//加载失败图
+                    .into(ivPic);//设置给控件
         }
     }
 
@@ -363,7 +402,6 @@ public class UserInfoActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
     /**
      * 更换头像
      *
@@ -415,48 +453,6 @@ public class UserInfoActivity extends BaseActivity {
                     }
                 });
     }
-
-
-    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
-        @Override
-        public void onPermissionGranted(int requestCode) {
-            switch (requestCode) {
-                case PermissionUtils.CODE_RECORD_AUDIO:
-                    break;
-                case PermissionUtils.CODE_GET_ACCOUNTS:
-                    break;
-                case PermissionUtils.CODE_READ_PHONE_STATE:
-                    break;
-                case PermissionUtils.CODE_CALL_PHONE:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_CALL_PHONE", Toast.LENGTH_SHORT).show();
-                    break;
-                case PermissionUtils.CODE_CAMERA:
-                    Intent intent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    intent2.putExtra(MediaStore.EXTRA_OUTPUT,
-                            Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
-                    startActivityForResult(intent2, 2);// 采用ForResult打开
-//                    Toast.makeText(instance, "Result Permission Grant CODE_CAMERA", Toast.LENGTH_SHORT).show();
-                    break;
-                case PermissionUtils.CODE_ACCESS_FINE_LOCATION:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_ACCESS_FINE_LOCATION", Toast.LENGTH_SHORT).show();
-                    break;
-                case PermissionUtils.CODE_ACCESS_COARSE_LOCATION:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_ACCESS_COARSE_LOCATION", Toast.LENGTH_SHORT).show();
-                    break;
-                case PermissionUtils.CODE_READ_EXTERNAL_STORAGE:
-//                    Toast.makeText(instance, "Result Permission Grant CODE_READ_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
-                    break;
-                case PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE:
-                    SDCardUtils.saveBmp(head, SPUtils.get(instance, "userid", "").toString() + "userHead");
-//                    SDCardUtils.saveImageToGallery(instance, head);
-                    SPUtils.put(instance, "userPicLocal", Environment.getExternalStorageDirectory() + "/userHead/" + SPUtils.get(instance, "userid", "").toString() + "userHead.jpg");
-//                    Toast.makeText(instance, "Result Permission Grant CODE_WRITE_EXTERNAL_STORAGE", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
 
     /**
      * Callback received when a permissions request has been completed.

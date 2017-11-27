@@ -44,7 +44,7 @@ public class MessageActivity extends BaseActivity {
     public void initData() {
         if (!checkNetwork()) return;
         OkHttpUtils.get()
-                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "")+"?access_token=" + SPUtils.get(instance, "access_token", "") )
+                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
                 .execute(new StringCallback() {
                     @Override

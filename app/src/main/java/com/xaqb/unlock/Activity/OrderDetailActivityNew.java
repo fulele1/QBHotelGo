@@ -2,7 +2,6 @@ package com.xaqb.unlock.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,14 +24,10 @@ import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.ListViewForScroollView;
 import com.xaqb.unlock.zxing.activity.CaptureActivity;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.BitmapCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import okhttp3.Call;
 
 
 /**
@@ -41,8 +36,9 @@ import okhttp3.Call;
  */
 public class OrderDetailActivityNew extends BaseActivity {
     private OrderDetailActivityNew instance;
-    private TextView tvOrderId, tvOrderName, tvOrderPhone, tvOrderAddress, tvOrderLockType, tvOrderPay, tvOrderTime;
-    private ImageView ivFace, ivLock;
+    private TextView tvOrderId, tvOrderName, tvOrderPhone, tvOrderAddress,
+            tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark;
+    private ImageView ivLock;
     //    private Button btPayOnline, btPayCash,
     private Button btPayStatus;
     private String payStatus, orderId, scanResult, price, payPrice;
@@ -103,10 +99,12 @@ public class OrderDetailActivityNew extends BaseActivity {
         tvOrderLockType = (TextView) findViewById(R.id.tv_lock_type);
         tvOrderPay = (TextView) findViewById(R.id.tv_order_pay);
         tvOrderTime = (TextView) findViewById(R.id.tv_order_time);
-        ivFace = (ImageView) findViewById(R.id.iv_user_face);
         ivLock = (ImageView) findViewById(R.id.iv_lock_pic);
         btPayStatus = (Button) findViewById(R.id.bt_pay_status);
         lvPayRecord = (ListViewForScroollView) findViewById(R.id.lv_pay_record);
+        tvOrtherName = (TextView) findViewById(R.id.tv_other_name_od);
+        tvOrtherPhone = (TextView) findViewById(R.id.tv_other_phone_od);
+        tvOrtherRemark = (TextView) findViewById(R.id.tv_other_remark_od);
 
         /**
          * 5秒后自动查询下一次，查询30秒后，仍然失败的话，显示支付失败，等待用户手动刷新订单查看支付结果
@@ -163,14 +161,15 @@ public class OrderDetailActivityNew extends BaseActivity {
                                 tvOrderName.setText(map.get("or_username").toString());
                                 tvOrderPhone.setText(map.get("or_usertel").toString());
                                 tvOrderAddress.setText(map.get("or_useraddress").toString());
+                                tvOrtherName.setText(map.get("or_tpname").toString());//第三方姓名
+                                tvOrtherPhone.setText(map.get("or_tptel").toString());//第三方电话
+                                tvOrtherRemark.setText(map.get("or_remark").toString());//第三方备注
                                 price = map.get("or_price").toString();
                                 payPrice = map.get("or_cash").toString();
                                 tvOrderPay.setText(price);
                                 tvOrderLockType.setText(ToolsUtils.getLockType(map.get("or_locktype").toString()));
                                 tvOrderTime.setText(ToolsUtils.getStrTime(map.get("or_createtime").toString()));
                                 payStatus = map.get("or_paystatus").toString();
-
-
                                 //支付记录listview
                                 incomeInfos = new ArrayList<>();
                                 IncomeInfo info;
@@ -201,11 +200,7 @@ public class OrderDetailActivityNew extends BaseActivity {
                                     btPayStatus.setText("未付清");
                                 }
 
-                                String imageUrl = map.get("or_faceimg").toString();
-                                if (textNotEmpty(imageUrl)) {
-                                    loadImg(ivFace, imageUrl);
-                                }
-                                imageUrl = map.get("or_lockimg").toString();
+                                String imageUrl = map.get("or_lockimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivLock, imageUrl);
                                 }
@@ -238,11 +233,12 @@ public class OrderDetailActivityNew extends BaseActivity {
     }
 
     private void loadImg(final ImageView iv, String url) {
-        if (url != null && !url.equals("")){
+        if (url != null && !url.equals("")) {
             Picasso.with(instance)
                     .load(url)
                     .placeholder(R.mipmap.nothing_pic)
                     .error(R.mipmap.failed_pic)
+                    .fit()
                     .into(iv);
         }
     }
@@ -307,7 +303,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     Bundle bundle = data.getExtras();
                     if (bundle != null) {
                         scanResult = bundle.getString("result");
-//                        et.setText(scanResult);
                         progressDialog.setMessage("正在支付，请稍后...");
                         progressDialog.setCanceledOnTouchOutside(false);
                         progressDialog.show();
@@ -334,9 +329,6 @@ public class OrderDetailActivityNew extends BaseActivity {
                     public void doWork(Map<?, ?> map) {
                         try {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
                                 isFirstGetPayStatus = true;
                                 isQuery = false;
                                 getPayResult();

@@ -46,7 +46,7 @@ public class QRCodeActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean success = QRCodeUtil.createQRImage("http://www.ddkaisuo.net/home/staff/index?id="+ SPUtils.get(instance, "userid", ""), 800, 800, BitmapFactory.decodeResource(getResources(), R.mipmap.icon), filePath);
+                boolean success = QRCodeUtil.createQRImage("http://www.ddkaisuo.net/home/staff/index?id=" + SPUtils.get(instance, "userid", ""), 800, 800, BitmapFactory.decodeResource(getResources(), R.mipmap.icon), filePath);
 
                 if (success) {
                     runOnUiThread(new Runnable() {

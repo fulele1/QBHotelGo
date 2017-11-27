@@ -168,7 +168,6 @@
             android:gravity="center_vertical"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:textSize="@dimen/textview_small_size"
-            android:text="其实我也不知道会飞的撒娇陈女士的家伙可视对讲覅就U盾恢复的后代撒谎"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             />
@@ -258,7 +257,6 @@
                 android:padding="@dimen/activity_horizontal_margin"
                 android:textColor="@color/result_view"
                 android:textSize="@dimen/textview_normal_size"
-
                 />
 
         </LinearLayout>
@@ -271,31 +269,20 @@
             android:background="@mipmap/acq_side_3"
             android:layout_margin="@dimen/activity_horizontal_margin"
             >
-
-
-
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin">
 
-                <ImageView
-                    android:id="@+id/iv_user_face"
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    />
 
                 <ImageView
                     android:id="@+id/iv_lock_pic"
-                    android:layout_width="0dp"
+                    android:layout_width="70dp"
                     android:layout_height="150dp"
                     android:layout_weight="1"
                     android:padding="3dp"
                     />
             </TableRow>
-
 
             <TableRow
                 android:layout_width="match_parent"
@@ -306,14 +293,6 @@
 
 
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="人脸照片"
-                    android:textSize="@dimen/textview_small_size"/>
 
                 <TextView
                     android:layout_width="0dp"
@@ -327,6 +306,152 @@
 
         </TableLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/main" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:paddingTop="5dp"
+                android:text="第三方信息"
+                android:textColor="@color/result_view"
+                android:textSize="@dimen/textview_normal_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:background="@mipmap/acq_side_3"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/shadow_width"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="第三方姓名："
+                    android:textSize="@dimen/textview_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_other_name_od"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="10px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10px"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/point_line"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="第三方电话："
+                    android:textSize="@dimen/textview_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_other_phone_od"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="10px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10px"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/point_line"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:gravity="center"
+                    android:text="第三方备注："
+                    android:textSize="@dimen/textview_normal_size" />
+
+                <TextView
+                    android:id="@+id/tv_other_remark_od"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="10px"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10px"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/point_line"
+                />
+
+
+
+
+        </LinearLayout>
 
         <com.xaqb.unlock.Views.ListViewForScroollView
             android:id="@+id/lv_pay_record"

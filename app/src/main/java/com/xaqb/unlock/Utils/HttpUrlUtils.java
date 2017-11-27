@@ -95,7 +95,7 @@ public class HttpUrlUtils {
 
     //  获取实名认证信息接口
     public String getRealNameInfo() {
-        return getBaseUrl() + "v1/staff/realyapply/";
+        return getBaseUrl() + "/v1/staff/realyapply/";
     }
 
     //  获取收入明细接口

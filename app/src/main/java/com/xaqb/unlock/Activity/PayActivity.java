@@ -120,36 +120,6 @@ public class PayActivity extends BaseActivity {
         if (textNotEmpty(price)) {
             tvPrice.setText("需要支付的费用:" + price + "元");
         }
-//        if (!checkNetwork()) return;
-//        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getOrderList() + "?id=" + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                LogUtils.i("senddata", "" + map.toString());
-//                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//
-//
-//                    }
-//                });
 
     }
 
@@ -178,14 +148,6 @@ public class PayActivity extends BaseActivity {
             case R.id.bt_yes:
                 finish();
                 break;
-//            case R.id.bt_pay_status:
-//                isFirstGetPayStatus = false;
-//                progressDialog.setMessage("正在支付，请稍后...");
-//                progressDialog.setCanceledOnTouchOutside(false);
-//                progressDialog.show();
-//                isQuery = true;
-//                getPayResult();
-//                break;
         }
     }
 
@@ -217,92 +179,6 @@ public class PayActivity extends BaseActivity {
     }
 
 
-//    private void getOrderDetail(String orderId) {
-//        if (!checkNetwork()) {
-//            showToast(getResources().getString(R.string.network_not_alive));
-//            return;
-//        }
-//        loadingDialog.show("加载中...");
-//        LogUtils.i(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getOrderDetail() + "/" + orderId + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int i) {
-//                        loadingDialog.dismiss();
-//                        e.printStackTrace();
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String s, int i) {
-//                        try {
-//                            loadingDialog.dismiss();
-////                            LogUtils.i(s);
-//                            Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                            LogUtils.i(map.toString());
-//                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-////                                List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
-//                                tvOrderId.setText(map.get("or_orderno").toString());
-//                                tvOrderName.setText(map.get("or_username").toString());
-//                                tvOrderPhone.setText(map.get("or_usertel").toString());
-//                                tvOrderAddress.setText(map.get("or_useraddress").toString());
-//                                tvOrderPay.setText(map.get("or_price").toString());
-//                                tvOrderLockType.setText(map.get("or_locktype").toString());
-//                                tvOrderTime.setText(ToolsUtils.getStrTime(map.get("or_createtime").toString()));
-//                                payStatus = map.get("or_paystatus").toString();
-//                                if (payStatus.equals("01")) {
-//                                    btPayCash.setVisibility(View.GONE);
-//                                    btPayOnline.setText("已经支付");
-//                                    btPayOnline.setEnabled(false);
-//                                }
-//                                String imageUrl = map.get("or_faceimg").toString();
-//                                if (textNotEmpty(imageUrl)) {
-//                                    loadImg(ivFace, imageUrl);
-//                                }
-//                                imageUrl = map.get("or_lockimg").toString();
-//                                if (textNotEmpty(imageUrl)) {
-//                                    loadImg(ivLock, imageUrl);
-//                                }
-//                            } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                                ActivityController.finishAll();
-//                                showToast("登录失效，请重新登录");
-//                                startActivity(new Intent(instance, LoginActivity.class));
-//                            } else {
-//                                showToast(map.get("mess").toString());
-//                                return;
-//                            }
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//    }
-//
-//    private void loadImg(final ImageView iv, String url) {
-//        if (url != null && !url.equals(""))
-//            OkHttpUtils
-//                    .get()
-//                    .url(url)
-//                    .build()
-//                    .execute(new BitmapCallback() {
-//                        @Override
-//                        public void onError(Call call, Exception e, int i) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        @Override
-//                        public void onResponse(Bitmap bitmap, int i) {
-//                            try {
-//                                iv.setImageBitmap(bitmap);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    });
-//    }
-//
-
     /**
      * 在线支付
      */
@@ -325,9 +201,6 @@ public class PayActivity extends BaseActivity {
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                                btPayCash.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
                                 payId = map.get("id").toString();
                                 isFirstGetPayStatus = true;
                                 isQuery = false;
@@ -382,8 +255,6 @@ public class PayActivity extends BaseActivity {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 btPayCash.setVisibility(View.GONE);
                                 btPayOnline.setVisibility(View.GONE);
-//                                btPayOnline.setText("已经支付");
-//                                btPayOnline.setEnabled(false);
                                 btYes.setVisibility(View.VISIBLE);
                                 tvPrice.setText("支付成功");
                                 myHandler.sendEmptyMessage(101);

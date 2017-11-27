@@ -319,6 +319,7 @@ public class PayFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                             .load(mDataList.get(position).getPicUrl())
                             .placeholder(R.mipmap.nothing_pic)//添加占位图
                             .error(R.mipmap.failed_pic)//加载失败显示
+                            .fit()
                             .into(viewHolder.ivPic);
                 }
 

@@ -1,14 +1,10 @@
 package com.xaqb.unlock.Fragment;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +19,7 @@ import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Activity.AboutActivity;
 import com.xaqb.unlock.Activity.AdviseActivity;
 import com.xaqb.unlock.Activity.IncomeActivity;
-import com.xaqb.unlock.Activity.MainActivity;
+import com.xaqb.unlock.Activity.LoginActivity;
 import com.xaqb.unlock.Activity.MyOrderActivity;
 import com.xaqb.unlock.Activity.RealNameActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
@@ -32,9 +28,8 @@ import com.xaqb.unlock.Activity.UpdateActivity;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.CircleTransform;
 import com.xaqb.unlock.Utils.Globals;
-import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import java.io.File;
 
@@ -70,7 +65,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         llSetting = (LinearLayout) view.findViewById(R.id.ll_setting);
         llCustomer = (LinearLayout) view.findViewById(R.id.ll_customer_left);
         tvNickName = (TextView) view.findViewById(R.id.tv_left_nick_name);
-
         ivPic.setOnClickListener(this);
         ivEditor.setOnClickListener(this);
         llSetting.setOnClickListener(this);
@@ -80,9 +74,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                LogUtils.i("点击了item" + i);
-//                Fragment newContent = null;
-//                String title = null;
                 switch (i) {
                     case 0: // 我的订单
                         startActivity(new Intent(getActivity(), MyOrderActivity.class));
@@ -96,9 +87,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                     case 3: // 意见反馈
                         startActivity(new Intent(getActivity(), AdviseActivity.class));
                         break;
-//                    case 4: // 使用帮助
-//                        startActivity(new Intent(getActivity(), HelpActivity.class));
-//                        break;
                     case 4: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
@@ -123,14 +111,10 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                     default:
                         break;
                 }
-//                if (newContent != null) {
-//                    switchFragment(newContent, title);
-//                }
             }
         });
-//        String id = SPUtils.get(getActivity(), "userInfoId", 1) + "";
-//        UserInfo userInfo = DataSupport.find(UserInfo.class, Long.parseLong(id));
     }
+
 
     /**
      * 加载用户头像
@@ -141,10 +125,13 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         if (url != null && !url.equals(""))
             Picasso.with(getContext())
                     .load(url)
+                    .transform(new CircleTransform())//设置为圆形图片
                     .placeholder(R.mipmap.nothing_pic)
                     .error(R.mipmap.failed_pic)
+                    .fit()
                     .into(ivPic);
     }
+
 
     @Override
     public void onResume() {
@@ -181,13 +168,10 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_editor:
+            case R.id.iv_editor://编辑
                 startActivity(new Intent(getActivity(), UserInfoActivity.class));
                 break;
-            case R.id.ll_customer_left:
-//                startActivity(new Intent(getActivity(), AboutActivity.class));
-                break;
-            case R.id.ll_setting:
+            case R.id.ll_setting://注销登录
                 showAdialog(LeftFragment.this.getActivity(),"提示","确定要退出登录吗?","确定",View.VISIBLE);
                 break;
         }
@@ -195,21 +179,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void dialogOk() {
-        getActivity().finish();
+        startActivity(new Intent(getActivity(), LoginActivity.class));
+
     }
 
-    /**
-     * 切换fragment
-     *
-     * @param fragment
-     */
-    private void switchFragment(Fragment fragment, String title) {
-        if (getActivity() == null) {
-            return;
-        }
-        if (getActivity() instanceof MainActivity) {
-            MainActivity fca = (MainActivity) getActivity();
-//            fca.switchConent(fragment, title);
-        }
-    }
 }

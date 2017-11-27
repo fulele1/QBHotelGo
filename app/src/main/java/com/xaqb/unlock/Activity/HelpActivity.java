@@ -14,7 +14,7 @@ import com.xaqb.unlock.Views.ViewPagerCompat.ViewPagerCompat;
 public class HelpActivity extends BaseActivity {
     private HelpActivity instance;
     private ViewPagerCompat viewPager;
-//    private List<LearnPath> learnPaths = new ArrayList<LearnPath>();
+
     @Override
     public void initTitleBar() {
         setTitle("使用帮助");

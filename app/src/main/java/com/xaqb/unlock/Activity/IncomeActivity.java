@@ -41,23 +41,21 @@ import okhttp3.Call;
  */
 public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    private IncomeActivity instance;
-    private ArrayList<IncomeInfo> incomeInfos = new ArrayList<>();
-    public static boolean needRefresh;//是否需要刷新列表
-    /**
-     * 服务器端一共多少条数据
-     */
-    private int TOTAL_COUNTER = 34;
-
     /**
      * 每一页展示多少条数据
      */
     private static final int REQUEST_COUNT = 10;
-
+    public static boolean needRefresh;//是否需要刷新列表
     /**
      * 已经获取到多少条数据了
      */
     private static int mCurrentCounter = 0;
+    private IncomeActivity instance;
+    private ArrayList<IncomeInfo> incomeInfos = new ArrayList<>();
+    /**
+     * 服务器端一共多少条数据
+     */
+    private int TOTAL_COUNTER = 34;
     /**
      * 当前页数
      */
@@ -70,6 +68,14 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
     private MyAdapter mDataAdapter;
 
     private ImageView ivNoData;
+    private View.OnClickListener mFooterClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.Loading, null);
+//            requestData();
+        }
+    };
+
     @Override
     public void initTitleBar() {
         setTitle("收入明细");
@@ -98,28 +104,6 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
         mLuRecyclerViewAdapter = new LuRecyclerViewAdapter(mDataAdapter);
         mRecyclerView.setAdapter(mLuRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        View noDataView = View.inflate(instance, R.layout.list_no_data, null);
-//        mRecyclerView.setEmptyView(noDataView);
-//        mLuRecyclerViewAdapter.addHeaderView(new SampleHeader(this));
-//        mLuRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                SendOrder item = mDataAdapter.getDataList().get(position);
-////                item.getOrderID();
-////                showToast(item.toString());
-//                Intent intent = new Intent(instance, OrderDetailActivity.class);
-//                intent.putExtra("or_id", item.getOrderID());
-//                startActivity(intent);
-//            }
-//        });
-
-//        mLuRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
-//            @Override
-//            public void onItemLongClick(View view, int position) {
-////                SendOrder item = mDataAdapter.getDataList().get(position);
-////                showToast("long----------" + item.toString());
-//            }
-//        });
         mRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -186,7 +170,6 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
                                     incomeInfos.add(info);
                                 }
                                 if (incomeInfos.size() == 0) {
-//                                    ivNoData.setVisibility(View.VISIBLE);
                                     return;
                                 }
 
@@ -243,6 +226,20 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
         initData();
     }
 
+    private void notifyDataSetChanged() {
+        mLuRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 增加数据到集合
+     *
+     * @param list 需要增加的数据集合
+     */
+    private void addItems(ArrayList<IncomeInfo> list) {
+        mDataAdapter.addAll(list);
+        mCurrentCounter += list.size();
+    }
+
     private class MyAdapter extends ListBaseAdapter<IncomeInfo> {
 
         private LayoutInflater mLayoutInflater;
@@ -295,27 +292,5 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
             }
         }
     }
-
-    private void notifyDataSetChanged() {
-        mLuRecyclerViewAdapter.notifyDataSetChanged();
-    }
-
-    /**
-     * 增加数据到集合
-     *
-     * @param list 需要增加的数据集合
-     */
-    private void addItems(ArrayList<IncomeInfo> list) {
-        mDataAdapter.addAll(list);
-        mCurrentCounter += list.size();
-    }
-
-    private View.OnClickListener mFooterClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            LuRecyclerViewStateUtils.setFooterViewState(instance, mRecyclerView, REQUEST_COUNT, LoadingFooter.State.Loading, null);
-//            requestData();
-        }
-    };
 
 }

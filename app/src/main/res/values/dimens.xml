@@ -15,5 +15,6 @@
     <dimen name="slidingmenu_offset">45dp</dimen>
     <dimen name="slidingmenu_width">120dp</dimen>
     <dimen name="button_normal_size">20sp</dimen>
+    <dimen name="button_normal_sizes">5dp</dimen>
 
 </resources>
