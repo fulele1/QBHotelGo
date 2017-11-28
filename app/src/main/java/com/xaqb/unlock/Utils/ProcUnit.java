@@ -1459,33 +1459,34 @@ public final class ProcUnit {
         return aRet;
     }
 
-    public static boolean checkCertNo(String sNo) {
-        if (sNo == null) return false;
-        if (sNo.length() != 18) return false;
-        int i;
-        String sTmp = "";
-        for (i = 0; i < 18; i++) {
-            sTmp = sNo.substring(i, i + 1);
-            if (sTmp.compareTo("0") < 0 || sTmp.compareTo("9") > 0)
-                if (i != 17 || sTmp.compareTo("X") != 0) return false;
-
-        }
-        sTmp = sNo.substring(6, 14);
-        SimpleDateFormat oFormat = new SimpleDateFormat("yyyyMMdd");
-        try {
-            Date oDate = oFormat.parse(sTmp);
-        } catch (Exception e) {
-            return false;
-        }
-        int[] aRight = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};//权值数组
-        String[] aCheck = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
-        int iAll = 0;
-        for (i = 0; i < 17; i++)
-            iAll += (Integer.parseInt(sNo.substring(i, i + 1)) * aRight[i]);
-        iAll = iAll % 11;
-        if (sNo.substring(17, 18).compareTo(aCheck[iAll]) != 0) return false;
-        return true;
-    }
+    //检测身份证
+//    public static boolean checkCertNo(String sNo) {
+//        if (sNo == null) return false;
+//        if (sNo.length() != 18) return false;
+//        int i;
+//        String sTmp = "";
+//        for (i = 0; i < 18; i++) {
+//            sTmp = sNo.substring(i, i + 1);
+//            if (sTmp.compareTo("0") < 0 || sTmp.compareTo("9") > 0)
+//                if (i != 17 || sTmp.compareTo("X") != 0) return false;
+//
+//        }
+//        sTmp = sNo.substring(6, 14);
+//        SimpleDateFormat oFormat = new SimpleDateFormat("yyyyMMdd");
+//        try {
+//            Date oDate = oFormat.parse(sTmp);
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        int[] aRight = {7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2};//权值数组
+//        String[] aCheck = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
+//        int iAll = 0;
+//        for (i = 0; i < 17; i++)
+//            iAll += (Integer.parseInt(sNo.substring(i, i + 1)) * aRight[i]);
+//        iAll = iAll % 11;
+//        if (sNo.substring(17, 18).compareTo(aCheck[iAll]) != 0) return false;
+//        return true;
+//    }
 
     public static Rect getCertRect(int iWidth, int iHeight) {
         Rect oRC = new Rect();

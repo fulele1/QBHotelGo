@@ -17,7 +17,7 @@
         android:singleLine="true"
         android:text="标题栏"
         android:textColor="@color/result_view"
-        android:textSize="@dimen/activity_title" />
+        android:textSize="@dimen/button_normal_size" />
 
     <ImageView
         android:id="@+id/iv_backward"

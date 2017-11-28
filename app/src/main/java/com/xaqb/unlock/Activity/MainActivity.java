@@ -451,7 +451,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 i = new Intent(instance, MyOrderActivity.class);
                 startActivity(i);
                 break;
-            case R.id.iv_will_send:
+            case R.id.iv_will_send://待发数据
                 i = new Intent(instance, WillSendActivity.class);
                 startActivity(i);
                 break;
@@ -598,5 +598,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             pImg.setImageResource(data);
         }
     }
+
 
 }

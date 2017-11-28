@@ -8,10 +8,9 @@ import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by lenovo on 2017/1/5.
- */
+
 public class IDCardUtils {
+
     /*********************************** 身份证验证开始 ****************************************/
     /**
      * 身份证号码验证 1、号码的结构 公民身份号码是特征组合码，由十七位数字本体码和一位校验码组成。排列顺序从左至右依次为：六位数字地址码，
@@ -27,17 +26,19 @@ public class IDCardUtils {
     /**
      * 功能：身份证的有效验证
      *
-     * @param IDStr 身份证号
+     * @param IDStr
+     *            身份证号
      * @return 有效：返回"" 无效：返回String信息
      * @throws ParseException
      */
     @SuppressWarnings("unchecked")
     public static String IDCardValidate(String IDStr) throws ParseException {
+        if(IDStr.endsWith("X")){
+            IDStr = IDStr.replace("X","x");
+        }
         String errorInfo = "";// 记录错误信息
-        String[] ValCodeArr = {"1", "0", "X", "9", "8", "7", "6", "5", "4",
-                "3", "2"};
-        String[] Wi = {"7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7",
-                "9", "10", "5", "8", "4", "2"};
+        String[] ValCodeArr = { "1", "0", "x", "9", "8", "7", "6", "5", "4","3", "2" };
+        String[] Wi = { "7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7","9", "10", "5", "8", "4", "2" };
         String Ai = "";
         // ================ 号码的长度 15位或18位 ================
         if (IDStr.length() != 15 && IDStr.length() != 18) {
@@ -56,7 +57,7 @@ public class IDCardUtils {
             errorInfo = "身份证15位号码都应为数字 ; 18位号码除最后一位外，都应为数字。";
             return errorInfo;
         }
-        // =======================(end)========================
+
 
         // ================ 出生年月是否有效 ================
         String strYear = Ai.substring(6, 10);// 年份
@@ -77,7 +78,7 @@ public class IDCardUtils {
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
-        } catch (java.text.ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         if (Integer.parseInt(strMonth) > 12 || Integer.parseInt(strMonth) == 0) {
@@ -99,24 +100,23 @@ public class IDCardUtils {
         // ==============================================
 
         // ================ 判断最后一位的值 ================
-//        int TotalmulAiWi = 0;
-//        for (int i = 0; i < 17; i++) {
-//            TotalmulAiWi = TotalmulAiWi
-//                    + Integer.parseInt(String.valueOf(Ai.charAt(i)))
-//                    * Integer.parseInt(Wi[i]);
-//        }
-//        int modValue = TotalmulAiWi % 11;
-//        String strVerifyCode = ValCodeArr[modValue];
-//        Ai = Ai + strVerifyCode;
-//
-//        if (IDStr.length() == 18) {
-//            if (Ai.equals(IDStr) == false) {
-//                errorInfo = "身份证无效，不是合法的身份证号码";
-//                return errorInfo;
-//            }
-//        } else {
-//            return "";
-//        }
+        int TotalmulAiWi = 0;
+        for (int i = 0; i < 17; i++) {
+            TotalmulAiWi = TotalmulAiWi
+                    + Integer.parseInt(String.valueOf(Ai.charAt(i)))
+                    * Integer.parseInt(Wi[i]);
+        }
+        int modValue = TotalmulAiWi % 11;
+        String strVerifyCode = ValCodeArr[modValue];
+        Ai = Ai + strVerifyCode;
+        if (IDStr.length() == 18) {
+            if (Ai.equals(IDStr) == false) {
+                errorInfo = "身份证无效，不是合法的身份证号码";
+                return errorInfo;
+            }
+        } else {
+            return "";
+        }
         // =====================(end)=====================
         return "";
     }
@@ -186,7 +186,7 @@ public class IDCardUtils {
     /**
      * 功能：判断字符串是否为日期格式
      *
-     * @param
+     * @param strDate
      * @return
      */
     public static boolean isDate(String strDate) {
@@ -198,6 +198,20 @@ public class IDCardUtils {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @param args
+     * @throws ParseException
+     */
+    @SuppressWarnings("static-access")
+    public static void main(String[] args) throws ParseException {
+        // String IDCardNum="210102820826411";
+        // String IDCardNum="210102198208264114";
+        String IDCardNum = "210181198807193116";
+        IDCardUtils cc = new IDCardUtils();
+        System.out.println(cc.IDCardValidate(IDCardNum));
+        // System.out.println(cc.isDate("1996-02-29"));
     }
 
 }

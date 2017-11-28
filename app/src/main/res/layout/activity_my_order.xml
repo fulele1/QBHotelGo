@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:padding="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margins"
 
         >
         <TextView
@@ -24,6 +24,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:onClick="myClick"
+            android:padding="10px"
             />
 
         <TextView
@@ -33,9 +34,9 @@
             android:layout_weight="1"
             android:gravity="center"
             android:layout_gravity="center"
-            android:textSize="@dimen/textview_normal_size"
-            android:textColor="@color/result_view"
             android:text="我的订单"
+            android:textColor="@color/result_view"
+            android:textSize="@dimen/button_normal_size"
             />
 
         <TextView
@@ -51,13 +52,14 @@
     </LinearLayout>
 
 
-
     <RadioGroup
         android:id="@+id/rp_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
         >
         <RadioButton
             android:id="@+id/rb_all_m_order"
@@ -71,8 +73,6 @@
             android:textColor="@color/main"
             android:textSize="@dimen/textview_small_size"
             android:checked="true"/>
-            <!--android:background="@drawable/bg_redio_check"-->
-            />
 
         <RadioButton
             android:id="@+id/rb_wait_m_order"

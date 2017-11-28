@@ -1,26 +1,41 @@
 package com.xaqb.unlock.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.sdk.android.ams.common.util.SignUtil;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.CameraTool.CertCaptureActivity;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -28,7 +43,10 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
+import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.PaintView;
 import com.xaqb.unlock.Utils.PermissionUtils;
+import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
@@ -48,6 +66,8 @@ import java.util.Map;
 
 import okhttp3.Call;
 
+import static com.xaqb.unlock.Utils.IDCardUtils.IDCardValidate;
+
 
 /**
  * Created by chengeng on 2016/12/2.
@@ -61,16 +81,10 @@ public class CollectionInfoActivity extends BaseActivity {
     //声明mLocationOption对象
     public AMapLocationClientOption mLocationOption = null;
     private CollectionInfoActivity instance;
-    //    private WindowManager.LayoutParams params;
-    //    private PopupWindow popupWindow;
-//    private View layout, vPart; // pop的布局
-//    private LayoutInflater inflater;
     private Button btComplete;
-    //    private String username, psw;
     private EditText etUserName, etUserPhone, etOtherName, etOtherPhone, etOtherRemark, etUnlockPay, etUnlockAddress;
     private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
     private ImageView ivCertPic, ivFacePic, ivOtherFacePic, ivLockPic, ivZxing, ivCertScan;
-    //    private RelativeLayout rlPicFromSdcard, rlTakePic, rlCancle;
     private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress,
             lockType, unlockPay, unlockTime, imagePath1, imagePath2, imagePath3, otherName, otherPhone, otherRemark;
     private Intent intent;
@@ -83,6 +97,8 @@ public class CollectionInfoActivity extends BaseActivity {
     private int permissionCode = 0;
     private AMapLocationClient mlocationClient;
     private double longitude, latitude;
+    private ImageView imageSign;
+    private PaintView mView;
     /**
      * 定位监听
      */
@@ -114,6 +130,11 @@ public class CollectionInfoActivity extends BaseActivity {
     };
     private Bitmap bitmapCert;
     private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     public void initTitleBar() {
@@ -127,7 +148,7 @@ public class CollectionInfoActivity extends BaseActivity {
         instance = this;
         assignViews();
     }
-
+private ImageView ivSign;
     private void assignViews() {
         btComplete = (Button) findViewById(R.id.bt_complete);
         etUserName = (EditText) findViewById(R.id.et_user_name);
@@ -146,6 +167,7 @@ public class CollectionInfoActivity extends BaseActivity {
         ivLockPic = (ImageView) findViewById(R.id.iv_lock_pic);
         ivCertScan = (ImageView) findViewById(R.id.iv_cert_scan);
         lockTypeSpinner = (Spinner) findViewById(R.id.sp_lock_type);
+        ivSign = (ImageView) findViewById(R.id.iv_sign_collection);
         /**
          * 初始化高德地图控件
          */
@@ -168,8 +190,20 @@ public class CollectionInfoActivity extends BaseActivity {
         checkPer(PermissionUtils.CODE_ACCESS_COARSE_LOCATION);
     }
 
+    private byte [] picByte;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (requestCode) {
+            case 0://返回签字的图片
+                if (resultCode == RESULT_OK){
+                    Bundle bundle = data.getExtras();
+                    if (bundle != null) {
+                       picByte = bundle.getByteArray("picByte");
+                        ivSign.setImageBitmap(BitmapFactory.decodeByteArray(picByte, 0, picByte.length));
+                    }
+                }
+                break;
+
             case 2:
                 if (resultCode == RESULT_OK) {
                     // 从相机返回的数据
@@ -312,8 +346,6 @@ public class CollectionInfoActivity extends BaseActivity {
                         }
                     }
                 });
-
-
     }
 
     @Override
@@ -324,6 +356,7 @@ public class CollectionInfoActivity extends BaseActivity {
         ivOtherFacePic.setOnClickListener(instance);
         ivLockPic.setOnClickListener(instance);
         ivCertScan.setOnClickListener(instance);
+        ivSign.setOnClickListener(instance);
 
         lockTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -348,7 +381,6 @@ public class CollectionInfoActivity extends BaseActivity {
                     default:
                         break;
                 }
-
             }
 
 
@@ -385,6 +417,10 @@ public class CollectionInfoActivity extends BaseActivity {
                 case R.id.iv_cert_scan://读取身份证
                     scanCert();
                     break;
+                case R.id.iv_sign_collection://手写签名
+                    Intent intent1 = new Intent(instance, SignActivity.class);
+                    startActivityForResult(intent1, 0);
+                    break;
                 case R.id.bt_complete:
                     userName = etUserName.getText().toString().trim();
                     userPhone = etUserPhone.getText().toString().trim();
@@ -406,6 +442,9 @@ public class CollectionInfoActivity extends BaseActivity {
                         showToast("请输入客户电话");
                     } else if (!textNotEmpty(userCertNum)) {
                         showToast("请输入客户身份证号码");
+                    } else if (!IDCardValidate(userCertNum).equals("")) {
+                        LogUtils.e("身份证号码" + userCertNum);
+                        showToast("请输入正确身份证号码");
                     } else if (!textNotEmpty(unlockAddress)) {
                         showToast("请输入开锁地址");
                     } else if (!textNotEmpty(lockType)) {
@@ -473,6 +512,7 @@ public class CollectionInfoActivity extends BaseActivity {
                     .addParams("city", "")
                     .addParams("district", "")
                     .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))
+                    .addParams("signimg", Base64Utils.photoToBase64(BitmapFactory.decodeByteArray(picByte, 0, picByte.length), 60))//手写签名照片
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -591,4 +631,45 @@ public class CollectionInfoActivity extends BaseActivity {
         }
     }
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("CollectionInfo Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
+    }
 }
