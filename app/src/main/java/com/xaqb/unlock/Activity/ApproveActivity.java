@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.IDCardUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -43,15 +45,15 @@ import okhttp3.Call;
  * Created by chengeng on 2016/12/2.
  * 实名认证页面
  */
-public class RealNameActivity extends BaseActivity {
+public class ApproveActivity extends BaseActivity {
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     String[] types = {"身份证", "驾照", "户口本", "军官证", "士兵证", "警官证", "国内护照", "港澳通行证", "其他"};
     String[] sex = {"男", "女"};
     String[] nations = {"汉族"};
 
-    private RealNameActivity instance;
+    private ApproveActivity instance;
     private EditText etRealName, etCardNum, etAge;
-    private ImageView ivCertPic, ivFacePic;
+    private ImageView ivCertPic, ivFacePic,ivSign;
     private Button btSubmit;
     private WindowManager.LayoutParams params;
     private View layout, vPart; // pop的布局
@@ -89,6 +91,7 @@ public class RealNameActivity extends BaseActivity {
         btSubmit = (Button) findViewById(R.id.bt_submit);
         spType = (Spinner) findViewById(R.id.sp_type);
         spNation = (Spinner) findViewById(R.id.sp_nation);//选择民族
+        ivSign = (ImageView) findViewById(R.id.iv_sign_approve);//电子签名
     }
 
     @Override
@@ -146,6 +149,7 @@ public class RealNameActivity extends BaseActivity {
         ivFacePic.setOnClickListener(instance);
         ivCertPic.setOnClickListener(instance);
         btSubmit.setOnClickListener(instance);
+        ivSign.setOnClickListener(instance);
     }
 
     @Override
@@ -158,6 +162,11 @@ public class RealNameActivity extends BaseActivity {
             case R.id.iv_face_pic:
                 requestCoede = 1;
                 checkPer(PermissionUtils.CODE_CAMERA);
+                break;
+            case R.id.iv_sign_approve:
+                Intent intent1 = new Intent(instance, SignActivity.class);
+                startActivityForResult(intent1, 11);
+
                 break;
 
             case R.id.bt_submit:
@@ -181,6 +190,8 @@ public class RealNameActivity extends BaseActivity {
                     showToast("请拍摄证件照片");
                 } else if (!textNotEmpty(facePicPath)) {
                     showToast("请拍摄人脸照片");
+                } else if (mBmSign == null) {
+                    showToast("请添加电子签名");
                 } else {
                     try {
                         if (type.equals("身份证")) {
@@ -250,6 +261,7 @@ public class RealNameActivity extends BaseActivity {
                 .addParams("age", cardAge)
                 .addParams("certimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(certPicPath), 80))
                 .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(facePicPath), 80))
+                .addParams("signimg", Base64Utils.photoToBase64(mBmSign,80))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -270,16 +282,19 @@ public class RealNameActivity extends BaseActivity {
                                 switch (map.get("state").toString()) {
                                     case "0":
                                         showToast("上传成功，请等待审核！");
-                                        SPUtils.put(instance, "staff_is_real", "0");
+                                        SPUtils.put(instance, "staff_is_real", "2");
                                         finish();
                                         break;
                                     case "1":
                                         showToast("认证成功");
+                                        LogUtils.e("认证成功1");
                                         SPUtils.put(instance, "staff_is_real", "1");
+                                        finish();
                                         break;
                                     case "2":
                                         showToast("认证中，请等待审核！");
                                         SPUtils.put(instance, "staff_is_real", "2");
+                                        finish();
                                         break;
                                     case "3":
                                         showToast("认证失败！");
@@ -387,6 +402,7 @@ public class RealNameActivity extends BaseActivity {
         }
     }
 
+    private byte [] picByte;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 2:
@@ -399,13 +415,25 @@ public class RealNameActivity extends BaseActivity {
                     }
                 }
                 break;
+
+            case 11://电子签名
+                if (resultCode == RESULT_OK){
+                    Bundle bundle = data.getExtras();
+                    if (bundle != null) {
+                        picByte = bundle.getByteArray("picByte");
+                        mBmSign = BitmapFactory.decodeByteArray(picByte, 0, picByte.length);
+                        ivSign.setImageBitmap(mBmSign);
+                    }
+                }
+                break;
+
             default:
                 break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
+    private Bitmap mBmSign;
     @Override
     protected void onDestroy() {
 

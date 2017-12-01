@@ -50,7 +50,6 @@
                 android:gravity="right|center"
                 android:text="v1.0.1"
                 android:paddingLeft="10px"
-                android:textColor="@color/textColor"
                 android:textSize="@dimen/textview_small_size" />
 
         </LinearLayout>

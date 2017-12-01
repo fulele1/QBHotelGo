@@ -1,5 +1,6 @@
 package com.xaqb.unlock.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,7 +22,7 @@ import com.xaqb.unlock.Activity.AdviseActivity;
 import com.xaqb.unlock.Activity.IncomeActivity;
 import com.xaqb.unlock.Activity.LoginActivity;
 import com.xaqb.unlock.Activity.MyOrderActivity;
-import com.xaqb.unlock.Activity.RealNameActivity;
+import com.xaqb.unlock.Activity.ApproveActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
 import com.xaqb.unlock.Activity.UpdateActivity;
@@ -43,6 +44,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
     private LinearLayout llSetting, llCustomer;
     private TextView tvNickName;
     private String url, nickname, status = "";
+    private Activity instance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.main_left_menu, null);
         initViews(view);
+        instance = this.getActivity();
         return view;
     }
 
@@ -91,7 +94,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                         Toast.makeText(getActivity(), "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getActivity(), RealNameActivity.class));
+                            startActivity(new Intent(getActivity(), ApproveActivity.class));
                         } else if (status.equals(Globals.staffIsRealSuc)) {
                             Toast.makeText(getActivity(), "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), RealNameInfoActivity.class));
@@ -106,7 +109,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         if (readConfig("late").equals("yes")){
                             Toast.makeText(getContext(),"已是最新版本",Toast.LENGTH_SHORT).show();
                         }else{
-                            startActivity(new Intent(getActivity(), UpdateActivity.class));
+                            showDialogB(instance,"更新提示",0,"检测到新版本，是否更新","立刻更新","以后再说");
                         }
                     default:
                         break;
@@ -115,6 +118,11 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         });
     }
 
+    @Override
+    public void dialogOkB() {
+        super.dialogOkB();
+        startActivity(new Intent(getActivity(), UpdateActivity.class));
+    }
 
     /**
      * 加载用户头像
@@ -179,8 +187,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void dialogOk() {
+        SPUtils.put(instance,"userPsw","");
         startActivity(new Intent(getActivity(), LoginActivity.class));
-
     }
 
 }

@@ -21,7 +21,7 @@ public class QRCodeActivity extends BaseActivity {
 
     @Override
     public void initTitleBar() {
-        setTitleBarVisible(View.GONE);
+        setTitle("用户二维码");
     }
 
     @Override

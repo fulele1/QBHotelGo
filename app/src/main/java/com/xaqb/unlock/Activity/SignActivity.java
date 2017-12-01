@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -32,13 +34,17 @@ public class SignActivity extends BaseActivity {
         setTitle("手写签名");
     }
 
+    private CheckBox cbAgree;
+    private FrameLayout frameLayout;
     @Override
     public void initViews() throws Exception {
 
         setContentView(R.layout.activity_sign);
         instance = this;
         imageSign = (ImageView) findViewById(R.id.iv_sign);
-        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.tablet_view);
+        cbAgree = (CheckBox) findViewById(R.id.cb_agree_sign);
+
+        frameLayout = (FrameLayout) findViewById(R.id.tablet_view);
 
         mView = new PaintView(this);
         frameLayout.addView(mView);
@@ -77,6 +83,18 @@ public class SignActivity extends BaseActivity {
     @Override
     public void addListener() throws Exception {
 
+
+        cbAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    frameLayout.setVisibility(View.VISIBLE);
+                }else{
+                    frameLayout.setVisibility(View.INVISIBLE);
+                    mView.clear();
+                }
+            }
+        });
     }
 
     //bitmap转为Bytes

@@ -1,14 +1,15 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Environment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xaqb.unlock.R;
@@ -37,7 +38,7 @@ public class LoginActivity extends BaseActivity {
     private String username, psw;
     private EditText etUsername, etPsw;
     private CheckBox cbRememberPsw;
-
+    private ImageView ivDeUser,ivDePsw;
 
     @Override
     public void initTitleBar() {
@@ -55,16 +56,44 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();
+        setDeleteImgview(etUsername,ivDeUser);
+        setDeleteImgview(etPsw,ivDePsw);
+    }
+
+
+    /**
+     *
+     */
+    private void setDeleteImgview(EditText editText, final ImageView imageView){
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     private void assignViews() {
-
         tvForgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
         btLogin = (Button) findViewById(R.id.bt_login);
         etUsername = (EditText) findViewById(R.id.et_username);
         etPsw = (EditText) findViewById(R.id.et_password);
         cbRememberPsw = (CheckBox) findViewById(R.id.cb_remember_psw);
+        ivDeUser = (ImageView) findViewById(R.id.img_delete_user_login);
+        ivDePsw = (ImageView) findViewById(R.id.img_delete_psw_login);
     }
+
 
     @Override
     public void initData() {
@@ -93,16 +122,26 @@ public class LoginActivity extends BaseActivity {
     public void addListener() {
         tvForgetPsw.setOnClickListener(instance);
         btLogin.setOnClickListener(instance);
+        ivDePsw.setOnClickListener(instance);
+        ivDeUser.setOnClickListener(instance);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_forgetPsw:
+            case R.id.tv_forgetPsw://忘记密码
                 startActivity(new Intent(instance, BackPswActivity.class));
                 break;
-            case R.id.bt_login:
+            case R.id.bt_login://登录
                 login();
+                break;
+            case R.id.img_delete_user_login://删除用户名
+                etUsername.setText("");
+                ivDeUser.setVisibility(View.GONE);
+                break;
+            case R.id.img_delete_psw_login://删除密码
+                etPsw.setText("");
+                ivDePsw.setVisibility(View.GONE);
                 break;
         }
     }

@@ -203,7 +203,6 @@ private ImageView ivSign;
                     }
                 }
                 break;
-
             case 2:
                 if (resultCode == RESULT_OK) {
                     // 从相机返回的数据
@@ -357,7 +356,6 @@ private ImageView ivSign;
         ivLockPic.setOnClickListener(instance);
         ivCertScan.setOnClickListener(instance);
         ivSign.setOnClickListener(instance);
-
         lockTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

@@ -271,6 +271,18 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:drawableLeft="@mipmap/little_star"
+                android:text="照片采集:"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_normal_size"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                />
+
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -320,6 +332,29 @@
                 </TableRow>
 
             </TableLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/padding"
+                android:layout_marginLeft="@dimen/margin_edge"
+                android:drawableLeft="@mipmap/little_star"
+                android:text="电子签名:"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_normal_size"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                />
+
+            <ImageView
+                android:id="@+id/iv_sign_approve"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:src="@mipmap/sign_pic"
+                />
 
             <Button
                 android:id="@+id/bt_submit"

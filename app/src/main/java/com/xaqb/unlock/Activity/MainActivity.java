@@ -471,7 +471,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 status = SPUtils.get(instance, "staff_is_real", "").toString();
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                     Toast.makeText(instance, "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, RealNameActivity.class));
+                    startActivity(new Intent(instance, ApproveActivity.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
                     Toast.makeText(instance, "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
@@ -502,6 +502,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         startService(new Intent(instance, FileService.class));
         MobclickAgent.onResume(this);
         status = SPUtils.get(instance, "staff_is_real", "").toString();
+        LogUtils.e("修改后"+status);
     }
 
     @Override

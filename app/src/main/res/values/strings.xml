@@ -47,6 +47,7 @@
     <string name="str_scan_hint">取景框对准二维码, 即可自动扫描</string>
 
     <string name="network_not_alive">网络未连接，请检查网络</string>
+    <string name="on_char">._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
     <string-array name="advise">
         <item></item>
         <item>建议</item>

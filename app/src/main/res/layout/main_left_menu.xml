@@ -1,15 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?><!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"--><!--android:id="@+id/left_menu"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent">-->
-
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/left_menu"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:layout_marginLeft="@dimen/slidingmenu_offset"
     android:background="@color/white"
     android:orientation="vertical"
-
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginLeft="@dimen/slidingmenu_offset"
-   >
+    android:paddingLeft="@dimen/activity_horizontal_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,9 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
-            android:layout_marginLeft="10dp"
             android:textSize="@dimen/textview_normal_size" />
 
         <ImageView
@@ -41,9 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="30dp"
             android:padding="5dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:src="@mipmap/left_edit" />
     </LinearLayout>
 
@@ -51,8 +48,7 @@
         android:id="@+id/lv_left_menu"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        >
+        android:layout_weight="1">
 
     </ListView>
 
@@ -60,18 +56,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        >
+        android:paddingLeft="10dp">
 
         <LinearLayout
             android:id="@+id/ll_setting"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:padding="@dimen/padding"
             android:layout_marginBottom="@dimen/activity_horizontal_margin"
-            >
+            android:layout_weight="1"
+            android:padding="@dimen/padding">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -85,19 +79,20 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
-                android:text="注销登录"
                 android:paddingLeft="@dimen/margin_edge"
+                android:text="注销登录"
                 android:textSize="@dimen/textview_small_size" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_customer_left"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:background="@drawable/bg_button_selector"
             android:padding="12dp"
-            android:visibility="gone"
-            android:background="@drawable/bg_button_selector">
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -111,8 +106,8 @@
                 android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
-                android:text="客服"
                 android:paddingLeft="@dimen/margin_edge"
+                android:text="客服"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textview_small_size" />
         </LinearLayout>

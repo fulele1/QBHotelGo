@@ -138,7 +138,7 @@ public class BaseFragment extends Fragment {
 
 
     /**
-     * 弹出对话框
+     * 弹出吐司
      */
     public void showToastB(String str) {
         if (null == mToast) {

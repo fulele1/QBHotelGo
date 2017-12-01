@@ -29,32 +29,52 @@
         android:paddingTop="@dimen/activity_horizontal_margin"
         />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="注意：如果您同意此条例请签字确认。"
-        android:textColor="@color/red"
-        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"
-        />
+        >
 
+
+        <CheckBox
+            android:id="@+id/cb_agree_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_edge"
+            android:button="@drawable/checkbox_selector"
+            android:paddingBottom="3dp"
+            android:paddingRight="10dp"
+            android:paddingTop="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我已了解以上相关条例。"
+            android:textColor="@color/main"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
 
     <LinearLayout style="@style/common_horizontal_division_line_style" />
-
 
     <FrameLayout
         android:id="@+id/tablet_view"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/white" >
+        android:background="@color/white"
+        android:visibility="invisible"
+        >
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="3dp" >
+        android:paddingTop="3dp"
+        >
 
         <Button
             android:id="@+id/tablet_ok"
@@ -78,7 +98,5 @@
             android:textColor="@color/white"
             />
     </LinearLayout>
-
-
 
 </LinearLayout>
