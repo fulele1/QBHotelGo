@@ -24,16 +24,16 @@ import okhttp3.Call;
  * Created by chengeng on 2016/12/2.
  * 空activity，用于复制粘贴
  */
-public class RealNameInfoActivity extends BaseActivity {
+public class RealNameInfoActivity extends BaseActivityNew {
     private RealNameInfoActivity instance;
     private TextView tvCertName, tvCertType, tvCertNum, tvSex, tvNation;
     private ImageView ivCert, ivFace;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("实名认证信息");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("实名认证信息");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {

@@ -6,7 +6,9 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -23,24 +25,22 @@ import java.util.Map;
  * Created by chengeng on 2016/12/2.
  * 意见反馈界面
  */
-public class AdviseActivity extends BaseActivity {
+public class AdviseActivity extends BaseActivityNew {
     private AdviseActivity instance;
     private EditText etTitle, etAdvise;
     private Button btComplete;
     private String title, advise, type;
     private Spinner spType;
+    private TextView tvTitle;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("意见反馈");
-        showBackwardView(true);
-    }
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.advise_activity);
         instance = this;
         assignViews();
+        tvTitle.setText("意见反馈");
     }
 
     private void assignViews() {
@@ -48,6 +48,7 @@ public class AdviseActivity extends BaseActivity {
         etAdvise = (EditText) findViewById(R.id.et_advise_content);
         btComplete = (Button) findViewById(R.id.bt_complete);
         spType = (Spinner) findViewById(R.id.sp_advise_type);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
     }
 
     @Override

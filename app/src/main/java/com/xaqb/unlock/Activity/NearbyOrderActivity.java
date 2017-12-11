@@ -19,7 +19,7 @@ import com.xaqb.unlock.R;
  * Created by chengeng on 2016/12/2.
  * 空activity，用于复制粘贴
  */
-public class NearbyOrderActivity extends BaseActivity {
+public class NearbyOrderActivity extends BaseActivityNew {
     private NearbyOrderActivity instance;
     /**
      * 高德地图
@@ -52,11 +52,11 @@ public class NearbyOrderActivity extends BaseActivity {
         }
     };
 
-    @Override
-    public void initTitleBar() {
-        setTitle("附近订单");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("附近订单");
+//        showBackwardView(true);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

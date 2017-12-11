@@ -31,7 +31,11 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
-            android:textSize="@dimen/textview_normal_size" />
+            android:textSize="@dimen/textview_normal_size"
+            android:maxEms="3"
+            android:singleLine="true"
+            android:ellipsize="end"
+            />
 
         <ImageView
             android:id="@+id/iv_editor"

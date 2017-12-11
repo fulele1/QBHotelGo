@@ -8,6 +8,9 @@
     android:background="@color/white"
     tools:context="com.xaqb.unlock.Activity.SignActivity">
 
+    <include layout="@layout/pub_titlebar"/>
+    <LinearLayout style="@style/common_horizontal_match_line_style" />
+
     <ImageView
         android:id="@+id/iv_sign"
         android:layout_width="fill_parent"

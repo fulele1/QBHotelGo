@@ -15,18 +15,18 @@ import com.xaqb.unlock.Utils.SPUtils;
  * Created by chengeng on 2016/12/2.
  * 设置页面
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivityNew {
     private SettingActivity instance;
     private Button btQuit;
     private LinearLayout llResetPsw;
     private ImageView iv1, iv2, iv3;
     private Button bt1;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("设置");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("设置");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {

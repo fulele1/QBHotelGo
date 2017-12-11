@@ -35,6 +35,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.CameraTool.CertCaptureActivity;
 import com.xaqb.unlock.R;
@@ -73,7 +74,7 @@ import static com.xaqb.unlock.Utils.IDCardUtils.IDCardValidate;
  * Created by chengeng on 2016/12/2.
  * 0801新建信息采集页面//修改读取身份证功能为扫描身份证
  */
-public class CollectionInfoActivity extends BaseActivity {
+public class CollectionInfoActivity extends BaseActivityNew {
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     /**
      * 高德地图相关
@@ -83,7 +84,7 @@ public class CollectionInfoActivity extends BaseActivity {
     private CollectionInfoActivity instance;
     private Button btComplete;
     private EditText etUserName, etUserPhone, etOtherName, etOtherPhone, etOtherRemark, etUnlockPay, etUnlockAddress;
-    private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult;
+    private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult,tvTitle;
     private ImageView ivCertPic, ivFacePic, ivOtherFacePic, ivLockPic, ivZxing, ivCertScan;
     private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress,
             lockType, unlockPay, unlockTime, imagePath1, imagePath2, imagePath3, otherName, otherPhone, otherRemark;
@@ -136,17 +137,19 @@ public class CollectionInfoActivity extends BaseActivity {
      */
     private GoogleApiClient client;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("信息采集");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("信息采集");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.activity_collection_info);
         instance = this;
         assignViews();
+        tvTitle.setText("信息采集");
     }
 private ImageView ivSign;
     private void assignViews() {
@@ -168,6 +171,7 @@ private ImageView ivSign;
         ivCertScan = (ImageView) findViewById(R.id.iv_cert_scan);
         lockTypeSpinner = (Spinner) findViewById(R.id.sp_lock_type);
         ivSign = (ImageView) findViewById(R.id.iv_sign_collection);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         /**
          * 初始化高德地图控件
          */

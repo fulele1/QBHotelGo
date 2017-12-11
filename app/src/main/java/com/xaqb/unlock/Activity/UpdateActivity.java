@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.SPUtils;
 
@@ -31,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class UpdateActivity extends BaseActivity {
+public class UpdateActivity extends BaseActivityNew {
     protected String FsUrl = "";
     protected String FsPath = "";
     protected String FsFile = "";
@@ -91,16 +92,20 @@ public class UpdateActivity extends BaseActivity {
     private UpdateActivity instance;
     private Unbinder unbinder;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("检查更新");
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("检查更新");
+//    }
 
+    TextView tvTitle;
     @Override
     public void initViews() throws Exception {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.activity_update);
         instance = this;
         unbinder = ButterKnife.bind(instance);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle.setText("检查更新");
         Intent oInt = getIntent();
         FsUrl = "http://api.ddkaisuo.net";
         FsFile = SPUtils.get(instance, "au_file_path", "") + "";

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FlycoBanner_Lib/FlycoBanner_Lib.iml" filepath="$PROJECT_DIR$/FlycoBanner_Lib/FlycoBanner_Lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" filepath="$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/qbunlock-android.iml" filepath="$PROJECT_DIR$/qbunlock-android.iml" />

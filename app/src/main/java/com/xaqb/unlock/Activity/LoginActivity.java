@@ -5,13 +5,13 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -30,7 +30,7 @@ import okhttp3.Call;
  * Created by lenovo on 2016/11/22.
  * 登录页面
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivityNew {
 
     private TextView tvForgetPsw;
     private LoginActivity instance;
@@ -41,18 +41,10 @@ public class LoginActivity extends BaseActivity {
     private ImageView ivDeUser,ivDePsw;
 
     @Override
-    public void initTitleBar() {
-        setTitleBarVisible(View.GONE);
-    }
-
-    @Override
     public void initViews() {
 
-        //取消状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
+        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();

@@ -1,1 +1,1 @@
-include ':app', ':FlycoBanner_Lib', ':slidingmenu_library', ':LRecyclerview_library'
+include ':app', ':slidingmenu_library', ':LRecyclerview_library'

@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.QRCodeUtil;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -14,30 +16,25 @@ import com.xaqb.unlock.Utils.SPUtils;
 import java.io.File;
 
 
-public class QRCodeActivity extends BaseActivity {
+public class QRCodeActivity extends BaseActivityNew {
 
     private QRCodeActivity instance;
     private ImageView mIvQRCode;
-
-    @Override
-    public void initTitleBar() {
-        setTitle("用户二维码");
-    }
+    private TextView mTvTitle;
 
     @Override
     public void initViews() throws Exception {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.activity_qrcode);
         instance = this;
         mIvQRCode = (ImageView) findViewById(R.id.iv_qr_qrcode);
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mTvTitle.setText("用户二维码");
 
     }
 
     @Override
     public void initData() {
-
-        Intent intent = getIntent();
-        String user = intent.getStringExtra("");
-        String ide = intent.getStringExtra("");
 
         final String filePath = getFileRoot(this) + File.separator
                 + "qr_" + System.currentTimeMillis() + ".jpg";

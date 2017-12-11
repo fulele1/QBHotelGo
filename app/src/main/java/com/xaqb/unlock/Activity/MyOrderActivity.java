@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.Adapter.OrderFragmentAdapter;
 import com.xaqb.unlock.Fragment.AllFragment;
 import com.xaqb.unlock.Fragment.GotFragment;
@@ -31,26 +32,19 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
     private List<Fragment> mFrags;
     private FragmentManager mFragmentManager;
     private RadioGroup mRgp;
-    private RadioButton mRbWait;
-    private RadioButton mRbPay;
-    private RadioButton mRbGot;
-    private RadioButton mRbAll;
-    private TextView mTvBack;
+    private RadioButton mRbWait,mRbPay,mRbGot,mRbAll;
+    private TextView tvTitle;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            // 透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // 透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
+        StatusBarUtil.setTranslucentForImageViewInFragment(MyOrderActivity.this, null);
         setContentView(R.layout.activity_my_order);
         initView();
         initData();
         initEvent();
+        tvTitle.setText("我的订单");
     }
 
 
@@ -61,7 +55,6 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
         mVpg.setAdapter(new OrderFragmentAdapter(mFragmentManager, mFrags));
         mRgp.setOnCheckedChangeListener(new CheckedChange());
         mVpg.setOnPageChangeListener(new pageChange());
-        mTvBack.setOnClickListener(this);
     }
 
 
@@ -82,23 +75,19 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
      */
     private void initView() {
         mFragmentManager = this.getSupportFragmentManager();
-        mTvBack = (TextView) findViewById(R.id.tv_back_order);
         mVpg = (NoScrollViewPager) findViewById(R.id.vpg_order);
         mRgp = (RadioGroup) findViewById(R.id.rp_order);
         mRbWait = (RadioButton) findViewById(R.id.rb_wait_m_order);
         mRbPay = (RadioButton) findViewById(R.id.rb_pay_m_order);
         mRbGot = (RadioButton) findViewById(R.id.rb_got_m_order);
         mRbAll = (RadioButton) findViewById(R.id.rb_all_m_order);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+
     }
 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_back_order://返回键
-                MyOrderActivity.this.finish();
-                break;
-        }
     }
 
 

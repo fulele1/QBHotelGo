@@ -16,6 +16,7 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.Entity.IncomeInfo;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
@@ -39,7 +40,7 @@ import okhttp3.Call;
  * Created by chengeng on 2016/12/2.
  * 空activity，用于复制粘贴
  */
-public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class IncomeActivity extends BaseActivityNew implements SwipeRefreshLayout.OnRefreshListener {
 
     /**
      * 每一页展示多少条数据
@@ -68,6 +69,7 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
     private MyAdapter mDataAdapter;
 
     private ImageView ivNoData;
+    private TextView mTvTitle;
     private View.OnClickListener mFooterClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -76,23 +78,26 @@ public class IncomeActivity extends BaseActivity implements SwipeRefreshLayout.O
         }
     };
 
-    @Override
-    public void initTitleBar() {
-        setTitle("收入明细");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("收入明细");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.income_activity);
         instance = this;
         assignViews();
+        mTvTitle.setText("收入明细");
     }
 
     private void assignViews() {
         ivNoData = (ImageView) findViewById(R.id.iv_no_data);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = (LuRecyclerView) findViewById(R.id.list);
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
 
         //设置刷新时动画的颜色，可以设置4个
         if (mSwipeRefreshLayout != null) {

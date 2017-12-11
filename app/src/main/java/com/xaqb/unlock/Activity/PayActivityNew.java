@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -27,11 +28,11 @@ import java.util.Map;
 import okhttp3.Call;
 
 
-public class PayActivityNew extends BaseActivity implements View.OnClickListener {
+public class PayActivityNew extends BaseActivityNew implements View.OnClickListener {
 
     private PayActivityNew instance;
     private TextView[] tv;
-    private TextView tvResult, tvAtPrice;
+    private TextView tvResult, tvAtPrice,tvTitle;
     private ImageView iv_del;
     private String strResult;     //
     private int currentIndex = -1;   //用于记录当前输入位置
@@ -69,17 +70,14 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
         }
     };
 
-    @Override
-    public void initTitleBar() {
-        setTitle("订单支付");
-        showBackwardView(true);
-    }
 
     @Override
     public void initViews() throws Exception {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.activity_pay_new);
         instance = this;
         assignViews();
+        tvTitle.setText("订单支付");
     }
 
     private void assignViews() {
@@ -100,6 +98,7 @@ public class PayActivityNew extends BaseActivity implements View.OnClickListener
         tvResult = (TextView) findViewById(R.id.tv_result);
         tvAtPrice = (TextView) findViewById(R.id.tv_at_price);
         iv_del = (ImageView) findViewById(R.id.pay_keyboard_del);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
 
         strResult = "";
 

@@ -20,7 +20,7 @@ import okhttp3.Call;
 /**
  * Created by lenovo on 2016/11/22.
  */
-public class BackPswActivity extends BaseActivity {
+public class BackPswActivity extends BaseActivityNew {
 
     private TextView tvGetVCode;
     private Button btComplete;
@@ -30,11 +30,11 @@ public class BackPswActivity extends BaseActivity {
     private String phone, vCode, psw, confirmPsw, codeKey = "";
     private TimeCount time;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("找回密码");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("找回密码");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {

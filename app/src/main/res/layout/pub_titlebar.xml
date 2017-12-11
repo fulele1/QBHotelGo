@@ -2,8 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_titlebar"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="70dp"
     android:background="#ffffff"
+    android:paddingTop="@dimen/shadow_width"
     android:orientation="horizontal">
 
     <TextView
@@ -47,13 +48,14 @@
         android:onClick="onForward"
         android:singleLine="true"
         android:text="提交"
-        android:textColor="#ffffff"
         android:textSize="@dimen/textview_small_size"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+         />
 
     <!--
         android:textSize="48px"
     android:paddingLeft="10px"
     android:paddingRight="40px"
     android:drawablePadding="6px"-->
+
 </FrameLayout>

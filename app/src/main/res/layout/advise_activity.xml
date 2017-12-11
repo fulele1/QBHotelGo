@@ -6,7 +6,8 @@
     android:background="@color/white"
     >
 
-
+    <include layout="@layout/pub_titlebar" />
+    <LinearLayout style="@style/common_horizontal_match_line_style" />
 
 
     <TextView

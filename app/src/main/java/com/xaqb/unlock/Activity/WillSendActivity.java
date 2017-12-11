@@ -3,7 +3,9 @@ package com.xaqb.unlock.Activity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 
 import java.io.File;
@@ -13,28 +15,25 @@ import java.io.File;
  * Created by chengeng on 2016/12/2.
  * 待发数据页面
  */
-public class WillSendActivity extends BaseActivity {
+public class WillSendActivity extends BaseActivityNew {
     private WillSendActivity instance;
     private String[] aFile;
     private ListView oList;
+    private TextView tvTitle;
     private int dialogType;
     private ArrayAdapter<String> oAdapter;
 
     @Override
-    public void initTitleBar() {
-        setTitle("待发数据");
-        showBackwardView(true);
-    }
-
-    @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.will_send_activity);
         instance = this;
         assignViews();
+        tvTitle.setText("待发数据");
     }
 
     private void assignViews() {
-
+        tvTitle = (TextView) findViewById(R.id.tv_title);
     }
 
     @Override

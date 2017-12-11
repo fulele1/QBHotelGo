@@ -13,14 +13,14 @@ import com.xaqb.unlock.R;
  * Created by lenovo on 2016/11/22.
  * 引导页面
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivityNew {
 
     private ImageView iv;
 
-    @Override
-    public void initTitleBar() {
-        setTitleBarVisible(View.GONE);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitleBarVisible(View.GONE);
+//    }
 
     @Override
     public void initViews() {

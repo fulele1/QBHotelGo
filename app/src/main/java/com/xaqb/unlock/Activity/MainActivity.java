@@ -29,6 +29,7 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.jaeger.library.StatusBarUtil;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -225,7 +226,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//
         //取消状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -477,6 +478,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(instance, ApproveActivity.class));
+
                 }
                 break;
         }

@@ -8,6 +8,10 @@
     android:background="@color/white"
     >
 
+
+    <include layout="@layout/pub_titlebar"/>
+    <LinearLayout style="@style/common_horizontal_match_line_style" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

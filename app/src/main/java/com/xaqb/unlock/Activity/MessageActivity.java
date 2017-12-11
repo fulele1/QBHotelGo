@@ -20,14 +20,14 @@ import okhttp3.Call;
  * Created by chengeng on 2016/12/2.
  * 空activity，用于复制粘贴
  */
-public class MessageActivity extends BaseActivity {
+public class MessageActivity extends BaseActivityNew {
     private MessageActivity instance;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("消息中心");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("消息中心");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {

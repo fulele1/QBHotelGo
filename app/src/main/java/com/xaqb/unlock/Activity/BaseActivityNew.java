@@ -2,7 +2,6 @@ package com.xaqb.unlock.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -33,8 +32,11 @@ import com.xaqb.unlock.Views.LoadingDialog;
 
 import java.io.File;
 
+/**
+ * Created by fl on 2017/12/11.
+ */
 
-public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+public abstract class BaseActivityNew extends AppCompatActivity implements View.OnClickListener{
     // 加载数据对话框
     public LoadingDialog loadingDialog;
     protected String FsAppPath = "";
@@ -50,14 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      * @return
      */
     AlertDialog alertDialog;
-    private TextView tv_title;
-    private ImageView iv_backward;
-    private TextView tv_forward;
-    private FrameLayout mContentLayout;
-    private LinearLayout llRoot;
-    private FrameLayout layout_titlebar;
-    private LinearLayout mLyStatus;//状态栏
-    private Boolean iskitkat;
     private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
         @Override
         public void onPermissionGranted(int requestCode) {
@@ -81,28 +75,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT > 21) {
-            // 透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // 透明导航栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        } else if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setNavigationBarColor(Color.TRANSPARENT);//设置底下导航栏的背景色，当前设置透明色
-            getWindow().setStatusBarColor(Color.TRANSPARENT);//设置顶部状态栏颜色，当前设置透明色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+
 
         try {
             ActivityController.addActivity(this);
             loadingDialog = new LoadingDialog(this);
             setupViews();
-            initTitleBar();
             initViews();
             initData();
             addListener();
@@ -117,61 +98,9 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
      */
     private void setupViews() {
         super.setContentView(R.layout.ac_title);
-        llRoot = (LinearLayout) findViewById(R.id.llRoot);
-        layout_titlebar = (FrameLayout) findViewById(R.id.layout_titlebar);
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        mContentLayout = (FrameLayout) findViewById(R.id.layout_content);
-        iv_backward = (ImageView) findViewById(R.id.iv_backward);
-        tv_forward = (TextView) findViewById(R.id.tv_forward);
-        mLyStatus = (LinearLayout) findViewById(R.id.status_bar);//状态栏
 
     }
 
-    /**
-     * 初始化设置标题栏
-     */
-    public abstract void initTitleBar();
-
-    /**
-     * 设置标题栏是否可见
-     *
-     * @param visibility
-     */
-    public void setTitleBarVisible(int visibility) {
-        layout_titlebar.setVisibility(visibility);
-    }
-
-    /**
-     * 是否显示提交按钮
-     *
-     * @param show true则显示
-     */
-    protected void showForwardView(boolean show, String str) {
-        if (tv_forward != null) {
-            if (show) {
-//                mBackwardbButton.setText(backwardResid);
-                tv_forward.setVisibility(View.VISIBLE);
-                tv_forward.setText(str);
-            } else {
-                tv_forward.setVisibility(View.INVISIBLE);
-            }
-        } // else ignored
-    }
-
-    /**
-     * 是否显示返回按钮
-     *
-     * @param show true则显示
-     */
-    protected void showBackwardView(boolean show) {
-        if (iv_backward != null) {
-            if (show) {
-                iv_backward.setVisibility(View.VISIBLE);
-            } else {
-                iv_backward.setVisibility(View.INVISIBLE);
-            }
-        }
-    }
 
     /**
      * 初始化view控件
@@ -207,47 +136,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         Toast.makeText(this, "点击了标题右上角按钮", Toast.LENGTH_LONG).show();
     }
 
-    //设置标题内容
-    @Override
-    public void setTitle(int titleId) {
-        tv_title.setText(titleId);
-    }
-
-    //设置标题内容
-    @Override
-    public void setTitle(CharSequence title) {
-        tv_title.setText(title);
-    }
-
-    //设置标题文字颜色
-    @Override
-    public void setTitleColor(int textColor) {
-        tv_title.setTextColor(textColor);
-    }
-
-    //取出FrameLayout并调用父类removeAllViews()方法
-    @Override
-    public void setContentView(int layoutResID) {
-        mContentLayout.removeAllViews();
-        View.inflate(this, layoutResID, mContentLayout);
-        onContentChanged();
-    }
-
-    @Override
-    public void setContentView(View view) {
-        mContentLayout.removeAllViews();
-        mContentLayout.addView(view);
-        onContentChanged();
-    }
-
-
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-        mContentLayout.removeAllViews();
-        mContentLayout.addView(view, params);
-        onContentChanged();
-    }
-
 
     public AlertDialog showAdialog(final Context context, String title, String message, String ok, int view) {
         alertDialog = new AlertDialog.Builder(context).create();
@@ -263,7 +151,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BaseActivity.this.dialogOk();
+                BaseActivityNew.this.dialogOk();
                 alertDialog.dismiss();
 
             }
@@ -308,12 +196,12 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     //列表选择对话框
     protected AlertDialog showListDialog(String sCaption, String sList) {
-        Builder oBuilder = new Builder(this);
+        AlertDialog.Builder oBuilder = new AlertDialog.Builder(this);
         FaDialogList = sList.split(",");
         oBuilder.setItems(FaDialogList, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface oDialog, int iWhich) {
-                BaseActivity.this.dialogList(FaDialogList[iWhich]);
+                BaseActivityNew.this.dialogList(FaDialogList[iWhich]);
                 oDialog.dismiss();
             }
         });
@@ -334,7 +222,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                                      String sOk,
                                      String sCancel,
                                      int iLayout) {
-        Builder oBuilder = new Builder(this);
+        AlertDialog.Builder oBuilder = new AlertDialog.Builder(this);
         if (iLayout > 0) {
             LayoutInflater oInflater = getLayoutInflater();
             View oLayout = oInflater.inflate(iLayout, null, false);
@@ -346,7 +234,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             oBuilder.setPositiveButton(sOk, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    BaseActivity.this.dialogOk();
+                    BaseActivityNew.this.dialogOk();
                     dialog.dismiss();
                 }
             });
@@ -355,7 +243,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
             oBuilder.setNegativeButton(sCancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    BaseActivity.this.dialogCancel();
+                    BaseActivityNew.this.dialogCancel();
                     dialog.dismiss();
                 }
             });

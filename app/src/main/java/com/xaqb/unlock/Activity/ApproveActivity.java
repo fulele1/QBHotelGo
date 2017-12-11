@@ -17,8 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -45,16 +47,18 @@ import okhttp3.Call;
  * Created by chengeng on 2016/12/2.
  * 实名认证页面
  */
-public class ApproveActivity extends BaseActivity {
+public class ApproveActivity extends BaseActivityNew {
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     String[] types = {"身份证", "驾照", "户口本", "军官证", "士兵证", "警官证", "国内护照", "港澳通行证", "其他"};
     String[] sex = {"男", "女"};
     String[] nations = {"汉族"};
+    private boolean isInde;
 
     private ApproveActivity instance;
     private EditText etRealName, etCardNum, etAge;
     private ImageView ivCertPic, ivFacePic,ivSign;
     private Button btSubmit;
+    private TextView tvTitle;
     private WindowManager.LayoutParams params;
     private View layout, vPart; // pop的布局
     private LayoutInflater inflater;
@@ -67,17 +71,19 @@ public class ApproveActivity extends BaseActivity {
     private int requestCoede = 0;
     private File temp;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("实名认证");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("实名认证");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.approve_real_name_activity);
         instance = this;
         assignViews();
+        tvTitle.setText("实名认证");
     }
 
     private void assignViews() {
@@ -92,6 +98,7 @@ public class ApproveActivity extends BaseActivity {
         spType = (Spinner) findViewById(R.id.sp_type);
         spNation = (Spinner) findViewById(R.id.sp_nation);//选择民族
         ivSign = (ImageView) findViewById(R.id.iv_sign_approve);//电子签名
+        tvTitle = (TextView) findViewById(R.id.tv_title);
     }
 
     @Override

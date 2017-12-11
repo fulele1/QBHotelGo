@@ -20,6 +20,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
@@ -46,10 +47,10 @@ import okhttp3.RequestBody;
  * Created by chengeng on 2016/12/2.
  * 用户信息页面
  */
-public class UserInfoActivity extends BaseActivity {
+public class UserInfoActivity extends BaseActivityNew {
     private UserInfoActivity instance;
     private ImageView ivPic, ivScanner;
-    private TextView tvPhone, tvNickName, tvCompany, tvAddress, tvMessage;
+    private TextView tvPhone, tvNickName, tvCompany, tvAddress, tvMessage,tvTitle;
     private LinearLayout llUserPic, llNickName;
     private WindowManager.LayoutParams params;
     private PopupWindow popupWindow;
@@ -100,17 +101,14 @@ public class UserInfoActivity extends BaseActivity {
         }
     };
 
-    @Override
-    public void initTitleBar() {
-        setTitle("个人信息");
-        showBackwardView(true);
-    }
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.userinfo_activity);
         instance = this;
         assignViews();
+        tvTitle.setText("个人信息");
     }
 
     private void assignViews() {
@@ -124,6 +122,7 @@ public class UserInfoActivity extends BaseActivity {
         tvMessage = (TextView) findViewById(R.id.tv_userinfo_message);
         llUserPic = (LinearLayout) findViewById(R.id.ll_user_pic);
         llNickName = (LinearLayout) findViewById(R.id.ll_myinfo_nick_name);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         initContentsPop();
     }
 

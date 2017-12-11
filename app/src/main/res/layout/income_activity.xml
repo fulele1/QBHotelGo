@@ -5,6 +5,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/pub_titlebar"/>
+    <LinearLayout style="@style/common_horizontal_match_line_style" />
+
     <ImageView
         android:id="@+id/iv_no_data"
         android:layout_width="wrap_content"

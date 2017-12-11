@@ -6,14 +6,20 @@
     android:orientation="vertical"
     tools:context=".Activity.ResetNickNameActivity">
 
+    <include layout="@layout/pub_titlebar"/>
+    <LinearLayout style="@style/common_horizontal_match_line_style" />
+
+
+    <LinearLayout style="@style/common_horizontal_division_line_style" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-
         android:background="#ffffff"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,8 +27,9 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/margin_edge"
             android:gravity="center"
-            android:text="昵称"
-            android:textSize="@dimen/textview_normal_size" />
+            android:text="昵称:"
+            android:textSize="@dimen/textview_normal_size"
+            android:id="@+id/textView7" />
 
         <EditText
             android:id="@+id/et_nick_name"
@@ -38,25 +45,17 @@
             android:textSize="@dimen/textview_small_size" />
     </LinearLayout>
 
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
     <Button
         android:id="@+id/bt_complete"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/margin_edge"
-        android:layout_marginRight="@dimen/margin_edge"
-        android:layout_marginTop="30px"
-        android:layout_weight="0.5"
-        android:background="@drawable/bg_button_selector"
-        android:padding="5dp"
-        android:text="完成"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/shadow_width"
+        android:background="@drawable/bg_str_bt_selector"
+        android:text="提交"
         android:textColor="#ffffff"
-        android:textSize="@dimen/button_normal_size" />
+        android:textSize="@dimen/button_normal_size"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20" />
+
+
 </LinearLayout>

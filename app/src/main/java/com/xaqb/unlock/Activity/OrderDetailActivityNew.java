@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Adapter.PayRecordAdapter;
 import com.xaqb.unlock.Entity.IncomeInfo;
@@ -34,10 +35,10 @@ import java.util.Map;
  * Created by chengeng on 2017/04/06.
  * 订单详情activity
  */
-public class OrderDetailActivityNew extends BaseActivity {
+public class OrderDetailActivityNew extends BaseActivityNew {
     private OrderDetailActivityNew instance;
     private TextView tvOrderId, tvOrderName, tvOrderPhone, tvOrderAddress,
-            tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark;
+            tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark,tvTitle;
     private ImageView ivLock;
     //    private Button btPayOnline, btPayCash,
     private Button btPayStatus;
@@ -73,18 +74,13 @@ public class OrderDetailActivityNew extends BaseActivity {
         }
     };
 
-
-    @Override
-    public void initTitleBar() {
-        setTitle("订单详情");
-        showBackwardView(true);
-    }
-
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.order_detail_activity_new);
         instance = this;
         assignViews();
+        tvTitle.setText("订单详情");
     }
 
     private void assignViews() {
@@ -105,6 +101,7 @@ public class OrderDetailActivityNew extends BaseActivity {
         tvOrtherName = (TextView) findViewById(R.id.tv_other_name_od);
         tvOrtherPhone = (TextView) findViewById(R.id.tv_other_phone_od);
         tvOrtherRemark = (TextView) findViewById(R.id.tv_other_remark_od);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
 
         /**
          * 5秒后自动查询下一次，查询30秒后，仍然失败的话，显示支付失败，等待用户手动刷新订单查看支付结果

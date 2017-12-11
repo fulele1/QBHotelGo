@@ -8,48 +8,9 @@
     android:background="@color/white"
     tools:context="com.xaqb.unlock.Activity.MyOrderActivity">
 
+    <include layout="@layout/pub_titlebar"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_horizontal_margins"
 
-        >
-        <TextView
-            android:id="@+id/tv_back_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/title_back"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:onClick="myClick"
-            android:padding="10px"
-            />
-
-        <TextView
-            android:id="@+id/tv_title_tilte"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="我的订单"
-            android:textColor="@color/result_view"
-            android:textSize="@dimen/button_normal_size"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/title_back"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:onClick="myClick"
-            android:visibility="invisible"
-            />
-
-    </LinearLayout>
 
 
     <RadioGroup

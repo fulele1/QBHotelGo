@@ -168,9 +168,6 @@
             android:name=".CameraTool.CertCaptureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.OrderDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".zxing.activity.CaptureActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -183,13 +180,10 @@
             android:name=".Activity.AboutActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activity.PayActivity"
+            android:name=".Activity.MainActivityNew"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.HelpActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity.RealNameActivityNew"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.CollectionInfoActivity"
@@ -253,7 +247,6 @@
         <activity android:name=".Activity.MyOrderActivity" />
         <activity android:name=".Activity.QRCodeActivity" />
         <activity android:name=".Activity.UpdateActivity" />
-        <activity android:name=".Utils.PicassoPicActivity" />
         <activity android:name=".Activity.SignActivity" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for

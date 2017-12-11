@@ -40,7 +40,7 @@ import java.util.Map;
  * Created by chengeng on 2016/12/2.
  * 所有订单界面
  */
-public class OrderListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class OrderListActivity extends BaseActivityNew implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "lzx";
     /**
@@ -78,11 +78,11 @@ public class OrderListActivity extends BaseActivity implements SwipeRefreshLayou
         }
     };
 
-    @Override
-    public void initTitleBar() {
-        setTitle("我的订单");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("我的订单");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {

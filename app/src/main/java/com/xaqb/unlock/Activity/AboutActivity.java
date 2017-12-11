@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.view.View;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 
 
@@ -11,25 +12,29 @@ import com.xaqb.unlock.R;
  * Created by chengeng on 2016/12/2.
  * 空activity，用于复制粘贴
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends BaseActivityNew {
     private AboutActivity instance;
     private TextView tvVersion;
+    private TextView tvTitle;
 
-    @Override
-    public void initTitleBar() {
-        setTitle("关于我们");
-        showBackwardView(true);
-    }
+//    @Override
+//    public void initTitleBar() {
+//        setTitle("关于我们");
+//        showBackwardView(true);
+//    }
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.about_activity);
         instance = this;
         assignViews();
+        tvTitle.setText("关于我们");
     }
 
     private void assignViews() {
         tvVersion = (TextView) findViewById(R.id.tv_version);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
     }
 
     @Override
