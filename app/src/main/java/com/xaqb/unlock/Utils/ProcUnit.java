@@ -472,7 +472,8 @@ public final class ProcUnit {
             DefaultHttpClient client = new DefaultHttpClient();
             String sUrlCode = sUrl + "/getCode.ashx";
             HttpGet oGet = new HttpGet(sUrlCode);//此处的URL为http://..../path?arg1=value&....argn=value
-            oGet.setHeader("User-Agent", String.format("%s/%s (Linux; Android %s; %s Build/%s)", "qbunlock", MyApplication.versionName, Build.VERSION.RELEASE, Build.MANUFACTURER, Build.ID));
+//            oGet.setHeader("User-Agent", String.format("%s/%s (Linux; Android %s; %s Build/%s)", "qbunlock", MyApplication.versionName, Build.VERSION.RELEASE, Build.MANUFACTURER, Build.ID));
+            oGet.setHeader("User-Agent", String.format("express/1.029 (Linux; Android 5.1.1; RaySco Build/LMY47V)", "qbunlock", MyApplication.versionName, Build.VERSION.RELEASE, Build.MANUFACTURER, Build.ID));
             HttpResponse oResponse = client.execute(oGet); //模拟请求
             int iCode = oResponse.getStatusLine().getStatusCode();//返回响应码
             if (iCode == 200) {

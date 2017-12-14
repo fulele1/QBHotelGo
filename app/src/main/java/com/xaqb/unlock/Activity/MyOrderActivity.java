@@ -10,8 +10,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
@@ -34,6 +36,7 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
     private RadioGroup mRgp;
     private RadioButton mRbWait,mRbPay,mRbGot,mRbAll;
     private TextView tvTitle;
+    private ImageView ivBack;
 
 
     @Override
@@ -82,12 +85,24 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
         mRbGot = (RadioButton) findViewById(R.id.rb_got_m_order);
         mRbAll = (RadioButton) findViewById(R.id.rb_all_m_order);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        ivBack = (ImageView) findViewById(R.id.iv_backward);
 
     }
 
 
     @Override
     public void onClick(View v) {
+    }
+
+
+    /**
+     * 返回按钮点击后触发
+     *
+     * @param backwardView
+     */
+    public void onBackward(View backwardView) {
+//        Toast.makeText(this, "点击返回，可在此处调用finish()", Toast.LENGTH_LONG).show();
+        finish();
     }
 
 
