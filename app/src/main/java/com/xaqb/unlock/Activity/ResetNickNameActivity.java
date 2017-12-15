@@ -23,7 +23,7 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 /**
- * Created by lenovo on 2016/11/22.
+ * Created by fl on 2016/11/22.
  */
 public class ResetNickNameActivity extends BaseActivityNew {
 
@@ -69,7 +69,9 @@ public class ResetNickNameActivity extends BaseActivityNew {
                 nickName = etNickName.getText().toString().trim();
                 if (nickName == null || nickName.equals("")) {
                     showToast("请输入昵称");
-                } else if (oldNickName != null && oldNickName.equals(nickName)) {
+                } else if (nickName.length()>8||nickName.length()<2) {
+                    showToast("请输入正确的昵称");}
+                else if (oldNickName != null && oldNickName.equals(nickName)) {
                     showToast("昵称与原昵称相同");
                 } else {
                     try {

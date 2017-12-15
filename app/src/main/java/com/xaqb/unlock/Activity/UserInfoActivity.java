@@ -39,6 +39,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
@@ -102,6 +103,7 @@ public class UserInfoActivity extends BaseActivityNew {
     };
 
 
+
     @Override
     public void initViews() {
         StatusBarUtil.setTranslucent(this, 0);
@@ -125,6 +127,7 @@ public class UserInfoActivity extends BaseActivityNew {
         tvTitle = (TextView) findViewById(R.id.tv_title);
         initContentsPop();
     }
+
 
     @Override
     public void initData() {
@@ -187,59 +190,6 @@ public class UserInfoActivity extends BaseActivityNew {
 
                     }
                 });
-
-//        LogUtils.i(HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-//        loadingDialog.show("加载中...");
-//        OkHttpUtils.get()
-//                .url(HttpUrlUtils.getHttpUrl().getUserInfo() + SPUtils.get(instance, "userid", "") + "?access_token=" + SPUtils.get(instance, "access_token", ""))
-//                .build().execute(new StringCallback() {
-//            @Override
-//            public void onError(Call call, Exception e, int i) {
-//                e.printStackTrace();
-//                loadingDialog.dismiss();
-//                showToast("网络访问异常");
-//            }
-//
-//            @Override
-//            public void onResponse(String s, int i) {
-//                loadingDialog.dismiss();
-//                try {
-//                    Map<String, Object> map = GsonUtil.JsonToMap(s);
-//                    LogUtils.i(map.toString());
-//                    if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-//                        url = map.get("staff_headpic").toString();
-//                        nickname = map.get("staff_nickname").toString();
-//                        phone = map.get("staff_mp").toString();
-//                        company = map.get("staff_company").toString();
-//                        address = map.get("address").toString();
-//                        if (textNotEmpty(nickname)) {
-//                            tvNickName.setText(nickname);
-//                        }
-//                        if (textNotEmpty(phone)) {
-//                            tvPhone.setText(phone);
-//                        }
-//                        if (textNotEmpty(company)) {
-//                            tvCompany.setText(company);
-//                        }
-//                        if (textNotEmpty(address)) {
-//                            tvAddress.setText(address);
-//                        }
-//                        if (textNotEmpty(url)) {
-//                            loadUserPic();
-//                        }
-//                    } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-//                        ActivityController.finishAll();
-//                        showToast("登录失效，请重新登录");
-//                        startActivity(new Intent(instance, LoginActivity.class));
-//                    } else {
-//                        showToast(map.get("mess").toString());
-//                        return;
-//                    }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -270,6 +220,7 @@ public class UserInfoActivity extends BaseActivityNew {
         llUserPic.setOnClickListener(instance);
         llNickName.setOnClickListener(instance);
         ivScanner.setOnClickListener(instance);
+        ivPic.setOnClickListener(instance);
     }
 
     @Override
@@ -289,6 +240,9 @@ public class UserInfoActivity extends BaseActivityNew {
                 break;
             case R.id.iv_scanner_user_info://二维码显示信息   http://www.ddkaisuo.net/home/staff/index?id=2
                 startActivity(new Intent(instance, QRCodeActivity.class));
+                break;
+            case R.id.iv_user_pic://修改头像
+
                 break;
         }
     }
@@ -359,7 +313,7 @@ public class UserInfoActivity extends BaseActivityNew {
         });
     }
 
-    /**
+    /**4
      * 取消照片弹窗
      */
     private void canclePopwindow() {

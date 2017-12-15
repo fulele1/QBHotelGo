@@ -10,7 +10,6 @@
 
 
     <include layout="@layout/pub_titlebar"/>
-    <LinearLayout style="@style/common_horizontal_match_line_style" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -36,6 +35,7 @@
                     android:layout_height="90dp"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/shadow_width"
+                    android:src="@mipmap/main_user"
                     />
 
                 <ImageView
@@ -304,6 +304,7 @@
 
     </ScrollView>
 
+    <LinearLayout style="@style/common_horizontal_match_line_style" />
 
 
 </LinearLayout>

@@ -26,14 +26,9 @@ import okhttp3.Call;
  */
 public class RealNameInfoActivity extends BaseActivityNew {
     private RealNameInfoActivity instance;
-    private TextView tvCertName, tvCertType, tvCertNum, tvSex, tvNation;
+    private TextView tvCertName, tvCertType, tvCertNum, tvSex, tvNation,tvTitle;
     private ImageView ivCert, ivFace;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("实名认证信息");
-//        showBackwardView(true);
-//    }
 
     @Override
     public void initViews() {
@@ -50,6 +45,8 @@ public class RealNameInfoActivity extends BaseActivityNew {
         ivFace = (ImageView) findViewById(R.id.iv_face_info);
         tvSex = (TextView) findViewById(R.id.tv_sex_info);
         tvNation = (TextView) findViewById(R.id.tv_nation_info);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle.setText("实名认证信息");
     }
 
     @Override

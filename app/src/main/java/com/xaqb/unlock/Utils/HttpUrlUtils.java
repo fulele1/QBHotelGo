@@ -1,6 +1,8 @@
 package com.xaqb.unlock.Utils;
 
 
+import com.xaqb.unlock.BuildConfig;
+
 /**
  * Created by lenovo on 2017/3/15.
  */
@@ -11,14 +13,14 @@ public class HttpUrlUtils {
         return httpUrl;
     }
 
-    //  基础url
-    public String getBaseUrl() {
-        return "http://api.ddkaisuo.net";
-    }
-
-//    private String getBaseUrl() {
-//        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn/":"http://api.ddkaisuo.net";
+//    //  基础url
+//    public String getBaseUrl() {
+//        return "http://api.ddkaisuo.net";
 //    }
+
+    private String getBaseUrl() {
+        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn/":"http://api.ddkaisuo.net";
+    }
 
     //  用户登录接口
     public String getLoginUrl() {

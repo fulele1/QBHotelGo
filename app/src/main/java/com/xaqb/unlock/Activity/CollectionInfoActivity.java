@@ -43,6 +43,7 @@ import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.IDCardUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PaintView;
@@ -136,12 +137,6 @@ public class CollectionInfoActivity extends BaseActivityNew {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("信息采集");
-//        showBackwardView(true);
-//    }
 
     @Override
     public void initViews() {
@@ -440,12 +435,13 @@ private ImageView ivSign;
 
                     if (!textNotEmpty(userName)) {
                         showToast("请输入客户姓名");
-                    } else if (!textNotEmpty(userPhone)) {
+                    } else if (userName.length()<2) {
+                        showToast("姓名长度错误");
+                      } else if (!textNotEmpty(userPhone)) {
                         showToast("请输入客户电话");
                     } else if (!textNotEmpty(userCertNum)) {
                         showToast("请输入客户身份证号码");
                     } else if (!IDCardValidate(userCertNum).equals("")) {
-                        LogUtils.e("身份证号码" + userCertNum);
                         showToast("请输入正确身份证号码");
                     } else if (!textNotEmpty(unlockAddress)) {
                         showToast("请输入开锁地址");
@@ -457,6 +453,8 @@ private ImageView ivSign;
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {
                         showToast("请拍摄门锁照片");
+                    } else if (ivSign==null) {
+                        showToast("请添加手写签名");
                     } else {
                         try {
                             order();

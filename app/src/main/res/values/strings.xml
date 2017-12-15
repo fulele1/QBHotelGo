@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">咚咚物流</string>
+    <string name="app_name">咚咚开锁</string>
     <string name="login_user">账　号：</string>
     <string name="input_account">请输入账号</string>
     <string name="password">密　码：</string>

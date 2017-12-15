@@ -51,7 +51,13 @@ public class ApproveActivity extends BaseActivityNew {
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
     String[] types = {"身份证", "驾照", "户口本", "军官证", "士兵证", "警官证", "国内护照", "港澳通行证", "其他"};
     String[] sex = {"男", "女"};
-    String[] nations = {"汉族"};
+
+    String[] nations = {"汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝族","壮族","布依族","朝鲜族"
+            ,"满族","侗族","瑶族","白族","土家族","哈尼族","哈萨克族","傣族","黎族","僳僳族"
+            ,"佤族","畲族","高山族","拉祜族","水族","东乡族","纳西族","景颇族","柯尔克孜族","土族"
+            ,"达斡尔族","仫佬族","羌族","布朗族","撒拉族","毛南族","仡佬族","锡伯族","阿昌族","普米族"
+            ,"塔吉克族","怒族","乌孜别克族","俄罗斯族","鄂温克族","德昂族","保安族","裕固族","京族","塔塔尔族"
+            ,"独龙族","鄂伦春族","赫哲族","门巴族","珞巴族","基诺族"};
     private boolean isInde;
 
     private ApproveActivity instance;
@@ -71,11 +77,6 @@ public class ApproveActivity extends BaseActivityNew {
     private int requestCoede = 0;
     private File temp;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("实名认证");
-//        showBackwardView(true);
-//    }
 
     @Override
     public void initViews() {
@@ -185,6 +186,8 @@ public class ApproveActivity extends BaseActivityNew {
                     showToast("请选择证件类型");
                 } else if (realName == null || realName.equals("")) {
                     showToast("请输入真实姓名");
+                } else if (realName.length()>8 || realName.length()<2) {
+                    showToast("请有效的长度");
                 } else if (cardNum == null || cardNum.equals("")) {
                     showToast("请输入证件号码");
                 } else if (sexx == null || sexx.equals("")) {
@@ -192,7 +195,9 @@ public class ApproveActivity extends BaseActivityNew {
                 } else if (cardNation == null || cardNation.equals("")) {
                     showToast("请输入民族");
                 } else if (cardAge == null || cardAge.equals("")) {
-                    showToast("请输入年龄");
+                    showToast("请输入年龄");}
+                else if (cardAge.length()>3) {
+                    showToast("请输入正确的年龄");
                 } else if (!textNotEmpty(certPicPath)) {
                     showToast("请拍摄证件照片");
                 } else if (!textNotEmpty(facePicPath)) {
@@ -369,8 +374,6 @@ public class ApproveActivity extends BaseActivityNew {
         /**
          * 把图片旋转为正的方向
          */
-//        bitmap = ImageDispose.rotaingImageView(degree, bitmap);
-//        Bitmap new_bitmap = ImageDispose.compressImage(bitmap);
         ImageDispose.saveBitmapFile(PHOTO_COMM_NAME, bitmap);
 
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
@@ -382,17 +385,12 @@ public class ApproveActivity extends BaseActivityNew {
         }
         File oldFile = new File(path);
         if (oldFile.exists()) {
-//            Logger.d(" oldFile.delete()=" + oldFile.delete());
             Intent intent_delete = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             Uri uri_delete = Uri.fromFile(oldFile);
             intent.setData(uri_delete);
             instance.sendBroadcast(intent_delete);//这个广播的目的就是更新图库，发了这个广播进入相册就可以找到你保存的图片了！，记得要传你更新的file哦
         }
         getImage(PHOTO_COMM_NAME);
-//        if (file.length() / 1024 / 1024 >= 5) {
-//            showToast("文件不能大于5M");
-//            return;
-//        }
 
     }
 

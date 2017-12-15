@@ -9,13 +9,6 @@
 
     <!-- Title -->
 
-    <LinearLayout
-        android:id="@+id/status_bar"
-        android:layout_width="fill_parent"
-        android:layout_height="20dp"
-        android:orientation="vertical"
-        android:visibility="gone"
-        ></LinearLayout>
 
     <include layout="@layout/pub_titlebar" />
 

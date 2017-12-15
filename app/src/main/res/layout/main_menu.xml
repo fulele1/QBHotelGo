@@ -11,7 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1.2"
+        android:layout_weight="1.1"
+        android:background="@color/white"
+
         >
 
         <LinearLayout
@@ -21,6 +23,7 @@
             android:paddingBottom="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_horizontal_margin"
             android:background="@color/white"
+            android:layout_marginTop="@dimen/shadow_width"
             >
 
             <ImageView
@@ -35,12 +38,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="咚咚物流业监管者管理系统"
+                android:text="咚咚开锁"
                 android:gravity="center"
                 android:layout_gravity="center"
                 android:textColor="@color/result_view"
                 android:textSize="@dimen/activity_title"
+                android:layout_weight="1"
                 />
 
             <ImageView
@@ -171,6 +174,7 @@
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:src="@mipmap/main_neary_t"
+                    android:visibility="invisible"
                     />
             </LinearLayout>
 

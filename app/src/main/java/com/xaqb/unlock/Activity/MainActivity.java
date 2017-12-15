@@ -478,8 +478,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, ApproveActivity.class));
-
+//                    startActivity(new Intent(instance, ApproveActivity.class));
                 }
                 break;
         }

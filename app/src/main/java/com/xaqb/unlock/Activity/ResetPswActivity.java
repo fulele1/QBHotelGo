@@ -79,10 +79,16 @@ public class ResetPswActivity extends BaseActivityNew {
         confirmPsw = etConfirmPsw.getText().toString().trim();
         if (oldPsw == null || oldPsw.equals("")) {
             showToast("请输入旧密码");
+        } else if (oldPsw.length()>20 || oldPsw.length()<6) {
+            showToast("请输入长度为6-20的密码");
         } else if (newPsw == null || newPsw.equals("")) {
             showToast("请输入新密码");
+        } else if (newPsw.length()>20 || newPsw.length()<6) {
+            showToast("请输入长度为6-20的密码");
         } else if (confirmPsw == null || confirmPsw.equals("")) {
             showToast("请确认新密码");
+        } else if (confirmPsw.length()>20 || confirmPsw.length()<6) {
+            showToast("请输入长度为6-20的密码");
         } else if (!newPsw.equals(confirmPsw)) {
             showToast("两次输入的密码不一致");
         } else {
