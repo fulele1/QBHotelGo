@@ -23,7 +23,6 @@
             android:paddingBottom="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_horizontal_margin"
             android:background="@color/white"
-            android:layout_marginTop="@dimen/shadow_width"
             >
 
             <ImageView
@@ -44,6 +43,7 @@
                 android:textColor="@color/result_view"
                 android:textSize="@dimen/activity_title"
                 android:layout_weight="1"
+                android:layout_marginTop="@dimen/button_normal_sizes"
                 />
 
             <ImageView

@@ -50,9 +50,9 @@ import okhttp3.RequestBody;
  */
 public class UserInfoActivity extends BaseActivityNew {
     private UserInfoActivity instance;
-    private ImageView ivPic, ivScanner;
-    private TextView tvPhone, tvNickName, tvCompany, tvAddress, tvMessage,tvTitle;
-    private LinearLayout llUserPic, llNickName;
+    private ImageView ivPic,llUserPic;
+    private TextView tvPhone, tvNickName, tvCompany, tvAddress, tvMessage,tvTitle,tvScanner;
+    private LinearLayout llNickName;
     private WindowManager.LayoutParams params;
     private PopupWindow popupWindow;
     private View layout, vPart; // pop的布局
@@ -115,15 +115,13 @@ public class UserInfoActivity extends BaseActivityNew {
 
     private void assignViews() {
         params = getWindow().getAttributes();
-        ivPic = (ImageView) findViewById(R.id.iv_user_pic);
-        ivScanner = (ImageView) findViewById(R.id.iv_scanner_user_info);
+        ivPic = (ImageView) findViewById(R.id.iv_user_pic_user);
+        tvScanner = (TextView) findViewById(R.id.tv_scanner_user_info);
         tvPhone = (TextView) findViewById(R.id.tv_userinfo_phone);
-        tvNickName = (TextView) findViewById(R.id.tv_userinfo_name);
         tvCompany = (TextView) findViewById(R.id.tv_userinfo_company);
         tvAddress = (TextView) findViewById(R.id.tv_userinfo_address);
         tvMessage = (TextView) findViewById(R.id.tv_userinfo_message);
-        llUserPic = (LinearLayout) findViewById(R.id.ll_user_pic);
-        llNickName = (LinearLayout) findViewById(R.id.ll_myinfo_nick_name);
+        tvNickName = (TextView) findViewById(R.id.tv_myinfo_nick_name);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         initContentsPop();
     }
@@ -199,6 +197,7 @@ public class UserInfoActivity extends BaseActivityNew {
         if (nickname != null && !nickname.equals(""))
             tvNickName.setText(nickname);
         else tvNickName.setText("暂无昵称");
+
         if (isPicChange) {
             url = SPUtils.get(instance, "staff_headpic", "").toString();
             if (SPUtils.get(instance, "userPicLocal", "").toString().equals(Environment.getExternalStorageDirectory() + "/userHead/" + SPUtils.get(instance, "userid", "").toString() + "userHead.jpg")) {
@@ -217,32 +216,28 @@ public class UserInfoActivity extends BaseActivityNew {
 
     @Override
     public void addListener() {
-        llUserPic.setOnClickListener(instance);
-        llNickName.setOnClickListener(instance);
-        ivScanner.setOnClickListener(instance);
+        tvNickName.setOnClickListener(instance);
+        tvScanner.setOnClickListener(instance);
         ivPic.setOnClickListener(instance);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_user_pic:
+            case R.id.iv_user_pic_user:
                 // 弹出照片选择框
                 params.alpha = 0.7f;
                 getWindow().setAttributes(params);
                 popupWindow.showAtLocation(findViewById(R.id.ll_main_my_info), Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM,
                         0, 0);
                 break;
-            case R.id.ll_myinfo_nick_name:
+            case R.id.tv_myinfo_nick_name:
                 Intent i = new Intent(instance, ResetNickNameActivity.class);
                 i.putExtra("nickName", nickname);
                 startActivity(i);
                 break;
-            case R.id.iv_scanner_user_info://二维码显示信息   http://www.ddkaisuo.net/home/staff/index?id=2
+            case R.id.tv_scanner_user_info://二维码显示信息   http://www.ddkaisuo.net/home/staff/index?id=2
                 startActivity(new Intent(instance, QRCodeActivity.class));
-                break;
-            case R.id.iv_user_pic://修改头像
-
                 break;
         }
     }

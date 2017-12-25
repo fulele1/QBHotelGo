@@ -22,12 +22,6 @@ public class SettingActivity extends BaseActivityNew {
     private ImageView iv1, iv2, iv3;
     private Button bt1;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("设置");
-//        showBackwardView(true);
-//    }
-
     @Override
     public void initViews() {
         setContentView(R.layout.setting_activity);

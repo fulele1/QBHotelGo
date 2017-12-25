@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -26,11 +27,15 @@ import com.xaqb.unlock.Activity.ApproveActivity;
 import com.xaqb.unlock.Activity.RealNameInfoActivity;
 import com.xaqb.unlock.Activity.ResetPswActivity;
 import com.xaqb.unlock.Activity.UpdateActivity;
+import com.xaqb.unlock.Activity.UpdateActivityNew;
 import com.xaqb.unlock.Activity.UserInfoActivity;
 import com.xaqb.unlock.Adapter.LeftMenuListAdapter;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.ApkTotalUtill;
 import com.xaqb.unlock.Utils.CircleTransform;
 import com.xaqb.unlock.Utils.Globals;
+import com.xaqb.unlock.Utils.PermisionUtil;
+import com.xaqb.unlock.Utils.PicUtil;
 import com.xaqb.unlock.Utils.SPUtils;
 import java.io.File;
 
@@ -106,11 +111,26 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         startActivity(new Intent(getActivity(), AboutActivity.class));
                         break;
                     case 6://检查更新
+                        f = new File(SPUtils.get(instance,"au_save_path","")+"");
+                        isExists =f.exists();
+
                         if (readConfig("late").equals("yes")){
                             Toast.makeText(getContext(),"已是最新版本",Toast.LENGTH_SHORT).show();
                         }else{
-                            showDialogB(instance,"更新提示",0,"检测到新版本，是否更新","立刻更新","以后再说");
+                            if (isExists
+                                    && ApkTotalUtill.getUninatllApkInfo(instance,SPUtils.get(instance,"au_save_path","")+"")
+                                    ){
+                                showDialogB(instance,"提示",0,"新版本已下载成功是否直接安装","立刻安装","以后再说");
+
+                            }else{
+                                showDialogB(instance,"发现新版本",0,"本次更新的内容有：\n"+SPUtils.get(instance,"au_info",""),"立刻更新","以后再说");
+
+                            }
+
+
                         }
+
+
                     default:
                         break;
                 }
@@ -118,10 +138,25 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         });
     }
 
+    private boolean isExists;
+    private File f;
     @Override
     public void dialogOkB() {
         super.dialogOkB();
-        startActivity(new Intent(getActivity(), UpdateActivity.class));
+        if (isExists
+                && ApkTotalUtill.getUninatllApkInfo(instance,SPUtils.get(instance,"au_save_path","")+"")
+ ){
+            //安装app
+            Intent oInt1 = new Intent(Intent.ACTION_VIEW);
+            oInt1.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
+
+            //关键点：
+            //安装完成后执行打开
+            oInt1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(oInt1);
+        }else{
+        startActivity(new Intent(getActivity(), UpdateActivityNew.class));
+        }
     }
 
     /**
@@ -140,7 +175,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                     .into(ivPic);
     }
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -154,7 +188,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
             File f = new File(Environment.getExternalStorageDirectory() + "/userHead/" + SPUtils.get(getActivity(), "userid", "").toString() + "userHead.jpg");
             if (f.exists()) {
                 Bitmap bitmap = BitmapFactory.decodeFile(SPUtils.get(getActivity(), "userPicLocal", "").toString());
-                ivPic.setImageBitmap(bitmap);
+                ivPic.setImageBitmap(PicUtil.getCircleBit(bitmap));
+//                loadUserPic(new File(SPUtils.get(getActivity(), "userPicLocal", "").toString()));
             }
         } else if (!url.equals("")) {
             loadUserPic(url);

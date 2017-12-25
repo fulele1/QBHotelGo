@@ -21,20 +21,23 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:src="@mipmap/left_user" />
+            android:src="@mipmap/left_user"
+            />
 
         <TextView
             android:id="@+id/tv_left_nick_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="28dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:textSize="@dimen/textview_normal_size"
-            android:maxEms="3"
+            android:maxEms="4"
             android:singleLine="true"
             android:ellipsize="end"
+            android:text="你假发的"
+            android:layout_weight="1"
             />
 
         <ImageView

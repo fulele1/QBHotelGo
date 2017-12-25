@@ -66,10 +66,10 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
      */
     private void initData() {
         mFrags = new ArrayList<>();
-        mFrags.add(new AllFragment());
-        mFrags.add(new WaitFragment());
-        mFrags.add(new PayFragment());
-        mFrags.add(new GotFragment());
+        mFrags.add(new AllFragment());//全部订单
+        mFrags.add(new WaitFragment());//待付款
+        mFrags.add(new PayFragment());//未付清
+        mFrags.add(new GotFragment());//已完成
     }
 
 

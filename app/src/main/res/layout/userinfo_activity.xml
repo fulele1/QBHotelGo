@@ -22,76 +22,35 @@
             android:orientation="vertical"
             >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <RelativeLayout
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 >
-
                 <ImageView
-                    android:id="@+id/iv_user_pic"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
+                    android:id="@+id/iv_user_pic_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/shadow_width"
                     android:src="@mipmap/main_user"
                     />
 
                 <ImageView
-                    android:id="@+id/iv_scanner_user_info"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/scanner"
-                    android:layout_gravity="right"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_user_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ll_background_no_radius"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                >
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/margin_edge"
-                    android:gravity="center"
-                    android:text="用户头像"
-                    android:textSize="@dimen/textview_normal_size" />
+                    android:layout_margin="@dimen/shadow_width"
+                    android:src="@mipmap/left_edit"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3" />
-
-                <!--<com.xaqb.unlock.Views.RoundImageView-->
-                <!--android:id="@+id/iv_user_pic"-->
-                <!--android:layout_width="64dp"-->
-                <!--android:layout_height="64dp"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:layout_margin="5dp"-->
-                <!--android:padding="3dp"-->
-                <!--android:src="@mipmap/main_user" />-->
-
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="14dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="12dp"
-                    android:src="@mipmap/right_arrow" />
-            </LinearLayout>
-
+            </RelativeLayout>
 
 
             <LinearLayout
-                android:id="@+id/ll_myinfo_nick_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ll_background_no_radius"
@@ -108,15 +67,9 @@
                     android:layout_marginBottom="@dimen/padding"
                     />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    />
 
                 <TextView
-                    android:id="@+id/tv_userinfo_name"
+                    android:id="@+id/tv_myinfo_nick_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/textview_small_size"
@@ -125,14 +78,45 @@
                     android:padding="@dimen/activity_horizontal_margin"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:drawableRight="@mipmap/right_arrow"
                     />
 
-                <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="14dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="12dp"
-                    android:src="@mipmap/right_arrow" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ll_background_no_radius"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_edge"
+                    android:text="二维码:"
+                    android:textSize="@dimen/textview_normal_size"
+                    android:textColor="@color/viewfinder_frame"
+                    android:layout_marginBottom="@dimen/padding"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_scanner_user_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/textview_small_size"
+                    android:background="@drawable/bg_edittext"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:drawableRight="@mipmap/right_arrow"
+                    android:drawableLeft="@mipmap/scanner"
+                    />
+
+
             </LinearLayout>
 
 
@@ -141,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:background="#ffffff"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 >
 
                 <TextView

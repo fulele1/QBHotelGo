@@ -1,14 +1,18 @@
 package com.xaqb.unlock.Activity;
 
+
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
+import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
+import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -22,63 +26,46 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
-/**
- * Created by fl on 2016/11/22.
- */
-public class ResetNickNameActivity extends BaseActivityNew {
+public class ResetPicActivity extends BaseActivityNew{
 
-    private ResetNickNameActivity instance;
-    private EditText etNickName;
-    private TextView tvTitle,tvForward;
-    private String nickName, oldNickName;
-
-
+    private ResetPicActivity instance;
+    private TextView mTvTitle,mTvForward;
+    private ImageView mIvPic;
+    private String oldPic,newPic;
     @Override
-    public void initViews() {
+    public void initViews(){
         StatusBarUtil.setTranslucent(this,0);
-        setContentView(R.layout.reset_nick_name_activity);
+        setContentView(R.layout.activity_reset_pic);
         instance = this;
+        mTvTitle = (TextView) findViewById(R.id.tv_title);
+        mTvForward = (TextView) findViewById(R.id.tv_forward);
+        mTvForward.setVisibility(View.VISIBLE);
+        mIvPic = (ImageView) findViewById(R.id.iv_pic_rePic);
+        mTvTitle.setText("个人头像");
         Intent intent = getIntent();
-        oldNickName = intent.getStringExtra("nickName");
-        assignViews();
-        tvTitle.setText("修改昵称");
-    }
+        oldPic = intent.getStringExtra("url");
 
-    private void assignViews() {
-        etNickName = (EditText) findViewById(R.id.et_nick_name);
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvForward = (TextView) findViewById(R.id.tv_forward);
-        tvForward.setText("完成");
-        tvForward.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void initData() {
-        if (oldNickName != null)
-            etNickName.setText(oldNickName);
+        newPic = Base64Utils.photoToBase64(((BitmapDrawable) ((ImageView) mIvPic).getDrawable()).getBitmap(), 60);
+            Picasso.with(instance)
+                    .load(oldPic)
+                    .error(R.mipmap.main_user)
+                    .placeholder(R.mipmap.main_user)
+                    .into(mIvPic);
     }
 
     @Override
     public void doThis() {
-        nickName = etNickName.getText().toString().trim();
-                if (nickName == null || nickName.equals("")) {
-                    showToast("请输入昵称");
-                } else if (nickName.length()>8||nickName.length()<2) {
-                    showToast("昵称长度为2-8,请输入正确的格式");}
-                else if (oldNickName != null && oldNickName.equals(nickName)) {
-                    showToast("昵称与原昵称相同");
-                } else {
-                    try {
-                        resetNickName();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+        resetNickName();
     }
 
+    @Override
+    public void initData(){
+
+    }
 
     @Override
-    public void addListener() {
+    public void addListener(){
+
     }
 
     private void resetNickName() {
@@ -88,7 +75,7 @@ public class ResetNickNameActivity extends BaseActivityNew {
         }
         loadingDialog.show("正在修改");
         Map<String, String> map = new HashMap<>();
-        map.put("nickname", nickName);
+        map.put("headpic", newPic);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), GsonUtil.GsonString(map));
 
         QBHttp.put(
@@ -101,8 +88,7 @@ public class ResetNickNameActivity extends BaseActivityNew {
                         try {
                             loadingDialog.dismiss();
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                SPUtils.put(instance, "staff_nickname", nickName);
-                                showToast("修改昵称成功");
+                                showToast("修改头像成功");
                                 finish();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
@@ -132,5 +118,5 @@ public class ResetNickNameActivity extends BaseActivityNew {
         );
 
     }
-}
 
+}

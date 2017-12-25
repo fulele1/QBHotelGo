@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
+import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Views.LoadingDialog;
 
@@ -78,7 +79,6 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
-
 
         try {
             ActivityController.addActivity(this);
@@ -133,10 +133,23 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
      * @param forwardView
      */
     public void onForward(View forwardView) {
-        Toast.makeText(this, "点击了标题右上角按钮", Toast.LENGTH_LONG).show();
+        doThis();
+    }
+
+    public void doThis(){
+
     }
 
 
+    /**
+     * 待发数据页面
+     * @param context
+     * @param title
+     * @param message
+     * @param ok
+     * @param view
+     * @return
+     */
     public AlertDialog showAdialog(final Context context, String title, String message, String ok, int view) {
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.show();
@@ -167,6 +180,43 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
         });
         return alertDialog;
     }
+
+
+    /**
+     * 更新界面
+     * @param context
+     * @param title
+     * @param message
+     * @param ok
+     * @return
+     */
+    public AlertDialog showAdialog(final Context context, String title, String message, String ok) {
+        alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog.show();
+        Window window = alertDialog.getWindow();
+        window.setContentView(R.layout.loading_my_layout);
+        TextView tvTitle = (TextView) window.findViewById(R.id.tv_dialog_title);
+        tvTitle.setText(title);
+        TextView tvMessage = (TextView) window.findViewById(R.id.tv_dialog_message);
+        tvMessage.setText(message);
+        Button btOk = (Button) window.findViewById(R.id.btn_dia_ok);
+        btOk.setText(ok);
+        btOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BaseActivityNew.this.dialogOk();
+                alertDialog.dismiss();
+
+            }
+        });
+        return alertDialog;
+    }
+
+
+
+
+
+
 
     //判断字符串是否为空
     protected boolean textNotEmpty(String text) {

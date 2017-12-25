@@ -40,7 +40,6 @@ public class OrderDetailActivityNew extends BaseActivityNew {
     private TextView tvOrderId, tvOrderName, tvOrderPhone, tvOrderAddress,
             tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark,tvTitle;
     private ImageView ivLock;
-    //    private Button btPayOnline, btPayCash,
     private Button btPayStatus;
     private String payStatus, orderId, scanResult, price, payPrice;
     private int dialogType;
@@ -207,6 +206,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
                                 showToast(map.get("mess").toString());
+//                                instance.finish();
                                 return;
                             }
                         } catch (Exception e) {
@@ -382,6 +382,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                                 progressDialog.dismiss();
                                 dialogType = 1;
                                 showDialog("提示", "支付成功", "确定", "", 0);
+                                instance.finish();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 progressDialog.dismiss();
                                 ActivityController.finishAll();
@@ -467,8 +468,6 @@ public class OrderDetailActivityNew extends BaseActivityNew {
 
                     }
                 }
-
-
         );
     }
 }

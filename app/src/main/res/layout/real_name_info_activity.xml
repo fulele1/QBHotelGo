@@ -4,7 +4,9 @@
     android:id="@+id/ll_approve_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bag">
+    android:background="@color/bag"
+    android:orientation="vertical"
+    >
 
     <include layout="@layout/pub_titlebar"/>
 

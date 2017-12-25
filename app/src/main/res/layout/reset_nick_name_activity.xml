@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/bag"
     tools:context=".Activity.ResetNickNameActivity">
 
     <include layout="@layout/pub_titlebar"/>
@@ -44,18 +45,6 @@
             android:paddingLeft="10px"
             android:textSize="@dimen/textview_small_size" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/bt_complete"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="@dimen/shadow_width"
-        android:background="@drawable/bg_str_bt_selector"
-        android:text="提交"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/button_normal_size"/>
-
 
 
 </LinearLayout>

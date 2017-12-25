@@ -17,10 +17,6 @@ public class SplashActivity extends BaseActivityNew {
 
     private ImageView iv;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitleBarVisible(View.GONE);
-//    }
 
     @Override
     public void initViews() {

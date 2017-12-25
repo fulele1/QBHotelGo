@@ -4,9 +4,11 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -17,9 +19,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
+import com.xaqb.unlock.BuildConfig;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermisionUtil;
+import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.ToastUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -34,10 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class UpdateActivity extends BaseActivityNew {
-    protected String FsUrl = "";
-    protected String FsPath = "";
-    protected String FsFile = "";
+public class UpdateActivityNew extends BaseActivityNew {
     protected String mDownLoadPath = "";//下载路径
     protected String mSavePath = "";//安装路径
     protected int FiDialogType = 0;//0：下载完成 1：发生错误 2：用户中断
@@ -61,12 +64,13 @@ public class UpdateActivity extends BaseActivityNew {
                 case 0: //成功完成
                     isUpdate = true;
                     FoBtn.setText("立即安装");
+                    SPUtils.put(instance,"total_apk","yes");
                     FoBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //安装app
                             Intent oInt = new Intent(Intent.ACTION_VIEW);
-                            oInt.setDataAndType(Uri.fromFile(new File(FsPath)), "application/vnd.android.package-archive");
+                            oInt.setDataAndType(Uri.fromFile(new File(mSavePath)), "application/vnd.android.package-archive");
                             //关键点：
                             //安装完成后执行打开
                             oInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -95,21 +99,18 @@ public class UpdateActivity extends BaseActivityNew {
             super.handleMessage(msg);
         }
     };
-    private UpdateActivity instance;
+    private UpdateActivityNew instance;
     private Unbinder unbinder;
 
     TextView tvTitle;
     @Override
     public void initViews() throws Exception {
         StatusBarUtil.setTranslucent(this,0);
-        setContentView(R.layout.activity_update);
+        setContentView(R.layout.activity_update_new);
         instance = this;
         unbinder = ButterKnife.bind(instance);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText("检查更新");
-        Intent oInt = getIntent();
-//        FsUrl = "http://api.ddkaisuo.net";
-//        FsFile = SPUtils.get(instance, "au_file_path", "") + "";
         mDownLoadPath = SPUtils.get(instance, "au_file_path", "") + "";
         mSavePath = SPUtils.get(instance, "au_save_path", "")+"";
     }
@@ -122,8 +123,7 @@ public class UpdateActivity extends BaseActivityNew {
 
     @Override
     public void initData() throws Exception {
-        FsPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
-        File oFile = new File(FsPath);
+        File oFile = new File(mSavePath);
         if (!oFile.exists()) oFile.mkdir();
         FoBar.setMax(100);
         this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
@@ -136,7 +136,17 @@ public class UpdateActivity extends BaseActivityNew {
                     quit();
                 }
             });
+
+
+        checkPer(PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE);
+
+    }
+
+    @Override
+    protected void requestPerPass(int requestCode) {
+        ToastUtil.showShort(instance,"开始下载");
         start();
+
     }
 
     public String getVersionName() {
@@ -170,11 +180,8 @@ public class UpdateActivity extends BaseActivityNew {
     protected void dialogOk() {
         switch (FiDialogType) {
             case 0:
-
-                //安装app
                 Intent oInt = new Intent(Intent.ACTION_VIEW);
                 oInt.setDataAndType(Uri.fromFile(new File(mSavePath)), "application/vnd.android.package-archive");
-
                 //关键点：
                 //安装完成后执行打开
                 oInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -220,7 +227,7 @@ public class UpdateActivity extends BaseActivityNew {
     }
 
     protected void start() {
-        File oFile = new File(FsPath + "/" + FsFile);
+        File oFile = new File(mSavePath);
         if (oFile.exists()) oFile.delete();
         FoThread = new DownFileThread();
         FbRun = true;
@@ -263,10 +270,10 @@ public class UpdateActivity extends BaseActivityNew {
         @Override
         public void run() {
             //apk保存的路径
-           oFile = new File(FsPath + "qbunlock.apk");
+            oFile = new File(mSavePath);
             try {
                 DefaultHttpClient client = new DefaultHttpClient();
-                HttpGet oGet = new HttpGet(FsUrl + "/" + FsFile);//apk的下载地址
+                HttpGet oGet = new HttpGet( mDownLoadPath);//apk的下载地址
                 HttpResponse oResponse = client.execute(oGet); //模拟请求
                 int iCode = oResponse.getStatusLine().getStatusCode();//返回响应码
                 if (iCode == 200) {

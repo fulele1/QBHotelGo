@@ -31,7 +31,7 @@
         android:scaleType="fitCenter"
         android:src="@mipmap/title_back"
         android:visibility="visible"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+        android:layout_marginLeft="@dimen/padding"/>
 
     <TextView
         android:id="@+id/tv_forward"
@@ -48,7 +48,8 @@
         android:onClick="onForward"
         android:singleLine="true"
         android:text="提交"
-        android:textSize="@dimen/textview_small_size"
+        android:textSize="@dimen/margin_edge"
+        android:textColor="@color/white"
         android:visibility="invisible"
          />
 

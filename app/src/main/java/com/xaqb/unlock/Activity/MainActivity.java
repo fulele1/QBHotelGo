@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -29,7 +28,6 @@ import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
-import com.jaeger.library.StatusBarUtil;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -37,12 +35,14 @@ import com.xaqb.unlock.Fragment.LeftFragment;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Service.FileService;
 import com.xaqb.unlock.Utils.ActivityController;
+import com.xaqb.unlock.Utils.ApkTotalUtill;
 import com.xaqb.unlock.Utils.CheckNetwork;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
+import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
+import okhttp3.HttpUrl;
 
 /**
  * 主页面
@@ -95,7 +96,15 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
      * 检查是否要进行更新
      */
     private String au_last_version;
-    private String au_filename;
+    private String au_filePath;
+    private String au_info;
+    private String au_id;
+    private List<Integer> mImageList;
+    /**
+     * 下载新版本
+     */
+    private File f;
+    private boolean isExists;
     Handler FoHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -103,27 +112,41 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 case 0: //获取版本号
                     String sVersion = getVersionName();
                     String[] aData = FsRet.split(",");
+                    int newVersion = Integer.parseInt(au_version.replace(".", ""));
+                    int nowVersion = Integer.parseInt(getVersionName().replace(".", ""));
+                    LogUtils.e(newVersion+nowVersion+"");
 
-
-                    if (au_version.equals(getVersionName())) {
+                    if (newVersion == nowVersion) {
                         late = "yes";
                         writeConfig("late", late);
                         if (FbUpdate) {
                             showDialog("提示", "已经是最新版本", "确定", "", 0);
                         }
-                    } else {
-                        aData[0] = aData[0].trim();
-                        if (sVersion.compareTo(aData[0]) < 0) {
-                            FsVersion = aData[0];
-                            if (aData.length > 1) {
-                                aData[1] = aData[1].trim();
-                                if (aData[1].compareTo("1") == 0) FbForceUpdate = true;
-                            }
-                        }
+                    } else if (newVersion > nowVersion) {
 
-                        late = "no";
-                        writeConfig("late", late);
-                        showDialog("更新提示", "检测到新版本，是否更新", "立刻更新", "以后再说", 0);
+                        f = new File(SPUtils.get(instance,"au_save_path","")+"");
+                        isExists = f.exists();
+                            if (isExists
+                                    && ApkTotalUtill.getUninatllApkInfo(instance,SPUtils.get(instance,"au_save_path","")+"")
+                                    ) {
+                                showDialog( "提示", "新版本已下载成功是否直接安装", "立刻安装", "以后再说",0);
+
+                            } else {
+                                aData[0] = aData[0].trim();
+                                if (sVersion.compareTo(aData[0]) < 0) {
+                                    FsVersion = aData[0];
+                                    if (aData.length > 1) {
+                                        aData[1] = aData[1].trim();
+                                        if (aData[1].compareTo("1") == 0) FbForceUpdate = true;
+                                    }
+                                }
+
+                                late = "no";
+                                writeConfig("late", late);
+                                showDialog("发现新版本", "本次更新的内容有\n" + au_info, "立刻更新", "以后再说", 0);
+
+
+                        }
                     }
                     break;
 
@@ -152,9 +175,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             super.handleMessage(msg);
         }
     };
-    private String au_info;
-    private String au_id;
-    private List<Integer> mImageList;
 
     //获取版本信息
     public void getVersion() {
@@ -212,14 +232,11 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         }
     }
 
-    /**
-     * 下载新版本
-     */
     protected void downVersion() {
         Intent oInt = new Intent();
-        oInt.setClass(this, UpdateActivity.class);
-        oInt.putExtra("url", HttpUrlUtils.getHttpUrl().get_updata() + au_filename);
-        oInt.putExtra("file", au_filename);
+        oInt.setClass(this, UpdateActivityNew.class);
+        oInt.putExtra("url", HttpUrlUtils.getHttpUrl().get_updata() + au_filePath);
+        oInt.putExtra("file", au_filePath);
         startActivity(oInt);
     }
 
@@ -272,9 +289,12 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                             Map<String, Object> data = GsonUtil.JsonToMap(GsonUtil.GsonString(map.get("table")));
                             au_version = data.get("au_version").toString();
                             au_last_version = data.get("au_last_version").toString();
-                            au_filename = data.get("au_file_path").toString();//下载链接
-                            SPUtils.put(instance, "au_file_path", au_filename);
+                            au_filePath = data.get("au_file_path").toString();//下载链接
+
+                            SPUtils.put(instance, "au_file_path", HttpUrlUtils.getHttpUrl().getBaseUrl()+"/"+au_filePath);//下载地址
+                            SPUtils.put(instance, "au_save_path", Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+au_version+".apk");//保存地址
                             au_info = data.get("au_info").toString();
+                            SPUtils.put(instance, "au_info", au_info);
                             au_id = data.get("au_id").toString();
                             FsUrl = readConfig("url");
                             if (FsUrl.length() == 0) {
@@ -284,7 +304,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                             }
                             FsUrl = readConfig("url");
                             FsUser = readConfig("user");
-                            FsFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + au_filename;
+                            FsFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + au_version+".apk";
                             FbUpdate = false;
                             getVersion();
                             checkRight();
@@ -398,22 +418,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         mCb.startTurning(2000);
     }
 
-    //设置状态栏和导航栏沉浸式
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
-
     /**
      * 轮播图设置图片
      */
@@ -478,7 +482,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(instance, ApproveActivity.class));
                 }
                 break;
         }
@@ -504,7 +507,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         startService(new Intent(instance, FileService.class));
         MobclickAgent.onResume(this);
         status = SPUtils.get(instance, "staff_is_real", "").toString();
-        LogUtils.e("修改后"+status);
     }
 
     @Override
@@ -519,6 +521,17 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         ActivityController.removeActivity(instance);
     }
 
+
+    /**
+     * 检查更新
+     *
+     * @param sCaption
+     * @param sText
+     * @param sOk
+     * @param sCancel
+     * @param iLayout
+     * @return
+     */
     protected AlertDialog showDialog(String sCaption,
                                      String sText,
                                      String sOk,
@@ -563,7 +576,21 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
      * 对话框单击确定按钮处理
      */
     protected void dialogOk() {
-        downVersion();
+        if(isExists
+                && ApkTotalUtill.getUninatllApkInfo(instance,SPUtils.get(instance,"au_save_path","")+"")
+                ){
+            //安装app
+//            PermisionUtil.verifyStoragePermissions(instance);
+            Intent oInt1 = new Intent(Intent.ACTION_VIEW);
+            oInt1.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
+
+            //关键点：
+            //安装完成后执行打开
+            oInt1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(oInt1);
+        }else{
+            downVersion();
+        }
     }
 
     /**
@@ -601,6 +628,5 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             pImg.setImageResource(data);
         }
     }
-
 
 }
