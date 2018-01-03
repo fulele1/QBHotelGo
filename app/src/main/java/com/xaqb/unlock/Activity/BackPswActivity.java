@@ -30,11 +30,6 @@ public class BackPswActivity extends BaseActivityNew {
     private String phone, vCode, psw, confirmPsw, codeKey = "";
     private TimeCount time;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("找回密码");
-//        showBackwardView(true);
-//    }
 
     @Override
     public void initViews() {
@@ -150,7 +145,6 @@ public class BackPswActivity extends BaseActivityNew {
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getVerCode() + "/" + phone)
-//                    .addParams("tel", phone)
                     .build()
                     .execute(new StringCallback() {
                         @Override

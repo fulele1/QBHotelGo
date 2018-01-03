@@ -78,11 +78,6 @@ public class IncomeActivity extends BaseActivityNew implements SwipeRefreshLayou
         }
     };
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("收入明细");
-//        showBackwardView(true);
-//    }
 
     @Override
     public void initViews() {
@@ -297,5 +292,4 @@ public class IncomeActivity extends BaseActivityNew implements SwipeRefreshLayou
             }
         }
     }
-
 }

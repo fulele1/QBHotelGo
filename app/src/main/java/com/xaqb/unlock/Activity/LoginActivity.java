@@ -1,8 +1,6 @@
 package com.xaqb.unlock.Activity;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,11 +13,9 @@ import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
-import com.xaqb.unlock.Utils.CheckPermission;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.MyApplication;
-import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -44,64 +40,24 @@ public class LoginActivity extends BaseActivityNew {
     private CheckBox cbRememberPsw;
     private ImageView ivDeUser,ivDePsw;
 
-    //第一步
-    private String[] permission =  new String[] {
-            Manifest.permission.CAMERA,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-    CheckPermission permission1;
-    boolean checkPermission;
     @Override
     public void initViews() {
-//        PermisionUtil.verifyStoragePermissions(this);
         StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();
         setDeleteImgview(etUsername,ivDeUser);
         setDeleteImgview(etPsw,ivDePsw);
-        //第二步
-        permission1 = new CheckPermission();
-        checkPermission = permission1.checkPermission(instance, permission, 1000);
 
     }
 
-
-    /**
-     * 第 3 步: 申请权限结果返回处理
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1000) {
-            boolean isAllGranted = true;
-
-            // 判断是否所有的权限都已经授予了
-            for (int grant : grantResults) {
-                if (grant != PackageManager.PERMISSION_GRANTED) {
-                    isAllGranted = false;
-                    break;
-                }
-            }
-
-            if (isAllGranted) {
-                // 如果所有的权限都授予了, 则允许拍照
-                checkPermission = true;
-                SPUtils.put(this,"checkPermission",checkPermission);
-
-            } else {
-                // 弹出对话框告诉用户需要权限的原因, 并引导用户去应用权限管理中手动打开权限按钮
-                permission1.openAppDetails();
-            }
-        }
-
-    }
 
 
 
     /**
      *
+     * @param editText
+     * @param imageView
      */
     private void setDeleteImgview(EditText editText, final ImageView imageView){
         editText.addTextChangedListener(new TextWatcher() {
@@ -123,6 +79,9 @@ public class LoginActivity extends BaseActivityNew {
 
     }
 
+    /**
+     *
+     */
     private void assignViews() {
         tvForgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
         btLogin = (Button) findViewById(R.id.bt_login);

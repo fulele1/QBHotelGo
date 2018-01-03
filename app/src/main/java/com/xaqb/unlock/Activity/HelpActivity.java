@@ -14,12 +14,6 @@ public class HelpActivity extends BaseActivityNew {
     private HelpActivity instance;
     private ViewPagerCompat viewPager;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("使用帮助");
-//        showBackwardView(true);
-//    }
-
     @Override
     public void initViews() {
         setContentView(R.layout.help_activity);
@@ -29,7 +23,6 @@ public class HelpActivity extends BaseActivityNew {
 
     private void assignViews() {
         viewPager = (ViewPagerCompat) findViewById(R.id.vp_main);
-//        viewPager.setPageTransformer(true, new DepthPageTransformer());
         viewPager.setOffscreenPageLimit(10);
         viewPager.setAdapter(new ViewPagerCompatAdapter(null, instance));
     }

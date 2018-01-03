@@ -34,14 +34,13 @@ import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ApkTotalUtill;
 import com.xaqb.unlock.Utils.CircleTransform;
 import com.xaqb.unlock.Utils.Globals;
-import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.PicUtil;
 import com.xaqb.unlock.Utils.SPUtils;
 import java.io.File;
 
 /**
  * 左滑菜单
- * Created by lenovo on 2016/11/28.
+ * Created by fl on 2016/11/28.
  */
 public class LeftFragment extends BaseFragment implements View.OnClickListener {
     private ListView lvLeftMenu;
@@ -97,6 +96,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case 4: // 实名认证
                         status = SPUtils.get(getActivity(), "staff_is_real", "").toString();
+                        writeConfig("approveing","no");
                         if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                         Toast.makeText(getActivity(), "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), ApproveActivity.class));
@@ -105,6 +105,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                             startActivity(new Intent(getActivity(), RealNameInfoActivity.class));
                         } else if (status.equals(Globals.staffIsRealIng)) {
                             Toast.makeText(getActivity(), "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getActivity(), ApproveActivity.class));
+                            writeConfig("approveing","yes");
                         }
                         break;
                     case 5: // 关于我们
@@ -126,8 +128,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                                 showDialogB(instance,"发现新版本",0,"本次更新的内容有：\n"+SPUtils.get(instance,"au_info",""),"立刻更新","以后再说");
 
                             }
-
-
                         }
 
 

@@ -23,12 +23,6 @@ import okhttp3.Call;
 public class MessageActivity extends BaseActivityNew {
     private MessageActivity instance;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("消息中心");
-//        showBackwardView(true);
-//    }
-
     @Override
     public void initViews() {
         setContentView(R.layout.message_activity);

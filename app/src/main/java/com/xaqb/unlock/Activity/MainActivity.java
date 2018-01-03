@@ -42,7 +42,6 @@ import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
-import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -123,7 +122,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                             showDialog("提示", "已经是最新版本", "确定", "", 0);
                         }
                     } else if (newVersion > nowVersion) {
-
+                        late = "no";
+                        writeConfig("late", late);
                         f = new File(SPUtils.get(instance,"au_save_path","")+"");
                         isExists = f.exists();
                             if (isExists
@@ -140,12 +140,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                                         if (aData[1].compareTo("1") == 0) FbForceUpdate = true;
                                     }
                                 }
-
-                                late = "no";
-                                writeConfig("late", late);
+                                
                                 showDialog("发现新版本", "本次更新的内容有\n" + au_info, "立刻更新", "以后再说", 0);
-
-
                         }
                     }
                     break;
@@ -474,6 +470,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.iv_real_name://实名认证
                 status = SPUtils.get(instance, "staff_is_real", "").toString();
+                writeConfig("approveing","no");
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                     Toast.makeText(instance, "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, ApproveActivity.class));
@@ -482,6 +479,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(instance, ApproveActivity.class));
+                    writeConfig("approveing","yes");
                 }
                 break;
         }

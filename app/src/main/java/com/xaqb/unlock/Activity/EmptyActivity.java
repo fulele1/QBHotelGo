@@ -23,12 +23,6 @@ import okhttp3.Call;
 public class EmptyActivity extends BaseActivityNew {
     private EmptyActivity instance;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("");
-//        showBackwardView(true);
-//    }
-
     @Override
     public void initViews() {
         setContentView(R.layout.empty_activity);

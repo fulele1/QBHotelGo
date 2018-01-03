@@ -18,9 +18,13 @@ import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static android.os.Build.VERSION.SDK;
 
@@ -44,13 +48,21 @@ public class MyApplication extends Application {
             builder.detectFileUriExposure();
         }
 
-
         versionName = ProcUnit.getVersionName(getApplicationContext());
         CrashReport.initCrashReport(getApplicationContext());
         instance = getApplicationContext();
         CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(getApplicationContext()));
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggerInterceptor("qbunlock"))
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request newRequest = chain.request().newBuilder()
+                                .addHeader("User-Agent",String.format("XAQianbai Android qbunlock %s","V"+MyApplication.versionName))
+                                .build();
+                        return chain.proceed(newRequest);
+                    }
+                })
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 //其他配置
@@ -60,25 +72,25 @@ public class MyApplication extends Application {
     }
 
 
-    // SDK>24 和<24的解决方案
-    public static void openFile(Context context, File file) {
-        Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        Uri uri;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(context,
-                    context.getApplicationContext().getPackageName() + ".provider",
-                    file);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        } else {
-            uri = Uri.fromFile(file);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(uri, "application/vnd.android.package-archive");
-        }
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
+//    // SDK>24 和<24的解决方案
+//    public static void openFile(Context context, File file) {
+//        Intent intent = new Intent();
+//        intent.setAction(android.content.Intent.ACTION_VIEW);
+//        Uri uri;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//            Uri contentUri = FileProvider.getUriForFile(context,
+//                    context.getApplicationContext().getPackageName() + ".provider",
+//                    file);
+//            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+//        } else {
+//            uri = Uri.fromFile(file);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+//        }
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        context.startActivity(intent);
+//    }
 
 
 

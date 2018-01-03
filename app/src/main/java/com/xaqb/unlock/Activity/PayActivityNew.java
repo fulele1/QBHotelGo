@@ -328,7 +328,7 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
                                 apId = map.get("id").toString();
                                 isFirstGetPayStatus = true;
                                 isQuery = false;
-                                getPayResult();
+//                                getPayResult();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
@@ -435,8 +435,10 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
                             loadingDialog.dismiss();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                apId = map.get("id").toString();
                                 showToast("支付成功");
-                                finish();
+//                                getPayResult();
+                                instance.finish();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");

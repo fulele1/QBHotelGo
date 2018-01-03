@@ -5,29 +5,26 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushConfig;
+import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
-import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Views.LoadingDialog;
 
@@ -80,6 +77,26 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
             this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
+        XGPushConfig.enableDebug(this,true);//信鸽开启debug日志数据
+
+        //信鸽token注册
+        XGPushManager.registerPush(this, new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                //token在设备卸载重装的时候有可能会变
+                Log.d("TPush——qbunlock", "注册成功，设备token为：" + data);
+            }
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.d("TPush——qbunlock", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
+
+        //信鸽设置账号
+        XGPushManager.registerPush(getApplicationContext(), "XINGE");
+        //信鸽设置标签
+        XGPushManager.setTag(this,"XINGE");
+
         try {
             ActivityController.addActivity(this);
             loadingDialog = new LoadingDialog(this);
@@ -123,7 +140,6 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
      * @param backwardView
      */
     public void onBackward(View backwardView) {
-//        Toast.makeText(this, "点击返回，可在此处调用finish()", Toast.LENGTH_LONG).show();
         finish();
     }
 
@@ -211,12 +227,6 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
         });
         return alertDialog;
     }
-
-
-
-
-
-
 
     //判断字符串是否为空
     protected boolean textNotEmpty(String text) {

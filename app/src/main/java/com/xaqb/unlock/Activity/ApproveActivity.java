@@ -96,6 +96,11 @@ public class ApproveActivity extends BaseActivityNew {
         ivCertPic = (ImageView) findViewById(R.id.iv_cert_pic);
         ivFacePic = (ImageView) findViewById(R.id.iv_face_pic);
         btSubmit = (Button) findViewById(R.id.bt_submit);
+        if (readConfig("approveing").equals("yes")){
+            btSubmit.setClickable(false);
+            btSubmit.setText("正在认证中，请勿重复认证。");
+            btSubmit.setBackground(getResources().getDrawable(R.drawable.bg_button_gray));
+        }
         spType = (Spinner) findViewById(R.id.sp_type);
         spNation = (Spinner) findViewById(R.id.sp_nation);//选择民族
         ivSign = (ImageView) findViewById(R.id.iv_sign_approve);//电子签名

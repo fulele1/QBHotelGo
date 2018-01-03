@@ -18,13 +18,11 @@ import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
-import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.SPUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.litepal.util.LogUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;

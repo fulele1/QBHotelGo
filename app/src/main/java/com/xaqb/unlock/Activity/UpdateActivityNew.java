@@ -22,7 +22,6 @@ import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.BuildConfig;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.LogUtils;
-import com.xaqb.unlock.Utils.PermisionUtil;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToastUtil;

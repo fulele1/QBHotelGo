@@ -17,12 +17,6 @@ public class AboutActivity extends BaseActivityNew {
     private TextView tvVersion;
     private TextView tvTitle;
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("关于我们");
-//        showBackwardView(true);
-//    }
-
     @Override
     public void initViews() {
         StatusBarUtil.setTranslucent(this,0);
