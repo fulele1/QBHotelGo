@@ -19,6 +19,7 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -150,6 +151,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                     @Override
                     public void doWork(Map<?, ?> map) {
                         try {
+                            LogUtils.e("详情"+map.toString());
                             loadingDialog.dismiss();
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 List<Map<String, Object>> paydetail = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("paydetail")));

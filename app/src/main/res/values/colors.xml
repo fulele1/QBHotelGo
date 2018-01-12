@@ -19,5 +19,7 @@
     <color name="bag">#fafafafa</color>
     <color name="text">#bcbcbc</color>
     <color name="redio_text">#bbbbbb</color>
+    <color name="fuxk_base_color_white">#ffffff</color>
+
 
 </resources>

@@ -2,7 +2,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#CFCFCF"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/slidingmenu_offset"
+    >
 
     <include layout="@layout/pub_titlebar"/>
     <LinearLayout style="@style/common_horizontal_match_line_style" />

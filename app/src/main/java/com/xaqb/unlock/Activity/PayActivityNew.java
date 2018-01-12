@@ -18,6 +18,7 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -328,7 +329,9 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
                                 apId = map.get("id").toString();
                                 isFirstGetPayStatus = true;
                                 isQuery = false;
-//                                getPayResult();
+                                LogUtils.e("支付成功");
+                                progressDialog.dismiss();
+                                instance.finish();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
@@ -338,6 +341,7 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
                                 progressDialog.dismiss();
                                 dialogType = 1;
                                 showDialog("提示", "支付失败，请稍后再试", "确定", "", 0);
+                                LogUtils.e("在线支付支付失败，请稍后再试");
                                 return;
                             }
                         } catch (Exception e) {
@@ -378,12 +382,14 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 myHandler.sendEmptyMessage(101);
+                                LogUtils.e("支付结果，支付成功");
                                 progressDialog.dismiss();
                                 dialogType = 2;
                                 showDialog("提示", "支付成功", "确定", "", 0);
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
+                                LogUtils.e("支付结果，登录失效，请重新登录");
                                 startActivity(new Intent(instance, MainActivity.class));
                             } else {
                                 if (isFirstGetPayStatus) {
@@ -431,23 +437,27 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
 
                     @Override
                     public void onResponse(String s, int i) {
+                        LogUtils.e("现金支付，"+s);
                         try {
                             loadingDialog.dismiss();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
+                            LogUtils.e("现金支付，"+map.get("state").toString().equals(Globals.httpSuccessState)+"");
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                apId = map.get("id").toString();
                                 showToast("支付成功");
+                                LogUtils.e("现金支付，支付成功");
 //                                getPayResult();
                                 instance.finish();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
+                                LogUtils.e("现金支付，请重新登陆");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
                                 showToast(map.get("mess").toString());
                                 return;
                             }
                         } catch (Exception e) {
+                            LogUtils.e("现金支付，请稍后再试");
                             showToast("支付失败，请稍后再试");
                             e.printStackTrace();
                         }

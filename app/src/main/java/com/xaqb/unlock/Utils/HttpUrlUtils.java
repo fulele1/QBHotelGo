@@ -12,19 +12,25 @@ public class HttpUrlUtils {
     public static HttpUrlUtils getHttpUrl() {
         return httpUrl;
     }
-
-    //  基础url
-    public String getBaseUrl() {
-        return "http://api.ddkaisuo.net";
-    }
-
-//    private String getBaseUrl() {
-//        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn/":"http://api.ddkaisuo.net";
+//
+//    //  基础url
+//    public String getBaseUrl() {
+//        return "https://kaisuo.qbchoice.com";
 //    }
+
+    public String getBaseUrl() {
+        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn/":"https://kaisuo.qbchoice.com";
+    }
 
     //  用户登录接口
     public String getLoginUrl() {
         return getBaseUrl() + "/v1/staff/login";
+    }
+
+
+    //  轮播图接口 http://api.ddks.comv1/staff/advertisement
+    public String getPic() {
+        return getBaseUrl() + "/v1/staff/advertisement";
     }
 
     //  修改个人信息接口

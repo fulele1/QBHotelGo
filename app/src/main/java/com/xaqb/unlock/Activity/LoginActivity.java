@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -48,11 +49,7 @@ public class LoginActivity extends BaseActivityNew {
         assignViews();
         setDeleteImgview(etUsername,ivDeUser);
         setDeleteImgview(etPsw,ivDePsw);
-
     }
-
-
-
 
     /**
      *

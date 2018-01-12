@@ -19,14 +19,6 @@
     <string name="order_pay">未付清</string>
     <string name="order_finished">已完成</string>
 
-
-
-
-
-
-
-
-
     <string-array name="permissions">
         <item>@string/permission_recode_audio_hint</item>
         <item>@string/permission_get_accounts_hint</item>

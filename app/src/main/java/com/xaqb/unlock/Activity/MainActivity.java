@@ -8,15 +8,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -80,7 +84,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private boolean isQuit = false;
     private ImageView ivUser, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName, ivMessage;
     private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
-    //    private Button btOrder;
+//        private Button btOrder;
     private Fragment mContent;
     private SlidingMenu sm;
     private Handler mHandler = new Handler() {
@@ -239,10 +243,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//
-        //取消状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.main_menu);
         instance = this;
         ActivityController.addActivity(instance);
@@ -266,6 +266,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
     private void checkVerdion() {
         //  请求连接网络 解析后 拿到版本号和版本名
+//        LogUtils.e(HttpUrlUtils.getHttpUrl().getPic() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
                 .build()
@@ -470,7 +471,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
             case R.id.iv_real_name://实名认证
                 status = SPUtils.get(instance, "staff_is_real", "").toString();
-                writeConfig("approveing","no");
                 if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
                     Toast.makeText(instance, "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, ApproveActivity.class));
@@ -479,12 +479,14 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(instance, ApproveActivity.class));
-                    writeConfig("approveing","yes");
+//                    startActivity(new Intent(instance, ApproveActivity.class));
+                    startActivity(new Intent(instance, RealNameInfoActivity.class));
                 }
                 break;
         }
     }
+
+
 
     @Override
     public void onBackPressed() {
