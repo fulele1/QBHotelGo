@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.SDCardUtils;
 
 import java.io.File;
 
@@ -51,11 +53,14 @@ public class WillSendActivity extends BaseActivityNew {
                 for (i = 0; i < oFiles.length; i++) {
                     if (oFiles[i].getName().startsWith("咚咚开锁")) {
                         aFile[iLen] = oFiles[i].getName();
+                        LogUtils.e(instance.getFilesDir().getAbsolutePath()+"/"+oFiles[i]+".txt");
+                        SDCardUtils.deletFile(instance.getFilesDir().getAbsolutePath()+"/"+oFiles[i]+".txt");
                         iLen++;
                     }
                 }
                 oList = (ListView) this.findViewById(R.id.lv_will_send);
                 oAdapter = new ArrayAdapter<>(this, R.layout.will_send_list, aFile);
+
                 oList.setAdapter(oAdapter);
             } else {
                 dialogType = 2;

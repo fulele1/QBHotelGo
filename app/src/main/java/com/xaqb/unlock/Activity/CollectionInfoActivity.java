@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -35,8 +34,11 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PaintView;
 import com.xaqb.unlock.Utils.PermissionUtils;
+import com.xaqb.unlock.Utils.PhoneFormatCheckUtils;
+import com.xaqb.unlock.Utils.PriceUtil;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.xaqb.unlock.Utils.ToolsUtils;
@@ -53,6 +55,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 
@@ -73,7 +76,7 @@ public class CollectionInfoActivity extends BaseActivityNew {
     private CollectionInfoActivity instance;
     private Button btComplete;
     private EditText etUserName, etUserPhone, etOtherName, etOtherPhone, etOtherRemark, etUnlockPay, etUnlockAddress;
-    private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult,tvTitle;
+    private TextView etUserCertNum, etLockType, etUnlcokTime, tvReadResult, tvTitle;
     private ImageView ivCertPic, ivFacePic, ivOtherFacePic, ivLockPic, ivZxing, ivCertScan;
     private String userName, userPhone, userCertNum, userSex, idAddress, userNation, unlockAddress,
             lockType, unlockPay, unlockTime, imagePath1, imagePath2, imagePath3, otherName, otherPhone, otherRemark;
@@ -87,8 +90,6 @@ public class CollectionInfoActivity extends BaseActivityNew {
     private int permissionCode = 0;
     private AMapLocationClient mlocationClient;
     private double longitude, latitude;
-    private ImageView imageSign;
-    private PaintView mView;
     /**
      * 定位监听
      */
@@ -118,6 +119,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
             }
         }
     };
+    private ImageView imageSign;
+    private PaintView mView;
     private Bitmap bitmapCert;
     private String[] lockTypes = {"门锁", "保险柜锁", "汽车锁", "电子锁", "汽车芯片"};
     /**
@@ -125,6 +128,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+    private ImageView ivSign;
+    private byte[] picByte;
 
     @Override
     public void initViews() {
@@ -134,7 +139,7 @@ public class CollectionInfoActivity extends BaseActivityNew {
         assignViews();
         tvTitle.setText("信息采集");
     }
-private ImageView ivSign;
+
     private void assignViews() {
         btComplete = (Button) findViewById(R.id.bt_complete);
         etUserName = (EditText) findViewById(R.id.et_user_name);
@@ -177,15 +182,16 @@ private ImageView ivSign;
         checkPer(PermissionUtils.CODE_ACCESS_COARSE_LOCATION);
     }
 
-    private byte [] picByte;
+    public boolean isSign;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         switch (requestCode) {
             case 0://返回签字的图片
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     if (bundle != null) {
-                       picByte = bundle.getByteArray("picByte");
+                        picByte = bundle.getByteArray("picByte");
+                        isSign = true;
                         ivSign.setImageBitmap(BitmapFactory.decodeByteArray(picByte, 0, picByte.length));
                     }
                 }
@@ -218,6 +224,7 @@ private ImageView ivSign;
     public void onReadCert(String sNo, Bitmap oCert) {
         userCertNum = sNo;
         etUserCertNum.setText(sNo);
+//        etUserCertNum.setText(sNo.substring(0,3)+"********"+sNo.substring(11));
         oCert = ToolsUtils.drawText(oCert, getString(R.string.logo), 50);
         bitmapCert = oCert;
         ivCertPic.setImageBitmap(bitmapCert);
@@ -423,10 +430,12 @@ private ImageView ivSign;
 
                     if (!textNotEmpty(userName)) {
                         showToast("请输入客户姓名");
-                    } else if (userName.length()<2) {
+                    } else if (userName.length() < 2) {
                         showToast("姓名长度错误");
-                      } else if (!textNotEmpty(userPhone)) {
+                    } else if (!textNotEmpty(userPhone)) {
                         showToast("请输入客户电话");
+                    } else if (!PhoneFormatCheckUtils.isChinaPhoneLegal(userPhone)) {
+                        showToast("电话号码格式错误");
                     } else if (!textNotEmpty(userCertNum)) {
                         showToast("请输入客户身份证号码");
                     } else if (!IDCardValidate(userCertNum).equals("")) {
@@ -437,11 +446,13 @@ private ImageView ivSign;
                         showToast("请输入锁具类型");
                     } else if (!textNotEmpty(unlockPay)) {
                         showToast("请输入开锁费用");
+                    } else if (!Pattern.compile("^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,2})?$").matcher(unlockPay).matches()) {
+                        showToast("价格格式错误");
                     } else if (!textNotEmpty(imagePath1)) {
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {
                         showToast("请拍摄门锁照片");
-                    } else if (ivSign==null) {
+                    } else if (!isSign) {
                         showToast("请添加手写签名");
                     } else {
                         try {
@@ -479,19 +490,19 @@ private ImageView ivSign;
                     .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                     .addParams("longitude", longitude + "")
                     .addParams("latitude", latitude + "")
-                    .addParams("price", unlockPay)
-                    .addParams("staffid", SPUtils.get(instance, "userid", "").toString())
-                    .addParams("username", userName)
+                    .addParams("price", unlockPay)//价格
+                    .addParams("staffid", SPUtils.get(instance, "userid", "").toString())//用户id
+                    .addParams("username", userName)//用户姓名
                     .addParams("tpname", otherName)//第三方姓名
                     .addParams("tptel", otherPhone)//第三方电话
                     .addParams("remark", otherRemark)//第三方备注
-                    .addParams("usertel", userPhone)
-                    .addParams("useraddress", unlockAddress)
-                    .addParams("locktype", lockType)
-                    .addParams("certcode", userCertNum)
-                    .addParams("certimg", Base64Utils.photoToBase64(bitmapCert, 60))
-                    .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 60))
-                    .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 60))
+                    .addParams("usertel", userPhone)//电话号码
+                    .addParams("useraddress", unlockAddress)//地址
+                    .addParams("locktype", lockType)//锁具类型
+                    .addParams("certcode", userCertNum)//身份证号码
+                    .addParams("certimg", Base64Utils.photoToBase64(bitmapCert, 60))//身份证照片
+                    .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 60))//人脸照片
+                    .addParams("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 60))//锁具照片
                     .addParams("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 60))//第三方照片
                     .addParams("usersex", "")
                     .addParams("idaddress", "")
@@ -499,7 +510,7 @@ private ImageView ivSign;
                     .addParams("province", "")
                     .addParams("city", "")
                     .addParams("district", "")
-                    .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))
+                    .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))//开锁时间
                     .addParams("signimg", Base64Utils.photoToBase64(BitmapFactory.decodeByteArray(picByte, 0, picByte.length), 60))//手写签名照片
                     .build()
                     .execute(new StringCallback() {
@@ -507,13 +518,14 @@ private ImageView ivSign;
                         public void onError(Call call, Exception e, int i) {
                             e.printStackTrace();
                             loadingDialog.dismiss();
-                            showToast("网络访问异常");
+                            showToast("网络访问失败");
                             btComplete.setEnabled(true);
                             saveJson();
                         }
 
                         @Override
                         public void onResponse(String s, int i) {
+                            LogUtils.e("下单成功" + s);
                             try {
                                 loadingDialog.dismiss();
                                 btComplete.setEnabled(true);
@@ -565,11 +577,12 @@ private ImageView ivSign;
         datas.put("usersex", "");
         datas.put("idaddress", "");
         datas.put("usernation", "");
-        datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 80));
-        datas.put("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 80));
-        datas.put("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 80));
-        datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 80));
+        datas.put("certimg", Base64Utils.photoToBase64(bitmapCert, 60));
+        datas.put("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath1), 60));
+        datas.put("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 60));
+        datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 60));
         datas.put("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()));
+        datas.put("signing", Base64Utils.photoToBase64(BitmapFactory.decodeByteArray(picByte, 0, picByte.length), 60));
         datas.put("province", "");
         datas.put("city", "");
         datas.put("district", "");

@@ -72,27 +72,6 @@ public class MyApplication extends Application {
     }
 
 
-//    // SDK>24 和<24的解决方案
-//    public static void openFile(Context context, File file) {
-//        Intent intent = new Intent();
-//        intent.setAction(android.content.Intent.ACTION_VIEW);
-//        Uri uri;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//            Uri contentUri = FileProvider.getUriForFile(context,
-//                    context.getApplicationContext().getPackageName() + ".provider",
-//                    file);
-//            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-//        } else {
-//            uri = Uri.fromFile(file);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.setDataAndType(uri, "application/vnd.android.package-archive");
-//        }
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(intent);
-//    }
-
-
 
     /**
      * 初始化云推送通道

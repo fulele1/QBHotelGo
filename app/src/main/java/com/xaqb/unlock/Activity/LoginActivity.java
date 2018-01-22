@@ -11,18 +11,24 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
 import com.xaqb.unlock.Utils.PermissionUtils;
+import com.xaqb.unlock.Utils.PriceUtil;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.apache.commons.logging.Log;
+
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -33,7 +39,7 @@ import okhttp3.Call;
  */
 public class LoginActivity extends BaseActivityNew {
 
-    private TextView tvForgetPsw;
+    private TextView tvForgetPsw,mTst;
     private LoginActivity instance;
     private Button btLogin;
     private String username, psw;
@@ -49,6 +55,10 @@ public class LoginActivity extends BaseActivityNew {
         assignViews();
         setDeleteImgview(etUsername,ivDeUser);
         setDeleteImgview(etPsw,ivDePsw);
+        if (HttpUrlUtils.getHttpUrl().getBaseUrl().equals("http://kaisuo.qbchoice.cn")){
+            mTst.setVisibility(View.VISIBLE);
+        }
+
     }
 
     /**
@@ -81,6 +91,7 @@ public class LoginActivity extends BaseActivityNew {
      */
     private void assignViews() {
         tvForgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
+        mTst = (TextView) findViewById(R.id.test_version);
         btLogin = (Button) findViewById(R.id.bt_login);
         etUsername = (EditText) findViewById(R.id.et_username);
         etPsw = (EditText) findViewById(R.id.et_password);

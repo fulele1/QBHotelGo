@@ -64,8 +64,10 @@
         <com.bigkoo.convenientbanner.ConvenientBanner
             android:id="@+id/cb_main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="180dp"
             app:canLoop="true"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
             />
 
     </LinearLayout>

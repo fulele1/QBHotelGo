@@ -2,6 +2,7 @@ package com.xaqb.unlock.Utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.xaqb.unlock.Activity.LoginActivity;
@@ -71,6 +72,7 @@ public class QBHttp {
                     public void onResponse(String s, int i) {
                         try {
                             Map<?, ?> map = GsonUtil.JsonToMap(s);
+
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 callback.doWork(map);
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {

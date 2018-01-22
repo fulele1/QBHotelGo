@@ -81,8 +81,6 @@ public class RealNameInfoActivity extends BaseActivityNew {
                                 "ra_state":1,"ra_age":18,"ra_sex":"女","ra_nation":"01","ct_name":"身份证",
                                 "ra_signimg":"http:\/\/kaisuo.qbchoice.cn\/v1\/staff\/privite\/106\/5\/ra_signimg"}}*/
 
-
-
                         loadingDialog.dismiss();
                         try {
                             Map<String, Object> map = GsonUtil.JsonToMap(s);

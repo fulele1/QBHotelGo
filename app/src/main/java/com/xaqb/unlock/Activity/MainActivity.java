@@ -26,14 +26,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.alibaba.sdk.android.push.CloudPushService;
-import com.alibaba.sdk.android.push.CommonCallback;
-import com.alibaba.sdk.android.push.noonesdk.PushServiceFactory;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.squareup.picasso.Picasso;
 import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.Fragment.LeftFragment;
 import com.xaqb.unlock.R;
@@ -53,6 +52,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -95,6 +95,13 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             isQuit = false;
         }
     };
+    //轮播下面的小点（小圆点是本地的，自己导入的图片）
+    private int[] indicator = {R.mipmap.point_gary, R.mipmap.point_red};
+    private ConvenientBanner convenientBanner;
+    //图片加载地址的集合
+    private List<String> bean;
+    private String[] images;
+    private String[] url;
     /**
      * 检查是否要进行更新
      */
@@ -247,26 +254,110 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         instance = this;
         ActivityController.addActivity(instance);
         assignViews();
-        initData();
+//        initData();
+        checkPic();
         addListener();
         initSlidingMenu(savedInstanceState);
-        //阿里云推送绑定手机账号
-        CloudPushService pushService = PushServiceFactory.getCloudPushService();
-        pushService.bindAccount(SPUtils.get(instance, "userAccount", "").toString(), new CommonCallback() {
-            @Override
-            public void onSuccess(String s) {
-            }
-
-            @Override
-            public void onFailed(String s, String s1) {
-            }
-        });
         checkVerdion();//检查更新
+        startService(new Intent(instance, FileService.class));
     }
+
+    private void checkPic() {
+        //  请求连接网络 解析后 拿到版本号和版本名
+        OkHttpUtils.get()
+                .url(HttpUrlUtils.getHttpUrl().getPic() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        LogUtils.e("轮播图" + s);
+                        Map<String, Object> map = GsonUtil.GsonToMaps(s);
+                        if (map.get("state").toString().equals("1.0")) {
+                            return;
+                        } else if (map.get("state").toString().equals("0.0")) {
+
+                            List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
+                            images = new String [data.size()] ;
+                            url = new String [data.size()] ;
+
+                            for (int j = 0; j < data.size(); j++) {
+                                images[j] = data.get(j).get("art_img").toString();
+                                url[j] = data.get(j).get("url").toString();
+                            }
+
+                            convenientBanner = (ConvenientBanner) findViewById(R.id.cb_main);
+
+                            bean = Arrays.asList(images);
+                            convenientBanner.setPointViewVisible(true)
+                                    //设置小点
+                                    .setPageIndicator(indicator);
+                            //允许手动轮播
+                            convenientBanner.setManualPageable(true);
+                            //设置自动轮播的时间
+                            convenientBanner.startTurning(2000);
+                            //设置点击事件
+                            //泛型为具体实现类ImageLoaderHolder
+                            convenientBanner.setPages(new CBViewHolderCreator<MainActivity.NetImageLoadHolder>() {
+                                @Override
+                                public MainActivity.NetImageLoadHolder createHolder() {
+                                    return new MainActivity.NetImageLoadHolder();
+                                }
+                            }, bean);
+
+                            //设置每个pager的点击事件
+                            convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    LogUtils.e("轮播图"+url[convenientBanner.getCurrentItem()]+url.length);
+                                    if (url.length>0){
+                                        Uri uri = Uri.parse(url[convenientBanner.getCurrentItem()]);
+                                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                        startActivity(intent);
+                                    }
+
+                                }
+                            });
+
+                        }
+                    }
+                });
+    }
+
+
+
+    public class NetImageLoadHolder implements Holder<String> {
+        private ImageView image_lv;
+
+        //可以是一个布局也可以是一个Imageview
+        @Override
+        public ImageView createView(Context context) {
+            image_lv = new ImageView(context);
+            image_lv.setScaleType(ImageView.ScaleType.FIT_XY);
+
+            return image_lv;
+        }
+
+        @Override
+        public void UpdateUI(Context context, int position, String data) {
+            //Picasso
+            Picasso.with(context)
+                    .load(data)
+                    .placeholder(R.mipmap.main_pic1)
+                    .error(R.mipmap.main_pic1)
+                    .into(image_lv);
+
+        }
+
+    }
+
+
 
     private void checkVerdion() {
         //  请求连接网络 解析后 拿到版本号和版本名
-//        LogUtils.e(HttpUrlUtils.getHttpUrl().getPic() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
         OkHttpUtils.get()
                 .url(HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
                 .build()
@@ -305,7 +396,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                             FbUpdate = false;
                             getVersion();
                             checkRight();
-
                         }
                     }
                 });
@@ -406,27 +496,27 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         mCb = (ConvenientBanner) findViewById(R.id.cb_main);
     }
 
-    public void initData() {
-        mImageList = new ArrayList();
-        mImageList.add(R.mipmap.main_pic1);
-        mImageList.add(R.mipmap.main_pic2);
-        mImageList.add(R.mipmap.main_pic3);
-        cbSetPage();
-        mCb.startTurning(2000);
-    }
+//    public void initData() {
+//        mImageList = new ArrayList();
+//        mImageList.add(R.mipmap.main_pic1);
+//        mImageList.add(R.mipmap.main_pic2);
+//        mImageList.add(R.mipmap.main_pic3);
+////        cbSetPage();
+//        mCb.startTurning(2000);
+//    }
 
-    /**
-     * 轮播图设置图片
-     */
-    public void cbSetPage() {
-        mCb.setPages(new CBViewHolderCreator<CbHolder>() {
-            @Override
-            public CbHolder createHolder() {
-                return new CbHolder();
-            }
-        }, mImageList)
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
-    }
+//    /**
+//     * 轮播图设置图片
+//     */
+//    public void cbSetPage() {
+//        mCb.setPages(new CBViewHolderCreator<CbHolder>() {
+//            @Override
+//            public CbHolder createHolder() {
+//                return new CbHolder();
+//            }
+//        }, mImageList)
+//                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
+//    }
 
     public void addListener() {
         ivUser.setOnClickListener(instance);
@@ -610,24 +700,24 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         Toast.makeText(this, sMess, bLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * 轮播图holder
-     */
-    public class CbHolder implements Holder<Integer> {
-
-        private ImageView pImg;
-
-        @Override
-        public View createView(Context context) {
-            pImg = new ImageView(context);
-            pImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            return pImg;
-        }
-
-        @Override
-        public void UpdateUI(Context context, int position, Integer data) {
-            pImg.setImageResource(data);
-        }
-    }
+//    /**
+//     * 轮播图holder
+//     */
+//    public class CbHolder implements Holder<Integer> {
+//
+//        private ImageView pImg;
+//
+//        @Override
+//        public View createView(Context context) {
+//            pImg = new ImageView(context);
+//            pImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//            return pImg;
+//        }
+//
+//        @Override
+//        public void UpdateUI(Context context, int position, Integer data) {
+//            pImg.setImageResource(data);
+//        }
+//    }
 
 }

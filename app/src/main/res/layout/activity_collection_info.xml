@@ -361,9 +361,9 @@
                             android:id="@+id/iv_user_face"
                             android:layout_width="0dp"
                             android:layout_height="150dp"
-                            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                            android:layout_marginRight="@dimen/activity_horizontal_margin"
                             android:layout_weight="1"
+                            android:padding="10dp"
+
                             android:background="@color/per_bag"
                             android:src="@mipmap/acq_per" />
 
@@ -638,12 +638,6 @@
                 />
         </LinearLayout>
 
-
-
-
-
     </ScrollView>
-
-
 
 </LinearLayout>

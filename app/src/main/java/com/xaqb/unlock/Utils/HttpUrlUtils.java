@@ -13,13 +13,13 @@ public class HttpUrlUtils {
         return httpUrl;
     }
 //
-//    //  基础url
+//      基础url
 //    public String getBaseUrl() {
 //        return "https://kaisuo.qbchoice.com";
 //    }
 
     public String getBaseUrl() {
-        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn/":"https://kaisuo.qbchoice.com";
+        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn":"https://kaisuo.qbchoice.com";
     }
 
     //  用户登录接口

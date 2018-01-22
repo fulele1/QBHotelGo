@@ -57,6 +57,7 @@ public class PaintView extends View {
         canvas.drawPath(path, paint);
     }
 
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 

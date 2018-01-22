@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
@@ -22,7 +23,7 @@ import okhttp3.Call;
  */
 public class BackPswActivity extends BaseActivityNew {
 
-    private TextView tvGetVCode;
+    private TextView tvGetVCode,tvTitle;
     private Button btComplete;
     private BackPswActivity instance;
     private EditText etPhone, etVCode, etPsw, etConfirmPsw;
@@ -33,13 +34,16 @@ public class BackPswActivity extends BaseActivityNew {
 
     @Override
     public void initViews() {
+        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.backpsw_activity);
         instance = this;
         assignViews();
+        tvTitle.setText("找回密码");
     }
 
     private void assignViews() {
         tvGetVCode = (TextView) findViewById(R.id.tv_get_v_code);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
         etPhone = (EditText) findViewById(R.id.et_username);
         etVCode = (EditText) findViewById(R.id.et_v_code);
         etPsw = (EditText) findViewById(R.id.et_password);
@@ -91,18 +95,16 @@ public class BackPswActivity extends BaseActivityNew {
             showToast("请输入确认密码");
         } else if (!psw.equals(confirmPsw)) {
             showToast("两次输入的密码不一致");
+        } else if (vCode == null || vCode.equals("")) {
+            showToast("验证码不能为空");
         } else {
-            if (codeKey == null || codeKey.equals("")) {
-                showToast("验证码失效，请重新获取验证码");
-                return;
-            }
+//
             loadingDialog.show("正在修改");
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getBackPswUrl())
                     .addParams("new_pwd", confirmPsw)
                     .addParams("code", vCode)
-                    .addParams("codekey", codeKey)
                     .addParams("tel", phone)
                     .build()
                     .execute(new StringCallback() {

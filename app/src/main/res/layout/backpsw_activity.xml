@@ -6,6 +6,8 @@
     android:orientation="vertical"
     tools:context=".Activity.BackPswActivity">
 
+    <include layout="@layout/pub_titlebar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

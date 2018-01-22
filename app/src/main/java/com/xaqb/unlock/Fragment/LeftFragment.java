@@ -123,9 +123,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                                     ){
                                 showDialogB(instance,"提示",0,"新版本已下载成功是否直接安装","立刻安装","以后再说");
 
-                            }else{
+                            }else {
                                 showDialogB(instance,"发现新版本",0,"本次更新的内容有：\n"+SPUtils.get(instance,"au_info",""),"立刻更新","以后再说");
-
                             }
                         }
 

@@ -157,6 +157,7 @@ public class SDCardUtils {
         } else {
             try {
                 file.createNewFile();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -171,6 +172,22 @@ public class SDCardUtils {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    public static boolean deletFile(String path) {
+        //判断文件是否存在
+        File file = new File(path);
+        if (file.exists()) {
+        } else {
+            try {
+                file.delete();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    return true;
     }
 
     /**

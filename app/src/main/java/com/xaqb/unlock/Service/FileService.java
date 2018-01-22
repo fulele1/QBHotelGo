@@ -2,12 +2,16 @@ package com.xaqb.unlock.Service;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -117,7 +121,7 @@ public class FileService extends Service {
             InputStream inputStream = new FileInputStream(file);
             String address = GsonUtil.getString(inputStream);
             Map<String, Object> maps = GsonUtil.JsonToMap(address);
-//            LogUtils.i("上传的文件file参数==", maps.toString());
+            LogUtils.i("上传的文件file参数==", maps.toString());
 //            LogUtils.i(maps.get("usersex").toString());
 //            LogUtils.i(maps.get("idaddress").toString());
 //            LogUtils.i(maps.get("usernation").toString());
@@ -127,23 +131,27 @@ public class FileService extends Service {
                     .addParams("longitude", maps.get("longitude").toString())
                     .addParams("latitude", maps.get("latitude").toString())
                     .addParams("price", maps.get("price").toString())
-                    .addParams("remark", maps.get("remark").toString())
                     .addParams("staffid", maps.get("staffid").toString())
                     .addParams("username", maps.get("username").toString())
-                    .addParams("usertel", maps.get("usertel").toString())
+                    .addParams("tpname", maps.get("tpname").toString())//第三方姓名
+                    .addParams("tptel", maps.get("tptel").toString())//第三方电话
+                    .addParams("remark", maps.get("remark").toString())//第三方备注
+                    .addParams("usertel", maps.get("latitude").toString())
                     .addParams("useraddress", maps.get("useraddress").toString())
                     .addParams("locktype", maps.get("locktype").toString())
                     .addParams("certcode", maps.get("certcode").toString())
                     .addParams("certimg", maps.get("certimg").toString())
-                    .addParams("lockimg", maps.get("lockimg").toString())
-                    .addParams("usersex", maps.get("usersex").toString())
-                    .addParams("idaddress", maps.get("idaddress").toString())
-                    .addParams("usernation", maps.get("usernation").toString())
-                    .addParams("province", maps.get("province").toString())
-                    .addParams("city", maps.get("city").toString())
-                    .addParams("district", maps.get("district").toString())
-                    .addParams("unlocktime", maps.get("unlocktime").toString())
                     .addParams("faceimg", maps.get("faceimg").toString())
+                    .addParams("lockimg", maps.get("lockimg").toString())
+                    .addParams("tpimg", maps.get("tpimg").toString())//第三方照片
+                    .addParams("usersex", "")
+                    .addParams("idaddress", "")
+                    .addParams("usernation", "")
+                    .addParams("province", "")
+                    .addParams("city", "")
+                    .addParams("district", "")
+                    .addParams("unlocktime", maps.get("unlocktime").toString())
+                    .addParams("signimg", maps.get("signing").toString())//手写签名照片
                     .build()
                     .execute(new StringCallback() {
                         @Override
