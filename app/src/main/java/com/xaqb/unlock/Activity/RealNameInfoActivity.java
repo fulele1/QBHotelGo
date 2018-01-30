@@ -12,7 +12,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -73,7 +72,6 @@ public class RealNameInfoActivity extends BaseActivityNew {
 
                     @Override
                     public void onResponse(String s, int i) {
-                        LogUtils.e(s);
 
                         /*{"state":0,"mess":"","table":{"ra_id":5,"ra_name":"马*","ra_certcode":"6****************5",
                                 "ra_certimg":"http:\/\/kaisuo.qbchoice.cn\/v1\/staff\/privite\/106\/5\/ra_certimg",
@@ -89,8 +87,7 @@ public class RealNameInfoActivity extends BaseActivityNew {
                                 tvCertType.setText(map.get("ct_name").toString());
                                 tvCertNum.setText(map.get("ra_certcode").toString());
                                 tvSex.setText(map.get("ra_sex").toString());
-                                tvNation.setText(map.get("ra_nation").toString());
-                                LogUtils.e(map.get("ra_certimg").toString() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+                                tvNation.setText(nationUtil(map.get("ra_nation").toString()) );
                                 setPic(map.get("ra_certimg").toString() + "?access_token=" + SPUtils.get(instance, "access_token", ""),ivCert);
                                 setPic(map.get("ra_faceimg").toString() + "?access_token=" + SPUtils.get(instance, "access_token", ""),ivFace);
                                 setPic(map.get("ra_signimg").toString() + "?access_token=" + SPUtils.get(instance, "access_token", ""),ivSign);
@@ -109,6 +106,15 @@ public class RealNameInfoActivity extends BaseActivityNew {
                     }
                 });
 
+    }
+
+
+    public String nationUtil(String a){
+        switch (a){
+            case "01":
+                return "汉族";
+        }
+        return "汉族";
     }
 
     @Override

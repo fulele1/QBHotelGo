@@ -18,7 +18,7 @@
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="咚咚开锁治安管理系统"
+    android:text="咚咚开锁治安管理信息系统"
     android:gravity="center"
     android:layout_gravity="center"
     android:layout_marginBottom="@dimen/activity_title"

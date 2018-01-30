@@ -198,6 +198,7 @@ public class PayFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 , new QBCallback() {
                     @Override
                     public void doWork(Map<?, ?> map) {
+                        LogUtils.e("03"+map);
 //                        mLoadingDialog.dismiss();
                         try {
 //                            LogUtils.i(map.toString());

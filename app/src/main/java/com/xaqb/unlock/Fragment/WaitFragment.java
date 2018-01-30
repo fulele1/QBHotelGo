@@ -195,22 +195,17 @@ public class WaitFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 , new QBCallback() {
                     @Override
                     public void doWork(Map<?, ?> map) {
-//                        mLoadingDialog.dismiss();
+
                         try {
-//                            LogUtils.i(map.toString());
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                LogUtils.i("senddata", "" + map.toString());
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));
                                 if (data == null || data.size() == 0) {
                                     addItems(sendOrders);
                                     notifyDataSetChanged();
                                     ivNoData.setVisibility(View.VISIBLE);
                                     mSwipeRefreshLayout.setRefreshing(false);
-                                    LogUtils.i("暂无数据");
                                     return;
                                 }
-                                LogUtils.i("curr = ", map.get("curr").toString());
-                                LogUtils.i("data = ", data.toString());
                                 TOTAL_COUNTER = Integer.parseInt(map.get("page").toString());
                                 sendOrders = new ArrayList<>();
                                 SendOrder sendOrder;

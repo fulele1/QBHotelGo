@@ -83,11 +83,9 @@
             android:layout_weight="1"
             android:background="@drawable/bg_button_selector"
             android:gravity="center"
-            android:paddingLeft="4dp"
-            android:paddingRight="4dp"
             android:text="获取验证码"
             android:textColor="#ffffff"
-            android:textSize="@dimen/textview_small_size" />
+            android:textSize="@dimen/textview_smallx_size" />
     </LinearLayout>
 
     <LinearLayout style="@style/common_horizontal_division_line_style" />
@@ -160,24 +158,24 @@
 
     <LinearLayout style="@style/common_horizontal_division_line_style" />
 
-    <Button
-        android:id="@+id/bt_complete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
 
-        android:layout_marginLeft="@dimen/margin_edge"
-        android:layout_marginRight="@dimen/margin_edge"
-        android:layout_marginTop="30px"
-        android:layout_weight="0.5"
-        android:background="@drawable/bg_button_selector"
-        android:padding="5dp"
-        android:text="提交"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/button_normal_size" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="20" />
+
+    <Button
+        android:id="@+id/bt_complete"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_str_bt_selector"
+        android:padding="5dp"
+        android:text="提交"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/button_normal_size"
+        android:layout_marginBottom="@dimen/title_height"
+        />
+
 </LinearLayout>

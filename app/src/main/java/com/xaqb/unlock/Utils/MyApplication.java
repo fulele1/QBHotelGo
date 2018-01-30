@@ -40,7 +40,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initCloudChannel(this);
+//        initCloudChannel(this);
         //fl解决7.0以上版本我发安装本地安装包的问题
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -84,30 +84,30 @@ public class MyApplication extends Application {
         CloudPushService pushService = PushServiceFactory.getCloudPushService();
         deviceId = pushService.getDeviceId();
 //        LogUtils.i("deviceid------", deviceId);
-          pushService.bindTag(CloudPushService.DEVICE_TARGET, tags, "xaqb", new CommonCallback() {
-            @Override
-            public void onSuccess(String s) {
-//                LogUtils.i("onSuccess------", "onSuccess");
-            }
-
-            @Override
-            public void onFailed(String s, String s1) {
-//                LogUtils.i("onFailed------", "onFailed");
-            }
-        });
-
-
-        pushService.register(applicationContext, new CommonCallback() {
-            @Override
-            public void onSuccess(String response) {
-//                Log.d("阿里云", "init cloudchannel success");
-            }
-
-            @Override
-            public void onFailed(String errorCode, String errorMessage) {
-//                Log.d("阿里云", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
-            }
-        });
+//          pushService.bindTag(CloudPushService.DEVICE_TARGET, tags, "xaqb", new CommonCallback() {
+//            @Override
+//            public void onSuccess(String s) {
+////                LogUtils.i("onSuccess------", "onSuccess");
+//            }
+//
+//            @Override
+//            public void onFailed(String s, String s1) {
+////                LogUtils.i("onFailed------", "onFailed");
+//            }
+//        });
+//
+//
+//        pushService.register(applicationContext, new CommonCallback() {
+//            @Override
+//            public void onSuccess(String response) {
+////                Log.d("阿里云", "init cloudchannel success");
+//            }
+//
+//            @Override
+//            public void onFailed(String errorCode, String errorMessage) {
+////                Log.d("阿里云", "init cloudchannel failed -- errorcode:" + errorCode + " -- errorMessage:" + errorMessage);
+//            }
+//        });
     }
 
 }

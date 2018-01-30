@@ -43,7 +43,6 @@ import com.xaqb.unlock.Utils.CheckNetwork;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -124,7 +123,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     String[] aData = FsRet.split(",");
                     int newVersion = Integer.parseInt(au_version.replace(".", ""));
                     int nowVersion = Integer.parseInt(getVersionName().replace(".", ""));
-                    LogUtils.e(newVersion+nowVersion+"");
 
                     if (newVersion == nowVersion) {
                         late = "yes";
@@ -262,6 +260,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         startService(new Intent(instance, FileService.class));
     }
 
+
+
     private void checkPic() {
         //  请求连接网络 解析后 拿到版本号和版本名
         OkHttpUtils.get()
@@ -274,7 +274,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
                     @Override
                     public void onResponse(String s, int i) {
-                        LogUtils.e("轮播图" + s);
                         Map<String, Object> map = GsonUtil.GsonToMaps(s);
                         if (map.get("state").toString().equals("1.0")) {
                             return;
@@ -312,7 +311,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                             convenientBanner.setOnItemClickListener(new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(int position) {
-                                    LogUtils.e("轮播图"+url[convenientBanner.getCurrentItem()]+url.length);
                                     if (url.length>0){
                                         Uri uri = Uri.parse(url[convenientBanner.getCurrentItem()]);
                                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -368,7 +366,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
                     @Override
                     public void onResponse(String s, int i) {
-                        LogUtils.e("检查更新" + s);
                         Map<String, Object> map = GsonUtil.GsonToMaps(s);
                         if (map.get("state").toString().equals("1.0")) {
                             showMess(map.get("mess").toString(), true);
@@ -671,7 +668,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 && ApkTotalUtill.getUninatllApkInfo(instance,SPUtils.get(instance,"au_save_path","")+"")
                 ){
             //安装app
-//            PermisionUtil.verifyStoragePermissions(instance);
             Intent oInt1 = new Intent(Intent.ACTION_VIEW);
             oInt1.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
 

@@ -20,8 +20,6 @@ import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
-import com.xaqb.unlock.Utils.LogUtils;
-import com.xaqb.unlock.Utils.PaintView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -151,7 +149,6 @@ public class SignActivity extends BaseActivityNew {
             canvas.drawBitmap(cachebBitmap, 0, 0, null);
             canvas.drawPath(path, paint);
             into = into+1;
-            LogUtils.e(into+"打印");
             if (into>1){
                 btnOk.setEnabled(true);
             }

@@ -18,7 +18,6 @@ import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -66,7 +65,6 @@ public class TestActivity extends Activity{
 
                     @Override
                     public void onResponse(String s, int i) {
-                        LogUtils.e("轮播图" + s);
                         s = "{\"state\":0,\"mess\":\"success\",\"table\":\n" +
                                 " [{\"art_id\":1,\"art_img\":\"http:\\/\\/kaisuo.qbchoice.cn\\/\\/uploads\\/20171214\\/cbfdb45b59a8c3864e342251278dd6e8.gif\",\"url\":\"http:\\/\\/kaisuo.qbchoice.cn\\/home\\/index\\/news_detail\\/id\\/1\"},\n" +
                                 " {\"art_id\":1,\"art_img\":\"http:\\/\\/kaisuo.qbchoice.cn\\/\\/uploads\\/20171214\\/cbfdb45b59a8c3864e342251278dd6e8.gif\",\"url\":\"http:\\/\\/kaisuo.qbchoice.cn\\/home\\/index\\/news_detail\\/id\\/1\"}]}";
@@ -112,7 +110,6 @@ public class TestActivity extends Activity{
                             convenientBanner.setOnItemClickListener(new OnItemClickListener() {
                                 @Override
                                 public void onItemClick(int position) {
-                                    LogUtils.e("轮播图"+url[convenientBanner.getCurrentItem()]);
                                     Uri uri = Uri.parse(url[convenientBanner.getCurrentItem()]);
                                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                                     startActivity(intent);

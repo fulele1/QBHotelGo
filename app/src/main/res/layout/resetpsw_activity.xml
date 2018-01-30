@@ -109,6 +109,8 @@
         android:textColor="#ffffff"
         android:textSize="@dimen/button_normal_size"
         android:background="@drawable/bg_str_bt_selector"
+        android:layout_marginBottom="@dimen/title_height"
+
         />
 
 </LinearLayout>

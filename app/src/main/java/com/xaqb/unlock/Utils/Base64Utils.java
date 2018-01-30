@@ -6,7 +6,7 @@ import android.util.Base64;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Created by lenovo on 2017/3/15.
+ * Created by fl on 2017/3/15.
  */
 public class Base64Utils {
 

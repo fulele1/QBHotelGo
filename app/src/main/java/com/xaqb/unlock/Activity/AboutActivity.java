@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
-import com.xaqb.unlock.Utils.LogUtils;
 
 
 /**
@@ -36,7 +35,8 @@ public class AboutActivity extends BaseActivityNew {
     public void initData() {
         try {
             PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
-            tvVersion.setText("V"+info.versionName);
+
+                tvVersion.setText("V"+info.versionName);
         } catch (Exception e) {
             e.printStackTrace();
         }

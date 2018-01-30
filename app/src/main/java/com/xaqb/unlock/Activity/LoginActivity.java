@@ -5,30 +5,23 @@ import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
-import com.xaqb.unlock.Utils.MyApplication;
 import com.xaqb.unlock.Utils.PermissionUtils;
-import com.xaqb.unlock.Utils.PriceUtil;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.apache.commons.logging.Log;
 
-import java.text.DecimalFormat;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -170,7 +163,7 @@ public class LoginActivity extends BaseActivityNew {
                     .url(HttpUrlUtils.getHttpUrl().getLoginUrl())
                     .addParams("name", username)
                     .addParams("pwd", psw)
-                    .addParams("deviceid", MyApplication.deviceId)//阿里云设备标识
+                    .addParams("deviceid", "")
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -179,6 +172,16 @@ public class LoginActivity extends BaseActivityNew {
                             showToast("网络访问异常");
                         }
 
+
+
+
+//                        {"state":0,"mess":"","table":{"token":
+// {"access_token":"2f161a40b49938755060b7a50a51abd2",
+// "refresh_token":"ec9e68d5df2e2dd48f418ddb7827aeef",
+// "expire_in":7200},
+// "staff":{"staff_headpic":"https:\/\/kaisuo.qbchoice.com\/uploads\/20180122\/e660d6dc33613e39e2c012950a441cea.jpg",
+// "staff_nickname":"小安","staff_qq":"","staff_mp":"18702937072","staff_company":null,"staff_is_real":1,
+// "address":null,"id":46}}}
                         @Override
                         public void onResponse(String s, int i) {
                             try {

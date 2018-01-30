@@ -3,10 +3,12 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,18 +31,20 @@ import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.IDCardUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.File;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
 import okhttp3.Call;
+
+import static com.xaqb.unlock.Utils.IDCardUtils.IDCardValidate;
 
 
 /**
@@ -192,37 +196,43 @@ public class ApproveActivity extends BaseActivityNew {
                 } else if (realName == null || realName.equals("")) {
                     showToast("请输入真实姓名");
                 } else if (realName.length()>8 || realName.length()<2) {
-                    showToast("请有效的长度");
+                    showToast("请有效的姓名长度");
                 } else if (cardNum == null || cardNum.equals("")) {
                     showToast("请输入证件号码");
-                } else if (sexx == null || sexx.equals("")) {
-                    showToast("请输入性别");
-                } else if (cardNation == null || cardNation.equals("")) {
-                    showToast("请输入民族");
-                } else if (cardAge == null || cardAge.equals("")) {
-                    showToast("请输入年龄");}
-                else if (cardAge.length()>3) {
-                    showToast("请输入正确的年龄");
-                } else if (!textNotEmpty(certPicPath)) {
-                    showToast("请拍摄证件照片");
-                } else if (!textNotEmpty(facePicPath)) {
-                    showToast("请拍摄人脸照片");
-                } else if (mBmSign == null) {
-                    showToast("请添加电子签名");
-                } else {
-                    try {
-                        if (type.equals("身份证")) {
-                            if (!IDCardUtils.IDCardValidate(cardNum).equals("")) {
-                                showToast("请输入正确的证件号码");
+                }  else try {
+                    if (!IDCardValidate(cardNum).equals("")) {
+                    showToast("请输入正确身份证号码");
+                 } else if (sexx == null || sexx.equals("")) {
+                        showToast("请输入性别");
+                    } else if (cardNation == null || cardNation.equals("")) {
+                        showToast("请输入民族");
+                    } else if (cardAge == null || cardAge.equals("")) {
+                        showToast("请输入年龄");}
+                    else if (cardAge.length()>=3) {
+                        showToast("请输入正确的年龄");
+                    } else if (!textNotEmpty(certPicPath)) {
+                        showToast("请拍摄证件照片");
+                    } else if (!textNotEmpty(facePicPath)) {
+                        showToast("请拍摄人脸照片");
+                    } else if (!isSign) {
+                        showToast("请添加电子签名");
+                    } else {
+                        try {
+                            if (type.equals("身份证")) {
+                                if (!IDCardUtils.IDCardValidate(cardNum).equals("")) {
+                                    showToast("请输入正确的证件号码");
+                                } else {
+                                    submit();
+                                }
                             } else {
                                 submit();
                             }
-                        } else {
-                            submit();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
                 break;
         }
@@ -278,7 +288,8 @@ public class ApproveActivity extends BaseActivityNew {
                 .addParams("age", cardAge)
                 .addParams("certimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(certPicPath), 80))
                 .addParams("faceimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(facePicPath), 80))
-                .addParams("signimg", Base64Utils.photoToBase64(mBmSign,80))
+//                .addParams("signimg", Base64Utils.photoToBase64(mBmSign,80))
+                .addParams("signimg", Base64.encodeToString(picByte, Base64.DEFAULT))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -304,7 +315,6 @@ public class ApproveActivity extends BaseActivityNew {
                                         break;
                                     case "1":
                                         showToast("认证成功");
-                                        LogUtils.e("认证成功1");
                                         SPUtils.put(instance, "staff_is_real", "1");
                                         finish();
                                         break;
@@ -413,6 +423,7 @@ public class ApproveActivity extends BaseActivityNew {
     }
 
     private byte [] picByte;
+    private boolean isSign;
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 2:
@@ -432,7 +443,10 @@ public class ApproveActivity extends BaseActivityNew {
                     if (bundle != null) {
                         picByte = bundle.getByteArray("picByte");
                         mBmSign = BitmapFactory.decodeByteArray(picByte, 0, picByte.length);
+
                         ivSign.setImageBitmap(mBmSign);
+                        isSign = true;
+
                     }
                 }
                 break;

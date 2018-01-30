@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,7 +37,6 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PaintView;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.PhoneFormatCheckUtils;
@@ -222,9 +224,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
 
     //设置身份证照片并加水印
     public void onReadCert(String sNo, Bitmap oCert) {
-        userCertNum = sNo;
-        etUserCertNum.setText(sNo);
-//        etUserCertNum.setText(sNo.substring(0,3)+"********"+sNo.substring(11));
+        UserCertNumFinal = sNo;
+        etUserCertNum.setText(sNo.substring(0,3)+"***********"+sNo.substring(14));
         oCert = ToolsUtils.drawText(oCert, getString(R.string.logo), 50);
         bitmapCert = oCert;
         ivCertPic.setImageBitmap(bitmapCert);
@@ -339,6 +340,31 @@ public class CollectionInfoActivity extends BaseActivityNew {
                         }
                     }
                 });
+
+        etUserCertNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (start==17){
+                    UserCertNumFinal = s+"";
+                    etUserCertNum.setText(UserCertNumFinal.substring(0,3)+"***********"+UserCertNumFinal.substring(14));
+                    return;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -383,6 +409,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
         });
     }
 
+    private String UserCertNumFinal;
+
     @Override
     public void onClick(View v) {
         try {
@@ -420,7 +448,7 @@ public class CollectionInfoActivity extends BaseActivityNew {
                     otherPhone = etOtherPhone.getText().toString().trim();
                     otherRemark = etOtherRemark.getText().toString().trim();
                     unlockAddress = etUnlockAddress.getText().toString().trim();
-                    userCertNum = etUserCertNum.getText().toString().trim();//身份证号码
+                    userCertNum = UserCertNumFinal;//身份证号码
                     lockType = lockTypeSpinner.getSelectedItem().toString();
                     if (lockType != null && lockType.contains("-")) {
                         lockType = lockType.substring(0, lockType.indexOf("-"));
@@ -448,6 +476,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
                         showToast("请输入开锁费用");
                     } else if (!Pattern.compile("^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,2})?$").matcher(unlockPay).matches()) {
                         showToast("价格格式错误");
+                    } else if ( (Double.parseDouble(unlockPay) == 0)) {
+                        showToast("输入金额格式有误");
                     } else if (!textNotEmpty(imagePath1)) {
                         showToast("请拍摄人脸照片");
                     } else if (!textNotEmpty(imagePath2)) {
@@ -511,7 +541,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
                     .addParams("city", "")
                     .addParams("district", "")
                     .addParams("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()))//开锁时间
-                    .addParams("signimg", Base64Utils.photoToBase64(BitmapFactory.decodeByteArray(picByte, 0, picByte.length), 60))//手写签名照片
+
+                    .addParams("signimg", Base64.encodeToString(picByte, Base64.DEFAULT))//手写签名照片
                     .build()
                     .execute(new StringCallback() {
                         @Override
@@ -525,7 +556,6 @@ public class CollectionInfoActivity extends BaseActivityNew {
 
                         @Override
                         public void onResponse(String s, int i) {
-                            LogUtils.e("下单成功" + s);
                             try {
                                 loadingDialog.dismiss();
                                 btComplete.setEnabled(true);
@@ -582,7 +612,7 @@ public class CollectionInfoActivity extends BaseActivityNew {
         datas.put("tpimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath3), 60));
         datas.put("lockimg", Base64Utils.photoToBase64(BitmapFactory.decodeFile(imagePath2), 60));
         datas.put("unlocktime", SDCardUtils.data(etUnlcokTime.getText().toString()));
-        datas.put("signing", Base64Utils.photoToBase64(BitmapFactory.decodeByteArray(picByte, 0, picByte.length), 60));
+        datas.put("signimg", Base64.encodeToString(picByte, Base64.DEFAULT));
         datas.put("province", "");
         datas.put("city", "");
         datas.put("district", "");

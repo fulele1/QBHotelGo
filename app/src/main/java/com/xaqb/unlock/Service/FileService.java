@@ -6,12 +6,9 @@ import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.xaqb.unlock.Utils.Base64Utils;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
-import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -121,10 +118,6 @@ public class FileService extends Service {
             InputStream inputStream = new FileInputStream(file);
             String address = GsonUtil.getString(inputStream);
             Map<String, Object> maps = GsonUtil.JsonToMap(address);
-            LogUtils.i("上传的文件file参数==", maps.toString());
-//            LogUtils.i(maps.get("usersex").toString());
-//            LogUtils.i(maps.get("idaddress").toString());
-//            LogUtils.i(maps.get("usernation").toString());
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getOrderUrl() + "?access_token=" + SPUtils.get(FileService.this, "access_token", ""))

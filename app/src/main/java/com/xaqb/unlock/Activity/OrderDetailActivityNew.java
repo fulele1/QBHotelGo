@@ -19,7 +19,6 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
-import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -138,6 +137,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
     }
 
 
+
     private void getOrderDetail(String orderId) {
         if (!checkNetwork()) {
             showToast(getResources().getString(R.string.network_not_alive));
@@ -151,7 +151,6 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                     @Override
                     public void doWork(Map<?, ?> map) {
                         try {
-                            LogUtils.e("详情"+map.toString());
                             loadingDialog.dismiss();
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 List<Map<String, Object>> paydetail = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("paydetail")));
@@ -198,7 +197,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                                     btPayStatus.setText("未付清");
                                 }
 
-                                String imageUrl = map.get("or_lockimg").toString();
+                                    String imageUrl = map.get("or_lockimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivLock, imageUrl);
                                 }
@@ -326,19 +325,18 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                 new QBCallback() {
                     @Override
                     public void doWork(Map<?, ?> map) {
+                        progressDialog.dismiss();
                         try {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 isFirstGetPayStatus = true;
                                 isQuery = false;
                                 getPayResult();
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
-                                progressDialog.dismiss();
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
                                 showToast(map.get("mess").toString());
-                                progressDialog.dismiss();
                                 dialogType = 1;
                                 showDialog("提示", "支付失败，请稍后再试", "确定", "", 0);
                                 return;
@@ -471,5 +469,11 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getOrderDetail(orderId);
     }
 }

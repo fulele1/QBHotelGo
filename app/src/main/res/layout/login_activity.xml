@@ -51,7 +51,9 @@
                 android:hint="@string/input_account"
                 android:maxLength="20"
                 android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:inputType="phone"
+                />
 
             <ImageView
                 android:id="@+id/img_delete_user_login"

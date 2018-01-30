@@ -186,6 +186,7 @@ public class GotFragment extends BaseFragment implements SwipeRefreshLayout.OnRe
                 , new QBCallback() {
                     @Override
                     public void doWork(Map<?, ?> map) {
+                        LogUtils.e("01"+map);
 //                        mLoadingDialog.dismiss();
                         try {
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
