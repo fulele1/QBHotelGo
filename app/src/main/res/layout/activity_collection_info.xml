@@ -17,6 +17,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/lay_status_coll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -634,7 +635,6 @@
                 android:text="提交"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/button_normal_size"
-                android:layout_marginBottom="@dimen/slidingmenu_offset"
                 />
         </LinearLayout>
 

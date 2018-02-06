@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +33,14 @@ public class ResetPswActivity extends BaseActivityNew {
     private Button btComplete;
     private TextView tvTilte;
     private ResetPswActivity instance;
+    private LinearLayout mLayStatus;
     private EditText etOldPsw, etNewPsw, etConfirmPsw;
     private int requestCode = 0;
     private String oldPsw, newPsw, confirmPsw;
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
+//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.resetpsw_activity);
         instance = this;
         assignViews();
@@ -51,6 +53,8 @@ public class ResetPswActivity extends BaseActivityNew {
         etConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
         btComplete = (Button) findViewById(R.id.bt_complete);
         tvTilte = (TextView) findViewById(R.id.tv_title);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_reset);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override

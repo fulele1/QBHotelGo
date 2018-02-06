@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -80,11 +81,12 @@ public class ApproveActivity extends BaseActivityNew {
     private ArrayAdapter spinnerAdapter, spinnerSexAdapter, spinnerNationAdapter;
     private int requestCoede = 0;
     private File temp;
+    private LinearLayout mLayStatus;
 
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this, 0);
+//        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.approve_real_name_activity);
         instance = this;
         assignViews();
@@ -109,6 +111,8 @@ public class ApproveActivity extends BaseActivityNew {
         spNation = (Spinner) findViewById(R.id.sp_nation);//选择民族
         ivSign = (ImageView) findViewById(R.id.iv_sign_approve);//电子签名
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_approve);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override

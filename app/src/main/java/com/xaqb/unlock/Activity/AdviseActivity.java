@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -32,11 +33,12 @@ public class AdviseActivity extends BaseActivityNew {
     private String title, advise, type;
     private Spinner spType;
     private TextView tvTitle;
+    private LinearLayout mLayStatus;
 
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
+//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.advise_activity);
         instance = this;
         assignViews();
@@ -49,6 +51,8 @@ public class AdviseActivity extends BaseActivityNew {
         btComplete = (Button) findViewById(R.id.bt_complete);
         spType = (Spinner) findViewById(R.id.sp_advise_type);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_Advice);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override

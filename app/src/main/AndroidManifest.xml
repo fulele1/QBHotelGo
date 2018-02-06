@@ -161,7 +161,9 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activity.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
         <activity
             android:name=".Activity.OrderListActivity"
             android:screenOrientation="portrait" />

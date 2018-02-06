@@ -4,6 +4,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
@@ -25,6 +26,7 @@ public class BackPswActivity extends BaseActivityNew {
 
     private TextView tvGetVCode,tvTitle;
     private Button btComplete;
+    private LinearLayout mLayStatus;
     private BackPswActivity instance;
     private EditText etPhone, etVCode, etPsw, etConfirmPsw;
     private int requestCode = 0;
@@ -34,7 +36,7 @@ public class BackPswActivity extends BaseActivityNew {
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
+//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.backpsw_activity);
         instance = this;
         assignViews();
@@ -50,6 +52,8 @@ public class BackPswActivity extends BaseActivityNew {
         etConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
         time = new TimeCount(60000, 1000);//构造CountDownTimer对象
         btComplete = (Button) findViewById(R.id.bt_complete);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_back);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override

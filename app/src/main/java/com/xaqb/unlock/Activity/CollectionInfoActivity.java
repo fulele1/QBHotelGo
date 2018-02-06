@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,6 +89,7 @@ public class CollectionInfoActivity extends BaseActivityNew {
     private List<String> images = new ArrayList<>();
     private Spinner lockTypeSpinner;
     private String goodsType;
+    private LinearLayout mLayStatus;
     private boolean isReadCard, isConfigFace;
     private int permissionCode = 0;
     private AMapLocationClient mlocationClient;
@@ -135,7 +137,7 @@ public class CollectionInfoActivity extends BaseActivityNew {
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this, 0);
+//        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.activity_collection_info);
         instance = this;
         assignViews();
@@ -162,6 +164,8 @@ public class CollectionInfoActivity extends BaseActivityNew {
         lockTypeSpinner = (Spinner) findViewById(R.id.sp_lock_type);
         ivSign = (ImageView) findViewById(R.id.iv_sign_collection);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_coll);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
         /**
          * 初始化高德地图控件
          */

@@ -9,18 +9,23 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
+import com.xaqb.unlock.Utils.NullUtil;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+
+import org.litepal.util.LogUtil;
 
 import java.util.Map;
 
@@ -38,11 +43,13 @@ public class LoginActivity extends BaseActivityNew {
     private String username, psw;
     private EditText etUsername, etPsw;
     private CheckBox cbRememberPsw;
+    private LinearLayout mLayStatus;
     private ImageView ivDeUser,ivDePsw;
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this, 0);
+//        StatusBarUtil.setTranslucent(this, 0);
+
         setContentView(R.layout.login_activity);
         instance = this;
         assignViews();
@@ -76,7 +83,6 @@ public class LoginActivity extends BaseActivityNew {
 
             }
         });
-
     }
 
     /**
@@ -91,6 +97,8 @@ public class LoginActivity extends BaseActivityNew {
         cbRememberPsw = (CheckBox) findViewById(R.id.cb_remember_psw);
         ivDeUser = (ImageView) findViewById(R.id.img_delete_user_login);
         ivDePsw = (ImageView) findViewById(R.id.img_delete_psw_login);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
 
@@ -173,34 +181,26 @@ public class LoginActivity extends BaseActivityNew {
                         }
 
 
-
-
-//                        {"state":0,"mess":"","table":{"token":
-// {"access_token":"2f161a40b49938755060b7a50a51abd2",
-// "refresh_token":"ec9e68d5df2e2dd48f418ddb7827aeef",
-// "expire_in":7200},
-// "staff":{"staff_headpic":"https:\/\/kaisuo.qbchoice.com\/uploads\/20180122\/e660d6dc33613e39e2c012950a441cea.jpg",
-// "staff_nickname":"小安","staff_qq":"","staff_mp":"18702937072","staff_company":null,"staff_is_real":1,
-// "address":null,"id":46}}}
                         @Override
                         public void onResponse(String s, int i) {
+                            LogUtils.e(s);
                             try {
                                 loadingDialog.dismiss();
                                 Map<?, ?> map = GsonUtil.JsonToMap(s);
                                 if (map.get("state").toString().equals("0")) {
                                     SPUtils.put(instance, "userAccount", username);
-                                    SPUtils.put(instance, "userid", map.get("id").toString());
-                                    SPUtils.put(instance, "access_token", map.get("access_token"));
+                                    SPUtils.put(instance, "userid", NullUtil.getString(map.get("id")));
+                                    SPUtils.put(instance, "access_token", NullUtil.getString(map.get("access_token")));
                                     SPUtils.put(instance, "tokenTime", System.currentTimeMillis());
                                     SPUtils.put(instance, "refreshTokenTime", System.currentTimeMillis());
-                                    SPUtils.put(instance, "refresh_token", map.get("refresh_token"));
-                                    SPUtils.put(instance, "staff_headpic", map.get("staff_headpic"));
-                                    SPUtils.put(instance, "staff_nickname", map.get("staff_nickname"));
-                                    SPUtils.put(instance, "staff_mp", map.get("staff_mp"));
-                                    SPUtils.put(instance, "staff_is_real", map.get("staff_is_real"));//认证状态
-                                    SPUtils.put(instance, "staff_address", map.get("address"));
-                                    SPUtils.put(instance, "staff_qq", map.get("staff_qq"));
-                                    SPUtils.put(instance, "staff_company", map.get("staff_company"));
+                                    SPUtils.put(instance, "refresh_token", NullUtil.getString(map.get("refresh_token")));
+                                    SPUtils.put(instance, "staff_headpic", NullUtil.getString(map.get("staff_headpic")));
+                                    SPUtils.put(instance, "staff_nickname", NullUtil.getString(map.get("staff_nickname")));
+                                    SPUtils.put(instance, "staff_mp", NullUtil.getString(map.get("staff_mp")));
+                                    SPUtils.put(instance, "staff_is_real", NullUtil.getString(map.get("staff_is_real")));//认证状态
+                                    SPUtils.put(instance, "staff_address", NullUtil.getString(map.get("address")));
+                                    SPUtils.put(instance, "staff_qq", NullUtil.getString(map.get("staff_qq")));
+                                    SPUtils.put(instance, "staff_company", NullUtil.getString(map.get("staff_company")));
                                     SPUtils.put(instance, "userName", username);
                                     SPUtils.put(instance, "userPsw", psw);
                                     if (cbRememberPsw.isChecked()) {
@@ -211,7 +211,7 @@ public class LoginActivity extends BaseActivityNew {
                                     finish();
                                     startActivity(new Intent(instance, MainActivity.class));
                                 } else {
-                                    showToast(map.get("mess").toString());
+                                    showToast(NullUtil.getString(map.get("mess")));
                                     return;
                                 }
                             } catch (Exception e) {

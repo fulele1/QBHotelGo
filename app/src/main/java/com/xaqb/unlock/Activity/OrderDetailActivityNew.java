@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jaeger.library.StatusBarUtil;
@@ -19,6 +20,7 @@ import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.NullUtil;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
@@ -41,6 +43,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
             tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark,tvTitle;
     private ImageView ivLock;
     private Button btPayStatus;
+    private LinearLayout mLayStatus;
     private String payStatus, orderId, scanResult, price, payPrice;
     private int dialogType;
     private ProgressDialog progressDialog;
@@ -75,7 +78,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
 
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
+//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.order_detail_activity_new);
         instance = this;
         assignViews();
@@ -101,6 +104,8 @@ public class OrderDetailActivityNew extends BaseActivityNew {
         tvOrtherPhone = (TextView) findViewById(R.id.tv_other_phone_od);
         tvOrtherRemark = (TextView) findViewById(R.id.tv_other_remark_od);
         tvTitle = (TextView) findViewById(R.id.tv_title);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_orderDetail);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
 
         /**
          * 5秒后自动查询下一次，查询30秒后，仍然失败的话，显示支付失败，等待用户手动刷新订单查看支付结果
@@ -154,19 +159,19 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                             loadingDialog.dismiss();
                             if (map.get("state").toString().equals(Globals.httpSuccessState)) {
                                 List<Map<String, Object>> paydetail = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("paydetail")));
-                                tvOrderId.setText(map.get("or_orderno").toString());
-                                tvOrderName.setText(map.get("or_username").toString());
-                                tvOrderPhone.setText(map.get("or_usertel").toString());
-                                tvOrderAddress.setText(map.get("or_useraddress").toString());
-                                tvOrtherName.setText(map.get("or_tpname").toString());//第三方姓名
-                                tvOrtherPhone.setText(map.get("or_tptel").toString());//第三方电话
-                                tvOrtherRemark.setText(map.get("or_remark").toString());//第三方备注
+                                tvOrderId.setText(NullUtil.getString(map.get("or_orderno")));
+                                tvOrderName.setText(NullUtil.getString(map.get("or_username")));
+                                tvOrderPhone.setText(NullUtil.getString(map.get("or_usertel")));
+                                tvOrderAddress.setText(NullUtil.getString(map.get("or_useraddress")));
+                                tvOrtherName.setText(NullUtil.getString(map.get("or_tpname")));//第三方姓名
+                                tvOrtherPhone.setText(NullUtil.getString(map.get("or_tptel")));//第三方电话
+                                tvOrtherRemark.setText(NullUtil.getString(map.get("or_remark")));//第三方备注
                                 price = map.get("or_price").toString();
                                 payPrice = map.get("or_cash").toString();
                                 tvOrderPay.setText(price);
-                                tvOrderLockType.setText(ToolsUtils.getLockType(map.get("or_locktype").toString()));
-                                tvOrderTime.setText(ToolsUtils.getStrTime(map.get("or_createtime").toString()));
-                                payStatus = map.get("or_paystatus").toString();
+                                tvOrderLockType.setText(ToolsUtils.getLockType(NullUtil.getString(map.get("or_locktype"))));
+                                tvOrderTime.setText(ToolsUtils.getStrTime(NullUtil.getString(map.get("or_createtime"))));
+                                payStatus = NullUtil.getString(map.get("or_paystatus"));
                                 //支付记录listview
                                 incomeInfos = new ArrayList<>();
                                 IncomeInfo info;

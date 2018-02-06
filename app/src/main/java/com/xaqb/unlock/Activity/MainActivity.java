@@ -30,6 +30,7 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.jaeger.library.StatusBarUtil;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.squareup.picasso.Picasso;
@@ -43,11 +44,15 @@ import com.xaqb.unlock.Utils.CheckNetwork;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.MyApplication;
+import com.xaqb.unlock.Utils.NullUtil;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.litepal.util.LogUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,6 +90,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private LinearLayout llMainMenu, llQuery, llPickUp, llTransport, llSign, llCustomer, llFriends;
 //        private Button btOrder;
     private Fragment mContent;
+    private LinearLayout mLayStatus;
     private SlidingMenu sm;
     private Handler mHandler = new Handler() {
 
@@ -121,6 +127,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 case 0: //获取版本号
                     String sVersion = getVersionName();
                     String[] aData = FsRet.split(",");
+                    LogUtils.e(au_version+"-----------"+getVersionName());
                     int newVersion = Integer.parseInt(au_version.replace(".", ""));
                     int nowVersion = Integer.parseInt(getVersionName().replace(".", ""));
 
@@ -284,8 +291,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                             url = new String [data.size()] ;
 
                             for (int j = 0; j < data.size(); j++) {
-                                images[j] = data.get(j).get("art_img").toString();
-                                url[j] = data.get(j).get("url").toString();
+                                images[j] = NullUtil.getString(data.get(j).get("art_img"));
+                                url[j] = NullUtil.getString(data.get(j).get("url"));
                             }
 
                             convenientBanner = (ConvenientBanner) findViewById(R.id.cb_main);
@@ -316,7 +323,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                                         startActivity(intent);
                                     }
-
                                 }
                             });
 
@@ -366,21 +372,22 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
                     @Override
                     public void onResponse(String s, int i) {
+                        LogUtils.e(s);
                         Map<String, Object> map = GsonUtil.GsonToMaps(s);
                         if (map.get("state").toString().equals("1.0")) {
-                            showMess(map.get("mess").toString(), true);
+                            showMess(NullUtil.getString(map.get("mess")), true);
                             return;
                         } else if (map.get("state").toString().equals("0.0")) {
                             Map<String, Object> data = GsonUtil.JsonToMap(GsonUtil.GsonString(map.get("table")));
-                            au_version = data.get("au_version").toString();
-                            au_last_version = data.get("au_last_version").toString();
-                            au_filePath = data.get("au_file_path").toString();//下载链接
+                            au_version = NullUtil.getString(data.get("au_version"));
+                            au_last_version = NullUtil.getString(data.get("au_last_version"));
+                            au_filePath = NullUtil.getString(data.get("au_file_path"));//下载链接
 
                             SPUtils.put(instance, "au_file_path", HttpUrlUtils.getHttpUrl().getBaseUrl()+"/"+au_filePath);//下载地址
                             SPUtils.put(instance, "au_save_path", Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+au_version+".apk");//保存地址
-                            au_info = data.get("au_info").toString();
+                            au_info = NullUtil.getString(data.get("au_info"));
                             SPUtils.put(instance, "au_info", au_info);
-                            au_id = data.get("au_id").toString();
+                            au_id = NullUtil.getString(data.get("au_id"));
                             FsUrl = readConfig("url");
                             if (FsUrl.length() == 0) {
                                 FsUrl = HttpUrlUtils.getHttpUrl().get_updata() + "?access_token=" +
@@ -491,6 +498,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         ivRealName = (ImageView) findViewById(R.id.iv_real_name);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         mCb = (ConvenientBanner) findViewById(R.id.cb_main);
+        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_main);
+        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
 //    public void initData() {

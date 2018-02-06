@@ -9,6 +9,7 @@
     <include layout="@layout/pub_titlebar" />
 
     <LinearLayout
+        android:id="@+id/lay_status_back"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30px"
@@ -175,7 +176,6 @@
         android:text="提交"
         android:textColor="#ffffff"
         android:textSize="@dimen/button_normal_size"
-        android:layout_marginBottom="@dimen/title_height"
         />
 
 </LinearLayout>
