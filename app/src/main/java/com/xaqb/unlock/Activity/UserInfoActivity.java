@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
@@ -34,6 +35,7 @@ import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 import java.io.File;
 import java.util.HashMap;
@@ -104,11 +106,13 @@ public class UserInfoActivity extends BaseActivityNew {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.userinfo_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+
         assignViews();
         tvTitle.setText("个人信息");
     }

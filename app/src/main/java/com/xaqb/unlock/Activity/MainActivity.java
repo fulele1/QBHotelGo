@@ -7,30 +7,34 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.jaeger.library.StatusBarUtil;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.squareup.picasso.Picasso;
@@ -49,12 +53,15 @@ import com.xaqb.unlock.Utils.MyApplication;
 import com.xaqb.unlock.Utils.NullUtil;
 import com.xaqb.unlock.Utils.ProcUnit;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.litepal.util.LogUtil;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -84,6 +91,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private MainActivity instance;
     private ConvenientBanner mCb;
     private String au_version;
+    private TextView mTxtKeyboard;
     private String status;
     private boolean isQuit = false;
     private ImageView ivUser, ivSend, ivWillSend, ivNearby, ivUserInfo, ivSetting, ivRealName, ivMessage;
@@ -252,11 +260,13 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         startActivity(oInt);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         instance = this;
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         ActivityController.addActivity(instance);
         assignViews();
 //        initData();
@@ -266,8 +276,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         checkVerdion();//检查更新
         startService(new Intent(instance, FileService.class));
     }
-
-
 
     private void checkPic() {
         //  请求连接网络 解析后 拿到版本号和版本名
@@ -498,31 +506,12 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         ivRealName = (ImageView) findViewById(R.id.iv_real_name);
         llMainMenu = (LinearLayout) findViewById(R.id.ll_main_menu);
         mCb = (ConvenientBanner) findViewById(R.id.cb_main);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_main);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
+        mTxtKeyboard = (TextView) findViewById(R.id.txt_keyboard);
+        if (StatuBarUtil.checkDeviceHasNavigationBar(instance)){
+            mTxtKeyboard.setVisibility(View.VISIBLE);
+        }
     }
 
-//    public void initData() {
-//        mImageList = new ArrayList();
-//        mImageList.add(R.mipmap.main_pic1);
-//        mImageList.add(R.mipmap.main_pic2);
-//        mImageList.add(R.mipmap.main_pic3);
-////        cbSetPage();
-//        mCb.startTurning(2000);
-//    }
-
-//    /**
-//     * 轮播图设置图片
-//     */
-//    public void cbSetPage() {
-//        mCb.setPages(new CBViewHolderCreator<CbHolder>() {
-//            @Override
-//            public CbHolder createHolder() {
-//                return new CbHolder();
-//            }
-//        }, mImageList)
-//                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_LEFT);
-//    }
 
     public void addListener() {
         ivUser.setOnClickListener(instance);

@@ -1,11 +1,12 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
@@ -13,6 +14,7 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -31,11 +33,13 @@ public class RealNameInfoActivity extends BaseActivityNew {
     private ImageView ivCert, ivFace,ivSign;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.real_name_info_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+
         assignViews();
     }
 
@@ -95,6 +99,7 @@ public class RealNameInfoActivity extends BaseActivityNew {
                             } else if (map.get("state").toString().equals(Globals.httpTokenFailure)) {
                                 ActivityController.finishAll();
                                 showToast("登录失效，请重新登录");
+
                                 startActivity(new Intent(instance, LoginActivity.class));
                             } else {
                                 showToast(map.get("mess").toString());

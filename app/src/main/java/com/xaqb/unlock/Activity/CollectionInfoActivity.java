@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -30,7 +32,6 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.CameraTool.CertCaptureActivity;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -38,12 +39,14 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PaintView;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.PhoneFormatCheckUtils;
 import com.xaqb.unlock.Utils.PriceUtil;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -135,11 +138,12 @@ public class CollectionInfoActivity extends BaseActivityNew {
     private ImageView ivSign;
     private byte[] picByte;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.activity_collection_info);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         assignViews();
         tvTitle.setText("信息采集");
     }
@@ -165,7 +169,6 @@ public class CollectionInfoActivity extends BaseActivityNew {
         ivSign = (ImageView) findViewById(R.id.iv_sign_collection);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         mLayStatus = (LinearLayout) findViewById(R.id.lay_status_coll);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
         /**
          * 初始化高德地图控件
          */
@@ -459,6 +462,10 @@ public class CollectionInfoActivity extends BaseActivityNew {
                     }
                     unlockPay = etUnlockPay.getText().toString().trim();
                     unlockTime = etUnlcokTime.getText().toString().trim();
+                    LogUtils.e("信息采集"+userName);
+                    LogUtils.e("信息采集"+userPhone);
+                    LogUtils.e("信息采集"+unlockAddress);
+                    LogUtils.e("信息采集"+lockType);
 
                     if (!textNotEmpty(userName)) {
                         showToast("请输入客户姓名");

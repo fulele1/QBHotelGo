@@ -1,17 +1,19 @@
 package com.xaqb.unlock.Activity;
 
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -34,11 +36,13 @@ public class BackPswActivity extends BaseActivityNew {
     private TimeCount time;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.backpsw_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+
         assignViews();
         tvTitle.setText("找回密码");
     }
@@ -52,8 +56,6 @@ public class BackPswActivity extends BaseActivityNew {
         etConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
         time = new TimeCount(60000, 1000);//构造CountDownTimer对象
         btComplete = (Button) findViewById(R.id.bt_complete);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_back);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override

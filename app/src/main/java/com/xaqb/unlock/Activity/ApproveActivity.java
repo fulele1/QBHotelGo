@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Base64Utils;
@@ -34,6 +39,7 @@ import com.xaqb.unlock.Utils.IDCardUtils;
 import com.xaqb.unlock.Utils.ImageDispose;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -57,17 +63,17 @@ public class ApproveActivity extends BaseActivityNew {
     String[] types = {"身份证", "驾照", "户口本", "军官证", "士兵证", "警官证", "国内护照", "港澳通行证", "其他"};
     String[] sex = {"男", "女"};
 
-    String[] nations = {"汉族","蒙古族","回族","藏族","维吾尔族","苗族","彝族","壮族","布依族","朝鲜族"
-            ,"满族","侗族","瑶族","白族","土家族","哈尼族","哈萨克族","傣族","黎族","僳僳族"
-            ,"佤族","畲族","高山族","拉祜族","水族","东乡族","纳西族","景颇族","柯尔克孜族","土族"
-            ,"达斡尔族","仫佬族","羌族","布朗族","撒拉族","毛南族","仡佬族","锡伯族","阿昌族","普米族"
-            ,"塔吉克族","怒族","乌孜别克族","俄罗斯族","鄂温克族","德昂族","保安族","裕固族","京族","塔塔尔族"
-            ,"独龙族","鄂伦春族","赫哲族","门巴族","珞巴族","基诺族"};
+    String[] nations = {"汉族", "蒙古族", "回族", "藏族", "维吾尔族", "苗族", "彝族", "壮族", "布依族", "朝鲜族"
+            , "满族", "侗族", "瑶族", "白族", "土家族", "哈尼族", "哈萨克族", "傣族", "黎族", "僳僳族"
+            , "佤族", "畲族", "高山族", "拉祜族", "水族", "东乡族", "纳西族", "景颇族", "柯尔克孜族", "土族"
+            , "达斡尔族", "仫佬族", "羌族", "布朗族", "撒拉族", "毛南族", "仡佬族", "锡伯族", "阿昌族", "普米族"
+            , "塔吉克族", "怒族", "乌孜别克族", "俄罗斯族", "鄂温克族", "德昂族", "保安族", "裕固族", "京族", "塔塔尔族"
+            , "独龙族", "鄂伦春族", "赫哲族", "门巴族", "珞巴族", "基诺族"};
     private boolean isInde;
 
     private ApproveActivity instance;
     private EditText etRealName, etCardNum, etAge;
-    private ImageView ivCertPic, ivFacePic,ivSign;
+    private ImageView ivCertPic, ivFacePic, ivSign;
     private Button btSubmit;
     private TextView tvTitle;
     private WindowManager.LayoutParams params;
@@ -82,13 +88,21 @@ public class ApproveActivity extends BaseActivityNew {
     private int requestCoede = 0;
     private File temp;
     private LinearLayout mLayStatus;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
 //        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.approve_real_name_activity);
         instance = this;
+//        StatuBarUtil.translucentStatusBar(this);
+        StatuBarUtil.translucentStatusBar(this, true);
         assignViews();
         tvTitle.setText("实名认证");
     }
@@ -112,7 +126,7 @@ public class ApproveActivity extends BaseActivityNew {
         ivSign = (ImageView) findViewById(R.id.iv_sign_approve);//电子签名
         tvTitle = (TextView) findViewById(R.id.tv_title);
         mLayStatus = (LinearLayout) findViewById(R.id.lay_status_approve);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
+//        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override
@@ -154,8 +168,173 @@ public class ApproveActivity extends BaseActivityNew {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 ArrayAdapter<String> adapter = (ArrayAdapter<String>) adapterView.getAdapter();
-//                cardNation = adapter.getItem(i);
-                cardNation = "01";
+                cardNation = adapter.getItem(i);
+
+                if (cardNation.equals("汉族")) {
+                    cardNation = "01";
+                }
+                if (cardNation.equals("蒙古族")) {
+                    cardNation = "02";
+                }
+                if (cardNation.equals("回族")) {
+                    cardNation = "03";
+                }
+                if (cardNation.equals("藏族")) {
+                    cardNation = "04";
+                }
+                if (cardNation.equals("维吾尔族")) {
+                    cardNation = "05";
+                }
+                if (cardNation.equals("苗族")) {
+                    cardNation = "06";
+                }
+                if (cardNation.equals("彝族")) {
+                    cardNation = "07";
+                }
+                if (cardNation.equals("布依族")) {
+                    cardNation = "08";
+                }
+                if (cardNation.equals("朝鲜族")) {
+                    cardNation = "09";
+                }
+                if (cardNation.equals("满族")) {
+                    cardNation = "10";
+                }
+                if (cardNation.equals("侗族")) {
+                    cardNation = "12";
+                }
+                if (cardNation.equals("瑶族")) {
+                    cardNation = "13";
+                }
+                if (cardNation.equals("白族")) {
+                    cardNation = "14";
+                }
+                if (cardNation.equals("土家族")) {
+                    cardNation = "15";
+                }
+                if (cardNation.equals("哈尼族")) {
+                    cardNation = "16";
+                }
+                if (cardNation.equals("哈萨克族")) {
+                    cardNation = "17";
+                }
+                if (cardNation.equals("傣族")) {
+                    cardNation = "18";
+                }
+                if (cardNation.equals("黎族")) {
+                    cardNation = "19";
+                }
+                if (cardNation.equals("僳僳族")) {
+                    cardNation = "20";
+                }
+                if (cardNation.equals("佤族")) {
+                    cardNation = "21";
+                }
+                if (cardNation.equals("畲族")) {
+                    cardNation = "22";
+                }
+                if (cardNation.equals("高山族")) {
+                    cardNation = "23";
+                }
+                if (cardNation.equals("拉祜族")) {
+                    cardNation = "24";
+                }
+                if (cardNation.equals("水族")) {
+                    cardNation = "25";
+                }
+                if (cardNation.equals("东乡族")) {
+                    cardNation = "26";
+                }
+                if (cardNation.equals("纳西族")) {
+                    cardNation = "27";
+                }
+                if (cardNation.equals("景颇族")) {
+                    cardNation = "28";
+                }
+                if (cardNation.equals("柯尔克孜族")) {
+                    cardNation = "29";
+                }
+                if (cardNation.equals("土族")) {
+                    cardNation = "30";
+                }
+                if (cardNation.equals("达斡尔族")) {
+                    cardNation = "31";
+                }
+                if (cardNation.equals("仫佬族")) {
+                    cardNation = "32";
+                }
+                if (cardNation.equals("羌族")) {
+                    cardNation = "33";
+                }
+                if (cardNation.equals("布朗族")) {
+                    cardNation = "34";
+                }
+                if (cardNation.equals("撒拉族")) {
+                    cardNation = "35";
+                }
+                if (cardNation.equals("毛南族")) {
+                    cardNation = "36";
+                }
+                if (cardNation.equals("仡佬族")) {
+                    cardNation = "37";
+                }
+                if (cardNation.equals("锡伯族")) {
+                    cardNation = "38";
+                }
+                if (cardNation.equals("阿昌族")) {
+                    cardNation = "39";
+                }
+                if (cardNation.equals("普米族")) {
+                    cardNation = "40";
+                }
+                if (cardNation.equals("塔吉克族")) {
+                    cardNation = "41";
+                }
+                if (cardNation.equals("怒族")) {
+                    cardNation = "42";
+                }
+                if (cardNation.equals("乌孜别克族")) {
+                    cardNation = "43";
+                }
+                if (cardNation.equals("俄罗斯族")) {
+                    cardNation = "44";
+                }
+                if (cardNation.equals("鄂温克族")) {
+                    cardNation = "45";
+                }
+                if (cardNation.equals("德昂族")) {
+                    cardNation = "46";
+                }
+                if (cardNation.equals("保安族")) {
+                    cardNation = "47";
+                }
+                if (cardNation.equals("裕固族")) {
+                    cardNation = "48";
+                }
+                if (cardNation.equals("京族")) {
+                    cardNation = "49";
+                }
+                if (cardNation.equals("塔塔尔族")) {
+                    cardNation = "50";
+                }
+                if (cardNation.equals("独龙族")) {
+                    cardNation = "51";
+                }
+                if (cardNation.equals("鄂伦春族")) {
+                    cardNation = "52";
+                }
+                if (cardNation.equals("赫哲族")) {
+                    cardNation = "53";
+                }
+                if (cardNation.equals("门巴族")) {
+                    cardNation = "54";
+                }
+                if (cardNation.equals("珞巴族")) {
+                    cardNation = "55";
+                }
+                if (cardNation.equals("基诺族")) {
+                    cardNation = "56";
+                }
             }
 
             @Override
@@ -199,20 +378,20 @@ public class ApproveActivity extends BaseActivityNew {
                     showToast("请选择证件类型");
                 } else if (realName == null || realName.equals("")) {
                     showToast("请输入真实姓名");
-                } else if (realName.length()>8 || realName.length()<2) {
+                } else if (realName.length() > 8 || realName.length() < 2) {
                     showToast("请有效的姓名长度");
                 } else if (cardNum == null || cardNum.equals("")) {
                     showToast("请输入证件号码");
-                }  else try {
+                } else try {
                     if (!IDCardValidate(cardNum).equals("")) {
-                    showToast("请输入正确身份证号码");
-                 } else if (sexx == null || sexx.equals("")) {
+                        showToast("请输入正确身份证号码");
+                    } else if (sexx == null || sexx.equals("")) {
                         showToast("请输入性别");
                     } else if (cardNation == null || cardNation.equals("")) {
                         showToast("请输入民族");
                     } else if (cardAge == null || cardAge.equals("")) {
-                        showToast("请输入年龄");}
-                    else if (cardAge.length()>=3) {
+                        showToast("请输入年龄");
+                    } else if (cardAge.length() >= 3) {
                         showToast("请输入正确的年龄");
                     } else if (!textNotEmpty(certPicPath)) {
                         showToast("请拍摄证件照片");
@@ -426,8 +605,9 @@ public class ApproveActivity extends BaseActivityNew {
         }
     }
 
-    private byte [] picByte;
+    private byte[] picByte;
     private boolean isSign;
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case 2:
@@ -442,7 +622,7 @@ public class ApproveActivity extends BaseActivityNew {
                 break;
 
             case 11://电子签名
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     if (bundle != null) {
                         picByte = bundle.getByteArray("picByte");
@@ -462,6 +642,7 @@ public class ApproveActivity extends BaseActivityNew {
     }
 
     private Bitmap mBmSign;
+
     @Override
     protected void onDestroy() {
 
@@ -478,5 +659,50 @@ public class ApproveActivity extends BaseActivityNew {
             f.delete();
         }
         super.onDestroy();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Approve Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

@@ -12,15 +12,15 @@ public class HttpUrlUtils {
     public static HttpUrlUtils getHttpUrl() {
         return httpUrl;
     }
-//
-//      基础url
-    public String getBaseUrl() {
-        return "https://kaisuo.qbchoice.com";
-    }
 
+//      //基础url
 //    public String getBaseUrl() {
-//        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn":"https://kaisuo.qbchoice.com";
+//        return "https://kaisuo.qbchoice.com";
 //    }
+
+    public String getBaseUrl() {
+        return BuildConfig.DEBUG ?"http://kaisuo.qbchoice.cn":"https://kaisuo.qbchoice.com";
+    }
 
     //  用户登录接口
     public String getLoginUrl() {

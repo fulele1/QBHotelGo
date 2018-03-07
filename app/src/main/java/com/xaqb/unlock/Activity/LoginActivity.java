@@ -1,7 +1,9 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
@@ -21,6 +22,7 @@ import com.xaqb.unlock.Utils.NullUtil;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SDCardUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -46,12 +48,17 @@ public class LoginActivity extends BaseActivityNew {
     private LinearLayout mLayStatus;
     private ImageView ivDeUser,ivDePsw;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this, 0);
-
         setContentView(R.layout.login_activity);
         instance = this;
+        StatuBarUtil.translucentStatusBar(this,true);
+        LogUtils.e(""+Build.VERSION.SDK_INT);
+        LogUtils.e(""+Build.VERSION_CODES.LOLLIPOP);
+        if (Build.VERSION.SDK_INT> Build.VERSION_CODES.LOLLIPOP){
+        StatuBarUtil.translucentStatusBar(this,true);
+        }
         assignViews();
         setDeleteImgview(etUsername,ivDeUser);
         setDeleteImgview(etPsw,ivDePsw);
@@ -98,7 +105,7 @@ public class LoginActivity extends BaseActivityNew {
         ivDeUser = (ImageView) findViewById(R.id.img_delete_user_login);
         ivDePsw = (ImageView) findViewById(R.id.img_delete_psw_login);
         mLayStatus = (LinearLayout) findViewById(R.id.lay_status);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
+//        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
 

@@ -2,6 +2,8 @@ package com.xaqb.unlock.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +18,6 @@ import com.github.jdsjlzx.recyclerview.LuRecyclerView;
 import com.github.jdsjlzx.recyclerview.LuRecyclerViewAdapter;
 import com.github.jdsjlzx.util.LuRecyclerViewStateUtils;
 import com.github.jdsjlzx.view.LoadingFooter;
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.Entity.IncomeInfo;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
@@ -24,6 +25,7 @@ import com.xaqb.unlock.Utils.Globals;
 import com.xaqb.unlock.Utils.GsonUtil;
 import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.LuRecycleView1229.ListBaseAdapter;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -79,11 +81,13 @@ public class IncomeActivity extends BaseActivityNew implements SwipeRefreshLayou
     };
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
+
         setContentView(R.layout.income_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         assignViews();
         mTvTitle.setText("收入明细");
     }

@@ -4,6 +4,7 @@ package com.xaqb.unlock.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -16,13 +17,13 @@ import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.Adapter.OrderFragmentAdapter;
 import com.xaqb.unlock.Fragment.AllFragment;
 import com.xaqb.unlock.Fragment.GotFragment;
 import com.xaqb.unlock.Fragment.PayFragment;
 import com.xaqb.unlock.Fragment.WaitFragment;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.xaqb.unlock.Views.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -39,11 +40,13 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
     private ImageView ivBack;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setTranslucentForImageViewInFragment(MyOrderActivity.this, null);
         setContentView(R.layout.activity_my_order);
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+
         initView();
         initData();
         initEvent();

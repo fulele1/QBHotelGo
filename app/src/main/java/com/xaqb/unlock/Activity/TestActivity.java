@@ -13,7 +13,6 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.holder.Holder;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.GsonUtil;
@@ -45,8 +44,7 @@ public class TestActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setTranslucent(this, 0);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main) ;
         instance = this;
         checkPic();
     }
@@ -68,11 +66,6 @@ public class TestActivity extends Activity{
                         s = "{\"state\":0,\"mess\":\"success\",\"table\":\n" +
                                 " [{\"art_id\":1,\"art_img\":\"http:\\/\\/kaisuo.qbchoice.cn\\/\\/uploads\\/20171214\\/cbfdb45b59a8c3864e342251278dd6e8.gif\",\"url\":\"http:\\/\\/kaisuo.qbchoice.cn\\/home\\/index\\/news_detail\\/id\\/1\"},\n" +
                                 " {\"art_id\":1,\"art_img\":\"http:\\/\\/kaisuo.qbchoice.cn\\/\\/uploads\\/20171214\\/cbfdb45b59a8c3864e342251278dd6e8.gif\",\"url\":\"http:\\/\\/kaisuo.qbchoice.cn\\/home\\/index\\/news_detail\\/id\\/1\"}]}";
-
-
-
-
-
                         Map<String, Object> map = GsonUtil.GsonToMaps(s);
                         if (map.get("state").toString().equals("1.0")) {
                             return;

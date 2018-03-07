@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -18,11 +19,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.BuildConfig;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.xaqb.unlock.Utils.ToastUtil;
 
 import org.apache.http.HttpResponse;
@@ -101,11 +102,12 @@ public class UpdateActivityNew extends BaseActivityNew {
     private Unbinder unbinder;
 
     TextView tvTitle;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
-        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.activity_update_new);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         unbinder = ButterKnife.bind(instance);
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText("检查更新");

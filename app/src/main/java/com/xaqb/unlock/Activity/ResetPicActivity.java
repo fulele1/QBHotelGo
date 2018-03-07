@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
@@ -34,7 +33,6 @@ public class ResetPicActivity extends BaseActivityNew{
     private String oldPic,newPic;
     @Override
     public void initViews(){
-        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.activity_reset_pic);
         instance = this;
         mTvTitle = (TextView) findViewById(R.id.tv_title);

@@ -7,7 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,8 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 import java.io.ByteArrayOutputStream;
 
@@ -40,12 +42,13 @@ public class SignActivity extends BaseActivityNew {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
-        StatusBarUtil.setTranslucent(this, 0);
 
         setContentView(R.layout.activity_sign);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         imageSign = (ImageView) findViewById(R.id.iv_sign);
         cbAgree = (CheckBox) findViewById(R.id.cb_agree_sign);
 

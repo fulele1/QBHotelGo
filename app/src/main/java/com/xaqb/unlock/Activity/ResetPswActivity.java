@@ -1,6 +1,8 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -17,6 +18,7 @@ import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -38,11 +40,12 @@ public class ResetPswActivity extends BaseActivityNew {
     private int requestCode = 0;
     private String oldPsw, newPsw, confirmPsw;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.resetpsw_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         assignViews();
         tvTilte.setText("修改密码");
     }
@@ -53,8 +56,6 @@ public class ResetPswActivity extends BaseActivityNew {
         etConfirmPsw = (EditText) findViewById(R.id.et_confirm_psw);
         btComplete = (Button) findViewById(R.id.bt_complete);
         tvTilte = (TextView) findViewById(R.id.tv_title);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_reset);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override

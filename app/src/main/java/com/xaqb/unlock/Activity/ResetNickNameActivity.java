@@ -1,12 +1,13 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -15,6 +16,7 @@ import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,11 +35,12 @@ public class ResetNickNameActivity extends BaseActivityNew {
     private String nickName, oldNickName;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.reset_nick_name_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         Intent intent = getIntent();
         oldNickName = intent.getStringExtra("nickName");
         assignViews();

@@ -3,15 +3,17 @@ package com.xaqb.unlock.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.QRCodeUtil;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 import java.io.File;
 
@@ -22,11 +24,12 @@ public class QRCodeActivity extends BaseActivityNew {
     private ImageView mIvQRCode;
     private TextView mTvTitle;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
-        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.activity_qrcode);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         mIvQRCode = (ImageView) findViewById(R.id.iv_qr_qrcode);
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mTvTitle.setText("用户二维码");

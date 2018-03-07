@@ -1,11 +1,13 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.pm.PackageInfo;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 
 /**
@@ -17,11 +19,13 @@ public class AboutActivity extends BaseActivityNew {
     private TextView tvVersion;
     private TextView tvTitle;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.about_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+
         assignViews();
         tvTitle.setText("关于我们");
     }

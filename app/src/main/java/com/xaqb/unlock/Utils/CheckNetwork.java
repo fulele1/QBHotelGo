@@ -1,55 +1,65 @@
 package com.xaqb.unlock.Utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
+
+import com.xaqb.unlock.Activity.SplashActivity;
+
+import static com.google.gson.internal.UnsafeAllocator.create;
 
 
 public class CheckNetwork {
 
-    public CheckNetwork() {
-        // TODO Auto-generated constructor stub
-    }
-
-//    /**
-//     * 检测网络是否可用
-//     *
-//     * @return 是否可用
-//     */
-//    public static boolean isNetworkAvailable(Context context) {
-//        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo ni = cm.getActiveNetworkInfo();
-//        return (ni != null && ni.isAvailable());
-//    }
 
     /**
-     * 检测当的网络（WLAN、3G/2G）状态
+     * 判断无网络的情况下跳转到设置界面
+     * @param context
+     */
+    public static void checkNetwork(final SplashActivity context){
+
+        if (!isNetworkAvailable(context)){
+            new AlertDialog.Builder(context)
+                    .setIcon(android.R.mipmap.sym_def_app_icon)
+                    .setTitle("提示")
+                    .setMessage("无网络 是否开启网络")
+                    .setPositiveButton("前往设置",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            context.startActivity(new Intent(Settings.ACTION_SETTINGS));//跳转至设置界面
+                            context.finish();
+                        }
+                    }).create().show();
+
+        }
+    }
+
+
+    /**
      *
-     * @param context Context
-     * @return true 表示网络可用
+     * @param context 上下文环境
+     * @return true 表示有网络  false表示无网络
      */
     public static boolean isNetworkAvailable(Context context) {
-//        ConnectivityManager connectivity = (ConnectivityManager) context
-//                .getSystemService(Context.CONNECTIVITY_SERVICE);
-//        if (connectivity != null) {
-//            NetworkInfo info = connectivity.getActiveNetworkInfo();
-//            if (info != null && info.isConnected())
-//            {
-//                // 当前网络是连接的
-//                if (info.getState() == NetworkInfo.State.CONNECTED)
-//                {
-//                    // 当前所连接的网络可用
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
+
         if (context != null) {
-            ConnectivityManager mConnectivityManager = (ConnectivityManager) context
+            ConnectivityManager connectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
-            if (mNetworkInfo != null) {
-                return mNetworkInfo.isAvailable();
+            if (connectivityManager == null){
+                return false;
+            }else{
+                NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
+                if (info !=null){
+                    for (NetworkInfo network : info){
+                        if (network.getState() == NetworkInfo.State.CONNECTED){
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return false;

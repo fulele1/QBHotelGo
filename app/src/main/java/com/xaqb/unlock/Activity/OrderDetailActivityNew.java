@@ -2,16 +2,22 @@ package com.xaqb.unlock.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 import com.xaqb.unlock.Adapter.PayRecordAdapter;
 import com.xaqb.unlock.Entity.IncomeInfo;
@@ -24,6 +30,7 @@ import com.xaqb.unlock.Utils.NullUtil;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 import com.xaqb.unlock.Utils.ToolsUtils;
 import com.xaqb.unlock.Views.ListViewForScroollView;
 import com.xaqb.unlock.zxing.activity.CaptureActivity;
@@ -40,7 +47,7 @@ import java.util.Map;
 public class OrderDetailActivityNew extends BaseActivityNew {
     private OrderDetailActivityNew instance;
     private TextView tvOrderId, tvOrderName, tvOrderPhone, tvOrderAddress,
-            tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark,tvTitle;
+            tvOrderLockType, tvOrderPay, tvOrderTime, tvOrtherName, tvOrtherPhone, tvOrtherRemark, tvTitle;
     private ImageView ivLock;
     private Button btPayStatus;
     private LinearLayout mLayStatus;
@@ -75,12 +82,19 @@ public class OrderDetailActivityNew extends BaseActivityNew {
             super.handleMessage(msg);
         }
     };
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.order_detail_activity_new);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this, getResources().getColor(R.color.main));
+
         assignViews();
         tvTitle.setText("订单详情");
     }
@@ -104,8 +118,6 @@ public class OrderDetailActivityNew extends BaseActivityNew {
         tvOrtherPhone = (TextView) findViewById(R.id.tv_other_phone_od);
         tvOrtherRemark = (TextView) findViewById(R.id.tv_other_remark_od);
         tvTitle = (TextView) findViewById(R.id.tv_title);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_orderDetail);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
 
         /**
          * 5秒后自动查询下一次，查询30秒后，仍然失败的话，显示支付失败，等待用户手动刷新订单查看支付结果
@@ -140,7 +152,6 @@ public class OrderDetailActivityNew extends BaseActivityNew {
         orderId = intent.getStringExtra("or_id");
         getOrderDetail(orderId);
     }
-
 
 
     private void getOrderDetail(String orderId) {
@@ -202,7 +213,7 @@ public class OrderDetailActivityNew extends BaseActivityNew {
                                     btPayStatus.setText("未付清");
                                 }
 
-                                    String imageUrl = map.get("or_lockimg").toString();
+                                String imageUrl = map.get("or_lockimg").toString();
                                 if (textNotEmpty(imageUrl)) {
                                     loadImg(ivLock, imageUrl);
                                 }
@@ -480,5 +491,50 @@ public class OrderDetailActivityNew extends BaseActivityNew {
     public void onResume() {
         super.onResume();
         getOrderDetail(orderId);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("OrderDetailActivityNew Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

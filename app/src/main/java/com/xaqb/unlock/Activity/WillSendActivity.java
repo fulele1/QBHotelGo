@@ -1,13 +1,15 @@
 package com.xaqb.unlock.Activity;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.SDCardUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 import java.io.File;
 
@@ -24,11 +26,12 @@ public class WillSendActivity extends BaseActivityNew {
     private int dialogType;
     private ArrayAdapter<String> oAdapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.will_send_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         assignViews();
         tvTitle.setText("待发数据");
     }

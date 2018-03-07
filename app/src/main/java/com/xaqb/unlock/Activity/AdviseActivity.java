@@ -1,6 +1,8 @@
 package com.xaqb.unlock.Activity;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -9,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
 import com.xaqb.unlock.Utils.Globals;
@@ -17,6 +18,7 @@ import com.xaqb.unlock.Utils.HttpUrlUtils;
 import com.xaqb.unlock.Utils.QBCallback;
 import com.xaqb.unlock.Utils.QBHttp;
 import com.xaqb.unlock.Utils.SPUtils;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,11 +38,12 @@ public class AdviseActivity extends BaseActivityNew {
     private LinearLayout mLayStatus;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this,0);
         setContentView(R.layout.advise_activity);
         instance = this;
+        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         assignViews();
         tvTitle.setText("意见反馈");
     }
@@ -51,8 +54,6 @@ public class AdviseActivity extends BaseActivityNew {
         btComplete = (Button) findViewById(R.id.bt_complete);
         spType = (Spinner) findViewById(R.id.sp_advise_type);
         tvTitle = (TextView) findViewById(R.id.tv_title);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_Advice);
-        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override
