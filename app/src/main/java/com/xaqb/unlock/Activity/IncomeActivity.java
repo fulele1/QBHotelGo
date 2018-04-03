@@ -87,7 +87,7 @@ public class IncomeActivity extends BaseActivityNew implements SwipeRefreshLayou
 
         setContentView(R.layout.income_activity);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         assignViews();
         mTvTitle.setText("收入明细");
     }

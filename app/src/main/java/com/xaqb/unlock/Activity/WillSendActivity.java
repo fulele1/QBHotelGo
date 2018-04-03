@@ -31,7 +31,7 @@ public class WillSendActivity extends BaseActivityNew {
     public void initViews() {
         setContentView(R.layout.will_send_activity);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         assignViews();
         tvTitle.setText("待发数据");
     }

@@ -76,9 +76,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="3dp"
-
-        android:paddingBottom="@dimen/slidingmenu_offset"
-
         >
 
         <Button

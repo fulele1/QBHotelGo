@@ -29,7 +29,7 @@ public class QRCodeActivity extends BaseActivityNew {
     public void initViews() throws Exception {
         setContentView(R.layout.activity_qrcode);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         mIvQRCode = (ImageView) findViewById(R.id.iv_qr_qrcode);
         mTvTitle = (TextView) findViewById(R.id.tv_title);
         mTvTitle.setText("用户二维码");

@@ -45,7 +45,7 @@ public class MyOrderActivity extends FragmentActivity implements View.OnClickLis
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_order);
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+        StatuBarUtil.setStatuBarLightMode(this,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
 
         initView();
         initData();

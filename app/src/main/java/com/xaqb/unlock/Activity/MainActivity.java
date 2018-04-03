@@ -9,12 +9,14 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityManagerCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.util.Log;
@@ -543,7 +545,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 startActivity(i);
                 break;
             case R.id.iv_nearby_order://附近订单
-                Toast.makeText(instance, "正在研发中...", Toast.LENGTH_SHORT).show();
+                i = new Intent(instance, NearbyOrderActivity.class);
+                startActivity(i);
                 break;
             case R.id.iv_user_info://个人信息
                 i = new Intent(instance, UserInfoActivity.class);
@@ -560,7 +563,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     Toast.makeText(instance, "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, ApproveActivity.class));
                 } else if (status.equals(Globals.staffIsRealSuc)) {
-                    Toast.makeText(instance, "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(instance, "已经认证成功！", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(instance, RealNameInfoActivity.class));
                 } else if (status.equals(Globals.staffIsRealIng)) {
                     Toast.makeText(instance, "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();
@@ -570,7 +573,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                 break;
         }
     }
-
 
 
     @Override
@@ -678,11 +680,13 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         }
     }
 
+
     /**
      * 对话框单击取消按钮处理
      */
     protected void dialogCancel() {
     }
+
 
     /**
      * 吐司
@@ -693,6 +697,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     protected void showMess(String sMess, boolean bLong) {
         Toast.makeText(this, sMess, bLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
     }
+
 
 //    /**
 //     * 轮播图holder

@@ -3,7 +3,7 @@
     android:id="@+id/layout_titlebar"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    android:background="@color/main"
+    android:background="@color/white"
     android:orientation="horizontal">
 
     <TextView
@@ -15,8 +15,8 @@
         android:ellipsize="marquee"
         android:gravity="center_horizontal|center"
         android:singleLine="true"
-        android:text="标题栏"
-        android:textColor="@color/white"
+        android:text=" "
+        android:textColor="@color/viewfinder_frame"
         android:textSize="@dimen/button_normal_size" />
 
     <ImageView
@@ -28,7 +28,7 @@
         android:onClick="onBackward"
         android:padding="10px"
         android:scaleType="fitCenter"
-        android:src="@mipmap/title_back"
+        android:src="@mipmap/back_title"
         android:visibility="visible"
         android:layout_marginLeft="@dimen/padding"/>
 

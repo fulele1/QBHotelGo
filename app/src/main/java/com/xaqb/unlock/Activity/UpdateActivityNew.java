@@ -107,8 +107,8 @@ public class UpdateActivityNew extends BaseActivityNew {
     public void initViews() throws Exception {
         setContentView(R.layout.activity_update_new);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
         unbinder = ButterKnife.bind(instance);
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         tvTitle = (TextView) findViewById(R.id.tv_title);
         tvTitle.setText("检查更新");
         mDownLoadPath = SPUtils.get(instance, "au_file_path", "") + "";

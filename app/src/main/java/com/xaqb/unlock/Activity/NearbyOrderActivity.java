@@ -1,8 +1,11 @@
 package com.xaqb.unlock.Activity;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -13,6 +16,7 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.xaqb.unlock.R;
+import com.xaqb.unlock.Utils.StatuBarUtil;
 
 
 /**
@@ -20,6 +24,7 @@ import com.xaqb.unlock.R;
  * 空activity，用于复制粘贴
  */
 public class NearbyOrderActivity extends BaseActivityNew {
+    private TextView tvTitle;
     private NearbyOrderActivity instance;
     /**
      * 高德地图
@@ -52,17 +57,17 @@ public class NearbyOrderActivity extends BaseActivityNew {
         }
     };
 
-//    @Override
-//    public void initTitleBar() {
-//        setTitle("附近订单");
-//        showBackwardView(true);
-//    }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nearby_activity);
         instance = this;
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle.setText("附近订单");
+
         //设置希望展示的地图缩放级别
         //获取地图控件引用
         mMapView = (MapView) findViewById(R.id.map);
@@ -92,7 +97,7 @@ public class NearbyOrderActivity extends BaseActivityNew {
                     // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
                     // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
                     // 在定位结束后，在合适的生命周期调用onDestroy()方法
-                    // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+                    // 在单次 定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
 
                     mlocationClient.startLocation();//启动定位
                 }
@@ -127,6 +132,34 @@ public class NearbyOrderActivity extends BaseActivityNew {
         mMapView.onResume();
     }
 
+
+
+    @Override
+    public void initViews() {
+        assignViews();
+
+    }
+
+    private void assignViews() {
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void addListener() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+        }
+    }
+
+
     @Override
     public void onPause() {
         super.onPause();
@@ -149,28 +182,5 @@ public class NearbyOrderActivity extends BaseActivityNew {
         mMapView.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void initViews() {
-        assignViews();
-    }
 
-    private void assignViews() {
-
-    }
-
-    @Override
-    public void initData() {
-
-    }
-
-    @Override
-    public void addListener() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-        }
-    }
 }

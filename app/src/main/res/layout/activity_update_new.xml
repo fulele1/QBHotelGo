@@ -2,7 +2,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     >
+
 
     <include layout="@layout/pub_titlebar"/>
     <LinearLayout style="@style/common_horizontal_match_line_style" />

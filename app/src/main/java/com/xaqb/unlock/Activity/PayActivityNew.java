@@ -79,7 +79,7 @@ public class PayActivityNew extends BaseActivityNew implements View.OnClickListe
     public void initViews() throws Exception {
         setContentView(R.layout.activity_pay_new);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         assignViews();
         tvTitle.setText("订单支付");
     }

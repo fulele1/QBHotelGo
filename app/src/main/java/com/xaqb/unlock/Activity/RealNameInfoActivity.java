@@ -38,8 +38,7 @@ public class RealNameInfoActivity extends BaseActivityNew {
     public void initViews() {
         setContentView(R.layout.real_name_info_activity);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
-
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         assignViews();
     }
 

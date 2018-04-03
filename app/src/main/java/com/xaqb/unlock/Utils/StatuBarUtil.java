@@ -17,9 +17,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- *
- * 状态栏修改工具类
  * Created by fl on 2018/3/6.
+ * 状态栏修改工具类 具有改变状态栏颜色（只有5.0以上版本可以）
+ * 透明状态栏（4.4-5.0之间 5.0以上可以）
+ * 修改状态栏的字体为黑色（小米 魅族  非小米魅族只有6.0以上的版本可以修改）
  */
 
 public class StatuBarUtil {
@@ -133,7 +134,7 @@ public class StatuBarUtil {
                     ViewCompat.requestApplyInsets(mChildView);
                 }
             }else if (Build.VERSION.SDK_INT<Build.VERSION_CODES.M){//如果是6.0以下的版本不修改颜色
-                activity.getWindow().setStatusBarColor(color);
+//                activity.getWindow().setStatusBarColor(color);
 
             }
         }

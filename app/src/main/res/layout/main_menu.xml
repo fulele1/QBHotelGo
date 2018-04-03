@@ -13,14 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="1.1"
+        android:layout_weight="1.4"
         android:background="@color/white"
 
         >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/activity_horizontal_margin"
             >
@@ -64,10 +64,12 @@
         <com.bigkoo.convenientbanner.ConvenientBanner
             android:id="@+id/cb_main"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="match_parent"
             app:canLoop="true"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
             />
 
     </LinearLayout>

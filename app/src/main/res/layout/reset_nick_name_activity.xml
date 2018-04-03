@@ -9,11 +9,6 @@
 
     <include layout="@layout/pub_titlebar"/>
     <LinearLayout style="@style/common_horizontal_match_line_style" />
-
-
-    <LinearLayout style="@style/common_horizontal_division_line_style" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

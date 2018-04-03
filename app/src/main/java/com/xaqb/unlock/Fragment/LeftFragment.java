@@ -100,7 +100,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         Toast.makeText(getActivity(), "认证失败或未认证，请认证", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), ApproveActivity.class));
                         } else if (status.equals(Globals.staffIsRealSuc)) {
-                            Toast.makeText(getActivity(), "已经认证成功！在个人信息界面查看详情", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "已经认证成功！", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getActivity(), RealNameInfoActivity.class));
                         } else if (status.equals(Globals.staffIsRealIng)) {
                             Toast.makeText(getActivity(), "正在认证中！请耐心等待", Toast.LENGTH_SHORT).show();

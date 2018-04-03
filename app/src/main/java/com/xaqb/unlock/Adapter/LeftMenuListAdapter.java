@@ -62,7 +62,7 @@ public class LeftMenuListAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.left_listview_item, null);
             holder.ivStatus = (ImageView) convertView.findViewById(R.id.iv_card_status);
             holder.ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
-            holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
+            holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title_left);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

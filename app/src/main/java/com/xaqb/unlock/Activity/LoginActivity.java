@@ -54,11 +54,6 @@ public class LoginActivity extends BaseActivityNew {
         setContentView(R.layout.login_activity);
         instance = this;
         StatuBarUtil.translucentStatusBar(this,true);
-        LogUtils.e(""+Build.VERSION.SDK_INT);
-        LogUtils.e(""+Build.VERSION_CODES.LOLLIPOP);
-        if (Build.VERSION.SDK_INT> Build.VERSION_CODES.LOLLIPOP){
-        StatuBarUtil.translucentStatusBar(this,true);
-        }
         assignViews();
         setDeleteImgview(etUsername,ivDeUser);
         setDeleteImgview(etPsw,ivDePsw);

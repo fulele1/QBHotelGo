@@ -25,6 +25,7 @@ import com.tencent.android.tpush.XGPushManager;
 import com.umeng.analytics.MobclickAgent;
 import com.xaqb.unlock.R;
 import com.xaqb.unlock.Utils.ActivityController;
+import com.xaqb.unlock.Utils.LogUtils;
 import com.xaqb.unlock.Utils.PermissionUtils;
 import com.xaqb.unlock.Views.LoadingDialog;
 
@@ -72,6 +73,8 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
     }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogUtils.e("fl--------onCreate");
+
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //            this.getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 //        }
@@ -334,18 +337,21 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
     @Override
     public void onResume() {
         super.onResume();
+        LogUtils.e("fl--------onResume");
         MobclickAgent.onResume(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LogUtils.e("fl--------onPause");
         MobclickAgent.onResume(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        LogUtils.e("fl--------onDestroy");
         ActivityController.removeActivity(this);
     }
 

@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.provider.Settings;
 
 import com.xaqb.unlock.Activity.SplashActivity;
+import com.xaqb.unlock.R;
 
 import static com.google.gson.internal.UnsafeAllocator.create;
 
@@ -24,7 +25,7 @@ public class CheckNetwork {
 
         if (!isNetworkAvailable(context)){
             new AlertDialog.Builder(context)
-                    .setIcon(android.R.mipmap.sym_def_app_icon)
+                    .setIcon(context.getResources().getDrawable(R.mipmap.side))
                     .setTitle("提示")
                     .setMessage("无网络 是否开启网络")
                     .setPositiveButton("前往设置",new DialogInterface.OnClickListener() {

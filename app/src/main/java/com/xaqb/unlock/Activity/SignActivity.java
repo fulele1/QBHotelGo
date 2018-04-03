@@ -48,7 +48,7 @@ public class SignActivity extends BaseActivityNew {
 
         setContentView(R.layout.activity_sign);
         instance = this;
-        StatuBarUtil.setStatusBarColor(this,getResources().getColor(R.color.main));
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         imageSign = (ImageView) findViewById(R.id.iv_sign);
         cbAgree = (CheckBox) findViewById(R.id.cb_agree_sign);
 

@@ -3,7 +3,6 @@ package com.xaqb.unlock.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -98,11 +97,9 @@ public class ApproveActivity extends BaseActivityNew {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-//        StatusBarUtil.setTranslucent(this, 0);
         setContentView(R.layout.approve_real_name_activity);
         instance = this;
-//        StatuBarUtil.translucentStatusBar(this);
-        StatuBarUtil.translucentStatusBar(this, true);
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         assignViews();
         tvTitle.setText("实名认证");
     }
@@ -116,17 +113,10 @@ public class ApproveActivity extends BaseActivityNew {
         ivCertPic = (ImageView) findViewById(R.id.iv_cert_pic);
         ivFacePic = (ImageView) findViewById(R.id.iv_face_pic);
         btSubmit = (Button) findViewById(R.id.bt_submit);
-//        if (readConfig("approveing").equals("yes")){
-//            btSubmit.setClickable(false);
-//            btSubmit.setText("正在认证中，请勿重复认证。");
-//            btSubmit.setBackground(getResources().getDrawable(R.drawable.bg_button_gray));
-//        }
         spType = (Spinner) findViewById(R.id.sp_type);
         spNation = (Spinner) findViewById(R.id.sp_nation);//选择民族
         ivSign = (ImageView) findViewById(R.id.iv_sign_approve);//电子签名
         tvTitle = (TextView) findViewById(R.id.tv_title);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status_approve);
-//        StatusBarUtil.setTranslucentForImageView(this, 0, mLayStatus);
     }
 
     @Override
