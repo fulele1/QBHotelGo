@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/login_bag"
+    android:background="@mipmap/login_bg"
     android:orientation="vertical"
     >
 
@@ -11,32 +11,36 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.3" />
-    <TextView
-        android:id="@+id/test_version"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试版"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
-        />
+        android:layout_weight="5" />
+
 
     <LinearLayout
         android:id="@+id/lay_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
         android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:padding="@dimen/activity_horizontal_margins">
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号"
+            android:layout_marginBottom="@dimen/button_normal_sizes"
+
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/button_normal_sizes"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="#ffffff"
-            android:orientation="horizontal">
+            android:background="@mipmap/login_edit_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            >
+
+
+
 
 
             <EditText
@@ -47,13 +51,12 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:digits="@string/on_char"
-                android:drawableLeft="@mipmap/login_user"
                 android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:hint="@string/input_account"
                 android:maxLength="20"
-                android:paddingLeft="10px"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
                 android:textSize="@dimen/textview_small_size"
-                android:inputType="phone"
                 />
 
             <ImageView
@@ -66,18 +69,22 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码"
+            android:layout_marginBottom="@dimen/button_normal_sizes"
+android:layout_marginTop="@dimen/activity_horizontal_margin"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/button_normal_sizes"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/shadow_width"
-            android:background="#ffffff"
-            android:gravity="center">
+            android:background="@mipmap/login_edit_bg"
+            android:gravity="center"
+            >
+
+
 
 
             <EditText
@@ -88,13 +95,15 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:digits="@string/on_char"
-                android:drawableLeft="@mipmap/login_psw"
                 android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:hint="@string/input_psw"
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingLeft="10px"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
+                />
 
             <ImageView
                 android:id="@+id/img_delete_psw_login"
@@ -106,7 +115,6 @@
                 />
         </LinearLayout>
 
-        <LinearLayout style="@style/common_horizontal_division_line_style" />
 
 
         <LinearLayout
@@ -125,17 +133,19 @@
                 android:button="@drawable/checkbox_selector"
                 android:paddingBottom="3dp"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="3dp" />
+                android:paddingRight="3dp"
+                android:paddingTop="3dp"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="5dp"
                 android:background="@drawable/bg_textview"
                 android:text="记住密码"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+
+                />
 
             <View
                 android:layout_width="0dp"
@@ -150,28 +160,25 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="@dimen/margin_edge"
                 android:background="@drawable/bg_textview"
-                android:text="忘记密码"
+                android:text="忘记密码？"
                 android:textSize="@dimen/textview_small_size"
-
                 />
         </LinearLayout>
 
     </LinearLayout>
 
 
-
     <Button
         android:id="@+id/bt_login"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="@dimen/title_height"
-        android:layout_marginLeft="@dimen/margin_edge"
-        android:layout_marginRight="@dimen/margin_edge"
-        android:background="@drawable/bg_button_selector"
-        android:text="@string/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/slidingmenu_offset"
+        android:background="@mipmap/login_btn_next"
         android:textColor="#ffffff"
-        android:textSize="@dimen/textview_small_size" />
+        android:textSize="@dimen/activity_horizontal_margins"
+        android:gravity="center"
+        />
 
 
 </LinearLayout>

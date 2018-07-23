@@ -9,53 +9,41 @@
     android:paddingLeft="@dimen/activity_horizontal_margin">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-        android:paddingTop="@dimen/title_height">
+        android:paddingTop="@dimen/shadow_width">
 
         <ImageView
             android:id="@+id/iv_user_pic"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_gravity="center"
             android:src="@mipmap/left_user"
             />
 
         <TextView
             android:id="@+id/tv_left_nick_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:gravity="center_vertical"
-            android:paddingLeft="15dp"
-            android:textSize="@dimen/textview_normal_size"
             android:maxEms="4"
             android:singleLine="true"
             android:ellipsize="end"
             android:text="你假发的"
             android:layout_weight="1"
-            />
-
-        <ImageView
-            android:id="@+id/iv_editor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="30dp"
-            android:padding="5dp"
-            android:src="@mipmap/left_edit" />
+            />
     </LinearLayout>
 
     <ListView
         android:id="@+id/lv_left_menu"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/activity_horizontal_margins"
+        >
 
     </ListView>
 

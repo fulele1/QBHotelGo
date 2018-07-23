@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:orientation="vertical"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/txt_day_log"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="19号"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/activity_title" />
+
+            <TextView
+                android:id="@+id/txt_date_log"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="2018.07" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_org_log"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="fsdfsdf"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/button_normal_sizes"
+                    />
+
+
+                <TextView
+                    android:id="@+id/txt_det_log"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="fjks"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size" />
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

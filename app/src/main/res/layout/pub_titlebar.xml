@@ -15,7 +15,6 @@
         android:ellipsize="marquee"
         android:gravity="center_horizontal|center"
         android:singleLine="true"
-        android:text=" "
         android:textColor="@color/viewfinder_frame"
         android:textSize="@dimen/button_normal_size" />
 
@@ -38,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_gravity="right"
-        android:layout_marginRight="10px"
+        android:layout_marginRight="@dimen/padding"
         android:clickable="true"
         android:ellipsize="end"
         android:gravity="center"
@@ -46,16 +45,9 @@
         android:minEms="3"
         android:onClick="onForward"
         android:singleLine="true"
-        android:text="提交"
-        android:textSize="@dimen/margin_edge"
-        android:textColor="@color/white"
+        android:textSize="@dimen/textview_smalls_size"
         android:visibility="invisible"
+        android:textColor="@color/viewfinder_frame"
          />
-
-    <!--
-        android:textSize="48px"
-    android:paddingLeft="10px"
-    android:paddingRight="40px"
-    android:drawablePadding="6px"-->
 
 </FrameLayout>

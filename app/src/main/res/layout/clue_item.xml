@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@mipmap/clue_item_bg"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+
+        <ImageView
+            android:id="@+id/tv_pic_clue"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/padding"
+            android:layout_marginTop="@dimen/padding"
+            android:scaleType="fitXY"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:id="@+id/txt_name_clue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/result_view"
+                        android:textSize="@dimen/textview_smalls_size"
+                        android:layout_weight="1"
+                        android:paddingLeft="5dp"
+                        android:layout_marginTop="@dimen/padding"
+
+                        />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txt_goods_clue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:layout_weight="1"
+                    android:textColor="@color/result_view"
+
+                    />
+
+                <TextView
+                    android:id="@+id/txt_date_clue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="5dp"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:layout_weight="1"
+                    android:textColor="@color/result_view"
+
+                    />
+
+
+            </LinearLayout>
+                <ImageView
+                    android:id="@+id/tv_tel_clue"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/tel"
+                    />
+
+
+        </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/txt_address_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textview_smalls_size"
+                android:textColor="@color/result_view"
+                android:padding="5dp"
+
+                />
+
+
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

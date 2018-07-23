@@ -1,1 +1,1 @@
-include ':app', ':slidingmenu_library', ':LRecyclerview_library'
+include ':app', ':slidingmenu_library'

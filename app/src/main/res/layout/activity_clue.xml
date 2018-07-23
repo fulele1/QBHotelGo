@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_clue"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bag"
+    tools:context="com.xaqb.hotel.Activity.ClueListActivity">
+    <include layout="@layout/pub_titlebar"/>
+
+    <ListView
+        android:id="@+id/list_clue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_horizontal_margins"></ListView>
+
+
+</LinearLayout>

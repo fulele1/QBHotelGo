@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_staff_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bag"
+    tools:context="com.xaqb.hotel.Activity.StaffDetailActivity">
+
+
+    <include layout="@layout/pub_titlebar"/>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/activity_horizontal_margin">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@mipmap/staff_bag"
+            android:layout_marginTop="@dimen/shadow_width"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            >
+
+            <TextView
+                android:id="@+id/txt_name_staff_del"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张三"
+                android:layout_marginTop="@dimen/slidingmenu_offset"
+                android:layout_gravity="center"
+                android:textColor="@color/result_view"
+                />
+            <TextView
+                android:id="@+id/txt_detail_staff_tal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女|香格里拉酒店|大堂经理"
+                android:layout_marginTop="@dimen/padding_en"
+                android:layout_gravity="center"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:padding="@dimen/padding_en">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_age_staff_del"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="24"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_normal_size" />
+
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="年龄"
+                        android:textSize="@dimen/textview_small_size" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_tall_staff_tal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="180"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_normal_size" />
+
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="身高"
+                        android:textSize="@dimen/textview_small_size" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/txt_blood_staff_tel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="AB"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_normal_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="血型"
+                        android:textSize="@dimen/textview_small_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系方式"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+
+                <TextView
+                    android:id="@+id/txt_tel_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="18393453242"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="国籍"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_country_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="中国"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="婚姻状况"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_marry_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="未婚"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="政治面貌"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_dang_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="党员"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="紧急联系人"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_conncet_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="张三"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="紧急联系人电话"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_tel_connecte_tel_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="18393453242"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="户籍地址"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_home_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="陕西省西安市未央区"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_en">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="现居地址"
+                    android:textColor="@color/result_view"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                <TextView
+                    android:id="@+id/txt_now_home_staff_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="陕西省西安市未央区"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_work_place_staff_tel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="凤城五路雅荷春天B201-NO 22945号"
+                android:padding="@dimen/padding_en"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_pic_staff_del"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/per"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            />
+
+    </RelativeLayout>
+</LinearLayout>

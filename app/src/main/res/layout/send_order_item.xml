@@ -31,15 +31,15 @@
 
         <TextView
             android:id="@+id/tv_order_no_item_order"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="left"
+            android:gravity="center"
             android:textColor="#292929"
             android:padding="5dp"
-            android:text="T54354612346521234651456+656"
+            android:text="张三"
             android:textSize="@dimen/textview_smalls_size"
             android:layout_weight="1"
+            android:drawableRight="@mipmap/ic_launcher"
             />
 
         <TextView
@@ -49,11 +49,14 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:textColor="#808080"
-            android:text="你在说什么，哈哈哈哈我也不知道这是在哪里 你猜一下"
+            android:text="静安大酒店"
             android:textSize="@dimen/textview_smalls_size"
             android:layout_weight="1"
 
             />
+
+        <LinearLayout
+            style="@style/common_horizontal_match_line_style"></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,15 +68,15 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             >
 
-            <TextView
+            <ImageView
                 android:id="@+id/tv_price_item_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left"
+                android:gravity="center"
                 android:text="¥5225"
                 android:textColor="#e55b55"
                 android:textSize="@dimen/button_normal_size"
-                android:visibility="gone"
+                android:src="@mipmap/ic_launcher"
                 />
 
 
@@ -81,11 +84,10 @@
                 android:id="@+id/tv_time_item_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
-                android:textColor="#c2c2c2"
-                android:textSize="@dimen/textview_smallss_size"
-                android:text="2015.45246645675457684546"
+                android:textSize="@dimen/textview_small_size"
+                android:text="610422199211162229"
                 android:layout_weight="1"
+                android:layout_gravity="center"
                 />
         </LinearLayout>
 

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_passenger"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bag"
+    android:orientation="vertical"
+    tools:context="com.xaqb.hotel.Activity.PassengerActivity">
+
+    <include layout="@layout/pub_titlebar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/bag"
+            android:orientation="vertical"
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <ImageView
+                    android:layout_width="3dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:background="@color/main" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/must_write"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_en"
+                    android:text="订单类型"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+
+                <EditText
+                    android:id="@+id/et_per_type_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="right"
+                    android:hint="请选择旅客类型..."
+                    android:textColor="@color/viewfinder_frame"
+                    android:textColorHint="@color/text"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <ImageView
+                    android:id="@+id/img_per_type_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:src="@mipmap/delete_edit"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="3dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:background="@color/main" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_en"
+                        android:text="辖区名称"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_smalls_size" />
+
+                    <EditText
+                        android:id="@+id/edit_org_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:gravity="right"
+                        android:hint="请选择管辖机构..."
+                        android:textColor="@color/viewfinder_frame"
+                        android:textColorHint="@color/text"
+                        android:textSize="@dimen/textview_small_size" />
+
+                    <ImageView
+                        android:id="@+id/img_clear_org_order"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/padding"
+                        android:src="@mipmap/delete_edit"
+                        android:visibility="gone"
+
+                        />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:text="酒店名称"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <EditText
+                    android:id="@+id/edit_hname_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:textSize="@dimen/textview_small_size"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:text="旅客姓名"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <EditText
+                    android:id="@+id/edit_pername_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="@null"
+                    android:gravity="right|center"
+                    android:textSize="@dimen/textview_small_size"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:text="查询时间"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <EditText
+                    android:id="@+id/edit_date_order"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="right|center"
+                    android:hint="请选择查询时间..."
+                    android:textColor="@color/viewfinder_frame"
+                    android:textColorHint="@color/text"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <ImageView
+                    android:id="@+id/img_clear_date_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:src="@mipmap/delete_edit"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:id="@+id/btn_quary_order"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_button_selector"
+            android:text="查询"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textview_normal_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.2" />
+
+    </LinearLayout>
+</LinearLayout>

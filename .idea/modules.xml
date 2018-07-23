@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" filepath="$PROJECT_DIR$/LRecyclerview_library/LRecyclerview_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/qbunlock-android.iml" filepath="$PROJECT_DIR$/qbunlock-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/qbHotelGo.iml" filepath="$PROJECT_DIR$/qbHotelGo.iml" />
       <module fileurl="file://$PROJECT_DIR$/slidingmenu_library/slidingmenu_library.iml" filepath="$PROJECT_DIR$/slidingmenu_library/slidingmenu_library.iml" />
     </modules>
   </component>

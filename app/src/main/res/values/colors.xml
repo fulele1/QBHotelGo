@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="main">#5c74f2</color>
+    <color name="main">#508fff</color>
+    <color name="LINE">#7C4AFB</color>
 
     <color name="white">#ffffff</color>
     <color name="per_bag">#a7dde9</color>
@@ -16,10 +17,18 @@
     <color name="possible_result_points">#00000000</color>
     <color name="textColor">#dadada</color>
     <color name="color_00">#3e3e3e3e</color>
-    <color name="bag">#fafafafa</color>
+    <color name="bag">#fafafa</color>
     <color name="text">#bcbcbc</color>
     <color name="redio_text">#bbbbbb</color>
     <color name="fuxk_base_color_white">#ffffff</color>
+    <color name="man">#2194ff</color>
+    <color name="woman">#8a19fe</color>
+    <color name="bagkk">#c1d2fe</color>
+    <color name="login_background">#a2aeff</color>
+    <color name="one">#2b76fd</color>
+    <color name="two">#2ec2ff</color>
+    <color name="three">#2c9efe</color>
+
 
 
 </resources>

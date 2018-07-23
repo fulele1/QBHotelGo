@@ -5,31 +5,28 @@ apply plugin: 'android-apt'
 android {
     signingConfigs {
         config {
-            keyAlias 'unlock'
-            keyPassword '84858896'
-            storeFile file('G:/signing/xaqb-unlock_sign0314.jks')
-            storePassword '84858896'
+            keyAlias 'hotel'
+            keyPassword '123456'
+            storeFile file('G:\\signing\\hotelgover-180426.jks')
+            storePassword '123456'
         }
     }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     useLibrary 'org.apache.http.legacy'//找不到DefaultHttpClient时使用
     defaultConfig {
-        applicationId "com.xaqianbai.unlock"
+        applicationId "com.xaqb.hotel"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+
+
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi'
-//            abiFilters 'armeabi-v7a'
-//            abiFilters 'arm64-v8a'
-////            ,'armeabi-v7a', 'arm64-v8a'
-//            abiFilters "x86"
-//            abiFilters "armeabi"
-//            abiFilters "arm64-v8a"
-//            abiFilters "x86_64"
+//            abiFilters 'arm64-v8a','armeabi-v7a'
+            abiFilters "x86"
         }
 
         //信鸽
@@ -37,16 +34,22 @@ android {
                 XG_ACCESS_ID:"2100272991",
                 XG_ACCESS_KEY : "A9ZFT66J5B4H",
         ]
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            signingConfig signingConfigs.config
             signingConfig signingConfigs.config
         }
         debug {
-//            signingConfig signingConfigs.config
             signingConfig signingConfigs.config
         }
     }
@@ -62,6 +65,12 @@ android {
         abortOnError false
     }
 
+
+    aaptOptions{
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
+
 }
 allprojects {
     repositories {
@@ -70,6 +79,7 @@ allprojects {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
     }
+
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -80,9 +90,6 @@ dependencies {
     compile files('libs/okhttp-3.4.2.jar')
     compile files('libs/okhttputils-2_6_2.jar')
     compile files('libs/okio-1.11.0.jar')
-    compile project(':slidingmenu_library')
-    compile files('libs/glide-3.7.0.jar')
-    compile project(':LRecyclerview_library')
     compile files('libs/zxing.jar')
     compile files('libs/AMap3DMap_5.0.0_AMapLocation_3.3.0_20170311.jar')
     //友盟
@@ -92,12 +99,6 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:latest.release'
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     compile files('libs/rskapi.jar')
-    //阿里云
-    compile 'com.aliyun.ams:alicloud-android-push:3.0.1@aar'
-    compile 'com.aliyun.ams:alicloud-android-utdid:1.1.5.3'
-    compile 'com.aliyun.ams:alicloud-android-ut:5.0.0'
-    //轮播图
-    compile 'com.bigkoo:convenientbanner:2.0.5'
     //Picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
     //butterKnife
@@ -105,10 +106,15 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
     //信鸽3.2.0 beta
-//信鸽jar
+    //信鸽jar
     compile 'com.tencent.xinge:xinge:3.2.0-1-beta'
-//wup包
+    //wup包
     compile 'com.tencent.wup:wup:1.0.0.E-release'
-//mid包
+    //mid包
     compile 'com.tencent.mid:mid:4.0.0-beta'
+    compile files('libs/mpandroidchartlibrary-2-1-6.jar')
+    compile 'com.jaeger.statusbarutil:library:1.4.0'
+    compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile project(':slidingmenu_library')
 }

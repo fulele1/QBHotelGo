@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_search_coms"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bag"
+    >
+
+    <include layout="@layout/pub_titlebar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_edge"
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_edge"
+            android:gravity="center"
+            android:text="搜索："
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/edit_search_org"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:drawablePadding="10px"
+            android:hint="请输入要查找的名称"
+            android:paddingLeft="10px"
+            android:singleLine="true"
+            android:textColor="#000000"
+            android:textSize="@dimen/textview_small_size" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+    <RelativeLayout
+        android:id="@+id/layout_search_com"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/abc_action_bar_content_inset_material"
+        android:background="@android:color/white"
+        >
+
+        <com.xaqb.hotel.Listview.PinnedSectionListView
+            android:id="@+id/phone_listview_org"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:divider="@null" />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <com.xaqb.hotel.Listview.LetterIndexView
+                android:id="@+id/phone_LetterIndexView_org"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </ScrollView>
+
+
+        <TextView
+            android:id="@+id/phone_txt_center_org"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="#fff16e"
+            android:textSize="@dimen/abc_action_bar_stacked_max_height"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

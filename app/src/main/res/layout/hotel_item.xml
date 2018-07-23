@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+    >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/tv_pic_hotel"
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:src="@mipmap/hotel"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/padding"
+        android:layout_marginRight="@dimen/padding"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        >
+
+
+    <TextView
+        android:id="@+id/txt_name_hotel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textColor="#292929"
+        android:padding="3dp"
+        android:text="香格里拉酒店"
+        android:textSize="@dimen/textview_smalls_size"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/padding"
+        />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+
+            >
+            <ImageView
+                android:id="@+id/img_star_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/star"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/img_star_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/star"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/img_star_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/star"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/img_star_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/star"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/img_star_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/star"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/txt_manager_hotel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="3dp"
+            android:textColor="#808080"
+            android:text="负责人：张三"
+            android:textSize="@dimen/textview_smalls_size"
+            android:layout_weight="1"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="2dp"
+            >
+            <TextView
+                android:id="@+id/txt_address_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textview_small_size"
+                android:text="西安市雁塔区长安西路"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/hetel_location"
+                android:gravity="center|left"
+                android:drawablePadding="@dimen/padding_en"
+
+                />
+
+            <TextView
+                android:id="@+id/txt_tel_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/textview_small_size"
+                android:text="18623574699"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/hotel_icon_phone"
+                android:gravity="center|left"
+                android:drawablePadding="@dimen/padding_en"
+                />
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
+
+
+
+</LinearLayout>

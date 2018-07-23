@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_passenger"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bag"
+    android:orientation="vertical"
+    tools:context="com.xaqb.hotel.Activity.PassengerActivity">
+
+    <include layout="@layout/pub_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_en"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="企业名称"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <EditText
+                    android:id="@+id/edit_code_log_del"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:gravity="right"
+                    android:focusable="false"
+                    />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/padding_en">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联查机构级别"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size"
+                    />
+
+                <EditText
+                    android:id="@+id/edit_level_log_del"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:gravity="right"
+                    android:focusable="false"
+                    />
+            </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_en">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联查机构名称"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                />
+
+            <EditText
+                android:id="@+id/edit_org_log_del"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                android:gravity="right"
+                android:focusable="false"
+                />
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_en">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联查人员"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                />
+
+            <EditText
+                android:id="@+id/edit_per_log_del"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                android:gravity="right"
+                android:focusable="false"
+                />
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_en">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联查事项"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                />
+
+            <EditText
+                android:id="@+id/edit_event_log_del"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                android:gravity="right"
+                android:focusable="false"
+                />
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_en">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联查日期"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                />
+
+            <EditText
+                android:id="@+id/edit_date_log_del"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                android:gravity="right"
+                android:focusable="false"
+                />
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_en">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="录入人员"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                />
+
+            <EditText
+                android:id="@+id/edit_operate_log_del"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                android:gravity="right"
+                android:focusable="false"
+                />
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_en">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="录入日期"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                />
+
+            <EditText
+                android:id="@+id/edit_operate_date_log_del"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size"
+                android:gravity="right"
+                android:focusable="false"
+                />
+        </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_en"
+                        android:text="发现问题"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_smalls_size"
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:orientation="vertical"
+                    >
+
+                    <EditText
+                        android:id="@+id/edit_clue_log_del"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="拒绝提供身份证信息"
+                        android:textColorHint="@color/text"
+                        android:textSize="@dimen/textview_small_size"
+                        android:textColor="@color/viewfinder_frame"
+                        android:gravity="left"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_en"
+                        android:text="处理结果"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_smalls_size"
+                        android:id="@+id/textView3" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:orientation="vertical"
+                    >
+
+                    <EditText
+                        android:id="@+id/edit_result_log_del"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:hint="拒绝提供身份证信息"
+                        android:textColorHint="@color/text"
+                        android:textSize="@dimen/textview_small_size"
+                        android:textColor="@color/viewfinder_frame"
+                        android:gravity="left"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+
+</LinearLayout>
+
+

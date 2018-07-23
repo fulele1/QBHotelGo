@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_hotel_detil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bag"
+    tools:context="com.xaqb.hotel.Activity.HotelDetilActivity"
+    >
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/bag"
+
+            >
+
+
+                <ImageView
+                    android:id="@+id/img_pic_del_hotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:background="@mipmap/hotel_gag"
+                    />
+
+                <ImageView
+                    android:id="@+id/img_back_del_hotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/back_write"
+                    android:onClick="onBack"
+                    android:layout_marginTop="@dimen/activity_horizontal_margins"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    />
+
+                <LinearLayout
+                    android:layout_marginTop="120dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/activity_horizontal_margin">
+
+                        <TextView
+                            android:id="@+id/txt_name_del_hotel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="西安香格里拉大酒店"
+                            android:gravity="center"
+                            android:textSize="@dimen/activity_title"
+                            android:textColor="@color/viewfinder_frame"
+                            />
+
+                        <TextView
+                            android:id="@+id/txt_del_del_hotel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="从业人员：345人|入住人数：524425|负责人：张三"
+                            android:gravity="center"
+                            android:textColor="@color/redio_text"
+                            android:paddingTop="@dimen/activity_horizontal_margin"
+                            />
+
+                        <TextView
+                            android:id="@+id/txt_tel_del_hotel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="酒店电话：029-5452154"
+                            android:gravity="center"
+                            android:textColor="@color/main"
+                            android:paddingTop="@dimen/activity_horizontal_margin"
+                            android:textSize="@dimen/textview_normal_size"
+                            android:layout_marginTop="@dimen/activity_horizontal_margin"
+                            />
+                </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="旅客七日入住趋势图"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/activity_horizontal_margin"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:background="@color/white"
+                    >
+
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_line_del_hotel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+
+                </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

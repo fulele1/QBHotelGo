@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_org_detile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bag"
+    tools:context="com.xaqb.hotel.Activity.OrgDetileActivity">
+
+    <include layout="@layout/pub_titlebar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="辖区数据"
+        android:textColor="@color/redio_text"
+        android:textSize="@dimen/activity_title"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@mipmap/police_org"
+            android:layout_margin="@dimen/button_normal_sizes"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="辖区名称"
+                android:textColor="@color/bag"
+                />
+            <TextView
+                android:id="@+id/txt_org_del_org"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="54651456"
+                android:textColor="@color/bag"
+                android:textSize="@dimen/activity_title"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@mipmap/hotel_org"
+            android:layout_margin="@dimen/button_normal_sizes"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="酒店总数"
+                android:textColor="@color/bag"
+                />
+            <TextView
+                android:id="@+id/txt_hotel_del_org"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="54651456"
+                android:textColor="@color/bag"
+                android:textSize="@dimen/activity_title"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout><LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@mipmap/per_org"
+            android:layout_margin="@dimen/button_normal_sizes"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="从业人员数"
+                android:textColor="@color/bag"
+                />
+            <TextView
+                android:id="@+id/txt_staff_del_org"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="54651456"
+                android:textColor="@color/bag"
+                android:textSize="@dimen/activity_title"
+                />
+        </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:background="@mipmap/passenger_org"
+            android:layout_margin="@dimen/button_normal_sizes"
+            android:gravity="center|left"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+        >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="入住人数"
+                android:textColor="@color/bag"
+                />
+            <TextView
+                android:id="@+id/txt_passenger_del_org"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="54651456"
+                android:textColor="@color/bag"
+                android:textSize="@dimen/activity_title"
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:text="旅客七日入住趋势图"
+        android:textColor="@color/redio_text"
+        android:textSize="@dimen/activity_title"
+        android:textStyle="bold"
+        android:id="@+id/textView2" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:id="@+id/lineChart_del_org"></com.github.mikephil.charting.charts.LineChart>
+</LinearLayout>
