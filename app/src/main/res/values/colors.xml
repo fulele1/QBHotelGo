@@ -7,27 +7,17 @@
     <color name="LINE">#7C4AFB</color>
 
     <color name="white">#ffffff</color>
-    <color name="per_bag">#a7dde9</color>
-    <color name="per_bag_">#e6bdd2</color>
 
     <color name="viewfinder_frame">#ff000000</color>
     <color name="viewfinder_laser">#ffff0000</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="result_view">#b0000000</color>
     <color name="possible_result_points">#00000000</color>
-    <color name="textColor">#dadada</color>
     <color name="color_00">#3e3e3e3e</color>
     <color name="bag">#fafafa</color>
     <color name="text">#bcbcbc</color>
     <color name="redio_text">#bbbbbb</color>
-    <color name="fuxk_base_color_white">#ffffff</color>
-    <color name="man">#2194ff</color>
-    <color name="woman">#8a19fe</color>
     <color name="bagkk">#c1d2fe</color>
-    <color name="login_background">#a2aeff</color>
-    <color name="one">#2b76fd</color>
-    <color name="two">#2ec2ff</color>
-    <color name="three">#2c9efe</color>
 
 
 

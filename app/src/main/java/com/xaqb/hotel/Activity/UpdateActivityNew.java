@@ -1,26 +1,32 @@
 package com.xaqb.hotel.Activity;
-
-
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+
+import com.jaeger.library.StatusBarUtil;
 import com.xaqb.hotel.R;
-import com.xaqb.hotel.Utils.PermissionUtils;
+import com.xaqb.hotel.Utils.LogUtils;
 import com.xaqb.hotel.Utils.SPUtils;
 import com.xaqb.hotel.Utils.StatuBarUtil;
-import com.xaqb.hotel.Utils.ToastUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -35,19 +41,101 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class UpdateActivityNew extends BaseActivityNew {
-    protected String mDownLoadPath = "";//下载路径
-    protected String mSavePath = "";//安装路径
+
+    protected String FsUrl = "";
+    protected String savePath = "";
     protected int FiDialogType = 0;//0：下载完成 1：发生错误 2：用户中断
     protected boolean FbRun = false;
+    protected ProgressBar FoBar;
     protected DownFileThread FoThread;
-    File oFile;
-    @BindView(R.id.pbprogress)
-    ProgressBar FoBar;
-    @BindView(R.id.tvmessage)
-    TextView FoText;
-    @BindView(R.id.buttonok)
-    Button FoBtn;
-    private boolean isUpdate;
+    protected TextView FoText;
+    protected Button FoBtn;
+    private UpdateActivityNew instance;
+    private String downUrl,newVersion;
+    @BindView(R.id.layout_titlebar)
+    FrameLayout titlebar;
+    Unbinder unbinder;
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void initViews() {
+        setContentView(R.layout.activity_update_new);
+        instance = this;
+        unbinder = ButterKnife.bind(instance);
+        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.bag));//修改状态栏字体颜色为黑色
+        titlebar.setBackgroundColor(getResources().getColor(R.color.bag));
+        TextView tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvTitle.setText("检查更新");
+        downUrl = SPUtils.get(instance,"urlDown","").toString();
+        newVersion = SPUtils.get(instance,"newVersion","").toString()+".apk";
+    }
+
+    @Override
+    public void onBackward(View backwardView) {
+        quit();
+    }
+
+    @Override
+    public void initData() {
+        savePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/";
+        File oFile = new File(savePath);
+        if (!oFile.exists()) oFile.mkdir();
+        FoBar = (ProgressBar) findViewById(R.id.pbprogress);
+        FoBar.setMax(100);
+        FoText = (TextView) findViewById(R.id.tvmessage);
+        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
+
+        FoBtn = (Button) findViewById(R.id.buttonok);
+
+        if (FoBtn != null)
+            FoBtn.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View oView) {
+                    quit();
+                }
+            });
+        start();
+    }
+
+    @Override
+    public void addListener()  {
+
+    }
+
+    /**
+     * 获得版本信息
+     *
+     * @return
+     */
+
+    public String getVersionName() {
+        try {
+            PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+
+            // 当前应用的版本名称
+            return info.versionName;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            return "无法获得应用版本号";
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int iCode, KeyEvent oEvent) {
+        if (iCode == KeyEvent.KEYCODE_BACK || iCode == KeyEvent.KEYCODE_HOME || iCode == KeyEvent.KEYCODE_MENU) {
+            quit();
+            return false;
+        }
+        return super.onKeyDown(iCode, oEvent);
+    }
+
     //0:下载成功  1：发生错误
     Handler FoHandler = new Handler() {
         @Override
@@ -56,18 +144,19 @@ public class UpdateActivityNew extends BaseActivityNew {
             int iPercent = 0;
             switch (msg.what) {
                 case 0: //成功完成
-                    isUpdate = true;
+
                     FoBtn.setText("立即安装");
                     SPUtils.put(instance,"total_apk","yes");
-                    FoBtn.setOnClickListener(new View.OnClickListener() {
+                    FoBtn.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             //安装app
                             Intent oInt = new Intent(Intent.ACTION_VIEW);
-                            oInt.setDataAndType(Uri.fromFile(new File(mSavePath)), "application/vnd.android.package-archive");
+                            oInt.setDataAndType(Uri.fromFile(new File(savePath + "/" + newVersion)), "application/vnd.android.package-archive");
                             //关键点：
                             //安装完成后执行打开
                             oInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            writeConfig("late", "true");
                             startActivity(oInt);
                         }
                     });
@@ -93,72 +182,14 @@ public class UpdateActivityNew extends BaseActivityNew {
             super.handleMessage(msg);
         }
     };
-    private UpdateActivityNew instance;
-    private Unbinder unbinder;
 
-    TextView tvTitle;
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void initViews() throws Exception {
-        setContentView(R.layout.activity_update_new);
-        instance = this;
-        unbinder = ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
-        tvTitle = (TextView) findViewById(R.id.tv_title);
-        tvTitle.setText("检查更新");
-        mDownLoadPath = SPUtils.get(instance, "au_file_path", "") + "";
-        mSavePath = SPUtils.get(instance, "au_save_path", "")+"";
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind();
-    }
-
-    @Override
-    public void initData() throws Exception {
-        File oFile = new File(mSavePath);
-        if (!oFile.exists()) oFile.mkdir();
-        FoBar.setMax(100);
-        this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
-        StringBuffer update = new StringBuffer("当前版本：" + getVersionName() + "\n\n");
-
-        if (FoBtn != null)
-            FoBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View oView) {
-                    quit();
-                }
-            });
-
-
-        checkPer(PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE);
-
-    }
-
-    @Override
-    protected void requestPerPass(int requestCode) {
-        ToastUtil.showShort(instance,"开始下载");
-        start();
-
-    }
-
-    public String getVersionName() {
-        try {
-            PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
-
-            // 当前应用的版本名称
-            return info.versionName;
-
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
+    protected void quit() {
+        if (FbRun) {
+            FiDialogType = 2;
+            showDialog("确认信息", "将要终止文件下载，是否确定？", "确定", "取消", 0);
+            FoThread.pause();
+        } else
+            finish();
     }
 
     @Override
@@ -175,8 +206,9 @@ public class UpdateActivityNew extends BaseActivityNew {
     protected void dialogOk() {
         switch (FiDialogType) {
             case 0:
+                //安装app
                 Intent oInt = new Intent(Intent.ACTION_VIEW);
-                oInt.setDataAndType(Uri.fromFile(new File(mSavePath)), "application/vnd.android.package-archive");
+                oInt.setDataAndType(Uri.fromFile(new File(savePath + "/" + newVersion)), "application/vnd.android.package-archive");
                 //关键点：
                 //安装完成后执行打开
                 oInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -193,43 +225,6 @@ public class UpdateActivityNew extends BaseActivityNew {
         }
     }
 
-    /**
-     * 停止下载
-     */
-    protected void quit() {
-        if (FbRun) {
-            FiDialogType = 2;
-            showDialog("确认信息", "将要终止文件下载，是否确定？", "确定", "取消", 0);
-            FoThread.pause();
-        } else
-            finish();
-    }
-
-
-    @Override
-    public boolean onKeyDown(int iCode, KeyEvent oEvent) {
-        if (iCode == KeyEvent.KEYCODE_BACK || iCode == KeyEvent.KEYCODE_HOME || iCode == KeyEvent.KEYCODE_MENU) {
-            quit();
-            return false;
-        }
-        return super.onKeyDown(iCode, oEvent);
-    }
-
-
-    @Override
-    public void addListener() throws Exception {
-
-    }
-
-    protected void start() {
-        File oFile = new File(mSavePath);
-        if (oFile.exists()) oFile.delete();
-        FoThread = new DownFileThread();
-        FbRun = true;
-        FoThread.start();
-        FoText.setText("开始下载.....");
-    }
-
     class DownFileThread extends Thread {
         private int FiState = 0;
 
@@ -241,7 +236,6 @@ public class UpdateActivityNew extends BaseActivityNew {
 
         public void over() {
             FiState = 0;
-            isUpdate = true;
         }
 
         public void pause() {
@@ -259,16 +253,31 @@ public class UpdateActivityNew extends BaseActivityNew {
             oMess.obj = sError;
             FoHandler.sendMessage(oMess);
         }
+        private static final int REQUEST_EXTERNAL_STORAGE = 1;
+        private  String[] PERMISSIONS_STORAGE = {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE };
 
-
-
+        public  void verifyStoragePermissions(Activity activity) {
+            // Check if we have write permission
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,
+                        REQUEST_EXTERNAL_STORAGE);
+            }
+        }
         @Override
         public void run() {
-            //apk保存的路径
-            oFile = new File(mSavePath);
+            final File oFile = new File(savePath + "/" + newVersion);
+
+            verifyStoragePermissions(instance);
+
             try {
                 DefaultHttpClient client = new DefaultHttpClient();
-                HttpGet oGet = new HttpGet( mDownLoadPath);//apk的下载地址
+                HttpGet oGet = new HttpGet(downUrl);//此处的URL为http://..../path?arg1=value&....argn=value
+                LogUtils.e(FsUrl);
                 HttpResponse oResponse = client.execute(oGet); //模拟请求
                 int iCode = oResponse.getStatusLine().getStatusCode();//返回响应码
                 if (iCode == 200) {
@@ -309,6 +318,7 @@ public class UpdateActivityNew extends BaseActivityNew {
                                         FiState = 0;
                                         break;
                                     }
+                                    //Thread.sleep(100);
                                 } else {
                                     Thread.sleep(100);
                                     iTimeout += 1;
@@ -318,18 +328,30 @@ public class UpdateActivityNew extends BaseActivityNew {
                                     }
                                 }
                             } else Thread.sleep(1000);
-                        }
+                        } //while
                     } finally {
                         oInput.close();
                         oStream.close();
                     }
+
+
                 } else {
                     send(1, 0, oResponse.getStatusLine().getReasonPhrase());
                 }
                 FiState = 0;
             } catch (Exception E) {
                 send(1, 0, E.getMessage());
+
             }
         }
+    }
+
+    protected void start() {
+        File oFile = new File(savePath + "/" + newVersion);
+        if (oFile.exists()) oFile.delete();
+        FoThread = new DownFileThread();
+        FbRun = true;
+        FoThread.start();
+        FoText.setText("开始下载.....");
     }
 }

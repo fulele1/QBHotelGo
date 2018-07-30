@@ -289,7 +289,6 @@ public class LogListActivity extends BaseActivityNew {
 
     }
 
-    private int size;
 
     private class PreviewHandler extends Handler {
 

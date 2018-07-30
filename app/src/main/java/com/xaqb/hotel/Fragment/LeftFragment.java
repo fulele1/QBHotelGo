@@ -34,6 +34,7 @@ import com.xaqb.hotel.Utils.GlideCircleTransform;
 import com.xaqb.hotel.Utils.GlideRoundTransform;
 import com.xaqb.hotel.Utils.PicUtil;
 import com.xaqb.hotel.Utils.SPUtils;
+import com.xaqb.hotel.Utils.UpdateUtil;
 
 import java.io.File;
 
@@ -75,7 +76,6 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         llCustomer.setOnClickListener(this);
         tvNickName.setOnClickListener(this);
 
-
         lvLeftMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -84,21 +84,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         startActivity(new Intent(getActivity(), ModifyPswActivity.class));
                         break;
                     case 1: // 版本更新
-                        f = new File(SPUtils.get(instance, "au_save_path", "") + "");
-                        isExists = f.exists();
-
-                        if (readConfig("late").equals("yes")) {
-                            Toast.makeText(getContext(), "已是最新版本", Toast.LENGTH_SHORT).show();
-                        } else {
-                            if (isExists
-                                    && ApkTotalUtill.getUninatllApkInfo(instance, SPUtils.get(instance, "au_save_path", "") + "")
-                                    ) {
-                                showDialogB(instance, "提示", 0, "新版本已下载成功是否直接安装", "立刻安装", "以后再说");
-
-                            } else {
-                                showDialogB(instance, "发现新版本", 0, "本次更新的内容有：\n" + SPUtils.get(instance, "au_info", ""), "立刻更新", "以后再说");
-                            }
-                        }
+                        SPUtils.put(getContext(),"isclickFragment","true");
+                        new UpdateUtil(getActivity(),"7").getVersion();
                         break;
                     case 2:// 线索信息
                         startActivity(new Intent(getActivity(), ClueListActivity.class));
@@ -113,25 +100,12 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         });
 
     }
-    private boolean isExists;
-    private File f;
     @Override
     public void dialogOkB() {
         super.dialogOkB();
-        if (isExists
-                && ApkTotalUtill.getUninatllApkInfo(instance,SPUtils.get(instance,"au_save_path","")+"")
- ){
-            //安装app
-            Intent oInt1 = new Intent(Intent.ACTION_VIEW);
-            oInt1.setDataAndType(Uri.fromFile(f), "application/vnd.android.package-archive");
 
-            //关键点：
-            //安装完成后执行打开
-            oInt1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(oInt1);
-        }else{
         startActivity(new Intent(getActivity(), UpdateActivityNew.class));
-        }
+
     }
 
     /**

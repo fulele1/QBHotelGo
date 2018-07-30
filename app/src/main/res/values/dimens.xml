@@ -6,7 +6,6 @@
     <dimen name="activity_title">22sp</dimen>
     <dimen name="textview_normal_size">18sp</dimen>
     <dimen name="textview_small_size">12sp</dimen>
-    <dimen name="textview_smallss_size">10sp</dimen>
     <dimen name="textview_smalls_size">14sp</dimen>
     <dimen name="textview_smallx_size">12sp</dimen>
     <dimen name="textview_smallx_sizes">8sp</dimen>
@@ -19,7 +18,6 @@
     <dimen name="button_normal_size">20sp</dimen>
     <dimen name="button_normal_sizes">5dp</dimen>
     <dimen name="padding_en">8dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_line">10dp</dimen>
     <dimen name="default_divider_padding">4dp</dimen>
 

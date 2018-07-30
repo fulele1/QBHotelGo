@@ -233,9 +233,10 @@ public class PassengerDetActivity extends AppCompatActivity {
                                     del.setPic_id(NullUtil.getString(lists.get(j).get(pk)));//图片id
                                     del.setPk(pk);//图片id
                                     dels.add(del);
-                                    Collections.reverse(dels);
+
                                 }
                                 delss.addAll(dels);
+                                Collections.reverse(delss);
 
                                 initData(delss.size(),delss);
                                 vpg.setAdapter(new FragmentAdapter(mFragmentManager,mFrags));

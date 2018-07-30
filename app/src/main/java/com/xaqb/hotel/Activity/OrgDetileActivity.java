@@ -8,15 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.maps.model.Text;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
-import com.squareup.picasso.Picasso;
-import com.xaqb.hotel.Entity.Passenger;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.ChartUtil;
 import com.xaqb.hotel.Utils.GsonUtil;

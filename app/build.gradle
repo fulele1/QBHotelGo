@@ -26,7 +26,7 @@ android {
             // 设置支持的SO库架构
             abiFilters 'armeabi'
 //            abiFilters 'arm64-v8a','armeabi-v7a'
-            abiFilters "x86"
+//            abiFilters "x86"
         }
 
         //信鸽
@@ -91,7 +91,6 @@ dependencies {
     compile files('libs/okhttputils-2_6_2.jar')
     compile files('libs/okio-1.11.0.jar')
     compile files('libs/zxing.jar')
-    compile files('libs/AMap3DMap_5.0.0_AMapLocation_3.3.0_20170311.jar')
     //友盟
     compile 'com.umeng.analytics:analytics:latest.integration'
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9

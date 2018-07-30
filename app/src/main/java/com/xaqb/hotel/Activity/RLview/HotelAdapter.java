@@ -50,7 +50,7 @@ public class HotelAdapter extends ListBaseAdapter<Hotel> {
         txt_tel.setText(item.getTel());
         if(!item.getPic().equals("")&&item.getPic()!=null){
             Glide.with(mContext).load(item.getPic())
-                    .placeholder(R.mipmap.per).error(R.mipmap.ic_launcher).into(tv_pic);
+                    .placeholder(R.mipmap.hotel).error(R.mipmap.hotel).into(tv_pic);
         }
 
         if (item.getStars().equals("1")){

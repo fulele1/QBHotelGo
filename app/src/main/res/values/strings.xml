@@ -1,25 +1,11 @@
 <resources>
     <string name="app_name">大旅业治安</string>
-    <string name="login_user">账　号：</string>
     <string name="input_account">请输入账号...</string>
     <string name="password">密　码：</string>
-    <string name="old_psw">旧密码：</string>
-    <string name="new_psw">新密码：</string>
     <string name="input_psw">请输入密码...</string>
     <string name="confirm_psw">请确认密码</string>
-    <string name="login_check_text">记住用户名</string>
-    <string name="login">登　录</string>
-    <string name="logo">咚咚开锁</string>
     <string name="function">日常报表</string>
-    <string name="functionss">旅客七日入住趋势图</string>
     <string name="functions">企业概述</string>
-    <string name="information">客户信息</string>
-    <string name="post_pic">上传照片</string>
-    <string name="function_english">Function module</string>
-    <string name="order_all">全部</string>
-    <string name="order_wait">待付款</string>
-    <string name="order_pay">未付清</string>
-    <string name="order_finished">已完成</string>
 
     <string-array name="permissions">
         <item>@string/permission_recode_audio_hint</item>
@@ -50,29 +36,7 @@
 
     <string name="network_not_alive">网络未连接，请检查网络</string>
     <string name="on_char">._0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
-    <string-array name="per_type">
-        <item>请选择</item>
-        <item>中国大陆</item>
-        <item>国外</item>
-        <item>港澳</item>
-    </string-array>
 
 
-    <string-array name="iden_type">
-        <item>请选择</item>
-        <item>身份证</item>
-        <item>户口本</item>
-        <item>军官证</item>
-        <item>警官证</item>
-        <item>士兵证</item>
-        <item>国内护照</item>
-        <item>驾照</item>
-        <item>港澳通行证</item>
-        <item>其他</item>
-    </string-array>
-    <string-array name="sex">
-        <item>男</item>
-        <item>女</item>
-    </string-array>
     <string name="title_activity_show">ShowActivity</string>
 </resources>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/alert_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@mipmap/dialog"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_dialog_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="友情提示"
+            android:textColor="@color/main"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_dialog_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:paddingBottom="30dp"
+            android:text="检测到新版本"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btn_dia_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingBottom="@dimen/shadow_width"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="马上更新"
+            android:textColor="#000" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/alert_close"
+        android:src="@mipmap/dog" />
+
+    <Button
+        android:id="@+id/btn_dia_no"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:background="@mipmap/close" />
+
+</RelativeLayout>
