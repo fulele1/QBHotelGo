@@ -5,8 +5,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
-import com.xaqb.hotel.Activity.PicassoRoundTransform;
 import com.xaqb.hotel.Entity.Order;
 import com.xaqb.hotel.Entity.Passenger;
 import com.xaqb.hotel.R;

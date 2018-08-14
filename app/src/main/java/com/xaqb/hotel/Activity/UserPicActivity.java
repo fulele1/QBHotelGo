@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.Base64Utils;
 import com.xaqb.hotel.Utils.GsonUtil;

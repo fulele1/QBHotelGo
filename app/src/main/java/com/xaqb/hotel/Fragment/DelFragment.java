@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
-import com.xaqb.hotel.Activity.PicassoRoundTransform;
 import com.xaqb.hotel.Entity.Del;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.HttpUrlUtils;

@@ -1,15 +1,10 @@
 package com.xaqb.hotel.Activity.RLview;
 
 import android.content.Context;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-import com.xaqb.hotel.Activity.PicassoRoundTransform;
-import com.xaqb.hotel.Entity.Clue;
 import com.xaqb.hotel.Entity.Log;
 import com.xaqb.hotel.R;
-import com.xaqb.hotel.Utils.DateUtil;
 
 
 /**

@@ -20,6 +20,7 @@ import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.EditClearUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
+import com.xaqb.hotel.Views.DoubleDatePickerDialog;
 
 import java.util.Calendar;
 
@@ -38,6 +39,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     EditText edit_org;
     @BindView(R.id.edit_name_hotel)
     EditText edit_name;
+    @BindView(R.id.edit_time_hotel)
+    EditText edit_time;
     @BindView(R.id.edit_start_hotel)
     EditText edit_start;
     @BindView(R.id.edit_end_hotel)
@@ -48,6 +51,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     ImageView img_clear_start;
     @BindView(R.id.img_clear_end_hotel)
     ImageView img_clear_end;
+    @BindView(R.id.img_clear_time_hotel)
+    ImageView img_clear_time;
     @BindView(R.id.btn_quary_hotel)
     Button btn_quary;
     private Unbinder unbinder;
@@ -73,6 +78,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         edit_org.setOnClickListener(instance);
         edit_start.setOnClickListener(instance);
         edit_end.setOnClickListener(instance);
+        edit_time.setOnClickListener(instance);
         img_clear_org.setOnClickListener(instance);
         img_clear_start.setOnClickListener(instance);
         img_clear_end.setOnClickListener(instance);
@@ -98,6 +104,21 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(instance, SearchAreaActivity.class);
                 startActivityForResult(intent, 0);
                 break;
+            case R.id.edit_time_hotel://选择时间
+                Calendar c = Calendar.getInstance();
+                new DoubleDatePickerDialog(instance, 0, new DoubleDatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
+                                          int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d→%d-%d-%d", startYear,
+                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
+                        edit_time.setText(textString);
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
+                break;
+
             case R.id.edit_start_hotel://成立时间
                 chooseDatePicker(edit_start);
                 break;

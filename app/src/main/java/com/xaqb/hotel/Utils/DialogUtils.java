@@ -30,8 +30,6 @@ public class DialogUtils {
                 })
                 .create();
         dialog.show();
-
-
     }
 
 

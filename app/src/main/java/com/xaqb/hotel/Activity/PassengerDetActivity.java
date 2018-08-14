@@ -18,13 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 import com.xaqb.hotel.Entity.Del;
 import com.xaqb.hotel.Entity.Log;
 import com.xaqb.hotel.Fragment.DelFragment;
 import com.xaqb.hotel.Fragment.FragmentAdapter;
 import com.xaqb.hotel.R;
-import com.xaqb.hotel.Utils.CircleTransform;
 import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.GlideRoundTransform;
 import com.xaqb.hotel.Utils.GsonUtil;
@@ -225,7 +223,8 @@ public class PassengerDetActivity extends AppCompatActivity {
                                     }else{
                                         goTime = DateUtil.getDate(goTime);
                                     }
-                                    del.setGo(goTime+curr+"--"+j);//离店时间
+//                                    del.setGo(goTime+curr+"--"+j);//离店时间
+                                    del.setGo(goTime);//离店时间
                                     del.setDays("共"+NullUtil.getString(lists.get(j).get("day"))+"天");//入住天数
                                     del.setHotel(NullUtil.getString(lists.get(j).get("hname")));//酒店名称
                                     del.setRoomNum(NullUtil.getString(lists.get(j).get("noroom")));//房间号

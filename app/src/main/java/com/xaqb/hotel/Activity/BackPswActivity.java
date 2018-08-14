@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
 import com.xaqb.hotel.Entity.Log;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.CodeUtils;

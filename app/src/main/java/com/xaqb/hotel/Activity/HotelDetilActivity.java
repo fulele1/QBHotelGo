@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.jaeger.library.StatusBarUtil;
-import com.squareup.picasso.Picasso;
 import com.xaqb.hotel.Entity.Hotel;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.ChartUtil;
