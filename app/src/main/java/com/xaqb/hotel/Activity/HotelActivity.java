@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.EditClearUtils;
+import com.xaqb.hotel.Utils.LogUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
 import com.xaqb.hotel.Views.DoubleDatePickerDialog;
@@ -41,16 +42,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     EditText edit_name;
     @BindView(R.id.edit_time_hotel)
     EditText edit_time;
-    @BindView(R.id.edit_start_hotel)
-    EditText edit_start;
-    @BindView(R.id.edit_end_hotel)
-    EditText edit_end;
     @BindView(R.id.img_clear_org_hotel)
     ImageView img_clear_org;
-    @BindView(R.id.img_clear_start_hotel)
-    ImageView img_clear_start;
-    @BindView(R.id.img_clear_end_hotel)
-    ImageView img_clear_end;
     @BindView(R.id.img_clear_time_hotel)
     ImageView img_clear_time;
     @BindView(R.id.btn_quary_hotel)
@@ -76,15 +69,10 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     private void event() {
         btn_quary.setOnClickListener(instance);
         edit_org.setOnClickListener(instance);
-        edit_start.setOnClickListener(instance);
-        edit_end.setOnClickListener(instance);
+
         edit_time.setOnClickListener(instance);
         img_clear_org.setOnClickListener(instance);
-        img_clear_start.setOnClickListener(instance);
-        img_clear_end.setOnClickListener(instance);
         EditClearUtils.clearText(edit_org,img_clear_org);
-        EditClearUtils.clearText(edit_start,img_clear_start);
-        EditClearUtils.clearText(edit_end,img_clear_end);
     }
 
     public void onBackward(View view){
@@ -112,32 +100,18 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                     public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
                                           int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
                                           int endDayOfMonth) {
-                        String textString = String.format("%d-%d-%d→%d-%d-%d", startYear,
+                        String textString = String.format("%d-%d-%d--->%d-%d-%d", startYear,
                                 startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         edit_time.setText(textString);
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
                 break;
 
-            case R.id.edit_start_hotel://成立时间
-                chooseDatePicker(edit_start);
-                break;
-            case R.id.edit_end_hotel://截止时间
-                chooseDatePicker(edit_end);
 
-                break;
             case R.id.img_clear_org_hotel://清除管辖机构
                 edit_org.setText("");
                 mOrg = "";
                 img_clear_org.setVisibility(View.GONE);
-                break;
-            case R.id.img_clear_start_hotel://清除成立时间
-                edit_start.setText("");
-                img_clear_start.setVisibility(View.GONE);
-                break;
-            case R.id.img_clear_end_hotel://清除截止时间
-                edit_end.setText("");
-                img_clear_end.setVisibility(View.GONE);
                 break;
             case R.id.btn_quary_hotel://查询
                 getIntentData();
@@ -155,29 +129,18 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
-
-    public void chooseDatePicker(final EditText editText) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(instance, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                i1 = i1 + 1;
-                String datainner = i + "-" + i1 + "-" + i2;
-                editText.setText(datainner);
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
     private String mOrg = "";
-    private String mName,mStart,mEnd;
+    private String mName,mStart,mEnd,mTime;
     private void getIntentData() {
         mName = edit_name.getText().toString().trim();
-        mStart = NullUtil.getString(DateUtil.data(edit_start.getText().toString().trim()));
-        mEnd = NullUtil.getString(DateUtil.data(edit_end.getText().toString().trim()));
+        mTime = edit_time.getText().toString().trim();
+        if (!mTime.equals("")){
+        mStart = NullUtil.getString(mTime.substring(0, mTime.indexOf("--->")));
+        mEnd = NullUtil.getString(mTime.substring(mTime.indexOf("--->")+4));
 
+        }
+        LogUtils.e("mStart"+mStart);
+        LogUtils.e("mEnd"+mEnd);
     }
 
     @Override

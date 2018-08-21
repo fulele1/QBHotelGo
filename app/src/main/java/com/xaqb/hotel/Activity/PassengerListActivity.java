@@ -32,6 +32,8 @@ import com.xaqb.hotel.Activity.RLview.PassengerAdapter;
 import com.xaqb.hotel.Entity.Order;
 import com.xaqb.hotel.Entity.Passenger;
 import com.xaqb.hotel.R;
+import com.xaqb.hotel.Utils.ConditionUtil;
+import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.GsonUtil;
 import com.xaqb.hotel.Utils.HttpUrlUtils;
 import com.xaqb.hotel.Utils.IdenTypeUtils;
@@ -44,6 +46,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -212,20 +215,29 @@ public class PassengerListActivity extends AppCompatActivity{
         unbinder.unbind();
     }
     public String  getIntentData(){
+
+
+        HashMap map = new HashMap();
         Intent intent = getIntent();
         String nameType = intent.getStringExtra("nameType");
         String name = intent.getStringExtra("name");
         String idenType = intent.getStringExtra("idenType");
         String iden = intent.getStringExtra("iden");
         String tel = intent.getStringExtra("tel");
-        String date = intent.getStringExtra("date");
-        LogUtils.e("旅客参数"+nameType+name+idenType+iden+tel+date);
-        return "?type="+nameType+
-                "&name="+name+
-                "&idtype="+idenType+
-                "&idcode="+iden+
-                "&tetphone="+tel+
-                "&ltime="+date;
+        String start = intent.getStringExtra("start");
+        String end = intent.getStringExtra("end");
+
+        map.put("\"IDType\"", idenType);//
+        map.put("\"name\"", name);//
+        map.put("\"idcode\"", iden);//
+        map.put("\"telphone\"", tel);//
+        if (!start.equals("")&&start !=null&&!end.equals("")&&end !=null) {
+            map.put("\"ltime\"", "[[\">=\"," + DateUtil.data(start) + "],[\"<=\"," + DateUtil.data(end) + "]]");//时间
+        }
+
+
+
+        return "?condition="+ ConditionUtil.getConditionString(map)+"&type="+nameType;
     }
 
 

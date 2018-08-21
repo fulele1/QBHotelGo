@@ -26,6 +26,8 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.xaqb.hotel.Activity.RLview.OrderAdapter;
 import com.xaqb.hotel.Entity.Order;
 import com.xaqb.hotel.R;
+import com.xaqb.hotel.Utils.ConditionUtil;
+import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.GsonUtil;
 import com.xaqb.hotel.Utils.HttpUrlUtils;
 import com.xaqb.hotel.Utils.IdenTypeUtils;
@@ -38,6 +40,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -210,15 +213,26 @@ public class OrderListActivity extends BaseActivityNew {
         unbinder.unbind();
     }
 
-    String mOrg,mName,mPerName,mDate,mType;
+    String mOrg,mName,mPerName,mStart,mEnd,mType;
     public String  getIntentData(){
+
+        HashMap map = new HashMap();
         Intent intent = getIntent();
         mType = intent.getStringExtra("type");
         mOrg = intent.getStringExtra("org");
         mName = intent.getStringExtra("hName");
         mPerName = intent.getStringExtra("perName");
-        mDate = intent.getStringExtra("date");
-        return "?type="+mType+"&hname="+mName+"&name="+mPerName+"&psorgan="+mOrg+"&ltime="+mDate;
+        mStart = NullUtil.getString(intent.getStringExtra("start"));
+        mEnd = NullUtil.getString(intent.getStringExtra("end"));
+
+        map.put("\"so_code\"", mOrg);//管辖机构
+        map.put("\"hname\"", mName);//场站名称
+        map.put("\"name\"", mPerName);//
+        if (!mStart.equals("")&&mStart !=null&&!mEnd.equals("")&&mEnd !=null) {
+            map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(mStart) + "],[\"<=\"," + DateUtil.data(mEnd) + "]]");//时间
+        }
+
+        return "?condition="+ ConditionUtil.getConditionString(map)+"&type="+mType;
     }
 
 
@@ -241,7 +255,7 @@ public class OrderListActivity extends BaseActivityNew {
                     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                     @Override
                     public void onResponse(String s, int i) {
-
+LogUtils.e(s);
                         try{
                             mOrder = new ArrayList<>();
 
@@ -309,6 +323,9 @@ public class OrderListActivity extends BaseActivityNew {
                                 Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(instance,LoginActivity.class));
                                 finish();
+                            }else {
+                                mHandler.sendEmptyMessage(-3);
+                                Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                             }
                         }catch (Exception e){
                             mHandler.sendEmptyMessage(-3);

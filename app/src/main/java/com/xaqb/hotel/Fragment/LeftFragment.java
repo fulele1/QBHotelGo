@@ -2,11 +2,7 @@ package com.xaqb.hotel.Fragment;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xaqb.hotel.Activity.ClueListActivity;
@@ -27,14 +22,10 @@ import com.xaqb.hotel.Activity.UserNickNameActivity;
 import com.xaqb.hotel.Activity.UserPicActivity;
 import com.xaqb.hotel.Adapter.LeftMenuListAdapter;
 import com.xaqb.hotel.R;
-import com.xaqb.hotel.Utils.ApkTotalUtill;
 import com.xaqb.hotel.Utils.GlideCircleTransform;
-import com.xaqb.hotel.Utils.GlideRoundTransform;
-import com.xaqb.hotel.Utils.PicUtil;
 import com.xaqb.hotel.Utils.SPUtils;
 import com.xaqb.hotel.Utils.UpdateUtil;
 
-import java.io.File;
 
 /**
  * 左滑菜单

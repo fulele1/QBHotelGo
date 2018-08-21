@@ -34,6 +34,8 @@ import com.xaqb.hotel.Entity.Hotel;
 import com.xaqb.hotel.Entity.Passenger;
 import com.xaqb.hotel.Entity.Staff;
 import com.xaqb.hotel.R;
+import com.xaqb.hotel.Utils.ConditionUtil;
+import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.GsonUtil;
 import com.xaqb.hotel.Utils.HttpUrlUtils;
 import com.xaqb.hotel.Utils.LogUtils;
@@ -45,6 +47,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -202,14 +205,48 @@ public class HotelListActivity extends AppCompatActivity{
 
     String mOrg,mName,mStart,mEnd;
     public String  getIntentData(){
+        HashMap map = new HashMap();
         Intent intent = getIntent();
         mOrg = intent.getStringExtra("org");
         mName = intent.getStringExtra("name");
         mStart = intent.getStringExtra("start");
         mEnd = intent.getStringExtra("end");
-        LogUtils.e(mOrg+mName+mStart+mEnd);
-        return "?code="+mOrg+"&hname="+mName+"&starttime="+mStart+"&endtime="+mEnd;
+        map.put("\"station\"", mOrg);//管辖机构
+        map.put("\"hname\"", mName);//场站名称
+        if (!mStart.equals("")&&mStart !=null&&!mEnd.equals("")&&mEnd !=null) {
+            map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(mStart) + "],[\"<=\"," + DateUtil.data(mEnd) + "]]");//时间
+        }
+        return "?condition="+ConditionUtil.getConditionString(map);
     }
+
+
+    public String getData() {
+        HashMap map = new HashMap();
+
+        Intent intent = instance.getIntent();
+        String so_code = intent.getStringExtra("so_code");
+        String entrepot = intent.getStringExtra("entrepot");
+        String store = intent.getStringExtra("store");
+        String createtime = intent.getStringExtra("createtime");
+
+        LogUtils.e("so_code"+so_code);
+        LogUtils.e("entrepot"+entrepot);
+        LogUtils.e("store"+store);
+        LogUtils.e("createtime"+ DateUtil.data(createtime));
+
+        map.put("\"so_code\"", so_code);//管辖机构
+        map.put("\"entrepot\"", entrepot);//场站名称
+        map.put("\"store\"", store);//门店
+        if (!createtime.equals("")&&createtime !=null){
+
+            map.put("\"createtime\"", "[\">=\","+ DateUtil.data(createtime)+"]");//时间
+        }
+        LogUtils.e("condition"+ ConditionUtil.getConditionString(map));
+        return "&condition="+ConditionUtil.getConditionString(map);
+    }
+
+
+
 
 
     List<Hotel> mHotel;

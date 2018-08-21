@@ -144,14 +144,8 @@ public class PassengerDetActivity extends AppCompatActivity {
         dt_id = intent.getStringExtra("dt_id");
         pic = intent.getStringExtra("pic");
 
-
-        return "?ccode="+id+
-                "&type="+type+
-                "&name="+name+
-                "&idcode="+idcode+
-                "&address="+address+
-                "&idtype="+idtype+
-                "&sex="+sex;
+        return "?id="+dt_id+
+                "&type="+type;
     }
 
     List<Del> dels;

@@ -25,6 +25,7 @@ import com.xaqb.hotel.Utils.EditClearUtils;
 import com.xaqb.hotel.Utils.LogUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
+import com.xaqb.hotel.Views.DoubleDatePickerDialog;
 
 import java.util.Calendar;
 
@@ -105,7 +106,20 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.edit_date_passenger://查询时间
-                chooseDatePicker();
+                Calendar c = Calendar.getInstance();
+                new DoubleDatePickerDialog(instance, 0, new DoubleDatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
+                                          int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d--->%d-%d-%d", startYear,
+                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
+                        edit_date.setText(textString);
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
+
+
             break;
             case R.id.img_clear_date_pass://清除时间
                 edit_date.setText("");
@@ -154,7 +168,8 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
                     i.putExtra("idenType", idenType);
                     i.putExtra("iden", mIden);
                     i.putExtra("tel", mTel);
-                    i.putExtra("date", mDate);
+                    i.putExtra("start", mStart);
+                    i.putExtra("end", mEnd);
                     startActivity(i);
                 }
             break;
@@ -163,13 +178,24 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
     private String mName,mIden,mTel,mDate;
     private String idenType;
     private String perType;
+    private String mStart ="";
+    private String mEnd ="";
     private void getIntentData(){
         mName = edit_name.getText().toString().trim();
         mIden = edit_iden.getText().toString().trim();
         mTel = edit_tel.getText().toString().trim();
-        mDate = NullUtil.getString(DateUtil.data(edit_date.getText().toString().trim()));
+        mDate = edit_date.getText().toString().trim();
         String inenty = et_iden_type.getText().toString().trim();
         String perty = et_per_type.getText().toString().trim();
+
+        if (!mDate.equals("")){
+            mStart = NullUtil.getString(mDate.substring(0, mDate.indexOf("--->")));
+            mEnd = NullUtil.getString(mDate.substring(mDate.indexOf("--->")+4));
+        }
+
+        LogUtils.e("mStart"+mStart);
+        LogUtils.e("mEnd"+mEnd);
+
         LogUtils.e("inenty"+inenty);
         LogUtils.e("perty"+perty);
         if (inenty.equals("身份证")){
@@ -193,8 +219,6 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
         }else{
             idenType = "";
         }
-
-
         if (perty.equals("中国大陆")){
             perType = "1";
         }else if (perty.equals("国外")){
@@ -207,20 +231,4 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-
-    public void chooseDatePicker() {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(instance, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                i1 = i1 + 1;
-                String datainner = i + "-" + i1 + "-" + i2;
-                edit_date.setText(datainner);
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
 }

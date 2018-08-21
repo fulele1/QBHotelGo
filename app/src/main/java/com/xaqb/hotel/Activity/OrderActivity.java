@@ -22,8 +22,10 @@ import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.DialogUtils;
 import com.xaqb.hotel.Utils.EditClearUtils;
+import com.xaqb.hotel.Utils.LogUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
+import com.xaqb.hotel.Views.DoubleDatePickerDialog;
 
 import java.util.Calendar;
 
@@ -122,7 +124,19 @@ public class OrderActivity extends BaseActivityNew implements View.OnClickListen
                 img_clear_org.setVisibility(View.GONE);
                 break;
             case R.id.edit_date_order://成立时间
-                chooseDatePicker(edit_date);
+                Calendar c = Calendar.getInstance();
+                new DoubleDatePickerDialog(instance, 0, new DoubleDatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
+                                          int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d--->%d-%d-%d", startYear,
+                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
+                        edit_date.setText(textString);
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
+
                 break;
             case R.id.img_clear_date_order://清除成立时间
                 edit_date.setText("");
@@ -139,21 +153,24 @@ public class OrderActivity extends BaseActivityNew implements View.OnClickListen
                     i.putExtra("org", mOrg);
                     i.putExtra("hName", mHName);
                     i.putExtra("perName", mPerName);
-                    i.putExtra("date", mDate);
+                    i.putExtra("start", mStart);
+                    i.putExtra("end", mEnd);
                     startActivity(i);
                 }
                 break;
         }
     }
 
-
     private String mOrg = "";
-    private String mHName,mPerName,mDate,mType;
+    private String mHName,mPerName,mDate,mType,mStart,mEnd;
     private void getIntentData() {
         mHName = edit_hname.getText().toString().trim();
         mPerName = edit_pername.getText().toString().trim();
-        mDate = NullUtil.getString(DateUtil.data(edit_date.getText().toString().trim()));
-
+        mDate = edit_date.getText().toString().trim();
+        if (!mDate.equals("")){
+            mStart = NullUtil.getString(mDate.substring(0, mDate.indexOf("--->")));
+            mEnd = NullUtil.getString(mDate.substring(mDate.indexOf("--->")+4));
+        }
         String type = et_per_type.getText().toString().trim();
         if (type.equals("中国大陆")){
             mType = "1";
@@ -165,24 +182,6 @@ public class OrderActivity extends BaseActivityNew implements View.OnClickListen
             mType = "";
         }
     }
-
-
-    public void chooseDatePicker(final EditText editText) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(instance, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                i1 = i1 + 1;
-                String datainner = i + "-" + i1 + "-" + i2;
-                editText.setText(datainner);
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
-
 
 
     @Override
