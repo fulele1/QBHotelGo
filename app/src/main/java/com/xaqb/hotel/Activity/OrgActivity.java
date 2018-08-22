@@ -21,6 +21,7 @@ import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.EditClearUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
+import com.xaqb.hotel.Views.DoubleDatePickerDialog;
 
 import java.util.Calendar;
 
@@ -39,16 +40,12 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
     FrameLayout titlebar;
     @BindView(R.id.edit_org_org)
     EditText edit_org;
-    @BindView(R.id.edit_start_org)
-    EditText edit_start;
-    @BindView(R.id.edit_end_org)
-    EditText edit_end;
+    @BindView(R.id.edit_time_org)
+    EditText edit_time;
     @BindView(R.id.img_clear_org_org)
     ImageView img_clear_org;
     @BindView(R.id.img_clear_start_org)
     ImageView img_clear_start;
-    @BindView(R.id.img_clear_end_org)
-    ImageView img_clear_end;
     @BindView(R.id.btn_quary_org)
     Button btn_quary;
 
@@ -69,15 +66,12 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
 
     private void event() {
         edit_org.setOnClickListener(instance);
-        edit_start.setOnClickListener(instance);
-        edit_end.setOnClickListener(instance);
+        edit_time.setOnClickListener(instance);
         img_clear_org.setOnClickListener(instance);
         img_clear_start.setOnClickListener(instance);
-        img_clear_end.setOnClickListener(instance);
         btn_quary.setOnClickListener(instance);
         EditClearUtils.clearText(edit_org,img_clear_org);
-        EditClearUtils.clearText(edit_start,img_clear_start);
-        EditClearUtils.clearText(edit_end,img_clear_end);
+        EditClearUtils.clearText(edit_time,img_clear_start);
     }
 
     public void onBackward(View view){
@@ -98,12 +92,19 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
                 Intent intent = new Intent(instance, SearchOrgActivity.class);
                 startActivityForResult(intent, 0);
                 break;
-            case R.id.edit_start_org://成立时间
-                chooseDatePicker(edit_start);
-                break;
-            case R.id.edit_end_org://截止时间
-                chooseDatePicker(edit_end);
+            case R.id.edit_time_org://成立时间
+                Calendar c = Calendar.getInstance();
+                new DoubleDatePickerDialog(instance, 0, new DoubleDatePickerDialog.OnDateSetListener() {
 
+                    @Override
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
+                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
+                                          int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d--->%d-%d-%d", startYear,
+                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
+                        edit_time.setText(textString);
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
                 break;
             case R.id.img_clear_org_org://清除管辖机构
                 edit_org.setText("");
@@ -111,12 +112,8 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
                 img_clear_org.setVisibility(View.GONE);
                 break;
             case R.id.img_clear_start_org://清除成立时间
-                edit_start.setText("");
+                edit_time.setText("");
                 img_clear_start.setVisibility(View.GONE);
-                break;
-            case R.id.img_clear_end_org://清除截止时间
-                edit_end.setText("");
-                img_clear_end.setVisibility(View.GONE);
                 break;
             case R.id.btn_quary_org://查询
                 getIntentData();
@@ -137,29 +134,17 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
 
 
     private String mOrg = "";
-    private String mName,mStart,mEnd;
+    private String mTime;
+    private String mEnd = "";
+    private String mStart = "";
     private void getIntentData() {
-        mStart = NullUtil.getString(DateUtil.data(edit_start.getText().toString().trim()));
-        mEnd = NullUtil.getString(DateUtil.data(edit_end.getText().toString().trim()));
+        mTime = NullUtil.getString(edit_time.getText().toString().trim());
+
+        if (!mTime.equals("")){
+            mStart = NullUtil.getString(mTime.substring(0, mTime.indexOf("--->")));
+            mEnd = NullUtil.getString(mTime.substring(mTime.indexOf("--->")+4));
+        }
     }
-
-
-    public void chooseDatePicker(final EditText editText) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(instance, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                i1 = i1 + 1;
-                String datainner = i + "-" + i1 + "-" + i2;
-                editText.setText(datainner);
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -174,5 +159,4 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
-
 }

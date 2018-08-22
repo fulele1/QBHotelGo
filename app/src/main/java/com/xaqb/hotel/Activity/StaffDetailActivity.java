@@ -64,8 +64,6 @@ public class StaffDetailActivity extends AppCompatActivity {
     TextView txt_home;
     @BindView(R.id.txt_now_home_staff_tel)
     TextView txt_now_home;
-    @BindView(R.id.txt_work_place_staff_tel)
-    TextView txt_work_place;
     private StaffDetailActivity instance;
     private Unbinder unbinder;
 
@@ -123,34 +121,34 @@ public class StaffDetailActivity extends AppCompatActivity {
                                 Toast.makeText(instance,data.get("mess").toString(),Toast.LENGTH_LONG).show();
                                 return;
                             } else if (data.get("state").toString().equals("0")) {
-                                txt_name.setText(NullUtil.getString(data.get("name")));
-                                String sex = NullUtil.getString(data.get("sex"));
+                                txt_name.setText(NullUtil.getString(data.get("xm")));//姓名
+                                String sex = NullUtil.getString(data.get("xb"));//性别
                                 if (sex.equals("1")){
                                     sex = "男";
                                 }else {
                                     sex = "女";
                                 }
-                                String hname = NullUtil.getString(data.get("hname"));
-                                String quarters = NullUtil.getString(data.get("quarters"));
+                                String hname = NullUtil.getString(data.get("hname"));//旅馆名称
+                                String quarters = NullUtil.getString(data.get("zw"));//职位
                                 txt_detail.setText(sex+"|"+hname+"|"+quarters);
-                                txt_age.setText(NullUtil.getString(data.get("age")));
-                                txt_tall.setText(NullUtil.getString(data.get("height")));
-                                txt_blood.setText(NullUtil.getString(data.get("blood")));
-                                txt_tel.setText(NullUtil.getString(data.get("telphone")));
-                                txt_country.setText(NullUtil.getString(data.get("na_name")));
-                                String marry = NullUtil.getString(data.get("marry"));
+                                txt_age.setText(NullUtil.getString(data.get("age")));//年龄
+                                txt_tall.setText(NullUtil.getString(data.get("sg")));//身高
+                                txt_blood.setText(NullUtil.getString(data.get("xx")));//血型
+                                txt_tel.setText(NullUtil.getString(data.get("lxfs1")));//联系方式
+                                txt_country.setText(NullUtil.getString(data.get("title")));//国籍
+                                String marry = NullUtil.getString(data.get("hyzk"));//婚姻状况
                                 if (marry.equals("0")){
                                     marry = "未婚";
                                 }else {
                                     marry = "已婚";
                                 }
                                 txt_marry.setText(marry);
-                                txt_dang.setText(NullUtil.getString(data.get("political")));
-                                txt_conncet.setText(NullUtil.getString(data.get("people")));
-                                txt_tel_connecte.setText(NullUtil.getString(data.get("peoplephone")));
-                                txt_home.setText(NullUtil.getString(data.get("houseadd")));
-                                txt_now_home.setText(NullUtil.getString(data.get("address")));
-                                 txt_work_place.setText(NullUtil.getString(data.get("political")));
+                                txt_dang.setText(NullUtil.getString(data.get("zzmm")));//政治面貌
+                                txt_conncet.setText(NullUtil.getString(data.get("jjlxr")));//紧急联系人
+                                txt_tel_connecte.setText(NullUtil.getString(data.get("jjlxrdh")));//紧急联系人电话
+                                txt_home.setText(NullUtil.getString(data.get("hjdxz")));
+                                txt_now_home.setText(NullUtil.getString(data.get("xzzxz")));
+//                                 txt_work_place.setText(NullUtil.getString(data.get("political")));
                                 if(!pic.equals("")&&pic !=null){
                                     Glide.with(instance)
                                             .load(NullUtil.getString(pic))

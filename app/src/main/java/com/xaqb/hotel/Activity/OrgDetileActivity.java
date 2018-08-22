@@ -15,6 +15,8 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.LineData;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.ChartUtil;
+import com.xaqb.hotel.Utils.ConditionUtil;
+import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.GsonUtil;
 import com.xaqb.hotel.Utils.HttpUrlUtils;
 import com.xaqb.hotel.Utils.LogUtils;
@@ -24,7 +26,11 @@ import com.xaqb.hotel.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,11 +79,16 @@ public class OrgDetileActivity extends AppCompatActivity {
 
     public String  getIntentData(){
         Intent intent = getIntent();
+        HashMap map = new HashMap();
         String org = intent.getStringExtra("org");
         String start = intent.getStringExtra("start");
         String end = intent.getStringExtra("end");
         LogUtils.e(org+start+end);
-        return "?code="+org+"&starttime="+start+"&endtime="+end;
+        map.put("\"psorgan\"", "\""+org+"\"");//管辖机构
+        if (!start.equals("")&&start !=null&&!end.equals("")&&end !=null) {
+            map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(start) + "],[\"<=\"," + DateUtil.data(end) + "]]");//时间
+        }
+        return "?condition="+ ConditionUtil.getConditionString(map);
     }
 
 
@@ -108,17 +119,24 @@ public class OrgDetileActivity extends AppCompatActivity {
                                 txt_passenger.setText(NullUtil.getString(data.get("check_num")));
 
 
-                                List<Map<String, Object>> table = GsonUtil.GsonToListMaps(data.get("result").toString());
                                 ArrayList<String> x = new ArrayList<String>();
                                 ArrayList<Double> y = new ArrayList<Double>();
-                                for (int j = 0; j <table.size(); j++) {
-                                    // x轴显示的数据
-                                    x.add(table.get(j).get("date").toString());
-                                    y.add(Double.parseDouble(table.get(j).get("live_num").toString()));
-                                }
+                                try
+                                {
+                                    JSONArray jsonArray = new JSONArray(data.get("result").toString());
+                                    for (int j=0; j < jsonArray.length(); j++)    {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(j);
+                                        x.add(jsonObject.getString("date"));
+                                        y.add(Double.parseDouble(jsonObject.getString("live_num")));
+                                    }
 
-                                LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
-                                ChartUtil.setChartStyle(chart_line, mLineData, Color.WHITE);
+                                    LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
+                                    ChartUtil.setChartStyle(chart_line, mLineData, Color.WHITE);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
+                                }
 
                             } else if (data.get("state").toString().equals("0")) {
                                 //响应失败

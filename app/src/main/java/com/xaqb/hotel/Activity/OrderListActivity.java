@@ -225,13 +225,12 @@ public class OrderListActivity extends BaseActivityNew {
         mStart = NullUtil.getString(intent.getStringExtra("start"));
         mEnd = NullUtil.getString(intent.getStringExtra("end"));
 
-        map.put("\"so_code\"", mOrg);//管辖机构
-        map.put("\"hname\"", mName);//场站名称
-        map.put("\"name\"", mPerName);//
+        map.put("\"psorgan\"", "\""+mOrg+"\"");//管辖机构
+        map.put("\"hname\"", "\""+mName+"\"");//酒店名称
+        map.put("\"name\"", "\""+mPerName+"\"");//旅客姓名
         if (!mStart.equals("")&&mStart !=null&&!mEnd.equals("")&&mEnd !=null) {
             map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(mStart) + "],[\"<=\"," + DateUtil.data(mEnd) + "]]");//时间
         }
-
         return "?condition="+ ConditionUtil.getConditionString(map)+"&type="+mType;
     }
 

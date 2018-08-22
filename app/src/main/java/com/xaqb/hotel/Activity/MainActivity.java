@@ -33,6 +33,9 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.umeng.analytics.MobclickAgent;
@@ -56,6 +59,9 @@ import com.xaqb.hotel.zxing.activity.CaptureActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -132,7 +138,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.bag));//修改状态栏字体颜色为黑色
         mUnbinder = ButterKnife.bind(instance);
         ActivityController.addActivity(instance);
-        new UpdateUtil(this,"7").getVersion();//检查时候有新版本
+        new UpdateUtil(this,"20").getVersion();//检查时候有新版本
         addListener();
         initSlidingMenu(savedInstanceState);
 
@@ -140,10 +146,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         setPie();
         setPieProgress();
     }
-
-
-
-
 
 
     private void setSPData() {
@@ -304,23 +306,37 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     }
 
 
+
     /**
      * 折线图
      */
     public void setLine(){
         List<Map<String, Object>> table = GsonUtil.GsonToListMaps(SPUtils.get(instance, "table", "").toString());
             LogUtils.e(table.toString());
+
         ArrayList<String> x = new ArrayList<String>();
         ArrayList<Double> y = new ArrayList<Double>();
-        for (int i = 0; i <table.size(); i++) {
-            // x轴显示的数据
-            x.add(table.get(i).get("date").toString());
-            y.add(Double.parseDouble(table.get(i).get("count").toString()));
-            LogUtils.e(table.get(i).get("date").toString());
+        try
+        {
+            JSONArray jsonArray = new JSONArray(SPUtils.get(instance, "table", "").toString());
+            for (int i=0; i < jsonArray.length(); i++)    {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String date = jsonObject.getString("date");
+                String count = jsonObject.getString("count");
+                x.add(jsonObject.getString("date"));
+                y.add(Double.parseDouble(jsonObject.getString("count")));
+                System.out.println("id" + date + ";name" + count );
+            }
+
+            LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
+            ChartUtil.setChartStyle(mLine, mLineData, Color.WHITE);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
-        LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
-        ChartUtil.setChartStyle(mLine, mLineData, Color.WHITE);
+
     }
 
     /**
@@ -341,10 +357,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         float wei = Float.parseFloat(SPUtils.get(instance, "wei", "").toString());
         float other = Float.parseFloat(SPUtils.get(instance, "other", "").toString());
 
-//        float han = 70.8f;
-//        float zang = 0f;
-//        float wei = 0f;
-//        float other = 29.2f;
         sizes.add(new Entry(han,0));
         sizes.add(new Entry(zang,1));
         sizes.add(new Entry(wei,2));

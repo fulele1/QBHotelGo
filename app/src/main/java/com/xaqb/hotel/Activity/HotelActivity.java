@@ -107,7 +107,6 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
                 break;
 
-
             case R.id.img_clear_org_hotel://清除管辖机构
                 edit_org.setText("");
                 mOrg = "";
@@ -130,14 +129,15 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         }
     }
     private String mOrg = "";
-    private String mName,mStart,mEnd,mTime;
+    private String mName,mTime;
+    private String mStart= "";
+    private String mEnd= "";
     private void getIntentData() {
         mName = edit_name.getText().toString().trim();
         mTime = edit_time.getText().toString().trim();
         if (!mTime.equals("")){
         mStart = NullUtil.getString(mTime.substring(0, mTime.indexOf("--->")));
         mEnd = NullUtil.getString(mTime.substring(mTime.indexOf("--->")+4));
-
         }
         LogUtils.e("mStart"+mStart);
         LogUtils.e("mEnd"+mEnd);

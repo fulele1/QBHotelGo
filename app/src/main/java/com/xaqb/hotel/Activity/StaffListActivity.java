@@ -28,6 +28,7 @@ import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.xaqb.hotel.Activity.RLview.StaffAdapter;
 import com.xaqb.hotel.Entity.Staff;
 import com.xaqb.hotel.R;
+import com.xaqb.hotel.Utils.ConditionUtil;
 import com.xaqb.hotel.Utils.GsonUtil;
 import com.xaqb.hotel.Utils.HttpUrlUtils;
 import com.xaqb.hotel.Utils.LogUtils;
@@ -39,6 +40,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -184,8 +186,6 @@ public class StaffListActivity extends AppCompatActivity {
 
         });
 
-
-
     }
 
     private List<Staff> mStaffs;
@@ -223,17 +223,23 @@ public class StaffListActivity extends AppCompatActivity {
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                     for (int j = 0; j < data.size(); j++) {
                                         Staff staff = new Staff();
-                                        staff.setName(NullUtil.getString(data.get(j).get("name")));//姓名
+                                        staff.setName(NullUtil.getString(data.get(j).get("xm")));//姓名
                                         staff.setHotel(NullUtil.getString(data.get(j).get("hname")));//酒店
                                         staff.setPic(HttpUrlUtils.getHttpUrl().picInPer()+NullUtil.getString(data.get(j).get(pk))
                                                 +"/"+NullUtil.getString(img)
-                                                +"?access_token="+ SPUtils.get(instance,"access_token",""));//片
-                                        staff.setTel(NullUtil.getString(data.get(j).get("telphone")));//电话
-                                        staff.setIden(NullUtil.getString(data.get(j).get("idcode")));//身份证
-                                        staff.setSex(NullUtil.getString(data.get(j).get("sex")));//性别
-                                        staff.setId(NullUtil.getString(data.get(j).get("s_id")));//ID
+                                                +"?access_token="+ SPUtils.get(instance,"access_token",""));//图片
+
+                                        LogUtils.e(HttpUrlUtils.getHttpUrl().picInPer()+NullUtil.getString(data.get(j).get(pk))
+                                                +"/"+NullUtil.getString(img)
+                                                +"?access_token="+ SPUtils.get(instance,"access_token",""));
+
+                                        staff.setTel(NullUtil.getString(data.get(j).get("lxfs1")));//电话
+                                        staff.setIden(NullUtil.getString(data.get(j).get("zjhm")));//身份证
+                                        staff.setSex(NullUtil.getString(data.get(j).get("xb")));//性别
+                                        staff.setId(NullUtil.getString(data.get(j).get("em_id")));//ID
                                         mStaffs.add(staff);
                                         mStaffss.add(staff);
+
                                     }
                                     String count = map.get("count").toString();
                                     String  num = map.get("num").toString();
@@ -276,23 +282,26 @@ public class StaffListActivity extends AppCompatActivity {
         unbinder.unbind();
     }
 
-
-
     private String hotel;
     private String name;
     private String tel;
     private String iden;
     private String org;
     public String getIntentData() {
+        HashMap map = new HashMap();
         Intent i = getIntent();
         hotel = i.getStringExtra("hotel");
         name = i.getStringExtra("name");
         tel = i.getStringExtra("tel");
         iden = i.getStringExtra("iden");
         org = i.getStringExtra("org");
+        map.put("\"psorgan\"", "\""+org+"\"");//管辖机构
+        map.put("\"hname\"", "\""+hotel+"\"");//酒店名称
+        map.put("\"xm\"", "\""+name+"\"");//姓名
+        map.put("\"lxfs1\"", "\""+tel+"\"");//电话号码
+        map.put("\"zjhm\"", "\""+iden+"\"");//证件号码
 
-
-        return "?hname="+hotel+"&name="+name+"&telphone="+tel+"&idcode="+iden+"&code="+org;
+        return "?condition="+ ConditionUtil.getConditionString(map);
     }
 
 
@@ -384,7 +393,4 @@ public class StaffListActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-
 }

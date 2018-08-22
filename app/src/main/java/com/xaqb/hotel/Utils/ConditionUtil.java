@@ -2,6 +2,7 @@ package com.xaqb.hotel.Utils;
 
 import android.util.Base64;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,7 +22,7 @@ public class ConditionUtil {
         Iterator map1it = map.entrySet().iterator();
         while (map1it.hasNext()) {
             Map.Entry<String, String> entry = (Map.Entry<String, String>) map1it.next();
-            if (!"".equals(entry.getValue().toString()) && entry.getValue() != null) {
+            if (!"\"\"".equals(entry.getValue().toString()) && entry.getValue() != null) {
                 map2.put(entry.getKey(), entry.getValue());
                 list.add(entry.getKey());
             }
@@ -30,25 +31,31 @@ public class ConditionUtil {
         String condition = "";
         switch (list.size()) {
             case 1:
-                condition = "{" + list.get(0) +":\""+ map2.get(list.get(0)) + "\"}";
+                    condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + "}";
                 break;
             case 2:
-                condition = "{" + list.get(0) +":\""+ map2.get(list.get(0)) + "\","
-                        + list.get(1) +":\""+ map2.get(list.get(1)) + "\"}";
+                condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + ","
+                        + list.get(1) +":"+ map2.get(list.get(1)) + "}";
                 break;
             case 3:
-                condition = "{" + list.get(0) +":\""+ map2.get(list.get(0)) + "\"," +
-                        list.get(1) +":\""+ map2.get(list.get(1)) + "\"," +
-                        list.get(2) +":\""+ map2.get(list.get(2)) + "\"}";
+                condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + "," +
+                        list.get(1) +":"+ map2.get(list.get(1)) + "," +
+                        list.get(2) +":"+ map2.get(list.get(2)) + "}";
                 break;
             case 4:
-                condition = "{" + list.get(0) +":\""+ map2.get(list.get(0)) + "\"," +
-                        list.get(1) +":\""+ map2.get(list.get(1)) + "\"," +
-                        list.get(2) +":\""+ map2.get(list.get(2)) + "\"," +
-                        list.get(3) +":\""+ map2.get(list.get(3)) + "\"}";
+                condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + "," +
+                        list.get(1) +":"+ map2.get(list.get(1)) + "," +
+                        list.get(2) +":"+ map2.get(list.get(2)) + "," +
+                        list.get(3) +":"+ map2.get(list.get(3)) + "}";
+                break;
+            case 5:
+                condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + "," +
+                        list.get(1) +":"+ map2.get(list.get(1)) + "," +
+                        list.get(2) +":"+ map2.get(list.get(2)) + "," +
+                        list.get(3) +":"+ map2.get(list.get(3)) + "," +
+                        list.get(4) +":"+ map2.get(list.get(4)) + "}";
                 break;
         }
-
 
         LogUtils.e("String---"+condition);
         LogUtils.e("64---"+ Base64.encodeToString(condition.getBytes(), Base64.DEFAULT));
@@ -58,7 +65,23 @@ public class ConditionUtil {
 
 
     public static String getUrlEncoded(String list) {
-        return  UrlEncodeUtil.toURLEncoded(Base64.encodeToString(list.getBytes(), Base64.DEFAULT));
+
+        if (list == null || list.equals("")) {
+            return "";
+        }
+
+        try
+        {
+            String str = new String(list.getBytes(), "UTF-8");
+            str = URLEncoder.encode(Base64.encodeToString(str.getBytes(), Base64.DEFAULT), "UTF-8");
+            return str;
+        }
+        catch (Exception localException)
+        {
+        }
+
+        return "";
+
     }
 
 }

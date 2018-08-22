@@ -74,7 +74,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                         break;
                     case 1: // 版本更新
                         SPUtils.put(getContext(),"isclickFragment","true");
-                        new UpdateUtil(getActivity(),"7").getVersion();
+                        new UpdateUtil(getActivity(),"20").getVersion();
                         break;
                     case 2:// 线索信息
                         startActivity(new Intent(getActivity(), ClueListActivity.class));

@@ -17,10 +17,6 @@
         android:padding="@dimen/activity_horizontal_margin">
 
 
-
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,13 +90,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/padding_en"
-                android:text="成立时间"
+                android:text="选择时间"
                 android:textColor="@color/viewfinder_frame"
                 android:textSize="@dimen/textview_smalls_size"
                 />
 
             <EditText
-                android:id="@+id/edit_start_org"
+                android:id="@+id/edit_time_org"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
@@ -108,7 +104,7 @@
                 android:focusable="false"
                 android:gravity="right|center"
                 android:layout_weight="1"
-                android:hint="请选择管辖机构..."
+                android:hint="请选择时间..."
                 android:textColorHint="@color/text"
                 android:textSize="@dimen/textview_small_size"
                 android:textColor="@color/viewfinder_frame"
@@ -121,50 +117,6 @@
                 android:src="@mipmap/delete_edit"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                android:layout_marginLeft="@dimen/padding"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_en"
-                android:text="截止时间"
-                android:textColor="@color/viewfinder_frame"
-                android:textSize="@dimen/textview_smalls_size"
-                />
-
-            <EditText
-                android:id="@+id/edit_end_org"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:background="@null"
-                android:focusable="false"
-                android:gravity="right|center"
-                android:layout_weight="1"
-                android:hint="请选择管辖机构..."
-                android:textColorHint="@color/text"
-                android:textSize="@dimen/textview_small_size"
-                android:textColor="@color/viewfinder_frame"
-                />
-
-            <ImageView
-                android:id="@+id/img_clear_end_org"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/delete_edit"
-                android:visibility="gone"
-                android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/padding"
                 />
 

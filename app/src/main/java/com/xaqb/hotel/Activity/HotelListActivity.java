@@ -211,8 +211,8 @@ public class HotelListActivity extends AppCompatActivity{
         mName = intent.getStringExtra("name");
         mStart = intent.getStringExtra("start");
         mEnd = intent.getStringExtra("end");
-        map.put("\"station\"", mOrg);//管辖机构
-        map.put("\"hname\"", mName);//场站名称
+        map.put("\"station\"", "\""+mOrg+"\"");//管辖机构
+        map.put("\"hname\"", "\""+mName+"\"");//场站名称
         if (!mStart.equals("")&&mStart !=null&&!mEnd.equals("")&&mEnd !=null) {
             map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(mStart) + "],[\"<=\"," + DateUtil.data(mEnd) + "]]");//时间
         }
@@ -294,6 +294,11 @@ public class HotelListActivity extends AppCompatActivity{
                                         hotel.setPic(HttpUrlUtils.getHttpUrl().picInHotel()+NullUtil.getString(data.get(j).get(pk))
                                                 +"/"+NullUtil.getString(img)
                                                 +"?access_token="+ SPUtils.get(instance,"access_token",""));//酒店全景图
+
+                                        LogUtils.e(HttpUrlUtils.getHttpUrl().picInHotel()+NullUtil.getString(data.get(j).get(pk))
+                                                +"/"+NullUtil.getString(img)
+                                                +"?access_token="+ SPUtils.get(instance,"access_token",""));
+
                                         mHotel.add(hotel);
                                         mHotels.add(hotel);
                                     }

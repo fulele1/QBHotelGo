@@ -48,7 +48,6 @@
                 android:id="@+id/txt_org_del_org"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54651456"
                 android:textColor="@color/bag"
                 android:textSize="@dimen/activity_title"
                 />
@@ -75,7 +74,6 @@
                 android:id="@+id/txt_hotel_del_org"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54651456"
                 android:textColor="@color/bag"
                 android:textSize="@dimen/activity_title"
                 />
@@ -110,10 +108,8 @@
                 />
             <TextView
                 android:id="@+id/txt_staff_del_org"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54651456"
                 android:textColor="@color/bag"
                 android:textSize="@dimen/activity_title"
                 />
@@ -140,7 +136,6 @@
                 android:id="@+id/txt_passenger_del_org"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54651456"
                 android:textColor="@color/bag"
                 android:textSize="@dimen/activity_title"
                 />

@@ -227,15 +227,13 @@ public class PassengerListActivity extends AppCompatActivity{
         String start = intent.getStringExtra("start");
         String end = intent.getStringExtra("end");
 
-        map.put("\"IDType\"", idenType);//
-        map.put("\"name\"", name);//
-        map.put("\"idcode\"", iden);//
-        map.put("\"telphone\"", tel);//
+        map.put("\"IDType\"", "\""+idenType+"\"");//
+        map.put("\"name\"", "\""+name+"\"");//
+        map.put("\"idcode\"", "\""+iden+"\"");//
+        map.put("\"telphone\"", "\""+tel+"\"");//
         if (!start.equals("")&&start !=null&&!end.equals("")&&end !=null) {
             map.put("\"ltime\"", "[[\">=\"," + DateUtil.data(start) + "],[\"<=\"," + DateUtil.data(end) + "]]");//时间
         }
-
-
 
         return "?condition="+ ConditionUtil.getConditionString(map)+"&type="+nameType;
     }
@@ -378,7 +376,6 @@ public class PassengerListActivity extends AppCompatActivity{
                         if (newList.size() + currentSize >= TOTAL_COUNTER) {
                             break;
                         }
-
                         Passenger item = new Passenger();
                         item.setId(mPassengers.get(i).getId());
                         item.setName(mPassengers.get(i).getName());
