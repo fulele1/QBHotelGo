@@ -22,7 +22,7 @@
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/list_r_staff_list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:background="@mipmap/nodata"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 

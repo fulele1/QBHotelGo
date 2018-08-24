@@ -186,16 +186,10 @@ public class HotelListActivity extends AppCompatActivity{
                     intent.putExtra("pic",mHotels.get(position).getPic());
                     startActivity(intent);
                 }
-
             }
 
         });
-
-
     }
-
-
-
 
     @Override
     protected void onDestroy() {

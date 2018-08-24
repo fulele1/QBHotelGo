@@ -1,6 +1,6 @@
 package com.xaqb.hotel.Activity;
 
-import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,12 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xaqb.hotel.R;
-import com.xaqb.hotel.Utils.DateUtil;
+import com.xaqb.hotel.Utils.DoubleDateUtil;
 import com.xaqb.hotel.Utils.EditClearUtils;
 import com.xaqb.hotel.Utils.LogUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
-import com.xaqb.hotel.Views.DoubleDatePickerDialog;
 
 import java.util.Calendar;
 
@@ -93,18 +92,28 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 startActivityForResult(intent, 0);
                 break;
             case R.id.edit_time_hotel://选择时间
-                Calendar c = Calendar.getInstance();
-                new DoubleDatePickerDialog(instance, 0, new DoubleDatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
-                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
-                                          int endDayOfMonth) {
-                        String textString = String.format("%d-%d-%d--->%d-%d-%d", startYear,
-                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-                        edit_time.setText(textString);
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
+                DoubleDateUtil.show(instance,edit_time);
+
+//                if (mDoubleTimeSelectDialog == null) {
+//                mDoubleTimeSelectDialog = new DoubleDateSelectDialog(instance, "1990-01-01","2018-08-23",
+//                        "2018-08-23");
+//                mDoubleTimeSelectDialog.setOnDateSelectFinished(new DoubleDateSelectDialog.OnDateSelectFinished() {
+//                    @Override
+//                    public void onSelectFinished(String startTime, String endTime) {
+//                        edit_time.setText(startTime.replace("-", ".") + "--->" + endTime.replace("-", "."));
+//                    }
+//                });
+//
+//                mDoubleTimeSelectDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+//
+//                    }
+//                });
+//        }if (!mDoubleTimeSelectDialog.isShowing()) {
+//            mDoubleTimeSelectDialog.show();
+//        }
                 break;
 
             case R.id.img_clear_org_hotel://清除管辖机构

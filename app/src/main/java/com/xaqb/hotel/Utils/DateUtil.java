@@ -54,6 +54,14 @@ public class DateUtil {
     }
 
 
+    public static String getNowTime(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
+
+
+
     /**
      * 把时间转换为时间戳
      * @param time

@@ -1,31 +1,24 @@
 package com.xaqb.hotel.Activity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompatSideChannelService;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xaqb.hotel.R;
-import com.xaqb.hotel.Utils.DateUtil;
 import com.xaqb.hotel.Utils.DialogUtils;
+import com.xaqb.hotel.Utils.DoubleDateUtil;
 import com.xaqb.hotel.Utils.EditClearUtils;
-import com.xaqb.hotel.Utils.LogUtils;
 import com.xaqb.hotel.Utils.NullUtil;
 import com.xaqb.hotel.Utils.StatuBarUtil;
-import com.xaqb.hotel.Views.DoubleDatePickerDialog;
 
 import java.util.Calendar;
 
@@ -124,18 +117,8 @@ public class OrderActivity extends BaseActivityNew implements View.OnClickListen
                 img_clear_org.setVisibility(View.GONE);
                 break;
             case R.id.edit_date_order://成立时间
-                Calendar c = Calendar.getInstance();
-                new DoubleDatePickerDialog(instance, 0, new DoubleDatePickerDialog.OnDateSetListener() {
 
-                    @Override
-                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
-                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
-                                          int endDayOfMonth) {
-                        String textString = String.format("%d-%d-%d--->%d-%d-%d", startYear,
-                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-                        edit_date.setText(textString);
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), false).show();
+                DoubleDateUtil.show(instance,edit_date);
 
                 break;
             case R.id.img_clear_date_order://清除成立时间

@@ -30,6 +30,9 @@ import com.xaqb.hotel.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -125,19 +128,35 @@ public class HotelDetilActivity extends AppCompatActivity {
                                             .into(img_pic);
                                 }
 
-
-
-                                List<Map<String, Object>> table = GsonUtil.GsonToListMaps(data.get("result").toString());
                                 ArrayList<String> x = new ArrayList<String>();
                                 ArrayList<Double> y = new ArrayList<Double>();
-                                for (int j = 0; j <table.size(); j++) {
-                                    // x轴显示的数据
-                                    x.add(table.get(j).get("date").toString());
-                                    y.add(Double.parseDouble(table.get(j).get("live_num").toString()));
+                                try
+                                {
+                                    JSONArray jsonArray = new JSONArray(data.get("result").toString());
+                                    for (int j=0; j < jsonArray.length(); j++)    {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(j);
+                                        x.add(jsonObject.getString("date"));
+                                        y.add(Double.parseDouble(jsonObject.getString("live_num")));
+                                    }
+
+                                    LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
+                                    ChartUtil.setChartStyle(chart_line, mLineData, Color.WHITE);
+                                }
+                                catch (Exception e)
+                                {
+                                    e.printStackTrace();
                                 }
 
-                                LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
-                                ChartUtil.setChartStyle(chart_line, mLineData, Color.WHITE);
+//                                List<Map<String, Object>> table = GsonUtil.GsonToListMaps(data.get("result").toString());
+//
+//                                for (int j = 0; j <table.size(); j++) {
+//                                    // x轴显示的数据
+//                                    x.add(table.get(j).get("date").toString());
+//                                    y.add(Double.parseDouble(table.get(j).get("live_num").toString()));
+//                                }
+//
+//                                LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
+//                                ChartUtil.setChartStyle(chart_line, mLineData, Color.WHITE);
 
                             } else if (data.get("state").toString().equals("10")) {
                                 //响应失败
