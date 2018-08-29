@@ -1,7 +1,6 @@
 package com.xaqb.hotel.Activity;
 
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -14,9 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +26,6 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.xaqb.hotel.Activity.RLview.PassengerAdapter;
-import com.xaqb.hotel.Entity.Order;
 import com.xaqb.hotel.Entity.Passenger;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.ConditionUtil;
@@ -55,7 +51,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.Call;
 
-import static com.xaqb.hotel.R.layout.activity_staff_list;
 
 public class PassengerListActivity extends AppCompatActivity{
 
@@ -65,9 +60,9 @@ public class PassengerListActivity extends AppCompatActivity{
     TextView title;
     @BindView(R.id.layout_titlebar)
     FrameLayout titlebar;
-    @BindView(R.id.txt_size_pass_list)
+    @BindView(R.id.recycler_text)
     TextView txt_size;
-    @BindView(R.id.list_r_staff_list)
+    @BindView(R.id.recycler_view)
     LRecyclerView list_r;
     /**服务器端一共多少条数据*/
     private int TOTAL_COUNTER;//如果服务器没有返回总数据或者总页数，这里设置为最大值比如10000，什么时候没有数据了根据接口返回判断
@@ -91,7 +86,7 @@ public class PassengerListActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_passenger_list);
+        setContentView(R.layout.activity_recyclerview_list);
         instance = this;
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色

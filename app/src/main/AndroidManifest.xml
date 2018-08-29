@@ -272,7 +272,8 @@
         <activity android:name=".Activity.QueryOrcActivity" />
         <activity android:name=".Activity.UserPicActivity" />
         <activity android:name=".Activity.UserNickNameActivity" />
-        <activity android:name=".Activity.ShowBigPicActivity"></activity>
+        <activity android:name=".Activity.ShowBigPicActivity" />
+        <activity android:name=".Activity.AboutActivity"></activity>
     </application>
 
 </manifest>

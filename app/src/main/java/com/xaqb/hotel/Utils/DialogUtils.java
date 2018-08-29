@@ -19,7 +19,7 @@ public class DialogUtils {
     public static void showItemDialog(final Context mContext, String title,final String[] items, final EditText view){
 
         AlertDialog dialog = new AlertDialog.Builder(mContext)
-                .setIcon(R.mipmap.icon)//设置标题的图片
+                .setIcon(R.mipmap.per)//设置标题的图片
                 .setTitle(title)//设置对话框的标题
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override

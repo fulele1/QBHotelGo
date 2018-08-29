@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.xaqb.hotel.Activity.AboutActivity;
 import com.xaqb.hotel.Activity.ClueListActivity;
 import com.xaqb.hotel.Activity.LogListActivity;
 import com.xaqb.hotel.Activity.LoginActivity;
@@ -69,18 +70,22 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
-                    case 0: // 修改密码
-                        startActivity(new Intent(getActivity(), ModifyPswActivity.class));
-                        break;
-                    case 1: // 版本更新
-                        SPUtils.put(getContext(),"isclickFragment","true");
-                        new UpdateUtil(getActivity(),"20").getVersion();
-                        break;
-                    case 2:// 线索信息
+
+                    case 0:// 线索信息
                         startActivity(new Intent(getActivity(), ClueListActivity.class));
                         break;
-                    case 3: // 检查日志
+                    case 1: // 检查日志
                         startActivity(new Intent(getActivity(), LogListActivity.class));
+                        break;
+                    case 2: //关于我们
+                        startActivity(new Intent(getActivity(), AboutActivity.class));
+                        break;
+                    case 3: // 修改密码
+                        startActivity(new Intent(getActivity(), ModifyPswActivity.class));
+                        break;
+                    case 4: // 版本更新
+                        SPUtils.put(getContext(), "isclickFragment", "true");
+                        new UpdateUtil(getActivity(), "20").getVersion();
                         break;
                     default:
                         break;
@@ -89,6 +94,7 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         });
 
     }
+
     @Override
     public void dialogOkB() {
         super.dialogOkB();
@@ -123,10 +129,10 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         if (nickname != null && !nickname.equals(""))
             tvNickName.setText(nickname);
         else tvNickName.setText("暂无昵称");
-         if (!url.equals("")) {
+        if (!url.equals("")) {
             loadUserPic(url);
         } else {
-             Glide.with(instance).load(R.mipmap.per).transform(new GlideCircleTransform(instance)).into(ivPic);
+            Glide.with(instance).load(R.mipmap.per).transform(new GlideCircleTransform(instance)).into(ivPic);
         }
     }
 
@@ -150,14 +156,14 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(), UserNickNameActivity.class));
                 break;
             case R.id.ll_setting://注销登录
-                showAdialog(LeftFragment.this.getActivity(),"提示","确定要退出登录吗?","确定",View.VISIBLE);
+                showAdialog(LeftFragment.this.getActivity(), "提示", "确定要退出登录吗?", "确定", View.VISIBLE);
                 break;
         }
     }
 
     @Override
     protected void dialogOk() {
-        SPUtils.put(instance,"userPsw","");
+        SPUtils.put(instance, "userPsw", "");
         startActivity(new Intent(getActivity(), LoginActivity.class));
     }
 

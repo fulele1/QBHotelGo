@@ -25,7 +25,6 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.xaqb.hotel.Activity.RLview.LogAdapter;
-import com.xaqb.hotel.Entity.Clue;
 import com.xaqb.hotel.Entity.Log;
 import com.xaqb.hotel.R;
 import com.xaqb.hotel.Utils.DateUtil;
@@ -56,9 +55,9 @@ public class LogListActivity extends BaseActivityNew {
     TextView title;
     @BindView(R.id.layout_titlebar)
     FrameLayout titlebar;
-    @BindView(R.id.txt_size_pass_list)
+    @BindView(R.id.recycler_text)
     TextView txt_size;
-    @BindView(R.id.list_r_staff_list)
+    @BindView(R.id.recycler_view)
     LRecyclerView list_r;
     /**服务器端一共多少条数据*/
     private int TOTAL_COUNTER;//如果服务器没有返回总数据或者总页数，这里设置为最大值比如10000，什么时候没有数据了根据接口返回判断
@@ -78,7 +77,7 @@ public class LogListActivity extends BaseActivityNew {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
-        setContentView(R.layout.activity_passenger_list);
+        setContentView(R.layout.activity_recyclerview_list);
         instance = this;
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
