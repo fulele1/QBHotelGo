@@ -65,17 +65,6 @@ public class LeftMenuListAdapter extends BaseAdapter {
 
         holder.ivIcon.setImageResource(icons[i]);
         holder.tvTitle.setText(leftMenuTitles[i]);
-//        if (i == 4) {
-//            status = SPUtils.get(context, "staff_is_real", "").toString();
-//            if (status.equals(Globals.staffIsRealNo) || status.equals(Globals.staffIsRealFaild)) {
-//                holder.ivStatus.setImageResource(R.mipmap.error);
-//            } else if (status.equals(Globals.staffIsRealSuc)) {
-//                holder.ivStatus.setImageResource(R.mipmap.ok);
-//            } else if (status.equals(Globals.staffIsRealIng)) {
-//                holder.ivStatus.setImageResource(R.mipmap.waring);
-//            }
-//            holder.ivStatus.setVisibility(View.VISIBLE);
-//        }
         return convertView;
     }
 

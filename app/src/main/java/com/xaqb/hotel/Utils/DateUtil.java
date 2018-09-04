@@ -68,7 +68,7 @@ public class DateUtil {
      * @return
      */
     public static String data(String time) {
-        SimpleDateFormat sdr = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdr = new SimpleDateFormat("yyyy.MM.dd");
         Date date;
         String times = null;
         try {

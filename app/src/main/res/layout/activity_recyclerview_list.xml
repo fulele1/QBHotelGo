@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/activity_horizontal_margin"
         android:background="@color/bag"
+        android:textColor="@color/text"
         />
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
