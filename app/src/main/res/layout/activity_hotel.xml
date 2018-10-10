@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bag"
     android:orientation="vertical"
-    tools:context="com.xaqb.hotel.Activity.PassengerActivity">
+    tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerActivity">
 
     <include layout="@layout/pub_titlebar" />
 
@@ -22,7 +22,10 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingRight="@dimen/padding_en"
+
+            >
 
             <ImageView
                 android:layout_width="3dp"
@@ -72,7 +75,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@color/white"
-
         >
 
         <TextView
@@ -89,7 +91,12 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@null"
-            android:gravity="right" />
+            android:gravity="right|center"
+            android:hint="请输入酒店名称..."
+            android:textSize="12sp"
+            android:paddingRight="@dimen/padding_en"
+
+            />
 
     </LinearLayout>
 
@@ -100,7 +107,7 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:background="@color/white"
         android:orientation="horizontal"
-
+        android:paddingRight="@dimen/padding_en"
         >
 
         <TextView
@@ -123,7 +130,9 @@
             android:gravity="right|center"
             android:hint="请选择截止时间..."
             android:textColorHint="@color/text"
-            android:textSize="@dimen/textview_small_size" />
+            android:textSize="@dimen/textview_small_size"
+
+            />
 
         <ImageView
             android:id="@+id/img_clear_time_hotel"
@@ -140,7 +149,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="1" />
 
     <Button
 

@@ -50,7 +50,7 @@
         android:background="@android:color/white"
         >
 
-        <com.xaqb.hotel.Listview.PinnedSectionListView
+        <com.xaqianbai.QBHotelSecurutyGovernor.Listview.PinnedSectionListView
             android:id="@+id/phone_listview_org"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true">
 
-            <com.xaqb.hotel.Listview.LetterIndexView
+            <com.xaqianbai.QBHotelSecurutyGovernor.Listview.LetterIndexView
                 android:id="@+id/phone_LetterIndexView_org"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.xaqb.hotel">
-
+    package="com.xaqianbai.QBHotelSecurutyGovernor">
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -22,6 +21,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <!-- 网络库使用，当网络操作时需要确保事务完成不被杀掉 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -57,7 +58,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
-        android:name=".Utils.MyApplication"
+        android:name="com.xaqianbai.QBHotelSecurutyGovernor.Utils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/per"
         android:label="@string/app_name"
@@ -67,46 +68,7 @@
             android:name="com.tencent.rdm.uuid"
             android:value="61404c12-fbc7-4e82-999d-7a08c6651b98" />
 
-        <!-- 配置阿里云 -->
-        <meta-data
-            android:name="com.alibaba.app.appkey"
-            android:value="23727669" /> <!-- 请填写你自己的- appKey -->
-        <meta-data
-            android:name="com.alibaba.app.appsecret"
-            android:value="f004995197fdd1d78900968960859370" /> <!-- 请填写你自己的appSecret -->
-        <receiver
-            android:name=".Receiver.MyMessageReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_OPENED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.push2.action.NOTIFICATION_REMOVED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.COMMAND" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.taobao.taobao.intent.action.COMMAND" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.RECEIVE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
 
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
 
         <!-- 配置友盟 -->
         <meta-data
@@ -130,7 +92,7 @@
             android:value="true" />
 
         <activity
-            android:name=".Activity.SplashActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -139,91 +101,48 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activity.MainActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".Activity.BackPswActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.BackPswActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Activity.ModifyPswActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ModifyPswActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".CameraTool.CertCaptureActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.CameraTool.CertCaptureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".zxing.activity.CaptureActivity"
+            android:name="com.xaqianbai.QBHotelSecurutyGovernor.zxing.activity.CaptureActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d527989c59a1fee043cce36a43f687b0" />
 
-        <service android:name="com.amap.api.location.APSService" />
-        <!-- <service -->
-        <!-- android:name=".Service.UploadService" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="true" /> -->
 
 
-        <!-- 通道保持服务 -->
-        <service
-            android:name="com.alibaba.sdk.android.push.ChannelService"
-            android:exported="true"
-            android:process=":channel">
-            <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.SERVICE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="org.agoo.android.intent.action.PING_V4" />
-
-                <category android:name="taobao" />
-            </intent-filter>
-        </service>
-        <!-- 消息接收服务 -->
-        <service
-            android:name="com.alibaba.sdk.android.push.MsgService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.taobao.accs.intent.action.RECEIVE" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.alibaba.sdk.android.push.NOTIFY_ACTION" />
-            </intent-filter>
-        </service>
-        <!-- 消息接收增强服务（可提高通知/消息达到率） -->
-        <service
-            android:name="com.alibaba.sdk.android.push.channel.TaobaoRecvService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="org.android.agoo.client.MessageReceiverService" />
-            </intent-filter>
-        </service>
-        <service
-            android:name=".Service.FileService"
-            android:enabled="true"
-            android:exported="true" />
-
-        <activity android:name=".Activity.StaffActivity" />
-        <activity android:name=".Activity.HotelActivity" />
-        <activity android:name=".Activity.OrgActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.HotelActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrgActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Activity.UpdateActivityNew" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UpdateActivityNew" />
 
         <!-- 7.0y以上安装apk崩溃问题解决代码 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.xaqb.hotel.fileprovider"
+            android:authorities="com.xaqianbai.QBHotelSecurutyGovernor.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -231,49 +150,34 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name=".Activity.PassengerActivity" />
-        <activity android:name=".Activity.StaffListActivity" />
-        <activity android:name=".Activity.StaffDetailActivity" />
-        <activity android:name=".Activity.SearchOrgActivity" />
-        <activity android:name=".Activity.PassengerListActivity" />
-        <activity android:name=".Activity.PassengerDetActivity" />
-        <activity android:name=".Activity.HotelListActivity" />
-        <activity android:name=".Activity.HotelDetilActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-
-        </activity>
-        <activity android:name=".Activity.OrgDetileActivity" />
-        <activity android:name=".Activity.ClueListActivity" />
-        <activity android:name=".Activity.ClueDelActivity" />
-        <activity android:name=".Activity.LogListActivity" />
-        <activity android:name=".Activity.LogDetActivity" />
-        <activity android:name=".Activity.SearchAreaActivity" />
-        <activity android:name=".Activity.OrderActivity" />
-        <activity android:name=".Activity.OrderListActivity" />
-        <activity
-            android:name=".Activity.ShowActivity"
-            android:label="@string/title_activity_show"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-
-        </activity>
-        <activity android:name=".Activity.QueryOrcActivity" />
-        <activity android:name=".Activity.UserPicActivity" />
-        <activity android:name=".Activity.UserNickNameActivity" />
-        <activity android:name=".Activity.ShowBigPicActivity" />
-        <activity android:name=".Activity.AboutActivity"></activity>
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffDetailActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SearchOrgActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerDetActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.HotelListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.HotelDetilActivity"/>
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrgDetileActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ClueListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ClueDelActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.LogListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.LogDetActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SearchAreaActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrderActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrderListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.QueryOrcActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UserPicActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UserNickNameActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ShowBigPicActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.AboutActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.CrimeListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.CrimeAddActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PunishmentListActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PunishmentAddActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.CrimeDelActivity" />
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PunishmentDelActivity"></activity>
+        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SearchHotelActivity"></activity>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bag"
     android:orientation="vertical"
-    tools:context="com.xaqb.hotel.Activity.PassengerActivity">
+    tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerActivity">
 
     <include layout="@layout/pub_titlebar" />
 

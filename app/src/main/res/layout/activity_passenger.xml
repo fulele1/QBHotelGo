@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bag"
     android:orientation="vertical"
-    tools:context="com.xaqb.hotel.Activity.PassengerActivity">
+    tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerActivity">
 
     <include layout="@layout/pub_titlebar" />
 
@@ -16,6 +16,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:layout_marginTop="@dimen/padding"
+                android:paddingRight="@dimen/padding_en"
+
                 >
 
                 <ImageView
@@ -94,7 +96,10 @@
                 android:background="@null"
                 android:gravity="right|center"
                 android:textColor="@color/viewfinder_frame"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:hint="请输入旅客姓名..."
+
+                />
 
         </LinearLayout>
 
@@ -173,7 +178,9 @@
                 android:background="@null"
                 android:gravity="right|center"
                 android:textColor="@color/viewfinder_frame"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:hint="请输入证件号码..."
+                />
 
 
         </LinearLayout>
@@ -204,7 +211,9 @@
                 android:background="@null"
                 android:gravity="right|center"
                 android:textColor="@color/viewfinder_frame"
-                android:textSize="@dimen/textview_small_size" />
+                android:textSize="@dimen/textview_small_size"
+                android:hint="请输入联系电话..."
+                />
 
         </LinearLayout>
 
@@ -257,7 +266,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.5" />
+        android:layout_weight="1" />
 
     <Button
 
@@ -273,6 +282,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="0.2" />
+        android:layout_weight="0.5" />
 
 </LinearLayout>

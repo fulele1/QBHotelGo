@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_passenger"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bag"
+    android:orientation="vertical"
+    tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerActivity">
+
+    <include layout="@layout/pub_titlebar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_en"
+                android:background="@color/white"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/must_write"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_en"
+                    android:text="酒店名称"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <EditText
+                    android:id="@+id/edit_name_cr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="right"
+                    android:hint="请选择酒店名称..."
+                    android:textColor="@color/viewfinder_frame"
+                    android:textColorHint="@color/text"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:src="@mipmap/delete_edit"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/must_write"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_en"
+                        android:text="案件类型"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_smalls_size" />
+
+                    <EditText
+                        android:id="@+id/edit_type_one_cr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:focusable="false"
+                        android:gravity="right"
+                        android:hint="请选择案件类型..."
+                        android:textColor="@color/viewfinder_frame"
+                        android:textColorHint="@color/text"
+
+                        android:textSize="@dimen/textview_small_size" />
+
+                    <ImageView
+                        android:id="@+id/img_clear_org_hotel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/padding"
+                        android:src="@mipmap/delete_edit"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/must_write"
+                        android:gravity="center"
+                        android:padding="@dimen/padding_en"
+                        android:text="案件编号"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textSize="@dimen/textview_smalls_size" />
+
+                    <EditText
+                        android:id="@+id/edit_code_cr"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right"
+                        android:textColor="@color/viewfinder_frame"
+                        android:textColorHint="@color/text"
+                        android:textSize="@dimen/textview_small_size" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/padding"
+                        android:src="@mipmap/delete_edit"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/must_write"
+                    android:gravity="center"
+                    android:padding="@dimen/padding_en"
+                    android:text="发案日期"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+
+                <EditText
+                    android:id="@+id/edit_date_cr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:focusable="false"
+                    android:gravity="right|center"
+                    android:hint="请选择发案日期..."
+                    android:textColorHint="@color/text"
+                    android:textSize="@dimen/textview_small_size" />
+
+                <ImageView
+                    android:id="@+id/img_clear_time_hotel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/padding"
+                    android:src="@mipmap/delete_edit"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:text="情况描述"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+
+                <EditText
+                    android:id="@+id/edit_condition_cr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:padding="@dimen/padding_en"
+                    android:textColorHint="@color/text"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    android:text="备注说明"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+
+                <EditText
+                    android:id="@+id/edit_remark_cr"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="left"
+                    android:padding="@dimen/padding_en"
+                    android:textColorHint="@color/text"
+                    android:textSize="@dimen/textview_small_size" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.5" />
+
+            <Button
+
+                android:id="@+id/btn_finish_crad"
+                android:layout_width="200dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_button_selector"
+                android:text="完成"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textview_normal_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.2" />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

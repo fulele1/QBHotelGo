@@ -17,7 +17,7 @@ import android.os.Build;
 import android.util.Base64;
 
 import com.YinanSoft.CardReaders.IDCardInfo;
-import com.xaqb.hotel.Utils.ToolsUtils;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.ToolsUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

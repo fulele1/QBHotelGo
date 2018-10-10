@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-    <com.xaqb.hotel.zxing.view.ViewfinderView
+    <com.xaqianbai.QBHotelSecurutyGovernor.zxing.view.ViewfinderView
         android:id="@+id/viewfinder_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

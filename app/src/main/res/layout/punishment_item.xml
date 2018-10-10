@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/tubiao"
+            />
+
+        <TextView
+            android:id="@+id/txt_hname_pu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:layout_weight="1"
+            android:textColor="@color/main"
+            android:textSize="@dimen/textview_normal_size"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txt_date_pu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="@dimen/textview_smalls_size"
+            android:layout_gravity="center"
+            android:drawableRight="@mipmap/click"
+            android:gravity="center"
+            android:drawablePadding="@dimen/default_divider_padding"
+
+            />
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        style="@style/common_horizontal_match_line_style"></LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txt_del_pu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="fkkdsjfasfjdsakfjsad"
+        android:paddingTop="@dimen/button_normal_sizes"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        />
+    <LinearLayout
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        style="@style/common_horizontal_division_line_style_list"></LinearLayout>
+
+
+
+</LinearLayout>

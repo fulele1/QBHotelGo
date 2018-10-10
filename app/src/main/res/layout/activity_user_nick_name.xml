@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/bag"
-    tools:context="com.xaqb.hotel.Activity.UserNickNameActivity">
+    tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UserNickNameActivity">
     <include layout="@layout/pub_titlebar"/>
     <LinearLayout
         android:layout_width="match_parent"

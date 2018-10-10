@@ -17,13 +17,13 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
-        versionName "1.1"
+        versionName "1.1.1"
 
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi'
 //            abiFilters 'arm64-v8a','armeabi-v7a'
-//            abiFilters "x86"
+            abiFilters "x86"
         }
 
         //信鸽
@@ -126,5 +126,11 @@ dependencies {
     compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
     compile 'com.github.darrenfantasy:DoubleDatePicker:1.0'
     compile project(path: ':slidingmenu')
+
+    //悬浮
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.android.support:design:26.1.0'
+
+    //二级联动 时间选择  案件类型选择
+    compile 'com.bigkoo:pickerview:2.1.1'
 }
