@@ -220,7 +220,7 @@ public class HotelListActivity extends AppCompatActivity {
         mName = intent.getStringExtra("name");
         mStart = intent.getStringExtra("start");
         mEnd = intent.getStringExtra("end");
-        map.put("\"hotelarea\"", "\"" + mOrg + "\"");//管辖机构
+        map.put("\"psorgan\"", "\"" + mOrg + "\"");//管辖机构
         map.put("\"hname\"", "\"" + mName + "\"");//场站名称
         if (!mStart.equals("") && mStart != null && !mEnd.equals("") && mEnd != null) {
             map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(mStart) + "],[\"<=\"," + DateUtil.data(mEnd) + "]]");//时间

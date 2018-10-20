@@ -135,8 +135,8 @@ public class HotelDetilActivity extends AppCompatActivity {
                                         LogUtils.e(jsonObject+"");
                                         LogUtils.e(jsonObject.getString("date"));
 
-                                        x.add(jsonObject.getString("date"));
-                                        y.add(Double.parseDouble(jsonObject.getString("live_num")));
+                                        x.add(jsonObject.getInt("date")+"");
+                                        y.add(jsonObject.getDouble("live_num"));
 
                                     }
 

@@ -84,7 +84,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.edit_org_hotel://管辖机构
-                Intent intent = new Intent(instance, SearchAreaActivity.class);
+                Intent intent = new Intent(instance, SearchOrgActivity.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.edit_time_hotel://选择时间
@@ -154,8 +154,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         if (requestCode == 0 && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             if (bundle != null) {
-                String name = bundle.getString("ha_name");
-                String code = bundle.getString("ha_code");
+                String name = bundle.getString("so_name");
+                String code = bundle.getString("so_code");
                 mOrg = code;
                 edit_org.setText(name);
             }

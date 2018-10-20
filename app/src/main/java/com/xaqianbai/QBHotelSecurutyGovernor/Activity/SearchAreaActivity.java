@@ -91,6 +91,8 @@ public class SearchAreaActivity extends BaseActivityNew {
 
 
     public void okConnection() {
+        Log.e("fule",HttpUrlUtils.getHttpUrl().getHouseList()+"&access_token="+ SPUtils.get(instance,"access_token",""));
+
         OkHttpUtils
                 .get()
                 .url(HttpUrlUtils.getHttpUrl().getHouseList()+"&access_token="+ SPUtils.get(instance,"access_token",""))

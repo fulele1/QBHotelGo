@@ -121,8 +121,8 @@ public class OrgDetileActivity extends AppCompatActivity {
                                     JSONArray jsonArray = new JSONArray(data.get("result").toString());
                                     for (int j=0; j < jsonArray.length(); j++)    {
                                         JSONObject jsonObject = jsonArray.getJSONObject(j);
-                                        x.add(jsonObject.getString("date"));
-                                        y.add(Double.parseDouble(jsonObject.getString("live_num")));
+                                        x.add(jsonObject.getInt("date")+"");
+                                        y.add(jsonObject.getDouble("live_num"));
                                     }
                                     LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
                                     ChartUtil.setChartStyle(chart_line, mLineData, Color.WHITE);

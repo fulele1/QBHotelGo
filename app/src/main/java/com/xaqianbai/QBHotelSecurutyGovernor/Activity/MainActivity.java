@@ -289,8 +289,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
      * 折线图
      */
     public void setLine(){
-        List<Map<String, Object>> table = GsonUtil.GsonToListMaps(SPUtils.get(instance, "table", "").toString());
-            LogUtils.e(table.toString());
+//        List<Map<String, Object>> table = GsonUtil.GsonToListMaps(SPUtils.get(instance, "table", "").toString());
+//            LogUtils.e(table.toString());
 
         ArrayList<String> x = new ArrayList<String>();
         ArrayList<Double> y = new ArrayList<Double>();
@@ -299,11 +299,10 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             JSONArray jsonArray = new JSONArray(SPUtils.get(instance, "table", "").toString());
             for (int i=0; i < jsonArray.length(); i++)    {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String date = jsonObject.getString("date");
-                String count = jsonObject.getString("count");
-                x.add(jsonObject.getString("date"));
-                y.add(Double.parseDouble(jsonObject.getString("count")));
-                System.out.println("id" + date + ";name" + count );
+                int date = jsonObject.getInt("date");
+                Double count = jsonObject.getDouble("count");
+                x.add(date+"");
+                y.add(count);
             }
 
             LineData mLineData = ChartUtil.makeLineData(instance,7, y, x);
