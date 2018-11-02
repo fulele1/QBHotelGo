@@ -48,11 +48,46 @@ public class CastTypeUtil {
         return code;
     }
 
+    public static String getTypeString(String code) {
+         if (code.equals("1")){
+            code = "警告";
+        }else if (code.equals("2")){
+            code = "罚款";
+        }else if (code.equals("3")){
+            code = "停业整顿";
+        }else if (code.equals("4")){
+            code = "吊销许可证";
+        }else if (code.equals("5")){
+            code = "限期整改";
+        }else if (code.equals("9")){
+            code = "其他";
+        }
+        return code;
+    }
+
     public static String getResultType(String string) {
         if (string.equals("未处罚")) {
             type = "0";
         } else if (string.equals("已处罚")) {
             type = "1";
+        }
+        return type;
+    }
+
+    public static String getResultTypeString(String string) {
+        if (string.equals("0")) {
+            type = "未处罚";
+        } else if (string.equals("1")) {
+            type = "已处罚";
+        }
+        return type;
+    }
+
+    public static String getyesno(String code) {
+        if (code.equals("0")) {
+            type = "否";
+        } else if (code.equals("1")) {
+            type = "是";
         }
         return type;
     }

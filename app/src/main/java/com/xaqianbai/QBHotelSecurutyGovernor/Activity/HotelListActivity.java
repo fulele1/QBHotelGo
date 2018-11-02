@@ -409,5 +409,4 @@ public class HotelListActivity extends AppCompatActivity {
         return true;
     }
 
-
 }

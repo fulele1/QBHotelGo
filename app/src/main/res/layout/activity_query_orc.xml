@@ -23,6 +23,49 @@
             android:orientation="vertical">
 
             <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10px"
+            android:padding="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="酒店编码："
+                android:textSize="@dimen/textview_smalls_size" />
+
+            <TextView
+                android:id="@+id/txt_hnohotel_query_orc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10px"
+            android:padding="@dimen/padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="酒店名称："
+                android:textSize="@dimen/textview_smalls_size" />
+
+            <TextView
+                android:id="@+id/txt_hname_query_orc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -32,17 +75,46 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="酒店门外监控数量："
+                    android:text="旅馆前台电话："
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <TextView
-                    android:id="@+id/txt_monitoroutnum_query_orc"
+                    android:id="@+id/txt_telphone_query_orc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+
+
+
+
+
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10px"
+                android:padding="@dimen/padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="旅馆地址："
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <TextView
+                    android:id="@+id/txt_haddress_query_orc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
-<LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -52,112 +124,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="星级："
-                    android:textSize="@dimen/textview_smalls_size" />
+                    android:text="旅馆负责人："
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:id="@+id/textView5" />
 
                 <TextView
-                    android:id="@+id/txt_st_name_query_orc"
+                    android:id="@+id/txt_principal_query_orc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="监控点数量："
-                android:textSize="@dimen/textview_smalls_size"
-                android:id="@+id/textView4" />
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
 
-            <TextView
-                    android:id="@+id/txt_monitornum_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="是否安装监控系统 :"
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_monitor_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="治安机构："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_so_name_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="从业人员数："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_employee_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="行政区域："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_ha_name_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -176,27 +156,10 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="旅馆负责人："
-                android:textSize="@dimen/textview_smalls_size"
-                android:id="@+id/textView5" />
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
 
-            <TextView
-                    android:id="@+id/txt_principal_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -206,16 +169,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="治安负责人："
+                    android:text="旅馆法人："
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <TextView
-                    android:id="@+id/txt_socialduty_query_orc"
+                    android:id="@+id/txt_legalperson_query_orc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
+
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -225,16 +192,64 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="酒店门外是否安装监控："
+                    android:text="旅馆法人联系电话："
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <TextView
-                    android:id="@+id/txt_monitorout_query_orc"
+                    android:id="@+id/txt_legalpersontel_query_orc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
+
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10px"
+                android:padding="@dimen/padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="行政区域："
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <TextView
+                    android:id="@+id/txt_ha_name_query_orc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10px"
+                android:padding="@dimen/padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="消防安全批文编号："
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <TextView
+                    android:id="@+id/txt_fireno_query_orc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -253,26 +268,11 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="旅馆编码："
-                    android:textSize="@dimen/textview_smalls_size" />
 
-                <TextView
-                    android:id="@+id/txt_hnohotel_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -292,7 +292,13 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
+
+            <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+
+
+
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -302,130 +308,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="店面名称："
+                    android:text="星级："
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <TextView
-                    android:id="@+id/txt_sname_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="旅馆法人联系电话："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_legalpersontel_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="旅馆前台电话："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_telphone_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="旅馆法人："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_legalperson_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="消防安全批文编号："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_fireno_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="旅馆地址："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_haddress_query_orc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" /><LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="旅馆名称："
-                    android:textSize="@dimen/textview_smalls_size" />
-
-                <TextView
-                    android:id="@+id/txt_hname_query_orc"
+                    android:id="@+id/txt_st_name_query_orc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
+
+
 </LinearLayout>
     </ScrollView>
         </LinearLayout>

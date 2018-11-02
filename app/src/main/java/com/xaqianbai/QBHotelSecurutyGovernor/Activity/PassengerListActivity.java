@@ -307,14 +307,14 @@ public class PassengerListActivity extends AppCompatActivity{
                                     txt_size.setVisibility(View.GONE);
                                 }
 
-
-
                             } else if (map.get("state").toString().equals("19")) {
                                 mHandler.sendEmptyMessage(-3);
+                                txt_size.setVisibility(View.GONE);
                                 //响应失败
                                 Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                             } else if (map.get("state").toString().equals("10")) {
                                 mHandler.sendEmptyMessage(-3);
+                                txt_size.setVisibility(View.GONE);
                                 //响应失败
                                 Toast.makeText(instance, map.get("mess").toString()+"正在重新登陆", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(instance,LoginActivity.class));

@@ -63,7 +63,7 @@ public class LogDetActivity extends BaseActivityNew {
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
-        title.setText("联查详情");
+        title.setText("联合检查详情");
     }
     private String id;
     @Override
@@ -106,7 +106,7 @@ public class LogDetActivity extends BaseActivityNew {
                                 edit_event.setText(NullUtil.getString(data.get("ucorgjob")));
                                 edit_date.setText(DateUtil.getDate(NullUtil.getString(data.get("ucorgdate"))));
                                 edit_operate.setText(NullUtil.getString(data.get("ou_realname")));
-                                edit_operate_date.setText(NullUtil.getString(data.get("udcdate")));
+                                edit_operate_date.setText(DateUtil.getDate(NullUtil.getString(data.get("udcdate"))));
                                 edit_clue.setText(NullUtil.getString(data.get("uccontent")));
                                 edit_result.setText(NullUtil.getString(data.get("ucresult")));
 

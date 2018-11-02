@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xaqianbai.QBHotelSecurutyGovernor">
+
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -58,7 +59,7 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
-        android:name="com.xaqianbai.QBHotelSecurutyGovernor.Utils.MyApplication"
+        android:name=".Utils.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/per"
         android:label="@string/app_name"
@@ -67,8 +68,6 @@
         <meta-data
             android:name="com.tencent.rdm.uuid"
             android:value="61404c12-fbc7-4e82-999d-7a08c6651b98" />
-
-
 
         <!-- 配置友盟 -->
         <meta-data
@@ -92,7 +91,7 @@
             android:value="true" />
 
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -101,43 +100,41 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.LoginActivity"
+            android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.MainActivity"
+            android:name=".Activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.BackPswActivity"
+            android:name=".Activity.BackPswActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ModifyPswActivity"
+            android:name=".Activity.ModifyPswActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.CameraTool.CertCaptureActivity"
+            android:name=".CameraTool.CertCaptureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.xaqianbai.QBHotelSecurutyGovernor.zxing.activity.CaptureActivity"
+            android:name=".zxing.activity.CaptureActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d527989c59a1fee043cce36a43f687b0" />
 
-
-
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.HotelActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrgActivity" />
+        <activity android:name=".Activity.StaffActivity" />
+        <activity android:name=".Activity.HotelActivity" />
+        <activity android:name=".Activity.OrgActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UpdateActivityNew" />
+        <activity android:name=".Activity.UpdateActivityNew" />
 
         <!-- 7.0y以上安装apk崩溃问题解决代码 -->
         <provider
@@ -150,34 +147,34 @@
                 android:resource="@xml/filepaths" />
         </provider>
 
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffDetailActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SearchOrgActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PassengerDetActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.HotelListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.HotelDetilActivity"/>
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrgDetileActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ClueListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ClueDelActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.LogListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.LogDetActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SearchAreaActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrderActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.OrderListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.QueryOrcActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UserPicActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.UserNickNameActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.ShowBigPicActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.AboutActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.CrimeListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.CrimeAddActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PunishmentListActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PunishmentAddActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.CrimeDelActivity" />
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.PunishmentDelActivity"></activity>
-        <activity android:name="com.xaqianbai.QBHotelSecurutyGovernor.Activity.SearchHotelActivity"></activity>
+        <activity android:name=".Activity.PassengerActivity" />
+        <activity android:name=".Activity.StaffListActivity" />
+        <activity android:name=".Activity.StaffDetailActivity" />
+        <activity android:name=".Activity.SearchOrgActivity" />
+        <activity android:name=".Activity.PassengerListActivity" />
+        <activity android:name=".Activity.PassengerDetActivity" />
+        <activity android:name=".Activity.HotelListActivity" />
+        <activity android:name=".Activity.HotelDetilActivity" />
+        <activity android:name=".Activity.OrgDetileActivity" />
+        <activity android:name=".Activity.ClueListActivity" />
+        <activity android:name=".Activity.ClueDelActivity" />
+        <activity android:name=".Activity.LogListActivity" />
+        <activity android:name=".Activity.LogDetActivity" />
+        <activity android:name=".Activity.SearchAreaActivity" />
+        <activity android:name=".Activity.OrderActivity" />
+        <activity android:name=".Activity.OrderListActivity" />
+        <activity android:name=".Activity.QueryOrcActivity" />
+        <activity android:name=".Activity.UserPicActivity" />
+        <activity android:name=".Activity.UserNickNameActivity" />
+        <activity android:name=".Activity.ShowBigPicActivity" />
+        <activity android:name=".Activity.AboutActivity" />
+        <activity android:name=".Activity.CrimeListActivity" />
+        <activity android:name=".Activity.CrimeAddActivity" />
+        <activity android:name=".Activity.PunishmentListActivity" />
+        <activity android:name=".Activity.PunishmentAddActivity" />
+        <activity android:name=".Activity.CrimeDelActivity" />
+        <activity android:name=".Activity.PunishmentDelActivity" />
+        <activity android:name=".Activity.SearchHotelActivity" />
     </application>
 
 </manifest>

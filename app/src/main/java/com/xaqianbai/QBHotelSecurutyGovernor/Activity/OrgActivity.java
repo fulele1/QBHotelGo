@@ -87,7 +87,6 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
                 startActivityForResult(intent, 0);
                 break;
             case R.id.edit_time_org://成立时间
-
                 DoubleDateUtil.show(instance,edit_time);
                 break;
             case R.id.img_clear_org_org://清除管辖机构
@@ -110,11 +109,10 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
                     i.putExtra("end", mEnd);
                     startActivity(i);
                 }
-
                 break;
         }
-
     }
+
 
 
     private String mOrg = "";
@@ -143,4 +141,5 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
             }
         }
     }
+
 }

@@ -94,7 +94,7 @@ public class CrimeDelActivity extends BaseActivityNew {
                                 edit_hname_crdel.setText(NullUtil.getString(data.get("hname")));
                                 edit_level_log_del.setText(DateUtil.getDate(NullUtil.getString(data.get("crimedate"))));
                                         edit_org_log_del.setText(NullUtil.getString(data.get("cp_property")));
-                                edit_per_log_del.setText(NullUtil.getString(data.get("cp_property")));
+                                edit_per_log_del.setText(NullUtil.getString(data.get("ct_type")));
                                         edit_event_log_del.setText(NullUtil.getString(data.get("qkms")));
 
                             } else if (data.get("state").toString().equals("0")) {

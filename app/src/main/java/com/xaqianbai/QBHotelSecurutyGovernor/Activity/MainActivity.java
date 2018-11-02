@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,6 +44,7 @@ import com.xaqianbai.QBHotelSecurutyGovernor.zxing.activity.CaptureActivity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -347,10 +349,11 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
         PieDataSet pieDataSet=new PieDataSet(sizes,"");//参数：颜色栏显示颜色目录、
         //pieDataSet.setDrawValues(false);//是否在块上面显示值以及百分百
-        pieDataSet.setSliceSpace(0f);//块间距
+        pieDataSet.setSliceSpace(3f);           //设置饼状Item之间的间隙
+        pieDataSet.setSelectionShift(10f);      //设置饼状Item被选中时变化的距离
         pieDataSet.setColors(colors);
 
-        //DisplayMetrics metrics=this.getResources().getDisplayMetrics();
+//        DisplayMetrics metrics=this.getResources().getDisplayMetrics();
         PieData pieData=new PieData(names,pieDataSet);
 
 
@@ -386,17 +389,28 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     public void setPieProgress(){
         // /名字
         ArrayList<String> names=new ArrayList<String>();
-        names.add("已入住");
-        names.add("未入住");
+        names.add("故障率");
+        names.add("未故障");
         //大小
 
         ArrayList<Entry> sizes=new ArrayList<Entry>();
-        float used = Float.parseFloat(SPUtils.get(instance, "checkin", "").toString());
-        progress_text.setText(used+"");
-        float to_use = 100.0f - used;
+        LogUtils.e(SPUtils.get(instance, "fault", "").toString()+"主界面");
+        LogUtils.e(SPUtils.get(instance, "ho_count", "").toString()+"主界面");
+        float fault = Float.parseFloat(SPUtils.get(instance, "fault", "").toString());
+        float ho_count = Float.parseFloat(SPUtils.get(instance, "ho_count", "").toString());
+        float faultp = fault/ho_count;
+        LogUtils.e(faultp+"主界面");
+        DecimalFormat decimalFormat=new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
+        String p=decimalFormat.format(faultp);//format 返回的是字符串
 
-        sizes.add(new Entry(used,0));
-        sizes.add(new Entry(to_use,1));
+        progress_text.setText(p+"");
+        float no_fault = 100.0f - faultp;
+
+        if (faultp<5){
+            faultp = 5;
+        }
+        sizes.add(new Entry(faultp,0));
+        sizes.add(new Entry(no_fault,1));
         //颜色
         ArrayList<Integer> colors=new ArrayList<Integer>();
         colors.add(Color.parseColor("#2b76fd"));
@@ -404,12 +418,12 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
 
         PieDataSet pieDataSet=new PieDataSet(sizes,"");//参数：颜色栏显示颜色目录、
         pieDataSet.setDrawValues(false);//是否在块上面显示值以及百分百
-        pieDataSet.setSliceSpace(0f);//块间距
+        pieDataSet.setSliceSpace(3f);           //设置饼状Item之间的间隙
+        pieDataSet.setSelectionShift(10f);      //设置饼状Item被选中时变化的距离
         pieDataSet.setColors(colors);
 
         //DisplayMetrics metrics=this.getResources().getDisplayMetrics();
         PieData pieData=new PieData(names,pieDataSet);
-
 
 
         mProgress.setTransparentCircleRadius(0f);//设置大圆里面透明小圆半径，和洞不是一个圆
@@ -437,7 +451,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         //durationMillisX：每个块运行到固定初始位置的时间
         //durationMillisY: 每个块到绘制结束时间
         mProgress.animateXY(1000, 1000);//设置动画（参数为时间）
-
     }
 
 }

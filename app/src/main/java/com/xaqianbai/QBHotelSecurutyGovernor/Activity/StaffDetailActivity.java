@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.DateUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GlideRoundTransform;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GsonUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.HttpUrlUtils;
@@ -44,26 +45,29 @@ public class StaffDetailActivity extends AppCompatActivity {
     TextView txt_detail;
     @BindView(R.id.txt_age_staff_del)
     TextView txt_age;
-    @BindView(R.id.txt_tall_staff_tal)
-    TextView txt_tall;
-    @BindView(R.id.txt_blood_staff_tel)
-    TextView txt_blood;
+    @BindView(R.id.txt_sex_staff_tal)
+    TextView txt_sex_staff_tal;
+    @BindView(R.id.txt_nation_staff_tel)
+    TextView txt_nation_staff_tel;
     @BindView(R.id.txt_tel_staff_tel)
     TextView txt_tel;
+    @BindView(R.id.txt_ide_staff_tel)
+    TextView txt_ide_staff_tel;
+    @BindView(R.id.txt_birthday_staff_tel)
+    TextView txt_birthday_staff_tel;
+
     @BindView(R.id.txt_country_staff_tel)
     TextView txt_country;
-    @BindView(R.id.txt_marry_staff_tel)
-    TextView txt_marry;
-    @BindView(R.id.txt_dang_staff_tel)
-    TextView txt_dang;
+
     @BindView(R.id.txt_conncet_staff_tel)
     TextView txt_conncet;
+
     @BindView(R.id.txt_tel_connecte_tel_tel)
-    TextView txt_tel_connecte;
-    @BindView(R.id.txt_home_staff_tel)
-    TextView txt_home;
-    @BindView(R.id.txt_now_home_staff_tel)
-    TextView txt_now_home;
+    TextView txt_tel_connecte_tel_tel;
+    @BindView(R.id.txt_job_staff_tel)
+    TextView txt_job_staff_tel;
+    @BindView(R.id.txt_per_type_staff_tel)
+    TextView txt_per_type_staff_tel;
     private StaffDetailActivity instance;
     private Unbinder unbinder;
 
@@ -129,26 +133,24 @@ public class StaffDetailActivity extends AppCompatActivity {
                                     sex = "女";
                                 }
                                 String hname = NullUtil.getString(data.get("hname"));//旅馆名称
-                                String quarters = NullUtil.getString(data.get("zw"));//职位
-                                txt_detail.setText(sex+"|"+hname+"|"+quarters);
+                                txt_detail.setText(hname);
                                 txt_age.setText(NullUtil.getString(data.get("age")));//年龄
-                                txt_tall.setText(NullUtil.getString(data.get("sg")));//身高
-                                txt_blood.setText(NullUtil.getString(data.get("xx")));//血型
+                                txt_sex_staff_tal.setText(sex);//性别
                                 txt_tel.setText(NullUtil.getString(data.get("lxfs1")));//联系方式
                                 txt_country.setText(NullUtil.getString(data.get("title")));//国籍
-                                String marry = NullUtil.getString(data.get("hyzk"));//婚姻状况
-                                if (marry.equals("0")){
-                                    marry = "未婚";
-                                }else {
-                                    marry = "已婚";
-                                }
-                                txt_marry.setText(marry);
-                                txt_dang.setText(NullUtil.getString(data.get("zzmm")));//政治面貌
+                                txt_job_staff_tel.setText(NullUtil.getString(data.get("zw")));//职位
+                                txt_job_staff_tel.setText(NullUtil.getString(data.get("lxfs1")));//联系方式
+                                txt_job_staff_tel.setText(NullUtil.getString(data.get("pe_name")));//人员类别
+                                txt_birthday_staff_tel.setText(DateUtil.getDate(NullUtil.getString(data.get("csrq"))));//出生日期
+                                txt_nation_staff_tel.setText(NullUtil.getString(data.get("na_name")));//民族
+//                                String marry = NullUtil.getString(data.get("hyzk"));//婚姻状况
+//                                if (marry.equals("0")){
+//                                    marry = "未婚";
+//                                }else {
+//                                    marry = "已婚";
+//                                }
                                 txt_conncet.setText(NullUtil.getString(data.get("jjlxr")));//紧急联系人
-                                txt_tel_connecte.setText(NullUtil.getString(data.get("jjlxrdh")));//紧急联系人电话
-                                txt_home.setText(NullUtil.getString(data.get("hjdxz")));
-                                txt_now_home.setText(NullUtil.getString(data.get("xzzxz")));
-//                                 txt_work_place.setText(NullUtil.getString(data.get("political")));
+                                txt_tel_connecte_tel_tel.setText(NullUtil.getString(data.get("jjlxrdh")));//紧急联系人电话
                                 if(!pic.equals("")&&pic !=null){
                                     Glide.with(instance)
                                             .load(NullUtil.getString(pic))
@@ -177,9 +179,6 @@ public class StaffDetailActivity extends AppCompatActivity {
                         } catch (Exception e) {
                             Toast.makeText(instance,e.toString(),Toast.LENGTH_LONG).show();
                         }
-
-
-
                     }
                 });
 

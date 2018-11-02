@@ -219,7 +219,11 @@ public class LoginActivity extends BaseActivityNew {
                                     SPUtils.put(instance, "zang", NullUtil.getString(map.get("zang")));//藏族百分比
                                     SPUtils.put(instance, "wei", NullUtil.getString(map.get("wei")));//维吾尔族百分比
                                     SPUtils.put(instance, "other", NullUtil.getString(map.get("other")));//其他族百分比
-                                    SPUtils.put(instance, "checkin", NullUtil.getString(map.get("checkin")));//今日入住比例
+                                    SPUtils.put(instance, "fault", NullUtil.getString(map.get("fault")));//故障率
+
+                                    LogUtils.e(NullUtil.getString(map.get("fault"))+"登录");
+
+                                    SPUtils.put(instance, "ho_count", NullUtil.getString(map.get("ho_count")));//旅馆数
                                     SPUtils.put(instance, "table", NullUtil.getString(map.get("table")));//入住比例
                                     SPUtils.put(instance, "userName", username);
                                     SPUtils.put(instance, "userPsw", psw);

@@ -31,8 +31,8 @@ public class ShowBigPicActivity extends BaseActivityNew {
         byte[] sss = Base64Utils.Base64ToString(url);
         Glide.with(this)
                 .load(sss)
-                .placeholder(R.mipmap.per)
-                .error(R.mipmap.ic_launcher)
+//                .placeholder(R.mipmap.per)
+//                .error(R.mipmap.ic_launcher)
                 .into(imageView);
     }
 

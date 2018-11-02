@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.CastTypeUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.DateUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GsonUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.HttpUrlUtils;
@@ -61,7 +62,7 @@ public class PunishmentDelActivity extends BaseActivityNew {
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
-        title.setText("发案详情");
+        title.setText("处罚详情");
     }
 
     private String id;
@@ -101,8 +102,8 @@ public class PunishmentDelActivity extends BaseActivityNew {
                             } else if (data.get("state").toString().equals("0")) {
                                 edit_namehotel_delpud.setText(NullUtil.getString(data.get("hname")));
                                 edit_punishdate_delpud.setText(DateUtil.getDate(NullUtil.getString(data.get("punishdate"))));
-                                        edit_punishresult_delpud.setText(NullUtil.getString(data.get("cflb")));
-                                edit_cflb_delpud.setText(NullUtil.getString(data.get("punishresult")));
+                                        edit_punishresult_delpud.setText(CastTypeUtil.getTypeString(NullUtil.getString(data.get("cflb"))));
+                                edit_cflb_delpud.setText(CastTypeUtil.getResultTypeString(NullUtil.getString(data.get("punishresult"))));
                                         edit_wgxq_delpud.setText(NullUtil.getString(data.get("cfyj")));
                                 edit_cfyj_delpud.setText(NullUtil.getString(data.get("pzjg")));
                                         edit_pzjg_delpud.setText(NullUtil.getString(data.get("pzrxm")));
