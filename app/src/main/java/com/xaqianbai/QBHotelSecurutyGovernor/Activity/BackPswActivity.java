@@ -31,14 +31,14 @@ import okhttp3.Call;
  */
 public class BackPswActivity extends BaseActivityNew {
 
-    private TextView tvGetVCode,tvTitle;
+    private TextView tvGetVCode, tvTitle;
     private Button btComplete;
     private BackPswActivity instance;
-    private EditText etPhone, etVCode, etPsw,edit_picCode;
-    private String phone, vCode, psw, codeKey = "";
+    private EditText etPhone, etVCode, etPsw, edit_picCode;
+    private String phone, vCode, psw, codeKey = "", picCode;
     private TimeCount time;
-    private  ImageView img_code;
-    private  FrameLayout layout_titleba;
+    private ImageView img_code;
+    private FrameLayout layout_titleba;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -46,7 +46,7 @@ public class BackPswActivity extends BaseActivityNew {
     public void initViews() {
         setContentView(R.layout.backpsw_activity);
         instance = this;
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         assignViews();
         layout_titleba.setBackgroundColor(getResources().getColor(R.color.white));
         tvTitle.setText("找回密码");
@@ -69,13 +69,14 @@ public class BackPswActivity extends BaseActivityNew {
 
 
     private String redoum = "";
+
     /**
      * 图片验证码生成
      */
-    public void getPicCode(){
+    public void getPicCode() {
         redoum = CodeUtils.getInstance().createCode();
         Glide.with(instance)
-                .load("http://hotel.qbchoice.cn/v1/governor/captchar?check="+redoum)
+                .load("http://hotel.qbchoice.cn/v1/governor/captchar?check=" + redoum)
                 .into(img_code);
     }
 
@@ -122,55 +123,71 @@ public class BackPswActivity extends BaseActivityNew {
         phone = etPhone.getText().toString().trim();
         vCode = etVCode.getText().toString().trim();
         psw = etPsw.getText().toString().trim();
+        picCode = edit_picCode.getText().toString().trim();
 
-            loadingDialog.show("正在修改");
+        if (phone == null || phone.equals("")) {
+            showToast("请输入手机号码");
+            return;
+        } else if (picCode == null || picCode.equals("")) {
+            showToast("请输入图形验证码");
+            return;
+        } else if (vCode == null || vCode.equals("")) {
+            showToast("请输入手机验证码");
+            return;
+        } else if (psw == null || psw.equals("")) {
+            showToast("请输入新密码");
+            return;
+        }
 
-            OkHttpUtils
-                    .post()
-                    .url(HttpUrlUtils.getHttpUrl().getBackPswUrl())
-                    .addParams("mp", phone)
-                    .addParams("checktmp", codeKey)
-                    .addParams("newpwd", psw)
-                    .build()
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int i) {
-                            e.printStackTrace();
-                            loadingDialog.dismiss();
-                        }
+        loadingDialog.show("正在修改");
 
-                        @Override
-                        public void onResponse(String s, int i) {
-                            loadingDialog.dismiss();
+        OkHttpUtils
+                .post()
+                .url(HttpUrlUtils.getHttpUrl().getBackPswUrl())
+                .addParams("mp", phone)
+                .addParams("checktmp", codeKey)
+                .addParams("newpwd", psw)
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        e.printStackTrace();
+                        loadingDialog.dismiss();
+                    }
 
-                            LogUtils.e("找回密码"+s);
-                            try {
-                                Map<String, Object> map = GsonUtil.JsonToMap(s);
-                                if (map.get("state").toString().equals(Globals.httpSuccessState)) {
-                                    showToast("找回密码成功");
-                                    finish();
-                                } else {
-                                    showToast(map.get("mess").toString());
-                                    return;
-                                }
-                            } catch (Exception e) {
-                                    showToast(e.toString());
+                    @Override
+                    public void onResponse(String s, int i) {
+                        loadingDialog.dismiss();
+
+                        LogUtils.e("找回密码" + s);
+                        try {
+                            Map<String, Object> map = GsonUtil.JsonToMap(s);
+                            if (map.get("state").toString().equals(Globals.httpSuccessState)) {
+                                showToast("找回密码成功");
+                                finish();
+                            } else {
+                                showToast(map.get("mess").toString());
+                                return;
                             }
+                        } catch (Exception e) {
+                            showToast(e.toString());
                         }
-                    });
+                    }
+                });
 
     }
 
     /**
      * 找回密码数据校验
+     *
      * @return
      */
     private void getcheckData() {
         OkHttpUtils
                 .post()
                 .url(HttpUrlUtils.getHttpUrl().getcheckmpCode())
-                .addParams("mp",etPhone.getText().toString().trim())
-                .addParams("smscode",etVCode.getText().toString().trim())
+                .addParams("mp", etPhone.getText().toString().trim())
+                .addParams("smscode", etVCode.getText().toString().trim())
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -180,7 +197,7 @@ public class BackPswActivity extends BaseActivityNew {
 
                     @Override
                     public void onResponse(String s, int i) {
-                        LogUtils.e("生成校验码"+s);
+                        LogUtils.e("生成校验码" + s);
 
                         try {
                             loadingDialog.dismiss();
@@ -190,7 +207,7 @@ public class BackPswActivity extends BaseActivityNew {
                                 return;
                             }
                             codeKey = map.get("table").toString();
-                             LogUtils.e("取得数据校验码"+codeKey);
+                            LogUtils.e("取得数据校验码" + codeKey);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -216,9 +233,9 @@ public class BackPswActivity extends BaseActivityNew {
             OkHttpUtils
                     .post()
                     .url(HttpUrlUtils.getHttpUrl().getVerCode())
-                    .addParams("imgcode",edit_picCode.getText().toString().trim())
-                    .addParams("tel",etPhone.getText().toString().trim())
-                    .addParams("check",redoum)
+                    .addParams("imgcode", edit_picCode.getText().toString().trim())
+                    .addParams("tel", etPhone.getText().toString().trim())
+                    .addParams("check", redoum)
                     .build()
                     .execute(new StringCallback() {
                         @Override

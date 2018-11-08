@@ -96,11 +96,13 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.img_clear_start_org://清除成立时间
                 edit_time.setText("");
+                mEnd = "";
+                mStart = "";
                 img_clear_start.setVisibility(View.GONE);
                 break;
             case R.id.btn_quary_org://查询
                 getIntentData();
-                if (mOrg.equals("") && mStart.equals("") && mEnd.equals("")) {
+                if (mOrg.equals("") && mTime.equals("") ) {
                     Toast.makeText(instance, "请选择查询条件", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent i = new Intent(instance, OrgDetileActivity.class);
@@ -112,8 +114,6 @@ public class OrgActivity extends AppCompatActivity implements View.OnClickListen
                 break;
         }
     }
-
-
 
     private String mOrg = "";
     private String mTime;

@@ -4,11 +4,11 @@
     android:id="@+id/activity_query_orc"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.QueryOrcActivity">
 
-    <include layout="@layout/pub_titlebar"/>
+    <include layout="@layout/pub_titlebar" />
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,44 +23,44 @@
             android:orientation="vertical">
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10px"
-            android:padding="@dimen/padding">
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="酒店编码："
-                android:textSize="@dimen/textview_smalls_size" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10px"
+                android:padding="@dimen/padding">
 
-            <TextView
-                android:id="@+id/txt_hnohotel_query_orc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="酒店编码："
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <TextView
+                    android:id="@+id/txt_hnohotel_query_orc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10px"
-            android:padding="@dimen/padding">
-
-            <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="酒店名称："
-                android:textSize="@dimen/textview_smalls_size" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10px"
+                android:padding="@dimen/padding">
 
-            <TextView
-                android:id="@+id/txt_hname_query_orc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="酒店名称："
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <TextView
+                    android:id="@+id/txt_hname_query_orc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
@@ -83,13 +83,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
-
-
-
-
-
-
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
 
@@ -122,11 +115,11 @@
                 android:padding="@dimen/padding">
 
                 <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="旅馆负责人："
-                    android:textSize="@dimen/textview_smalls_size"
-                    android:id="@+id/textView5" />
+                    android:textSize="@dimen/textview_smalls_size" />
 
                 <TextView
                     android:id="@+id/txt_principal_query_orc"
@@ -178,8 +171,6 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-
-
             <LinearLayout style="@style/common_horizontal_division_line_style" />
 
             <LinearLayout
@@ -201,8 +192,6 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-
-
             <LinearLayout style="@style/common_horizontal_division_line_style" />
 
             <LinearLayout
@@ -215,7 +204,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="行政区域："
+                    android:text="管辖机构："
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <TextView
@@ -246,15 +235,16 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-
-
             <LinearLayout style="@style/common_horizontal_division_line_style" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10px"
-                android:padding="@dimen/padding">
+                android:padding="@dimen/padding"
+                android:visibility="gone"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -268,10 +258,6 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-
-
-
-            <LinearLayout style="@style/common_horizontal_division_line_style" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -295,10 +281,7 @@
 
             <LinearLayout style="@style/common_horizontal_division_line_style" />
 
-
-
-
-<LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -320,6 +303,6 @@
             <LinearLayout style="@style/common_horizontal_division_line_style" />
 
 
-</LinearLayout>
-    </ScrollView>
         </LinearLayout>
+    </ScrollView>
+</LinearLayout>

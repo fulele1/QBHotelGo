@@ -72,7 +72,7 @@ public class PunishmentAddActivity extends BaseActivityNew {
         setContentView(R.layout.activity_punish_add);
         instance = this;
         unbinder = ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("处罚登记");
 
@@ -81,18 +81,31 @@ public class PunishmentAddActivity extends BaseActivityNew {
         pickerView1 = new OptionsPickerView(instance);
     }
 
+
+    @Override
+    public void onBackward(View backwardView) {
+        super.onBackward(backwardView);
+        if (addSuccess) {
+            writeConfig("addSuccess", "yes");
+            LogUtils.e("--------------" + "yes");
+        }
+    }
+
     private void intternet() {
 
-        if (mHotelCode.equals("")||mHotelCode ==null){
+        if (mHotelCode.equals("") || mHotelCode == null) {
             Toast.makeText(instance, "请选择酒店", Toast.LENGTH_SHORT).show();
             return;
-        }if (time.equals("")||time ==null){
+        }
+        if (time.equals("") || time == null) {
             Toast.makeText(instance, "请选择处罚日期", Toast.LENGTH_SHORT).show();
             return;
-        }if (kind.equals("")||kind ==null){
+        }
+        if (kind.equals("") || kind == null) {
             Toast.makeText(instance, "请选择处罚类别", Toast.LENGTH_SHORT).show();
             return;
-        }if (result.equals("")||result ==null){
+        }
+        if (result.equals("") || result == null) {
             Toast.makeText(instance, "请选择处罚结果", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -101,7 +114,7 @@ public class PunishmentAddActivity extends BaseActivityNew {
         LogUtils.e((HttpUrlUtils.getHttpUrl().PunishmentList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()));
         OkHttpUtils.post()
                 .url(HttpUrlUtils.getHttpUrl().PunishmentList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
-                .addParams("nohotel",   mHotelCode)//
+                .addParams("nohotel", mHotelCode)//
                 .addParams("punishdate", DateUtil.data(time))//选
                 .addParams("punishresult", result)//处罚结果 选
                 .addParams("cflb", kind)//处罚类别 选
@@ -122,12 +135,14 @@ public class PunishmentAddActivity extends BaseActivityNew {
                     @Override
                     public void onResponse(String s, int i) {
                         LogUtils.e(s);
-                        try{
+                        try {
                             Map<String, Object> data = GsonUtil.JsonToMap(s);
                             if (data.get("state").toString().equals("1")) {
                                 showToast(data.get("mess").toString());
                                 return;
                             } else if (data.get("state").toString().equals("0")) {
+                                addSuccess = true;
+                                LogUtils.e("--------------" + addSuccess);
                                 btn_finish_puad.setText("已发送成功");
                                 btn_finish_puad.setEnabled(false);
 //                                mIvShopDel.setVisibility(View.GONE);
@@ -136,7 +151,7 @@ public class PunishmentAddActivity extends BaseActivityNew {
                                 showToast("发送失败");
                             }
                             loadingDialog.dismiss();
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             showToast("数据格式异常，无法解析");
                         }
                     }
@@ -145,31 +160,34 @@ public class PunishmentAddActivity extends BaseActivityNew {
 
     }
 
+
+    private boolean addSuccess;
     private TimePickerView pvTime;
     private OptionsPickerView pickerView;
     private OptionsPickerView pickerView1;
-    private String time,kind,result;
+    private String time, kind, result;
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_finish_puad:
                 time = edit_time_pu.getText().toString().trim();
                 kind = CastTypeUtil.getTypeCode(edit_kind_pu.getText().toString().trim());
                 result = CastTypeUtil.getResultType(edit_result_pu.getText().toString().trim());
                 intternet();
                 break;
-                case R.id.edit_hname_pu:
-                    Intent intent = new Intent(instance, SearchHotelActivity.class);
-                    startActivityForResult(intent, 0);
+            case R.id.edit_hname_pu:
+                Intent intent = new Intent(instance, SearchHotelActivity.class);
+                startActivityForResult(intent, 0);
                 break;
-                case R.id.edit_time_pu:
-                    pvTime.show();
+            case R.id.edit_time_pu:
+                pvTime.show();
                 break;
-                case R.id.edit_kind_pu:
-                    pickerView.show();
+            case R.id.edit_kind_pu:
+                pickerView.show();
                 break;
-                case R.id.edit_result_pu:
-                    pickerView1.show();
+            case R.id.edit_result_pu:
+                pickerView1.show();
                 break;
         }
     }
@@ -218,7 +236,9 @@ public class PunishmentAddActivity extends BaseActivityNew {
         });
 
     }
+
     final ArrayList<String> parent = new ArrayList<>();
+
     //案件选择
     private void checkType() {
         parent.add("警告");
@@ -242,7 +262,9 @@ public class PunishmentAddActivity extends BaseActivityNew {
 
 
     }
+
     final ArrayList<String> parent1 = new ArrayList<>();
+
     //案件选择
     private void checkResult() {
         parent1.add("未处罚");
@@ -262,7 +284,7 @@ public class PunishmentAddActivity extends BaseActivityNew {
 
     }
 
-        @Override
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();

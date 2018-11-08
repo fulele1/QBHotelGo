@@ -112,7 +112,7 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
                 img_clear_ptype.setVisibility(View.GONE);
             break;
             case R.id.et_iden_type_pass://查询证件类型
-                DialogUtils.showItemDialog(instance,"类型选择",new String[]{"身份证","户口本","军官证","警官证","士兵证","国内护照","驾照","港澳通行证","其他"},et_iden_type);
+                DialogUtils.showItemDialog(instance,"类型选择",new String[]{"身份证","户口本","中国香港居民居住证","中国澳门居民居住证","中国台湾居民居住证","军官证","警官证","士兵证","国内护照","驾照","港澳通行证","其他"},et_iden_type);
             break;
             case R.id.img_clear_identype_pass://清除证件类型
                 et_iden_type.setText("");
@@ -184,6 +184,12 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
             idenType = "11";
         }else if (inenty.equals("户口本")){
             idenType = "13";
+        }else if (inenty.equals("中国香港居民居住证")){
+            idenType = "81";
+        }else if (inenty.equals("中国澳门居民居住证")){
+            idenType = "82";
+        }else if (inenty.equals("中国台湾居民居住证")){
+            idenType = "83";
         }else if (inenty.equals("军官证")){
             idenType = "90";
         }else if (inenty.equals("警官证")){

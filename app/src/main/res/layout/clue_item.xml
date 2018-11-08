@@ -77,7 +77,7 @@
                     android:textSize="@dimen/textview_smalls_size"
                     android:layout_weight="1"
                     android:textColor="@color/result_view"
-
+                    android:visibility="gone"
                     />
 
                 <TextView

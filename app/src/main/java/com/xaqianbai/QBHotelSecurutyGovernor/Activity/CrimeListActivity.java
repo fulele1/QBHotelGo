@@ -61,30 +61,38 @@ public class CrimeListActivity extends BaseActivityNew {
     LRecyclerView list_r;
     @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
-    /**服务器端一共多少条数据*/
+    /**
+     * 服务器端一共多少条数据
+     */
     private int TOTAL_COUNTER;//如果服务器没有返回总数据或者总页数，这里设置为最大值比如10000，什么时候没有数据了根据接口返回判断
 
-    /**每一页展示多少条数据*/
+    /**
+     * 每一页展示多少条数据
+     */
     private int REQUEST_COUNT;
 
-    /**已经获取到多少条数据了*/
+    /**
+     * 已经获取到多少条数据了
+     */
     private static int mCurrentCounter = 0;
-    private  int mCurrentpage = 1;
+    private int mCurrentpage = 1;
 
 
     private CrimeAdapter mDataAdapter = null;
 
     private CrimeListActivity.PreviewHandler mHandler = new CrimeListActivity.PreviewHandler(this);
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
         setContentView(R.layout.activity_recyclerview_list);
         instance = this;
         unbinder = ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("发案");
+        writeConfig("addSuccesscrime", "no");
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(instance);
 
@@ -108,7 +116,7 @@ public class CrimeListActivity extends BaseActivityNew {
         list_r.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
 
         //add a HeaderView
-        final View header = LayoutInflater.from(this).inflate(R.layout.sample_header,(ViewGroup)findViewById(android.R.id.content), false);
+        final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
         list_r.setOnRefreshListener(new OnRefreshListener() {
@@ -131,7 +139,7 @@ public class CrimeListActivity extends BaseActivityNew {
 
                 if (mCurrentCounter < TOTAL_COUNTER) {
                     // loading more
-                    mCurrentpage =mCurrentpage+1;
+                    mCurrentpage = mCurrentpage + 1;
                     connecting(mCurrentpage);
                 } else {
                     //the end
@@ -162,34 +170,19 @@ public class CrimeListActivity extends BaseActivityNew {
         });
 
         //设置头部加载颜色
-        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
+        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载颜色
-        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
+        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载文字提示
-        list_r.setFooterViewHint("拼命加载中","已经全部为你呈现了","网络不给力啊，点击再试一次吧");
+        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
 
         list_r.refresh();
-
-        //子条目的点击事件
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mDataAdapter.getDataList().size() > position) {
-                    Intent i = new Intent(instance, CrimeDelActivity.class);
-                    i.putExtra("id", mLogs.get(position).getId());
-                    startActivity(i);
-                }
-
-            }
-
-        });
-
 
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.floatingActionButton:
                 Intent i = new Intent(instance, CrimeAddActivity.class);
                 startActivity(i);
@@ -215,35 +208,36 @@ public class CrimeListActivity extends BaseActivityNew {
     }
 
 
-
     List<Crime> mLog;
     List<Crime> mLogs = new ArrayList<>();
+
     private void connecting(int p) {
 
-        LogUtils.e(HttpUrlUtils.getHttpUrl().BothList()+"?access_token="+ SPUtils.get(instance,"access_token",""));
+        LogUtils.e(HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p);
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().BothList()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&p="+p)
+                .url(HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         mHandler.sendEmptyMessage(-3);
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
-                        try{
+                        try {
+
                             mLog = new ArrayList<>();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals("1")) {
                                 mHandler.sendEmptyMessage(-3);
-                                Toast.makeText(instance,map.get("mess").toString(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
-                                if (!map.get("count").toString().equals("0")){
-                                    mHandler.sendEmptyMessage(-1);
+                                if (!map.get("count").toString().equals("0")) {
+
                                     list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                     for (int j = 0; j < data.size(); j++) {
@@ -256,14 +250,43 @@ public class CrimeListActivity extends BaseActivityNew {
                                         log.setDel(NullUtil.getString(data.get(j).get("qkms")));//day
                                         mLog.add(log);
                                         mLogs.add(log);
+                                        LogUtils.e(mLog.get(0).getId());
+                                        LogUtils.e(mLogs.get(0).getId());
+                                        LogUtils.e(mLog.size() + "mLog");
+                                        LogUtils.e(mLogs.size() + "mLogs");
                                     }
 
                                     String count = map.get("count").toString();
-                                    String  num = map.get("num").toString();
+                                    String num = map.get("num").toString();
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
-                                    txt_size.setText("共查询到"+count+"条数据");
-                                }else {
+                                    txt_size.setText("共查询到" + count + "条数据");
+
+                                    //子条目的点击事件
+                                    mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            if (mDataAdapter.getDataList().size() > position) {
+                                                if (readConfig("addSuccesscrime").equals("yes")) {
+                                                    LogUtils.e("--------------" + readConfig("addSuccesscrime"));
+                                                    Intent i = new Intent(instance, CrimeDelActivity.class);
+                                                    int a = Integer.parseInt(mLogs.get(position).getId());
+                                                    int b = a + 1;
+                                                    i.putExtra("id", b + "");
+                                                    startActivity(i);
+                                                } else {
+                                                    Intent i = new Intent(instance, CrimeDelActivity.class);
+                                                    i.putExtra("id", mLogs.get(position).getId());
+                                                    LogUtils.e(mLogs.get(position).getId());
+                                                    startActivity(i);
+                                                }
+
+                                            }
+                                        }
+                                    });
+                                    mHandler.sendEmptyMessage(-1);
+
+                                } else {
                                     txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);
                                 }
@@ -273,22 +296,21 @@ public class CrimeListActivity extends BaseActivityNew {
                                 mHandler.sendEmptyMessage(-3);
                                 txt_size.setVisibility(View.GONE);
                                 //响应失败
-                            }else if (map.get("state").toString().equals("10")) {
+                            } else if (map.get("state").toString().equals("10")) {
                                 mHandler.sendEmptyMessage(-3);
                                 //响应失败
                                 Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(instance,LoginActivity.class));
+                                startActivity(new Intent(instance, LoginActivity.class));
                                 finish();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             mHandler.sendEmptyMessage(-3);
-                            Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
     }
-
 
 
     private void notifyDataSetChanged() {
@@ -329,7 +351,6 @@ public class CrimeListActivity extends BaseActivityNew {
                         if (newList.size() + currentSize >= TOTAL_COUNTER) {
                             break;
                         }
-
                         Crime item = new Crime();
                         item.setId(mLog.get(i).getId());
                         item.setHname(mLog.get(i).getHname());
@@ -379,7 +400,6 @@ public class CrimeListActivity extends BaseActivityNew {
         }
         return true;
     }
-
 
 
 }

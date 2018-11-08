@@ -70,16 +70,16 @@ public class CrimeAddActivity extends BaseActivityNew {
         title.setText("发案登记");
         pickerView = new OptionsPickerView(instance);
         pvTime = new TimePickerView(instance, TimePickerView.Type.YEAR_MONTH_DAY);
-
     }
 
     private OptionsPickerView pickerView;
     private TimePickerView pvTime;
 
 
-    private String time,remark,condition,code;
+    private String time, remark, condition, code;
     private String ajxz = "";
     private String ajlb = "";
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -92,9 +92,9 @@ public class CrimeAddActivity extends BaseActivityNew {
                 LogUtils.e(edit_type_one_cr.getText().toString().trim());
                 String one = CastTypeUtil.getTypeCode(edit_type_one_cr.getText().toString().trim());
                 LogUtils.e(one);
-                if (!one.equals("")){
+                if (!one.equals("")) {
                     ajxz = one.substring(0, one.indexOf("-"));
-                    ajlb = one.substring(one.indexOf("-")+1,one.length());
+                    ajlb = one.substring(one.indexOf("-") + 1, one.length());
                 }
 
                 intternet();
@@ -111,6 +111,16 @@ public class CrimeAddActivity extends BaseActivityNew {
                 break;
         }
     }
+
+    @Override
+    public void onBackward(View backwardView) {
+        super.onBackward(backwardView);
+        if (addSuccess) {
+            writeConfig("addSuccesscrime", "yes");
+            LogUtils.e("--------------" + "yes");
+        }
+    }
+
 
     String mHotelCode = "";
 
@@ -130,16 +140,19 @@ public class CrimeAddActivity extends BaseActivityNew {
 
 
     private void intternet() {
-        if (mHotelCode.equals("")||mHotelCode ==null){
+        if (mHotelCode.equals("") || mHotelCode == null) {
             Toast.makeText(instance, "请选择酒店", Toast.LENGTH_SHORT).show();
             return;
-        }if (ajlb.equals("")||ajlb ==null){
+        }
+        if (ajlb.equals("") || ajlb == null) {
             Toast.makeText(instance, "请选择案件类别", Toast.LENGTH_SHORT).show();
             return;
-        }if (code.equals("")||code ==null){
+        }
+        if (code.equals("") || code == null) {
             Toast.makeText(instance, "请输入案件编号", Toast.LENGTH_SHORT).show();
             return;
-        }if (time.equals("")||time ==null){
+        }
+        if (time.equals("") || time == null) {
             Toast.makeText(instance, "请选择发案日期", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -178,6 +191,7 @@ public class CrimeAddActivity extends BaseActivityNew {
                                 showToast(data.get("mess").toString());
                                 return;
                             } else if (data.get("state").toString().equals("0")) {
+                                addSuccess = true;
                                 btn_finish_crad.setText("已发送成功");
                                 btn_finish_crad.setEnabled(false);
 //                                mIvShopDel.setVisibility(View.GONE);
@@ -194,6 +208,8 @@ public class CrimeAddActivity extends BaseActivityNew {
 
 
     }
+
+    private boolean addSuccess;
 
     @Override
     public void initData() throws Exception {

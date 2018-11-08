@@ -3,6 +3,7 @@ package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -53,6 +54,7 @@ public class PunishmentDelActivity extends BaseActivityNew {
     EditText edit_pzrxm_delpud;
     @BindView(R.id.edit_zxrxm_delpud)
     EditText edit_zxrxm_delpud;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
@@ -60,12 +62,14 @@ public class PunishmentDelActivity extends BaseActivityNew {
 
         instance = this;
         unbinder = ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("处罚详情");
     }
 
+
     private String id;
+
     @Override
     public void initData() throws Exception {
         id = getIntent().getStringExtra("id");
@@ -80,10 +84,10 @@ public class PunishmentDelActivity extends BaseActivityNew {
 
     private void connecting() {
 
-        LogUtils.e( HttpUrlUtils.getHttpUrl().PunishmentList()+"/"+id+"?access_token="+ SPUtils.get(instance,"access_token",""));
+        LogUtils.e(HttpUrlUtils.getHttpUrl().PunishmentList() + "/" + id + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().PunishmentList()+"/"+id+"?access_token="+ SPUtils.get(instance,"access_token",""))
+                .url(HttpUrlUtils.getHttpUrl().PunishmentList() + "/" + id + "?access_token=" + SPUtils.get(instance, "access_token", ""))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -97,31 +101,32 @@ public class PunishmentDelActivity extends BaseActivityNew {
                         try {
                             Map<String, Object> data = GsonUtil.JsonToMap(s);
                             if (data.get("state").toString().equals("1")) {
-                                Toast.makeText(instance,data.get("mess").toString(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_LONG).show();
                                 return;
                             } else if (data.get("state").toString().equals("0")) {
                                 edit_namehotel_delpud.setText(NullUtil.getString(data.get("hname")));
                                 edit_punishdate_delpud.setText(DateUtil.getDate(NullUtil.getString(data.get("punishdate"))));
-                                        edit_punishresult_delpud.setText(CastTypeUtil.getTypeString(NullUtil.getString(data.get("cflb"))));
+                                edit_punishresult_delpud.setText(CastTypeUtil.getTypeString(NullUtil.getString(data.get("cflb"))));
                                 edit_cflb_delpud.setText(CastTypeUtil.getResultTypeString(NullUtil.getString(data.get("punishresult"))));
-                                        edit_wgxq_delpud.setText(NullUtil.getString(data.get("cfyj")));
+                                edit_wgxq_delpud.setText(NullUtil.getString(data.get("cfyj")));
                                 edit_cfyj_delpud.setText(NullUtil.getString(data.get("pzjg")));
-                                        edit_pzjg_delpud.setText(NullUtil.getString(data.get("pzrxm")));
+                                edit_pzjg_delpud.setText(NullUtil.getString(data.get("pzrxm")));
                                 edit_pzrxm_delpud.setText(NullUtil.getString(data.get("zxrxm")));
-                                        edit_zxrxm_delpud.setText(NullUtil.getString(data.get("wgxq")));
+                                edit_zxrxm_delpud.setText(NullUtil.getString(data.get("wgxq")));
 
                             } else if (data.get("state").toString().equals("0")) {
                                 //响应失败
                                 Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_SHORT).show();
-                            }else if (data.get("state").toString().equals("10")) {
+                            } else if (data.get("state").toString().equals("10")) {
                                 //响应失败
                                 Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(instance,LoginActivity.class));
+                                startActivity(new Intent(instance, LoginActivity.class));
                                 finish();
                             }
-                        }catch (Exception e){
-                            Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-}}
+    }
+}

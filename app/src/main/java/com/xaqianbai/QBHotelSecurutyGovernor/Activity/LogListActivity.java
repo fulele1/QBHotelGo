@@ -59,28 +59,35 @@ public class LogListActivity extends BaseActivityNew {
     TextView txt_size;
     @BindView(R.id.recycler_view)
     LRecyclerView list_r;
-    /**服务器端一共多少条数据*/
+    /**
+     * 服务器端一共多少条数据
+     */
     private int TOTAL_COUNTER;//如果服务器没有返回总数据或者总页数，这里设置为最大值比如10000，什么时候没有数据了根据接口返回判断
 
-    /**每一页展示多少条数据*/
+    /**
+     * 每一页展示多少条数据
+     */
     private int REQUEST_COUNT;
 
-    /**已经获取到多少条数据了*/
+    /**
+     * 已经获取到多少条数据了
+     */
     private static int mCurrentCounter = 0;
-    private  int mCurrentpage = 1;
+    private int mCurrentpage = 1;
 
 
     private LogAdapter mDataAdapter = null;
 
     private LogListActivity.PreviewHandler mHandler = new LogListActivity.PreviewHandler(this);
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
         setContentView(R.layout.activity_recyclerview_list);
         instance = this;
         unbinder = ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("联合检查");
 
@@ -104,7 +111,7 @@ public class LogListActivity extends BaseActivityNew {
         list_r.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
 
         //add a HeaderView
-        final View header = LayoutInflater.from(this).inflate(R.layout.sample_header,(ViewGroup)findViewById(android.R.id.content), false);
+        final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
         list_r.setOnRefreshListener(new OnRefreshListener() {
@@ -127,7 +134,7 @@ public class LogListActivity extends BaseActivityNew {
 
                 if (mCurrentCounter < TOTAL_COUNTER) {
                     // loading more
-                    mCurrentpage =mCurrentpage+1;
+                    mCurrentpage = mCurrentpage + 1;
                     connecting(mCurrentpage);
                 } else {
                     //the end
@@ -158,11 +165,11 @@ public class LogListActivity extends BaseActivityNew {
         });
 
         //设置头部加载颜色
-        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
+        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载颜色
-        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
+        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载文字提示
-        list_r.setFooterViewHint("拼命加载中","已经全部为你呈现了","网络不给力啊，点击再试一次吧");
+        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
 
         list_r.refresh();
 
@@ -201,35 +208,35 @@ public class LogListActivity extends BaseActivityNew {
     }
 
 
-
     List<Log> mLog;
     List<Log> mLogs = new ArrayList<>();
+
     private void connecting(int p) {
 
-        LogUtils.e(HttpUrlUtils.getHttpUrl().LogList()+"?access_token="+ SPUtils.get(instance,"access_token",""));
+        LogUtils.e(HttpUrlUtils.getHttpUrl().LogList() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().LogList()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&p="+p)
+                .url(HttpUrlUtils.getHttpUrl().LogList() + "?access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         mHandler.sendEmptyMessage(-3);
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
 
-                        try{
+                        try {
                             mLog = new ArrayList<>();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
                             if (map.get("state").toString().equals("1")) {
                                 mHandler.sendEmptyMessage(-3);
-                                Toast.makeText(instance,map.get("mess").toString(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
-                                if (!map.get("count").toString().equals("0")){
+                                if (!map.get("count").toString().equals("0")) {
                                     mHandler.sendEmptyMessage(-1);
                                     list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
@@ -245,11 +252,11 @@ public class LogListActivity extends BaseActivityNew {
                                     }
 
                                     String count = map.get("count").toString();
-                                    String  num = map.get("num").toString();
+                                    String num = map.get("num").toString();
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
-                                    txt_size.setText("共查询到"+count+"条数据");
-                                }else {
+                                    txt_size.setText("共查询到" + count + "条数据");
+                                } else {
                                     txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);
                                 }
@@ -259,22 +266,21 @@ public class LogListActivity extends BaseActivityNew {
                                 mHandler.sendEmptyMessage(-3);
                                 txt_size.setVisibility(View.GONE);
                                 //响应失败
-                            }else if (map.get("state").toString().equals("10")) {
+                            } else if (map.get("state").toString().equals("10")) {
                                 mHandler.sendEmptyMessage(-3);
                                 //响应失败
                                 Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(instance,LoginActivity.class));
+                                startActivity(new Intent(instance, LoginActivity.class));
                                 finish();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             mHandler.sendEmptyMessage(-3);
-                            Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
                     }
                 });
     }
-
 
 
     private void notifyDataSetChanged() {
@@ -311,16 +317,16 @@ public class LogListActivity extends BaseActivityNew {
 
                     //模拟组装15个数据
                     ArrayList<Log> newList = new ArrayList<>();
-                    for (int i = 0; i < mLog.size(); i++) {
+                    for (int i = 0; i < mLogs.size(); i++) {
                         if (newList.size() + currentSize >= TOTAL_COUNTER) {
                             break;
                         }
 
                         Log item = new Log();
-                        item.setId(mLog.get(i).getId());
-                        item.setDate(DateUtil.getDate(mLog.get(i).getDate()));
-                        item.setOrg(mLog.get(i).getOrg());
-                        item.setDet(mLog.get(i).getDet());
+                        item.setId(mLogs.get(i).getId());
+                        item.setDate(DateUtil.getDate(mLogs.get(i).getDate()));
+                        item.setOrg(mLogs.get(i).getOrg());
+                        item.setDet(mLogs.get(i).getDet());
                         newList.add(item);
                     }
 
@@ -363,7 +369,6 @@ public class LogListActivity extends BaseActivityNew {
         }
         return true;
     }
-
 
 
 }

@@ -46,41 +46,37 @@ public class LoginActivity extends BaseActivityNew {
     private EditText etUsername, etPsw;
     private CheckBox cbRememberPsw;
     private LinearLayout mLayStatus;
-    private ImageView ivDeUser,ivDePsw;
+    private ImageView ivDeUser, ivDePsw;
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() {
-        sprfMain= PreferenceManager.getDefaultSharedPreferences(this);
-        editorMain=sprfMain.edit();
+        sprfMain = PreferenceManager.getDefaultSharedPreferences(this);
+        editorMain = sprfMain.edit();
 
-        if(sprfMain.getBoolean("main",false)){
-            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-            startActivity(intent);
-            LoginActivity.this.finish();
-        }
+//        if(sprfMain.getBoolean("main",false)){
+//            Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+//            startActivity(intent);
+//            LoginActivity.this.finish();
+//        }
 
-
-
-
-            setContentView(R.layout.login_activity);
-            instance = this;
-            StatuBarUtil.translucentStatusBar(this,true);
-            assignViews();
-            setDeleteImgview(etUsername,ivDeUser);
-            setDeleteImgview(etPsw,ivDePsw);
+        setContentView(R.layout.login_activity);
+        instance = this;
+        StatuBarUtil.translucentStatusBar(this, true);
+        assignViews();
+        setDeleteImgview(etUsername, ivDeUser);
+        setDeleteImgview(etPsw, ivDePsw);
 
 
     }
 
     /**
-     *
      * @param editText
      * @param imageView
      */
-    private void setDeleteImgview(EditText editText, final ImageView imageView){
+    private void setDeleteImgview(EditText editText, final ImageView imageView) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -127,8 +123,8 @@ public class LoginActivity extends BaseActivityNew {
         }
         checkPer(PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE);
         checkPer(PermissionUtils.CODE_CAMERA);
-        if(sprfMain.getBoolean("auto",false)){
-            login();
+        if (sprfMain.getBoolean("auto", false)) {
+//            login();
         }
     }
 
@@ -202,8 +198,8 @@ public class LoginActivity extends BaseActivityNew {
                                 if (map.get("state").toString().equals("0")) {
                                     SPUtils.put(instance, "ou_code", NullUtil.getString(map.get("ou_code")));//警员编号
                                     SPUtils.put(instance, "ou_nickname", NullUtil.getString(map.get("ou_nickname")));//昵称
-                                    SPUtils.put(instance, "ou_headpic", HttpUrlUtils.getHttpUrl().getOuPic()+
-                                            NullUtil.getString(map.get("ou_id"))+"/ou_headpic"+
+                                    SPUtils.put(instance, "ou_headpic", HttpUrlUtils.getHttpUrl().getOuPic() +
+                                            NullUtil.getString(map.get("ou_id")) + "/ou_headpic" +
                                             "?access_token=" + NullUtil.getString(map.get("access_token")));//用户头像
                                     SPUtils.put(instance, "ou_id", NullUtil.getString(map.get("ou_id")));//ou_id
                                     SPUtils.put(instance, "ho_count", NullUtil.getString(map.get("ho_count")));//旅馆数量
@@ -221,7 +217,7 @@ public class LoginActivity extends BaseActivityNew {
                                     SPUtils.put(instance, "other", NullUtil.getString(map.get("other")));//其他族百分比
                                     SPUtils.put(instance, "fault", NullUtil.getString(map.get("fault")));//故障率
 
-                                    LogUtils.e(NullUtil.getString(map.get("fault"))+"登录");
+                                    LogUtils.e(NullUtil.getString(map.get("fault")) + "登录");
 
                                     SPUtils.put(instance, "ho_count", NullUtil.getString(map.get("ho_count")));//旅馆数
                                     SPUtils.put(instance, "table", NullUtil.getString(map.get("table")));//入住比例
@@ -232,8 +228,8 @@ public class LoginActivity extends BaseActivityNew {
                                     } else {
                                         SPUtils.put(instance, "rememberPsw", false);
                                     }
-                                    editorMain.putBoolean("main",true);
-                                    editorMain.putBoolean("auto",true);
+                                    editorMain.putBoolean("main", true);
+                                    editorMain.putBoolean("auto", true);
                                     editorMain.commit();
                                     startActivity(new Intent(instance, MainActivity.class));
                                     finish();

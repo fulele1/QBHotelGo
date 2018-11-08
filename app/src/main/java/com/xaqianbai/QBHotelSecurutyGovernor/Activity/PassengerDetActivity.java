@@ -210,11 +210,14 @@ public class PassengerDetActivity extends AppCompatActivity {
                                 for (int j = 0; j < lists.size(); j++) {
                                     Del del = new Del();
                                     del.setCome(DateUtil.getDate(NullUtil.getString(lists.get(j).get("ltime"))));//入住时间
-                                    String goTime = NullUtil.getString(lists.get(j).get("etime"));
+                                    String goTime = NullUtil.getString(lists.get(j).get("day"));
+                                    String goTime1 = NullUtil.getString(lists.get(j).get("etime"));
                                     if (goTime.equals("")){
                                         goTime = "未离店";
+                                    }else if (goTime.equals("0")){
+                                        goTime = "当天离店";
                                     }else{
-                                        goTime = DateUtil.getDate(goTime);
+                                        goTime = DateUtil.getDate(goTime1);
                                     }
 //                                    del.setGo(goTime+curr+"--"+j);//离店时间
                                     del.setGo(goTime);//离店时间
@@ -222,6 +225,7 @@ public class PassengerDetActivity extends AppCompatActivity {
                                     del.setHotel(NullUtil.getString(lists.get(j).get("hname")));//酒店名称
                                     del.setRoomNum(NullUtil.getString(lists.get(j).get("noroom")));//房间号
                                     del.setPic(NullUtil.getString(data.get("imgs")));//图片(外层得到)
+                                    LogUtils.e("---------"+NullUtil.getString(lists.get(j).get(pk)));
                                     del.setPic_id(NullUtil.getString(lists.get(j).get(pk)));//图片id
                                     del.setPk(pk);//图片id
                                     dels.add(del);
@@ -261,6 +265,12 @@ public class PassengerDetActivity extends AppCompatActivity {
             return  "身份证";
         }else if (typeCode.equals("13")){
             return  "户口本";
+        }else if (typeCode.equals("81")){
+            return  "中国香港居民居住证";
+        }else if (typeCode.equals("82")){
+            return  "中国澳门居民居住证";
+        }else if (typeCode.equals("83")){
+            return  "中国台湾居民居住证";
         }else if (typeCode.equals("90")){
             return "军官证";
         }else if (typeCode.equals("91")){
@@ -278,6 +288,5 @@ public class PassengerDetActivity extends AppCompatActivity {
         }
         return "未知";
     }
-
 
 }

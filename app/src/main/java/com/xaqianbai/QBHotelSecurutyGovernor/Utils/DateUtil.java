@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.umeng.analytics.social.d.s;
+
 
 /**
  * Created by fl on 2017/7/12.
@@ -55,7 +57,7 @@ public class DateUtil {
     }
 
 
-    public static String getNowTime(){
+    public static String getNowTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        Date date = new Date(System.currentTimeMillis());//获取当前日期
         Date date = new Date();
@@ -65,14 +67,13 @@ public class DateUtil {
         date = calendar.getTime();
 
 
-
         return simpleDateFormat.format(date);
     }
 
 
-
     /**
      * 把时间转换为时间戳
+     *
      * @param time
      * @return
      */

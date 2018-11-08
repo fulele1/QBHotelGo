@@ -146,7 +146,10 @@
                         android:gravity="right"
                         android:textColor="@color/viewfinder_frame"
                         android:textColorHint="@color/text"
-                        android:textSize="@dimen/textview_small_size" />
+                        android:textSize="@dimen/textview_small_size"
+                        android:inputType="number"
+                        android:hint="请输入0-20之间的号码"
+                        />
 
                     <ImageView
                         android:layout_width="wrap_content"

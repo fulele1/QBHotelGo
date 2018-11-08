@@ -296,7 +296,7 @@ LogUtils.e(s);
                                     order.setIden(NullUtil.getString(data.get(j).get("idcode")));//证件号
                                     order.setDate(NullUtil.getString(data.get(j).get("ltime")));//时间
                                     order.setPass_type(NullUtil.getString(data.get(j).get("type")));//旅客类型
-                                    order.setDt_id(NullUtil.getString(data.get(j).get("dt_id")));//旅客dt_id
+                                    order.setDt_id(NullUtil.getString(data.get(j).get(pk)));//旅客dt_id
                                     LogUtils.e(HttpUrlUtils.getHttpUrl().picInDel()+"/"+ppp+"/"+NullUtil.getString(data.get(j).get(pk))
                                             +"/"+NullUtil.getString(img)
                                             +"?access_token="+ SPUtils.get(instance,"access_token",""));

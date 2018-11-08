@@ -11,8 +11,14 @@ public class IdenTypeUtils {
             mType = "身份证";
         }else if (type.equals("13")){
             mType = "户口本";
+        }else if (type.equals("83")){
+            mType = "中国香港居民居住证";
+        }else if (type.equals("84")){
+            mType = "中国澳门居民居住证";
+        }else if (type.equals("85")){
+            mType = "中国台湾居民居住证";
         }else if (type.equals("90")){
-            mType = "军官证";
+            return "军官证";
         }else if (type.equals("91")){
             mType = "警官证";
         }else if (type.equals("92")){

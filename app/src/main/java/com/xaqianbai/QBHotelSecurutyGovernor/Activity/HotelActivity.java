@@ -47,7 +47,6 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     private HotelActivity instance;
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         instance = this;
         unbinder = ButterKnife.bind(instance);
         title.setText("酒店查询");
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         event();
     }
@@ -64,13 +63,14 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     private void event() {
         btn_quary.setOnClickListener(instance);
         edit_org.setOnClickListener(instance);
-
         edit_time.setOnClickListener(instance);
         img_clear_org.setOnClickListener(instance);
-        EditClearUtils.clearText(edit_org,img_clear_org);
+        img_clear_time.setOnClickListener(instance);
+        EditClearUtils.clearText(edit_org, img_clear_org);
+        EditClearUtils.clearText(edit_time, img_clear_time);
     }
 
-    public void onBackward(View view){
+    public void onBackward(View view) {
         this.finish();
     }
 
@@ -82,40 +82,26 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.edit_org_hotel://管辖机构
                 Intent intent = new Intent(instance, SearchOrgActivity.class);
                 startActivityForResult(intent, 0);
                 break;
             case R.id.edit_time_hotel://选择时间
 
-                DoubleDateUtil.show(instance,edit_time);
+                DoubleDateUtil.show(instance, edit_time);
 
-//                if (mDoubleTimeSelectDialog == null) {
-//                mDoubleTimeSelectDialog = new DoubleDateSelectDialog(instance, "1990-01-01","2018-08-23",
-//                        "2018-08-23");
-//                mDoubleTimeSelectDialog.setOnDateSelectFinished(new DoubleDateSelectDialog.OnDateSelectFinished() {
-//                    @Override
-//                    public void onSelectFinished(String startTime, String endTime) {
-//                        edit_time.setText(startTime.replace("-", ".") + "--->" + endTime.replace("-", "."));
-//                    }
-//                });
-//
-//                mDoubleTimeSelectDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                    @Override
-//                    public void onDismiss(DialogInterface dialog) {
-//
-//                    }
-//                });
-//        }if (!mDoubleTimeSelectDialog.isShowing()) {
-//            mDoubleTimeSelectDialog.show();
-//        }
                 break;
 
             case R.id.img_clear_org_hotel://清除管辖机构
                 edit_org.setText("");
                 mOrg = "";
                 img_clear_org.setVisibility(View.GONE);
+                break;
+
+            case R.id.img_clear_time_hotel://清除时间
+                edit_time.setText("");
+                img_clear_time.setVisibility(View.GONE);
                 break;
             case R.id.btn_quary_hotel://查询
                 getIntentData();
@@ -133,19 +119,21 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+
     private String mOrg = "";
-    private String mName,mTime;
-    private String mStart= "";
-    private String mEnd= "";
+    private String mName, mTime;
+    private String mStart = "";
+    private String mEnd = "";
+
     private void getIntentData() {
         mName = edit_name.getText().toString().trim();
         mTime = edit_time.getText().toString().trim();
-        if (!mTime.equals("")){
-        mStart = NullUtil.getString(mTime.substring(0, mTime.indexOf("--->")));
-        mEnd = NullUtil.getString(mTime.substring(mTime.indexOf("--->")+4));
+        if (!mTime.equals("")) {
+            mStart = NullUtil.getString(mTime.substring(0, mTime.indexOf("--->")));
+            mEnd = NullUtil.getString(mTime.substring(mTime.indexOf("--->") + 4));
         }
-        LogUtils.e("mStart"+mStart);
-        LogUtils.e("mEnd"+mEnd);
+        LogUtils.e("mStart" + mStart);
+        LogUtils.e("mEnd" + mEnd);
     }
 
     @Override

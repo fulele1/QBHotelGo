@@ -69,7 +69,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="24"
                             android:textColor="@color/viewfinder_frame"
                             android:textSize="@dimen/textview_normal_size" />
 
@@ -98,7 +97,6 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="180"
                             android:textColor="@color/viewfinder_frame"
                             android:textSize="@dimen/textview_normal_size" />
 
@@ -129,7 +127,6 @@
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="AB"
                             android:textColor="@color/viewfinder_frame"
                             android:textSize="@dimen/textview_normal_size" />
 
@@ -161,7 +158,7 @@
                         />
 
                     <TextView
-                        android:id="@+id/txt_tel_staff_tel"
+                        android:id="@+id/txt_ide_staff_tel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="right"
@@ -183,7 +180,7 @@
                     android:paddingLeft="@dimen/activity_horizontal_margin"/>
 
                 <TextView
-                    android:id="@+id/txt_ide_staff_tel"
+                    android:id="@+id/txt_tel_staff_tel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
@@ -301,7 +298,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="职位"
+                        android:text="工作岗位"
                         android:textColor="@color/result_view"
                         android:textSize="@dimen/textview_smalls_size"
                         android:paddingLeft="@dimen/activity_horizontal_margin"/>
@@ -312,6 +309,35 @@
                         android:gravity="right"
                         android:paddingRight="@dimen/activity_horizontal_margin"
                         android:paddingLeft="@dimen/activity_horizontal_margin"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_en"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="人脸照片"
+                        android:textColor="@color/result_view"
+                        android:textSize="@dimen/textview_smalls_size"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:id="@+id/txt_face_pic_staff_tel"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@mipmap/per"
+                        android:layout_centerHorizontal="true"
+                        android:scaleType="fitXY"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:gravity="right"
                         />
                 </LinearLayout>
 

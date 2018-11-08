@@ -92,10 +92,10 @@ public class SearchHotelActivity extends BaseActivityNew {
 
 
     public void okConnection() {
-        LogUtils.e(HttpUrlUtils.getHttpUrl().HotelDel()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&nopage=");
+        LogUtils.e(HttpUrlUtils.getHttpUrl().HotelDelnew()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&nopage=");
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().HotelDel()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&nopage=")
+                .url(HttpUrlUtils.getHttpUrl().HotelDelnew()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&nopage=")
                 .build()
                 .execute(new StringCallback() {
                     @Override
