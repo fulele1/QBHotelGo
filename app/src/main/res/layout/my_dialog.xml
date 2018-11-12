@@ -2,65 +2,110 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    >
 
     <LinearLayout
         android:id="@+id/alert_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@mipmap/dialog"
+        android:background="@drawable/update_dia_bg"
         android:orientation="vertical"
-        android:padding="10dp">
+        >
 
-        <TextView
-            android:id="@+id/tv_dialog_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:gravity="center_horizontal"
-            android:padding="10dp"
-            android:text="友情提示"
-            android:textColor="@color/main"
-            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@mipmap/diaba"
+            >
+
+            <TextView
+                android:id="@+id/tv_dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="版本提示"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+
+
+                />
+
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_dialog_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center"
+            android:gravity="left"
             android:paddingBottom="30dp"
             android:text="检测到新版本"
-            android:textColor="#000"
-            android:textSize="14sp" />
+            android:textColor="@color/viewfinder_mask"
+            android:textSize="14sp"
+            android:layout_marginTop="@dimen/padding_en"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
-        <Button
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            >
+            <Button
+                android:id="@+id/btn_dia_miss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@mipmap/dia_no"
+                android:text="以后再说"
+                android:gravity="center"
+                android:textColor="@color/color_00"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                />
+
+            <Button
             android:id="@+id/btn_dia_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingBottom="@dimen/shadow_width"
-            android:layout_weight="1"
-            android:background="@null"
-            android:text="马上更新"
-            android:textColor="#000" />
-    </LinearLayout>
+            android:background="@mipmap/dia_yes"
+            android:text="立即升级"
+            android:gravity="center"
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/alert_close"
-        android:src="@mipmap/dog" />
+            android:textColor="@color/white"
+            />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_dia_no"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentRight="true"
-        android:background="@mipmap/close" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alert_close"
+        android:background="@mipmap/exit_dialog"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        />
+
+
 
 </RelativeLayout>

@@ -195,6 +195,15 @@ public class UpdateUtil {
                 alertDialog.dismiss();
             }
         });
+
+        Button btMiss = (Button) window.findViewById(R.id.btn_dia_miss);
+        btMiss.setVisibility(view);
+        btMiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
         return alertDialog;
     }
 

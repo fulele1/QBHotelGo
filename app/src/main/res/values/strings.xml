@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">大旅业治安</string>
+    <string name="app_name">旅业治安管理</string>
     <string name="input_account">请输入账号...</string>
     <string name="password">密　码：</string>
     <string name="input_psw">请输入密码...</string>

@@ -105,7 +105,7 @@ public class LogDetActivity extends BaseActivityNew {
                                 edit_per.setText(NullUtil.getString(data.get("ucorguser")));
                                 edit_event.setText(NullUtil.getString(data.get("ucorgjob")));
                                 edit_date.setText(DateUtil.getDate(NullUtil.getString(data.get("ucorgdate"))));
-                                edit_operate.setText(NullUtil.getString(data.get("ou_realname")));
+                                edit_operate.setText(NullUtil.getString(data.get("user_realname")));
                                 edit_operate_date.setText(DateUtil.getDate(NullUtil.getString(data.get("udcdate"))));
                                 edit_clue.setText(NullUtil.getString(data.get("uccontent")));
                                 edit_result.setText(NullUtil.getString(data.get("ucresult")));
@@ -124,8 +124,6 @@ public class LogDetActivity extends BaseActivityNew {
                         }
                     }
                 });
-
     }
-
 
 }

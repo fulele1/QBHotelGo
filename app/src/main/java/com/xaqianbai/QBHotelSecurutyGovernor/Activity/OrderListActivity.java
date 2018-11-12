@@ -116,7 +116,7 @@ public class OrderListActivity extends BaseActivityNew {
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mOrders= new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -238,7 +238,7 @@ public class OrderListActivity extends BaseActivityNew {
 
 
     private List<Order> mOrder;
-    private List<Order> mOrders= new ArrayList<>();
+    private List<Order> mOrders;
     private void connecting(int p) {
 //        QBHttp.get();
 

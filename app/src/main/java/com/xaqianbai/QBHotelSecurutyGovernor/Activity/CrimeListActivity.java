@@ -3,8 +3,11 @@ package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,7 +78,8 @@ public class CrimeListActivity extends BaseActivityNew {
      * 已经获取到多少条数据了
      */
     private static int mCurrentCounter = 0;
-    private int mCurrentpage = 1;
+    private int mCurrentpage;
+
 
 
     private CrimeAdapter mDataAdapter = null;
@@ -92,9 +96,38 @@ public class CrimeListActivity extends BaseActivityNew {
         StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("发案");
-        writeConfig("addSuccesscrime", "no");
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(instance);
+
+
+        writeConfig("addSuccesscrime", "no");
+        initRecycle();
+        mCurrentpage = 1;
+        initList();
+
+    }
+
+
+    /**
+     * 在添加完新的数据的时候重新刷新并加载
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (readConfig("addSuccesscrime").equals("yes")){
+            mLogs = new ArrayList<>();
+            mCurrentpage = 1;
+            initList();
+            writeConfig("addSuccesscrime", "no");
+        }
+    }
+
+
+
+    /**
+     * 初始化RecycleView
+     */
+    private void initRecycle() {
 
         mDataAdapter = new CrimeAdapter(instance);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
@@ -119,10 +152,44 @@ public class CrimeListActivity extends BaseActivityNew {
         final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
+        //设置头部加载颜色
+        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
+        //设置底部加载颜色
+        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
+        //设置底部加载文字提示
+        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.floatingActionButton:
+                Intent i = new Intent(instance, CrimeAddActivity.class);
+                startActivity(i);
+                break;
+        }
+    }
+
+    @Override
+    public void initData() throws Exception {
+
+    }
+
+    @Override
+    public void addListener() throws Exception {
+
+    }
+
+
+    /**
+     * 初始化RecycleView数据
+     */
+    public void initList(){
+
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mLogs = new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -148,55 +215,7 @@ public class CrimeListActivity extends BaseActivityNew {
             }
         });
 
-        list_r.setLScrollListener(new LRecyclerView.LScrollListener() {
-
-            @Override
-            public void onScrollUp() {
-            }
-
-            @Override
-            public void onScrollDown() {
-            }
-
-            @Override
-            public void onScrolled(int distanceX, int distanceY) {
-            }
-
-            @Override
-            public void onScrollStateChanged(int state) {
-
-            }
-
-        });
-
-        //设置头部加载颜色
-        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
-        //设置底部加载颜色
-        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
-        //设置底部加载文字提示
-        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-
         list_r.refresh();
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.floatingActionButton:
-                Intent i = new Intent(instance, CrimeAddActivity.class);
-                startActivity(i);
-                break;
-        }
-    }
-
-    @Override
-    public void initData() throws Exception {
-
-    }
-
-    @Override
-    public void addListener() throws Exception {
 
     }
 
@@ -209,7 +228,7 @@ public class CrimeListActivity extends BaseActivityNew {
 
 
     List<Crime> mLog;
-    List<Crime> mLogs = new ArrayList<>();
+    List<Crime> mLogs ;
 
     private void connecting(int p) {
 
@@ -250,10 +269,6 @@ public class CrimeListActivity extends BaseActivityNew {
                                         log.setDel(NullUtil.getString(data.get(j).get("qkms")));//day
                                         mLog.add(log);
                                         mLogs.add(log);
-                                        LogUtils.e(mLog.get(0).getId());
-                                        LogUtils.e(mLogs.get(0).getId());
-                                        LogUtils.e(mLog.size() + "mLog");
-                                        LogUtils.e(mLogs.size() + "mLogs");
                                     }
 
                                     String count = map.get("count").toString();
@@ -267,19 +282,19 @@ public class CrimeListActivity extends BaseActivityNew {
                                         @Override
                                         public void onItemClick(View view, int position) {
                                             if (mDataAdapter.getDataList().size() > position) {
-                                                if (readConfig("addSuccesscrime").equals("yes")) {
-                                                    LogUtils.e("--------------" + readConfig("addSuccesscrime"));
-                                                    Intent i = new Intent(instance, CrimeDelActivity.class);
-                                                    int a = Integer.parseInt(mLogs.get(position).getId());
-                                                    int b = a + 1;
-                                                    i.putExtra("id", b + "");
-                                                    startActivity(i);
-                                                } else {
+//                                                if (readConfig("addSuccesscrime").equals("yes")) {
+//                                                    LogUtils.e("--------------" + readConfig("addSuccesscrime"));
+//                                                    Intent i = new Intent(instance, CrimeDelActivity.class);
+//                                                    int a = Integer.parseInt(mLogs.get(position).getId());
+//                                                    int b = a + 1;
+//                                                    i.putExtra("id", b + "");
+//                                                    startActivity(i);
+//                                                } else {
                                                     Intent i = new Intent(instance, CrimeDelActivity.class);
                                                     i.putExtra("id", mLogs.get(position).getId());
                                                     LogUtils.e(mLogs.get(position).getId());
                                                     startActivity(i);
-                                                }
+//                                                }
 
                                             }
                                         }

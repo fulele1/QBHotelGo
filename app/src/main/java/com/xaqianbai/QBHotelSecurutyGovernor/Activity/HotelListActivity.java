@@ -128,7 +128,7 @@ public class HotelListActivity extends AppCompatActivity {
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mHotels = new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -230,7 +230,7 @@ public class HotelListActivity extends AppCompatActivity {
 
 
     List<Hotel> mHotel;
-    private List<Hotel> mHotels = new ArrayList<>();
+    private List<Hotel> mHotels ;
 
     private void connecting(int p) {
 

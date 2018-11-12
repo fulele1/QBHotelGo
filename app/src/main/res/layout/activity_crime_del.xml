@@ -154,13 +154,15 @@
                 android:id="@+id/edit_event_log_del"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@null"
                 android:textColor="@color/viewfinder_frame"
                 android:textSize="@dimen/textview_smalls_size"
-                android:gravity="right"
+                android:gravity="left"
+                android:layout_gravity="center"
                 android:focusable="false"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/app_name"
                 />
         </LinearLayout>
 

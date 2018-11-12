@@ -86,6 +86,57 @@ public class ClueListActivity extends BaseActivityNew{
 
         title.setText("线索信息");
 
+        initRecycle();
+        mCurrentpage = 1;
+        initList();
+    }
+
+    /**
+     * 初始化recycleview数据
+     */
+    public void initList(){
+
+        //上拉刷新
+        list_r.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mClues = new ArrayList<>();
+                LogUtils.e("midnaksdbuzdhoa niao sahdajhf");
+                mDataAdapter.clear();
+                mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
+                mCurrentCounter = 0;
+                connecting(1);
+            }
+        });
+
+        //是否禁用自动加载更多功能,false为禁用, 默认开启自动加载更多功能
+        list_r.setLoadMoreEnabled(true);
+
+        //下拉加载
+        list_r.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+
+                if (mCurrentCounter < TOTAL_COUNTER) {
+                    // loading more
+                    mCurrentpage =mCurrentpage+1;
+                    connecting(mCurrentpage);
+                } else {
+                    //the end
+                    list_r.setNoMore(true);
+                }
+            }
+        });
+
+        list_r.refresh();
+    }
+
+
+    /**
+     * 初始化recycleview
+     */
+    private void initRecycle() {
+
         mDataAdapter = new ClueAdapter(instance);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
         list_r.setAdapter(mLRecyclerViewAdapter);
@@ -109,78 +160,12 @@ public class ClueListActivity extends BaseActivityNew{
         final View header = LayoutInflater.from(this).inflate(R.layout.sample_header,(ViewGroup)findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
-        list_r.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                mDataAdapter.clear();
-                mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
-                mCurrentCounter = 0;
-                connecting(1);
-            }
-        });
-
-        //是否禁用自动加载更多功能,false为禁用, 默认开启自动加载更多功能
-        list_r.setLoadMoreEnabled(true);
-
-        list_r.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-
-                if (mCurrentCounter < TOTAL_COUNTER) {
-                    // loading more
-                    mCurrentpage =mCurrentpage+1;
-                    connecting(mCurrentpage);
-                } else {
-                    //the end
-                    list_r.setNoMore(true);
-                }
-            }
-        });
-
-        list_r.setLScrollListener(new LRecyclerView.LScrollListener() {
-
-            @Override
-            public void onScrollUp() {
-            }
-
-            @Override
-            public void onScrollDown() {
-            }
-
-            @Override
-            public void onScrolled(int distanceX, int distanceY) {
-            }
-
-            @Override
-            public void onScrollStateChanged(int state) {
-
-            }
-
-        });
-
         //设置头部加载颜色
         list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
         //设置底部加载颜色
         list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
         //设置底部加载文字提示
         list_r.setFooterViewHint("拼命加载中","已经全部为你呈现了","网络不给力啊，点击再试一次吧");
-
-        list_r.refresh();
-
-        //子条目的点击事件
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mDataAdapter.getDataList().size() > position) {
-                    Intent i = new Intent(instance, ClueDelActivity.class);
-                    i.putExtra("id", mClues.get(position).getId());
-                    startActivity(i);
-                }
-
-            }
-
-        });
 
 
     }
@@ -210,7 +195,7 @@ public class ClueListActivity extends BaseActivityNew{
 
 
     List<Clue> mClue;
-    List<Clue> mClues = new ArrayList<>();
+    List<Clue> mClues ;
     private void connecting(int p) {
 
         LogUtils.e(HttpUrlUtils.getHttpUrl().clueList()+"?access_token="+ SPUtils.get(instance,"access_token",""));
@@ -263,11 +248,30 @@ public class ClueListActivity extends BaseActivityNew{
                                         mClues.add(clue);
                                     }
 
+
+
                                     String count = map.get("count").toString();
                                     String  num = map.get("num").toString();
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
                                     txt_size.setText("共查询到"+count+"条数据");
+
+
+                                    //子条目的点击事件
+                                    mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            if (mDataAdapter.getDataList().size() > position) {
+                                                Intent i = new Intent(instance, ClueDelActivity.class);
+                                                i.putExtra("id", mClues.get(position).getId());
+                                                startActivity(i);
+                                            }
+                                        }
+
+                                    });
+
+
+
                                 } else {
                                     mHandler.sendEmptyMessage(-3);
                                     txt_size.setVisibility(View.GONE);
@@ -296,6 +300,8 @@ public class ClueListActivity extends BaseActivityNew{
                 });
     }
 
+
+    String first = "";
     private void notifyDataSetChanged() {
         mLRecyclerViewAdapter.notifyDataSetChanged();
     }
@@ -307,7 +313,6 @@ public class ClueListActivity extends BaseActivityNew{
 
     }
 
-    private int size;
 
     private class PreviewHandler extends Handler {
 

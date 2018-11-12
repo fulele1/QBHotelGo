@@ -91,6 +91,17 @@ public class LogListActivity extends BaseActivityNew {
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("联合检查");
 
+        initRecycle();
+        mCurrentpage = 1;
+        initList();
+
+    }
+
+
+    /**
+     * 初始化recycleview
+     */
+    private void initRecycle() {
         mDataAdapter = new LogAdapter(instance);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
         list_r.setAdapter(mLRecyclerViewAdapter);
@@ -114,10 +125,26 @@ public class LogListActivity extends BaseActivityNew {
         final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
+        //设置头部加载颜色
+        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
+        //设置底部加载颜色
+        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
+        //设置底部加载文字提示
+        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+
+
+    }
+
+
+    /**
+     * 初始化recycleview数据
+     */
+    private void initList() {
+
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mLogs = new ArrayList<>();//初始化总数据
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -143,49 +170,7 @@ public class LogListActivity extends BaseActivityNew {
             }
         });
 
-        list_r.setLScrollListener(new LRecyclerView.LScrollListener() {
-
-            @Override
-            public void onScrollUp() {
-            }
-
-            @Override
-            public void onScrollDown() {
-            }
-
-            @Override
-            public void onScrolled(int distanceX, int distanceY) {
-            }
-
-            @Override
-            public void onScrollStateChanged(int state) {
-
-            }
-
-        });
-
-        //设置头部加载颜色
-        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
-        //设置底部加载颜色
-        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
-        //设置底部加载文字提示
-        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-
         list_r.refresh();
-
-        //子条目的点击事件
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mDataAdapter.getDataList().size() > position) {
-                    Intent i = new Intent(instance, LogDetActivity.class);
-                    i.putExtra("id", mLogs.get(position).getId());
-                    startActivity(i);
-                }
-
-            }
-
-        });
 
 
     }
@@ -209,7 +194,7 @@ public class LogListActivity extends BaseActivityNew {
 
 
     List<Log> mLog;
-    List<Log> mLogs = new ArrayList<>();
+    List<Log> mLogs ;
 
     private void connecting(int p) {
 
@@ -256,6 +241,22 @@ public class LogListActivity extends BaseActivityNew {
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
                                     txt_size.setText("共查询到" + count + "条数据");
+
+                                    //子条目的点击事件
+                                    mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View view, int position) {
+                                            if (mDataAdapter.getDataList().size() > position) {
+                                                Intent i = new Intent(instance, LogDetActivity.class);
+                                                i.putExtra("id", mLogs.get(position).getId());
+                                                startActivity(i);
+                                            }
+
+                                        }
+
+                                    });
+
+
                                 } else {
                                     txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);

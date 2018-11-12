@@ -4,8 +4,11 @@ package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -78,7 +81,7 @@ public class PunishmentListActivity extends BaseActivityNew {
      * 已经获取到多少条数据了
      */
     private static int mCurrentCounter = 0;
-    private int mCurrentpage = 1;
+    private int mCurrentpage;
 
 
     private PunishmentAdapter mDataAdapter = null;
@@ -95,10 +98,33 @@ public class PunishmentListActivity extends BaseActivityNew {
         StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("处罚");
-        writeConfig("addSuccess", "no");
+
         floatingActionButton.setVisibility(View.VISIBLE);
         floatingActionButton.setOnClickListener(instance);
 
+        writeConfig("addSuccess", "no");
+        initRecycle();
+        mCurrentpage = 1;
+        initList();
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (readConfig("addSuccess").equals("yes")){
+            mLogs = new ArrayList<>();
+            mCurrentpage = 1;
+            initList();
+            writeConfig("addSuccess", "no");
+        }
+    }
+
+    /**
+     * 初始化recycleview
+     */
+    private void initRecycle() {
         mDataAdapter = new PunishmentAdapter(instance);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
         list_r.setAdapter(mLRecyclerViewAdapter);
@@ -122,10 +148,26 @@ public class PunishmentListActivity extends BaseActivityNew {
         final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
+        //设置头部加载颜色
+        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
+        //设置底部加载颜色
+        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
+        //设置底部加载文字提示
+        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+
+
+    }
+
+
+    /**
+     * 初始化recycleview数据
+     */
+    private void initList() {
+
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mLogs = new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -151,35 +193,7 @@ public class PunishmentListActivity extends BaseActivityNew {
             }
         });
 
-        list_r.setLScrollListener(new LRecyclerView.LScrollListener() {
-
-            @Override
-            public void onScrollUp() {
-            }
-
-            @Override
-            public void onScrollDown() {
-            }
-
-            @Override
-            public void onScrolled(int distanceX, int distanceY) {
-            }
-
-            @Override
-            public void onScrollStateChanged(int state) {
-
-            }
-
-        });
-
-        //设置头部加载颜色
-        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
-        //设置底部加载颜色
-        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
-        //设置底部加载文字提示
-        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-
-        list_r.refresh();
+        list_r.refresh();//刷新数据
 
 
     }
@@ -213,7 +227,7 @@ public class PunishmentListActivity extends BaseActivityNew {
 
 
     List<Punishment> mLog;
-    List<Punishment> mLogs = new ArrayList<>();
+    List<Punishment> mLogs;
 
     private void connecting(int p) {
 
@@ -263,18 +277,9 @@ public class PunishmentListActivity extends BaseActivityNew {
                                         @Override
                                         public void onItemClick(View view, int position) {
                                             if (mDataAdapter.getDataList().size() > position) {
-                                                if (readConfig("addSuccess").equals("yes")) {
-                                                    LogUtils.e("--------------" + readConfig("addSuccess"));
-                                                    Intent i = new Intent(instance, PunishmentDelActivity.class);
-                                                    int a = Integer.parseInt(mLogs.get(position).getId());
-                                                    int b = a + 1;
-                                                    i.putExtra("id", b + "");
-                                                    startActivity(i);
-                                                } else {
                                                     Intent i = new Intent(instance, PunishmentDelActivity.class);
                                                     i.putExtra("id", mLogs.get(position).getId());
                                                     startActivity(i);
-                                                }
 
                                             }
                                         }

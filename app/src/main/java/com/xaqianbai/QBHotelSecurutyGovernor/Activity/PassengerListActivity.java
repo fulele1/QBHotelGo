@@ -123,7 +123,7 @@ public class PassengerListActivity extends AppCompatActivity {
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mPassengerss = new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -240,7 +240,7 @@ public class PassengerListActivity extends AppCompatActivity {
 
 
     List<Passenger> mPassengers;
-    private List<Passenger> mPassengerss = new ArrayList<>();
+    private List<Passenger> mPassengerss ;
 
     private void connecting(int p) {
 

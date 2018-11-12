@@ -119,7 +119,7 @@ public class StaffListActivity extends AppCompatActivity {
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mStaffss = new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -193,7 +193,7 @@ public class StaffListActivity extends AppCompatActivity {
     }
 
     private List<Staff> mStaffs;
-    private List<Staff> mStaffss = new ArrayList<>();
+    private List<Staff> mStaffss ;
 
     private void connecting(int p) {
 

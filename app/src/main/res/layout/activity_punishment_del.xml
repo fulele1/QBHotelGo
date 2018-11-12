@@ -270,7 +270,8 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:focusable="false"
-                    android:gravity="right"
+                    android:gravity="left"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
             </LinearLayout>
