@@ -62,8 +62,8 @@ public class DelFragment extends Fragment{
         }
         Glide.with(instance)
                 .load(HttpUrlUtils.getHttpUrl().picInDel()+"/"+ppp+"/"+mDel.getPic_id()+"/"+mDel.getPic()+"?access_token="+ SPUtils.get(instance,"access_token",""))
-                .placeholder(R.mipmap.per)
-                .error(R.mipmap.ic_launcher)
+//                .placeholder(R.mipmap.per)
+                .error(R.mipmap.now_no_pic)
                 .into(img_pic);
         return view;
     }

@@ -167,16 +167,16 @@ public class StaffDetailActivity extends AppCompatActivity {
                                     Glide.with(instance)
                                             .load(NullUtil.getString(pic))
                                             .transform(new GlideRoundTransform(instance, 10))
-                                            .placeholder(R.mipmap.per)
-                                            .error(R.mipmap.ic_launcher)
+//                                            .placeholder(R.mipmap.per)
+                                            .error(R.mipmap.now_no_pic)
                                             .into(img_pic);
 
 
                                     Glide.with(instance)
                                             .load(NullUtil.getString(facePic))
                                             .transform(new GlideRoundTransform(instance, 10))
-                                            .placeholder(R.mipmap.per)
-                                            .error(R.mipmap.ic_launcher)
+//                                            .placeholder(R.mipmap.per)
+                                            .error(R.mipmap.now_no_pic)
                                             .into(txt_face_pic_staff_tel);
                                 }
                             } else if (data.get("state").toString().equals("19")) {

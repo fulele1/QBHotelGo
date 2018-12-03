@@ -81,7 +81,10 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/list_line"
-        android:text="fkkdsjfasfjdsakfjsad" />
+        android:text="暂无描述"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
 
     <LinearLayout
         style="@style/common_horizontal_division_line_style_list"

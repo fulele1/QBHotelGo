@@ -137,7 +137,6 @@ public class HotelDetilActivity extends AppCompatActivity {
 
                                         x.add(jsonObject.getInt("date") + "");
                                         y.add(jsonObject.getDouble("live_num"));
-
                                     }
 
                                     LineData mLineData = ChartUtil.makeLineData(instance, 7, y, x);

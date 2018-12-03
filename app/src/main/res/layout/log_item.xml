@@ -71,7 +71,10 @@
                     android:layout_height="wrap_content"
                     android:text="fjks"
                     android:textColor="@color/result_view"
-                    android:textSize="@dimen/textview_smalls_size" />
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    />
             </LinearLayout>
 
 

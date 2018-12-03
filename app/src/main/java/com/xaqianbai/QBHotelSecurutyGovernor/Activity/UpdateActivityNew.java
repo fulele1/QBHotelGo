@@ -149,14 +149,7 @@ public class UpdateActivityNew extends BaseActivityNew {
                     FoBtn.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //安装app
-                            Intent oInt = new Intent(Intent.ACTION_VIEW);
-                            oInt.setDataAndType(Uri.fromFile(new File(savePath + "/" + newVersion)), "application/vnd.android.package-archive");
-                            //关键点：
-                            //安装完成后执行打开
-                            oInt.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            writeConfig("late", "true");
-                            startActivity(oInt);
+
                         }
                     });
 

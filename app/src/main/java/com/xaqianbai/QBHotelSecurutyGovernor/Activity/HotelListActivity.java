@@ -1,5 +1,6 @@
 package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
@@ -100,6 +101,7 @@ public class HotelListActivity extends AppCompatActivity {
     /**
      * 初始化LRecycleView
      */
+    @SuppressLint("ResourceType")
     public void initLRecycleView() {
 
         mDataAdapter = new HotelAdapter(instance);
@@ -124,6 +126,9 @@ public class HotelListActivity extends AppCompatActivity {
         //add a HeaderView
         final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
+
+//        list_r.setEmptyView(findViewById(R.id.recycler_view));//空白页面
+
 
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override

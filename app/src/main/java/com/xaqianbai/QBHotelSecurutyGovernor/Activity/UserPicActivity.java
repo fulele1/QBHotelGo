@@ -119,8 +119,7 @@ public class UserPicActivity extends BaseActivityNew {
         if (url != null && !url.equals("")) {
             Glide.with(instance)
                     .load(url)
-                    .error(R.mipmap.per)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.now_no_pic)
                     .into(img_pic);
         }
         tv_forward.setVisibility(View.VISIBLE);

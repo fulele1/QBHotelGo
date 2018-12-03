@@ -31,6 +31,16 @@ public class PunishmentAdapter extends ListBaseAdapter<Punishment> {
         TextView txt_del_pu = holder.getView(R.id.txt_del_pu);
         txt_hname_crime.setText(item.getHname());
 //        txt_date_pu.setText(DateUtil.getDate(item.getDate()));
-        txt_del_pu.setText(item.getDel());
+//        txt_del_pu.setText(item.getDel());
+
+        String del = item.getDel();
+        if(del.equals("")){
+            txt_del_pu.setText("暂无描述");
+        }else {
+            txt_del_pu.setText(del);
+
+        }
+
+
     }
 }

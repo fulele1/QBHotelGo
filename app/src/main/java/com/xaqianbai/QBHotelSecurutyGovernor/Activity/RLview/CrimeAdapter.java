@@ -36,7 +36,13 @@ public class CrimeAdapter extends ListBaseAdapter<Crime> {
         txt_date_crime.setText(DateUtil.getDate(item.getDate()));
         txt_type_one_crime.setText("#"+item.getType_one());
         txt_type_two_crime.setText("#"+item.getType_two());
-        txt_del_crime.setText(item.getDel());
+        String del = item.getDel();
+        if(del.equals("")){
+            txt_del_crime.setText("暂无描述");
+        }else {
+            txt_del_crime.setText(del);
+
+        }
 
     }
 }

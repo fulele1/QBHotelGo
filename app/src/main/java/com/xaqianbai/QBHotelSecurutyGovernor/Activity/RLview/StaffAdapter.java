@@ -43,8 +43,8 @@ public class StaffAdapter extends ListBaseAdapter<Staff> {
         Glide.with(mContext)
                 .load(item.getPic())
                 .transform(new GlideRoundTransform(mContext,10))
-                .placeholder(R.mipmap.per)
-                .error(R.mipmap.ic_launcher)
+//                .placeholder(R.mipmap.per)
+                .error(R.mipmap.now_no_pic)
                 .into(tv_pic);
         if (item.getSex().equals("1")){
             img_sex.setImageResource(R.mipmap.man);

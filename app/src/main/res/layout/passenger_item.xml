@@ -120,6 +120,8 @@
             android:text=""
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"
             />
     </LinearLayout>
     <LinearLayout

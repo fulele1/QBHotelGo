@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.xaqianbai.QBHotelSecurutyGovernor.Entity.Hotel;
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
 
 
 /**
@@ -44,9 +45,12 @@ public class HotelAdapter extends ListBaseAdapter<Hotel> {
         txt_manager.setText("负责人:"+item.getManager());
         tv_address.setText(item.getAddress());
         txt_tel.setText(item.getTel());
+        LogUtils.e("不知道的分打飞节食减肥"+item.getPic());
         if(!item.getPic().equals("")&&item.getPic()!=null){
-            Glide.with(mContext).load(item.getPic())
-                    .placeholder(R.mipmap.hotel).error(R.mipmap.hotel).into(tv_pic);
+            Glide.with(mContext)
+                    .load(item.getPic())
+                    .error(R.mipmap.now_no_pic)
+                    .into(tv_pic);
         }
 
         if (item.getStars().equals("1")){
@@ -70,10 +74,5 @@ public class HotelAdapter extends ListBaseAdapter<Hotel> {
             star_four.setVisibility(View.VISIBLE);
             star_five.setVisibility(View.VISIBLE);
         }
-
-
     }
-
-
-
 }

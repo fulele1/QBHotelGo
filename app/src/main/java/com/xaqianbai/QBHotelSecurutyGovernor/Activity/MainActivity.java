@@ -240,7 +240,7 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
             Bundle bundle = data.getExtras();
             if (bundle != null) {
                 String scanResult = bundle.getString("result");
-                String code = scanResult.substring(scanResult.indexOf("=")+1,scanResult.length());
+                String code = scanResult.substring(scanResult.indexOf("hotel/")+6,scanResult.length());
                 LogUtils.e(code);
                 //跳转到查询结果结果界面
                 Intent intent = new Intent(instance, QueryOrcActivity.class);
@@ -284,8 +284,6 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         ActivityController.removeActivity(instance);
         mUnbinder.unbind();
     }
-
-
 
     /**
      * 折线图
@@ -335,17 +333,27 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         float zang = Float.parseFloat(SPUtils.get(instance, "zang", "").toString());
         float wei = Float.parseFloat(SPUtils.get(instance, "wei", "").toString());
         float other = Float.parseFloat(SPUtils.get(instance, "other", "").toString());
+        LogUtils.e("jkfjksjf"+han);
+        LogUtils.e("jkfjksjf"+zang);
+        LogUtils.e("jkfjksjf"+wei);
+        LogUtils.e("jkfjksjf"+other);
 
+        if (han != 0.0){
         sizes.add(new Entry(han,0));
-        sizes.add(new Entry(zang,1));
-        sizes.add(new Entry(wei,2));
-        sizes.add(new Entry(other,3));
+        }if (zang != 0.0){
+            sizes.add(new Entry(zang,1));
+        }if (wei != 0.0){
+            sizes.add(new Entry(wei,2));
+        }if (other != 0.0){
+            sizes.add(new Entry(other,3));
+        }
         //颜色
         ArrayList<Integer> colors=new ArrayList<Integer>();
         colors.add(Color.parseColor("#aa01fe"));
-        colors.add(Color.parseColor("#fd00a8"));
         colors.add(Color.parseColor("#04a5ff"));
         colors.add(Color.parseColor("#02dee1"));
+        colors.add(Color.parseColor("#fd00a8"));
+        colors.add(Color.parseColor("#04a5ff"));
 
         PieDataSet pieDataSet=new PieDataSet(sizes,"");//参数：颜色栏显示颜色目录、
         //pieDataSet.setDrawValues(false);//是否在块上面显示值以及百分百

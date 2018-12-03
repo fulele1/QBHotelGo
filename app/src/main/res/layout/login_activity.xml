@@ -162,6 +162,7 @@ android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@drawable/bg_textview"
                 android:text="忘记密码？"
                 android:textSize="@dimen/textview_small_size"
+                android:visibility="gone"
                 />
         </LinearLayout>
 

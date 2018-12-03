@@ -98,7 +98,6 @@ public class QueryOrcActivity extends BaseActivityNew {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-
                     }
 
                     @Override
@@ -122,9 +121,7 @@ public class QueryOrcActivity extends BaseActivityNew {
                                 txt_fireno.setText(NullUtil.getString(data.get("fireno")));
                                 txt_haddress.setText(NullUtil.getString(data.get("haddress")));
                                 txt_hname.setText(NullUtil.getString(data.get("hname")));
-
-
-                            } else if (data.get("state").toString().equals("0")) {
+                            } else if (data.get("state").toString().equals("19")) {
                                 //响应失败
                                 Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_SHORT).show();
                             }

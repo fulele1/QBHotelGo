@@ -10,15 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:src="@mipmap/chouti" />
 
         <TextView
@@ -99,15 +98,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:background="@mipmap/shadow"
-                >
+                android:background="@mipmap/shadow">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:layout_gravity="center">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/hotel_count_main"
@@ -134,10 +132,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_gravity="center"
-                    >
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/staff_count_main"
@@ -166,10 +163,9 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
                     android:layout_gravity="center"
-                    >
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
 
                     <TextView
@@ -205,34 +201,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:orientation="horizontal"
                 android:layout_margin="@dimen/padding"
-                >
+                android:orientation="horizontal">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:background="@mipmap/mp_bg"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="各民族入住比例"
                         android:gravity="center"
                         android:paddingTop="@dimen/padding_en"
-                        />
+                        android:text="各民族入住比例" />
 
                     <com.github.mikephil.charting.charts.PieChart
                         android:id="@+id/pie_main"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_margin="@dimen/activity_horizontal_margin"
-                        />
+                        android:layout_weight="1" />
 
 
                     <LinearLayout
@@ -242,33 +234,30 @@
                         android:paddingBottom="5dp"
 
                         >
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/unline_device_main"
                             android:layout_centerHorizontal="true"
-                            android:drawableLeft="@mipmap/han"
-                            android:gravity="center"
-                            android:text="汉族"
                             android:layout_gravity="center"
+                            android:drawableLeft="@mipmap/han"
                             android:drawablePadding="@dimen/button_normal_sizes"
-                            />
+                            android:gravity="center"
+                            android:text="汉族" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:drawableLeft="@mipmap/others"
-                            android:gravity="center"
-                            android:text="维族"
                             android:layout_gravity="center"
+                            android:drawableLeft="@mipmap/others"
                             android:drawablePadding="@dimen/button_normal_sizes"
-                            />
+                            android:gravity="center"
+                            android:text="维族" />
 
                     </LinearLayout>
-
-
 
 
                     <LinearLayout
@@ -278,29 +267,28 @@
                         android:paddingBottom="25dp"
 
                         >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:drawableLeft="@mipmap/wei"
-                            android:gravity="center"
-                            android:text="藏族"
-                            android:layout_gravity="center"
-                            android:drawablePadding="@dimen/button_normal_sizes"
-                            />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:drawableLeft="@mipmap/zang"
-                            android:gravity="center"
-                            android:text="其他"
                             android:layout_gravity="center"
+                            android:drawableLeft="@mipmap/wei"
                             android:drawablePadding="@dimen/button_normal_sizes"
-                            />
+                            android:gravity="center"
+                            android:text="藏族" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:drawableLeft="@mipmap/zang"
+                            android:drawablePadding="@dimen/button_normal_sizes"
+                            android:gravity="center"
+                            android:text="其他" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -310,28 +298,25 @@
                     android:layout_height="0dp" />
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
                     android:background="@mipmap/mp_bg"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="西安市今日故障率"
                         android:gravity="center"
                         android:paddingTop="@dimen/padding_en"
-                        />
+                        android:text="西安市今日故障率" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_margin="@dimen/activity_horizontal_margin"
+                        android:layout_weight="1"
 
                         >
 
@@ -346,63 +331,51 @@
                             android:id="@+id/progress_text_main"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            />
+                            android:layout_centerInParent="true" />
 
                     </RelativeLayout>
-
-
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="45dp"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
                         android:layout_marginBottom="20dp"
                         android:gravity="center"
                         android:orientation="vertical"
-                        >
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin">
 
                         <TextView
+                            android:id="@+id/textView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_above="@+id/unline_device_main"
                             android:layout_centerHorizontal="true"
-                            android:drawableLeft="@mipmap/used"
-                            android:text="故障率"
-                            android:gravity="center"
                             android:layout_gravity="center"
+                            android:drawableLeft="@mipmap/used"
                             android:drawablePadding="1dp"
-                            android:id="@+id/textView" />
-
+                            android:gravity="center"
+                            android:text="故障率" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_centerHorizontal="true"
-                            android:drawableLeft="@mipmap/to_use"
-                            android:text="未故障"
                             android:layout_gravity="center"
+                            android:drawableLeft="@mipmap/to_use"
                             android:gravity="center"
-
-                            />
-
-
+                            android:text="未故障" />
                     </LinearLayout>
 
-
                 </LinearLayout>
-
-
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:text="旅客七日入住趋势图"
                 android:textColor="@color/viewfinder_frame"
                 android:textSize="@dimen/activity_horizontal_margin" />
@@ -410,16 +383,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:background="@mipmap/sh_three"
-                >
+                android:layout_margin="10dp"
+                android:background="@mipmap/sh_three">
 
                 <com.github.mikephil.charting.charts.LineChart
                     android:id="@+id/chart_line_main"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-                    />
+                    android:layout_margin="@dimen/activity_horizontal_margin" />
 
 
             </LinearLayout>
@@ -433,11 +404,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@mipmap/meun_bag"
         android:gravity="center|bottom"
-        android:paddingBottom="@dimen/button_normal_sizes"
-        >
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/button_normal_sizes">
 
         <TextView
             android:id="@+id/txt_passenger_main"
@@ -446,8 +416,7 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/menu_passenger"
             android:gravity="center|bottom"
-            android:text="旅客查询"
-            />
+            android:text="旅客查询" />
 
         <TextView
             android:id="@+id/txt_staff_main"
@@ -483,7 +452,8 @@
             android:layout_weight="1"
             android:drawableTop="@mipmap/meun_order"
             android:gravity="center|bottom"
-            android:text="订单详情" />
+            android:text="订单详情"
+            android:visibility="gone" />
 
 
     </LinearLayout>

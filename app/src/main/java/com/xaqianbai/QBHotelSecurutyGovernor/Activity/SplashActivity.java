@@ -26,8 +26,8 @@ public class SplashActivity extends BaseActivityNew {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
-        iv = (ImageView) findViewById(R.id.iv);
-        AlphaAnimation animation = new AlphaAnimation(0.8f,1.0f);
+        iv = findViewById(R.id.iv);
+        AlphaAnimation animation = new AlphaAnimation(0.8f, 1.0f);
         animation.setDuration(1000);
         iv.setAnimation(animation);
         animation.setAnimationListener(new Animation.AnimationListener() {
@@ -47,8 +47,8 @@ public class SplashActivity extends BaseActivityNew {
              */
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (CheckNetwork.isNetworkAvailable(SplashActivity.this)){
-                    startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+                if (CheckNetwork.isNetworkAvailable(SplashActivity.this)) {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     SplashActivity.this.finish();
                 }
             }
@@ -71,7 +71,6 @@ public class SplashActivity extends BaseActivityNew {
 
     @Override
     public void addListener() {
-
     }
 
 }

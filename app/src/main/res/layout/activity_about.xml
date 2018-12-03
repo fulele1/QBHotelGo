@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="旅业治安管理警用信息系统"
+        android:text="碧海社会信息采集系统管理版"
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/activity_title"
@@ -85,6 +85,7 @@
                  />
 
             <TextView
+                android:id="@+id/txt_tel_about"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="15dp"

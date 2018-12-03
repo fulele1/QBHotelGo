@@ -109,8 +109,8 @@ private String id;
                                     byte[] sss = Base64Utils.Base64ToString(urls[j]);
                                     Glide.with(instance)
                                             .load(sss)
-                                            .placeholder(R.mipmap.per)
-                                            .error(R.mipmap.ic_launcher).into(imgs[j]);
+//                                            .placeholder(R.mipmap.per)
+                                            .error(R.mipmap.now_no_pic).into(imgs[j]);
                                     imgs[j].setVisibility(View.VISIBLE);
                                 }
                             }else if (data.get("state").toString().equals("10")) {

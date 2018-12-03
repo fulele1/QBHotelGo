@@ -59,12 +59,14 @@ public class LeftMenuListAdapter extends BaseAdapter {
             holder.ivIcon = (ImageView) convertView.findViewById(R.id.iv_icon);
             holder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title_left);
             convertView.setTag(holder);
+            holder.tvTitle.setTextSize(14);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
         holder.ivIcon.setImageResource(icons[i]);
         holder.tvTitle.setText(leftMenuTitles[i]);
+
         return convertView;
     }
 

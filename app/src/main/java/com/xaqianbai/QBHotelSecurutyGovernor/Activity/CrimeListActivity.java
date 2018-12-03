@@ -197,7 +197,7 @@ public class CrimeListActivity extends BaseActivityNew {
             }
         });
 
-        //是否禁用自动加载更多功能,false为禁用, 默认开启自动加载更多功能
+//        是否禁用自动加载更多功能,false为禁用, 默认开启自动加载更多功能
         list_r.setLoadMoreEnabled(true);
 
         list_r.setOnLoadMoreListener(new OnLoadMoreListener() {

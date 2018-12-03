@@ -1,8 +1,11 @@
 package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -21,6 +24,9 @@ public class AboutActivity extends BaseActivityNew {
     TextView title;
     @BindView(R.id.tv_version)
     TextView tv_version;
+
+    @BindView(R.id.txt_tel_about)
+    TextView txt_tel_about;
     @BindView(R.id.layout_titlebar)
     FrameLayout titlebar;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -32,8 +38,24 @@ public class AboutActivity extends BaseActivityNew {
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
+        txt_tel_about = findViewById(R.id.txt_tel_about);
+        txt_tel_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                showAdialog(instance,"提示","呼叫客服"+"tel:029-87888612","确定",View.VISIBLE);
+
+            }
+        });
 
         title.setText("关于我们");
+    }
+
+    @Override
+    protected void dialogOk() {
+        super.dialogOk();
+        Intent dialIntent =  new Intent(Intent.ACTION_DIAL, Uri.parse("tel:029-87888612"));//跳转到拨号界面，同时传递电话号码
+        instance.startActivity(dialIntent);
     }
 
     @Override
@@ -51,4 +73,8 @@ public class AboutActivity extends BaseActivityNew {
     public void addListener() throws Exception {
 
     }
+
+
+
+
 }

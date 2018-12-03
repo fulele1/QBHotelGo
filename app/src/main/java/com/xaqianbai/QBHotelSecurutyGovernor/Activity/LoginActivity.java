@@ -187,8 +187,6 @@ public class LoginActivity extends BaseActivityNew {
                             loadingDialog.dismiss();
                             showToast(e.toString());
                         }
-
-
                         @Override
                         public void onResponse(String s, int i) {
                             LogUtils.e(s);

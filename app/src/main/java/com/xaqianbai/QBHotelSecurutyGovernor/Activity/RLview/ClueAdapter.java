@@ -48,7 +48,7 @@ public class ClueAdapter extends ListBaseAdapter<Clue> {
         txt_goods.setText("可疑物品:"+item.getGood());
         if(!item.getPic().equals("")&&item.getPic()!=null){
             Glide.with(mContext).load(item.getPic()).transform(new GlideRoundTransform(mContext,10))
-                    .placeholder(R.mipmap.per).error(R.mipmap.ic_launcher).into(tv_pic);
+                    .error(R.mipmap.now_no_pic).into(tv_pic);
         }
 
         img_tel.setOnClickListener(new View.OnClickListener() {

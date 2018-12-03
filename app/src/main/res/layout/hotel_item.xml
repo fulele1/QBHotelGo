@@ -18,7 +18,6 @@
         android:id="@+id/tv_pic_hotel"
         android:layout_width="90dp"
         android:layout_height="match_parent"
-        android:src="@mipmap/hotel"
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/padding"
         android:layout_marginRight="@dimen/padding"
@@ -122,6 +121,8 @@
                 android:drawableLeft="@mipmap/hetel_location"
                 android:gravity="center|left"
                 android:drawablePadding="@dimen/padding_en"
+                android:maxLines="1"
+                android:ellipsize="end"
 
                 />
 
