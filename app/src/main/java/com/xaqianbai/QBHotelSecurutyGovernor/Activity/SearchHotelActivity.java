@@ -87,6 +87,7 @@ public class SearchHotelActivity extends BaseActivityNew {
         map_IsHead = new HashMap<>();
         adapter = new BrandAdapter(this, list_show, map_IsHead);
         listView.setAdapter(adapter);
+        loadingDialog.show("");
         okConnection();
     }
 
@@ -100,11 +101,11 @@ public class SearchHotelActivity extends BaseActivityNew {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
+
                         Log.e("fule",s);
 
                         Map<String, Object> map = GsonUtil.JsonToMap(s);
@@ -128,8 +129,8 @@ public class SearchHotelActivity extends BaseActivityNew {
                             //响应失败
                             Toast.makeText(instance, "未查询到有效数据", Toast.LENGTH_SHORT).show();
                         }
-                        loadingDialog.dismiss();
                         getData();
+                        loadingDialog.dismiss();
                     }
                 });
     }
@@ -161,6 +162,7 @@ public class SearchHotelActivity extends BaseActivityNew {
         }
 
         adapter.notifyDataSetChanged();
+
     }
 
     @Override

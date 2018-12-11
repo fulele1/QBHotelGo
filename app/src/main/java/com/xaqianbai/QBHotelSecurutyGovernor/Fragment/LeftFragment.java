@@ -125,8 +125,8 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
                     .load(url)
                     .skipMemoryCache(false)//防止大图因为内存问题无法加载
                     .transform(new GlideCircleTransform(instance))//设置为圆形图片
-                    .placeholder(R.mipmap.per)
-                    .error(R.mipmap.per)
+                    .placeholder(R.mipmap.now_no_pic)
+                    .error(R.mipmap.now_no_pic)
                     .into(ivPic);
     }
 
@@ -140,10 +140,13 @@ public class LeftFragment extends BaseFragment implements View.OnClickListener {
         if (nickname != null && !nickname.equals(""))
             tvNickName.setText(nickname);
         else tvNickName.setText("暂无昵称");
-        if (!url.equals("")) {
+        if (!url.equals("")&& !url.equals("")) {
             loadUserPic(url);
         } else {
-            Glide.with(instance).load(R.mipmap.per).transform(new GlideCircleTransform(instance)).into(ivPic);
+            Glide.with(instance)
+                    .load(R.mipmap.now_no_pic)
+                    .transform(new GlideCircleTransform(instance))
+                    .into(ivPic);
         }
     }
 

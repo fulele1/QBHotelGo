@@ -23,6 +23,7 @@
                             android:layout_height="wrap_content"
                             android:background="@color/white"
                             android:layout_marginTop="@dimen/padding_en"
+                            android:layout_marginRight="@dimen/padding_en"
 
                             >
 
@@ -47,15 +48,18 @@
                                     android:gravity="right|center"
                                     android:hint="请选择酒店名称..."
                                     android:textColorHint="@color/text"
+                                    android:longClickable="false"
                                     android:textSize="@dimen/textview_small_size" />
 
                                 <ImageView
+                                    android:id="@+id/img_hname_clear_pu"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="@dimen/padding"
                                     android:src="@mipmap/delete_edit"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -66,6 +70,7 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/padding_en"
 
                             >
 
@@ -91,16 +96,18 @@
                                     android:gravity="right|center"
                                     android:hint="请选择处罚日期..."
                                     android:textColorHint="@color/text"
+                                    android:longClickable="false"
                                     android:textSize="@dimen/textview_small_size" />
 
                                 <ImageView
-                                    android:id="@+id/img_clear_time_hotel"
+                                    android:id="@+id/img_time_clear_pu"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="@dimen/padding"
                                     android:src="@mipmap/delete_edit"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -110,7 +117,7 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
-
+                            android:layout_marginRight="@dimen/padding_en"
                             >
 
                                 <TextView
@@ -135,15 +142,18 @@
                                     android:gravity="right|center"
                                     android:hint="请选择处罚类别..."
                                     android:textColorHint="@color/text"
+                                    android:longClickable="false"
                                     android:textSize="@dimen/textview_small_size" />
 
                                 <ImageView
+                                    android:id="@+id/img_kind_clear_pu"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="@dimen/padding"
                                     android:src="@mipmap/delete_edit"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -155,6 +165,7 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/padding_en"
 
                             >
 
@@ -180,15 +191,18 @@
                                     android:gravity="right|center"
                                     android:hint="请选择处罚结果..."
                                     android:textColorHint="@color/text"
+                                    android:longClickable="false"
                                     android:textSize="@dimen/textview_small_size" />
 
                                 <ImageView
+                                    android:id="@+id/img_result_clear_pu"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="@dimen/padding"
                                     android:src="@mipmap/delete_edit"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -201,6 +215,8 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/padding_en"
+
                             >
 
                                 <TextView
@@ -221,7 +237,20 @@
                                     android:gravity="left"
                                     android:textColorHint="@color/text"
                                     android:padding="@dimen/padding_en"
-                                    android:textSize="@dimen/textview_small_size" />
+                                    android:textSize="@dimen/textview_small_size"
+                                    android:maxLength="100"
+                                    />
+
+
+                                <ImageView
+                                    android:id="@+id/img_del_clear_pu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/padding"
+                                    android:src="@mipmap/delete_edit"
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -233,6 +262,7 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/padding_en"
                             >
 
                                 <TextView
@@ -253,7 +283,19 @@
                                     android:gravity="left"
                                     android:textColorHint="@color/text"
                                     android:padding="@dimen/padding_en"
-                                    android:textSize="@dimen/textview_small_size" />
+                                    android:textSize="@dimen/textview_small_size"
+                                    android:maxLength="50"
+                                    />
+
+                                <ImageView
+                                    android:id="@+id/img_org_clear_pu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/padding"
+                                    android:src="@mipmap/delete_edit"
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -263,6 +305,8 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/padding_en"
+
                             >
 
                                 <TextView
@@ -283,7 +327,19 @@
                                     android:gravity="left"
                                     android:textColorHint="@color/text"
                                     android:padding="@dimen/padding_en"
-                                    android:textSize="@dimen/textview_small_size" />
+                                    android:textSize="@dimen/textview_small_size"
+                                    android:maxLength="20"
+                                    />
+
+                                <ImageView
+                                    android:id="@+id/img_mane_clear_pu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/padding"
+                                    android:src="@mipmap/delete_edit"
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -293,6 +349,8 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="horizontal"
+                            android:layout_marginRight="@dimen/padding_en"
+
                             >
 
                                 <TextView
@@ -313,7 +371,19 @@
                                     android:gravity="left"
                                     android:textColorHint="@color/text"
                                     android:padding="@dimen/padding_en"
-                                    android:textSize="@dimen/textview_small_size" />
+                                    android:textSize="@dimen/textview_small_size"
+                                    android:maxLength="20"
+                                    />
+
+                                <ImageView
+                                    android:id="@+id/img_per_clear_pu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/padding"
+                                    android:src="@mipmap/delete_edit"
+                                    android:visibility="gone"
+                                    />
 
                         </LinearLayout>
 
@@ -323,6 +393,7 @@
                             android:layout_marginTop="@dimen/activity_horizontal_margin"
                             android:background="@color/white"
                             android:orientation="vertical"
+                            android:layout_marginRight="@dimen/padding_en"
 
                             >
 
@@ -344,6 +415,7 @@
                                     android:gravity="left"
                                     android:textColorHint="@color/text"
                                     android:padding="@dimen/padding_en"
+                                    android:maxLength="120"
                                     android:textSize="@dimen/textview_small_size" />
 
                         </LinearLayout>

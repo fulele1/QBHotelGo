@@ -13,12 +13,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xaqianbai.QBHotelSecurutyGovernor.Entity.Del;
-import com.xaqianbai.QBHotelSecurutyGovernor.Entity.Log;
 import com.xaqianbai.QBHotelSecurutyGovernor.Fragment.DelFragment;
 import com.xaqianbai.QBHotelSecurutyGovernor.Fragment.FragmentAdapter;
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
@@ -63,6 +63,8 @@ public class PassengerDetActivity extends AppCompatActivity {
     TextView txt_iden;
     @BindView(R.id.txt_address_passenger)
     TextView txt_address;
+    @BindView(R.id.txt_address_type_passenger)
+    TextView txt_address_type_passenger;
     @BindView(R.id.vpg_pass_del)
     ViewPager vpg;
     private LinearLayout mGallery;
@@ -89,9 +91,36 @@ public class PassengerDetActivity extends AppCompatActivity {
 
     private void initData(int times,List<Del> del) {
         mFrags = new ArrayList<>();
+        mFrags.clear();
+        LogUtils.e("fragment---------------------------"+mFrags.size());
         for (int i = 0;i<times;i++){
+            LogUtils.e("fragment-------"+del.get(i).getRoomNum());
             mFrags.add(new DelFragment(del.get(i)));
         }
+        LogUtils.e("fragment-------------++++++++++++++++"+mFrags.size());
+        vpg.removeAllViews();
+        vpg.setAdapter(new FragmentAdapter(mFragmentManager,mFrags));
+
+
+//        if (curr.equals("1")){
+//            LogUtils.e("---------当前页----"+14);
+////                                LogUtils.e("---------当前页----"+((15*((Integer.parseInt(curr))))-1));
+////                                    vpg.setCurrentItem((15*((Integer.parseInt(curr))))-1);
+//            vpg.setCurrentItem(14);
+//
+//        }else if (curr.equals("2")){
+//            LogUtils.e("---------当前页----"+14);
+////                                LogUtils.e("---------当前页----"+((15*((Integer.parseInt(curr))))-1));
+////                                    vpg.setCurrentItem((15*((Integer.parseInt(curr))))-1);
+//            vpg.setCurrentItem(7);
+//        }else if (curr.equals("3")){
+//            LogUtils.e("---------当前页----"+14);
+////                                LogUtils.e("---------当前页----"+((15*((Integer.parseInt(curr))))-1));
+////                                    vpg.setCurrentItem((15*((Integer.parseInt(curr))))-1);
+//            vpg.setCurrentItem(14);
+//        }
+        vpg.setCurrentItem(14);
+        Collections.reverse(delss);
 
     }
 
@@ -112,9 +141,15 @@ public class PassengerDetActivity extends AppCompatActivity {
 
         @Override
         public void onPageSelected(int position) {
-            if (position ==0){
-                LogUtils.e(Integer.parseInt(curr)+1+"");
-                connecting(Integer.parseInt(curr)+1);
+            if (!page.equals(curr)) {
+                if (position == 0) {
+                    LogUtils.e(Integer.parseInt(curr) + 1 + "");
+                    connecting(Integer.parseInt(curr) + 1);
+                }
+            }else{
+                if (position == 0) {
+                    Toast.makeText(instance, "最后一张", Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
@@ -149,8 +184,8 @@ public class PassengerDetActivity extends AppCompatActivity {
 
     List<Del> dels;
     List<Del> delss = new ArrayList<>();
-    String curr;
-    String page;
+    String curr = "";
+    String page = "";
 
     private void connecting(final int p) {
 
@@ -175,13 +210,15 @@ public class PassengerDetActivity extends AppCompatActivity {
                                 return;
                             } else if (data.get("state").toString().equals("0")) {
                                 curr = NullUtil.getString(data.get("curr"));
+                                page = NullUtil.getString(data.get("page"));
                                 LogUtils.e("curr"+curr);
                                 page = NullUtil.getString(data.get("page"));
                                 String pk = NullUtil.getString(data.get("pk"));
                                 txt_name.setText(NullUtil.getString(data.get("name")));//姓名
                                 txt_iden.setText(gettype(NullUtil.getString(data.get("idtype")))+"："+NullUtil.getString(data.get("idcode")));//证件号
                                 if (pk.equals("dt_id")){
-                                txt_address.setText("户籍地址："+NullUtil.getString(data.get("address")));//户籍地址
+                                    txt_address_type_passenger.setText("户籍地址：");
+                                    txt_address.setText(NullUtil.getString(data.get("address")));
                                 }
                                 LogUtils.e("count"+NullUtil.getString(data.get("count")));
 
@@ -191,8 +228,8 @@ public class PassengerDetActivity extends AppCompatActivity {
                                     Glide.with(instance)
                                             .load(pic)
                                             .transform(new GlideRoundTransform(instance,10))
-                                            .placeholder(R.mipmap.per)
-                                            .error(R.mipmap.ic_launcher)
+                                            .placeholder(R.mipmap.now_no_pic)
+                                            .error(R.mipmap.now_no_pic)
                                             .into(img_pic);
                                 }
 
@@ -232,11 +269,18 @@ public class PassengerDetActivity extends AppCompatActivity {
 
                                 }
                                 delss.addAll(dels);
+                                for (Del ff:delss){
+                                    LogUtils.e("--------------------------"+ff.getRoomNum());
+                                }
                                 Collections.reverse(delss);
 
+                                for (Del ff:delss){
+                                    LogUtils.e("++++++++++++++++++++++++++++++++++++++++++"+ff.getRoomNum());
+                                }
+
                                 initData(delss.size(),delss);
-                                vpg.setAdapter(new FragmentAdapter(mFragmentManager,mFrags));
-                                vpg.setCurrentItem(14*Integer.parseInt(curr));
+
+
 
                             }else if (data.get("state").toString().equals("10")) {
                                 //响应失败
@@ -260,33 +304,35 @@ public class PassengerDetActivity extends AppCompatActivity {
 
 
     public String gettype(String typeCode){
+        String type = "";
         LogUtils.e("------------"+typeCode);
-        if (typeCode.equals("身份证 11")){
-            return  "身份证";
+        if (typeCode.equals("11")){
+            type =   "身份证";
         }else if (typeCode.equals("13")){
-            return  "户口本";
+            type =   "户口本";
         }else if (typeCode.equals("81")){
-            return  "中国香港居民居住证";
+            type =  "中国香港居民居住证";
         }else if (typeCode.equals("82")){
-            return  "中国澳门居民居住证";
+            type =  "中国澳门居民居住证";
         }else if (typeCode.equals("83")){
-            return  "中国台湾居民居住证";
+            type =   "中国台湾居民居住证";
         }else if (typeCode.equals("90")){
-            return "军官证";
+            type =  "军官证";
         }else if (typeCode.equals("91")){
-            return "警官证";
+            type =  "警官证";
         }else if (typeCode.equals("92")){
-            return "士兵证";
+            type =  "士兵证";
         }else if (typeCode.equals("93")){
-            return "国内护照";
+            type = "国内护照";
         }else if (typeCode.equals("94")){
-            return "驾照";
+            type =  "驾照";
         }else if (typeCode.equals("95")){
-            return "港澳通行证";
+            type =  "港澳通行证";
         }else if (typeCode.equals("99")){
-            return "其他";
+            type =  "其他";
         }
-        return "未知";
+        return type;
     }
+
 
 }

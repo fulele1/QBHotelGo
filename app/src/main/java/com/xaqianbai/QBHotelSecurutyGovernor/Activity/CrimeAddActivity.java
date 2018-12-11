@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.CastTypeUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.DateUtil;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.EditClearUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GsonUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.HttpUrlUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
@@ -59,6 +61,15 @@ public class CrimeAddActivity extends BaseActivityNew {
     @BindView(R.id.edit_remark_cr)
     EditText edit_remark_cr;
 
+    @BindView(R.id.img_name_clear_cr)
+    ImageView img_name_clear_cr;
+    @BindView(R.id.img_typeone_clear_cr)
+    ImageView img_typeone_clear_cr;
+    @BindView(R.id.img_code_clear_cr)
+    ImageView img_code_clear_cr;
+    @BindView(R.id.img_date_clear_cr)
+    ImageView img_date_clear_cr;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
@@ -84,7 +95,6 @@ public class CrimeAddActivity extends BaseActivityNew {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_finish_crad:
-
                 time = edit_date_cr.getText().toString().trim();
                 remark = edit_remark_cr.getText().toString().trim();
                 condition = edit_condition_cr.getText().toString().trim();
@@ -96,7 +106,6 @@ public class CrimeAddActivity extends BaseActivityNew {
                     ajxz = one.substring(0, one.indexOf("-"));
                     ajlb = one.substring(one.indexOf("-") + 1, one.length());
                 }
-
                 intternet();
                 break;
             case R.id.edit_type_one_cr:
@@ -109,6 +118,28 @@ public class CrimeAddActivity extends BaseActivityNew {
                 Intent intent = new Intent(instance, SearchHotelActivity.class);
                 startActivityForResult(intent, 0);
                 break;
+
+                case R.id.img_name_clear_cr:
+                    edit_name_cr.setText("");
+                    mHotelCode = "";
+                    img_name_clear_cr.setVisibility(View.GONE);
+                break;
+
+                case R.id.img_typeone_clear_cr:
+                    edit_type_one_cr.setText("");
+                    img_typeone_clear_cr.setVisibility(View.GONE);
+                break;
+
+                case R.id.img_code_clear_cr:
+                    edit_code_cr.setText("");
+                    img_code_clear_cr.setVisibility(View.GONE);
+                break;
+
+                case R.id.img_date_clear_cr:
+                    edit_date_cr.setText("");
+                    img_date_clear_cr.setVisibility(View.GONE);
+                break;
+
         }
     }
 
@@ -156,6 +187,7 @@ public class CrimeAddActivity extends BaseActivityNew {
             Toast.makeText(instance, "请选择发案日期", Toast.LENGTH_SHORT).show();
             return;
         }
+        loadingDialog.show("");
         LogUtils.e((HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()));
         OkHttpUtils.post()
                 .url(HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
@@ -170,9 +202,10 @@ public class CrimeAddActivity extends BaseActivityNew {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        loadingDialog.dismiss();
                         showToast(e.toString());
                         LogUtils.e(e.toString());
+                        loadingDialog.dismiss();
+
                     }
 
                     @Override
@@ -199,10 +232,11 @@ public class CrimeAddActivity extends BaseActivityNew {
                             } else {
                                 showToast("发送失败");
                             }
-                            loadingDialog.dismiss();
                         } catch (Exception e) {
                             showToast("数据格式异常，无法解析");
                         }
+                        loadingDialog.dismiss();
+
                     }
                 });
 
@@ -222,6 +256,15 @@ public class CrimeAddActivity extends BaseActivityNew {
         edit_type_one_cr.setOnClickListener(instance);
         edit_date_cr.setOnClickListener(instance);
         edit_name_cr.setOnClickListener(instance);
+        img_name_clear_cr.setOnClickListener(instance);
+        img_typeone_clear_cr.setOnClickListener(instance);
+        img_code_clear_cr.setOnClickListener(instance);
+        img_date_clear_cr.setOnClickListener(instance);
+        EditClearUtils.clearText(edit_name_cr,img_name_clear_cr);
+        EditClearUtils.clearText(edit_type_one_cr,img_typeone_clear_cr);
+        EditClearUtils.clearText(edit_code_cr,img_code_clear_cr);
+        EditClearUtils.clearText(edit_date_cr,img_date_clear_cr);
+
         checkType();
         checkTime();
     }

@@ -46,6 +46,12 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
     ImageView img_clear_date;
     @BindView(R.id.img_clear_ptype_pass)
     ImageView img_clear_ptype;
+    @BindView(R.id.img_clear_name_pass)
+    ImageView img_clear_name_pass;
+    @BindView(R.id.img_clear_iden_pass)
+    ImageView img_clear_iden_pass;
+    @BindView(R.id.img_clear_tel_pass)
+    ImageView img_clear_tel_pass;
     @BindView(R.id.img_clear_identype_pass)
     ImageView img_clear_identype;
     @BindView(R.id.et_per_type_pass)
@@ -77,9 +83,15 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
         et_per_type.setOnClickListener(instance);
         img_clear_identype.setOnClickListener(instance);
         et_iden_type.setOnClickListener(instance);
+        img_clear_name_pass.setOnClickListener(instance);
+        img_clear_iden_pass.setOnClickListener(instance);
+        img_clear_tel_pass.setOnClickListener(instance);
         EditClearUtils.clearText(edit_date,img_clear_date);
         EditClearUtils.clearText(et_iden_type,img_clear_identype);
         EditClearUtils.clearText(et_per_type,img_clear_ptype);
+        EditClearUtils.clearText(edit_name,img_clear_name_pass);
+        EditClearUtils.clearText(edit_iden,img_clear_iden_pass);
+        EditClearUtils.clearText(edit_tel,img_clear_tel_pass);
     }
 
     public void onBackward(View view){
@@ -103,6 +115,21 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
             case R.id.img_clear_date_pass://清除时间
                 edit_date.setText("");
                 img_clear_date.setVisibility(View.GONE);
+            break;
+
+            case R.id.img_clear_name_pass:
+                edit_name.setText("");
+                img_clear_name_pass.setVisibility(View.GONE);
+            break;
+
+            case R.id.img_clear_iden_pass://
+                edit_iden.setText("");
+                img_clear_iden_pass.setVisibility(View.GONE);
+            break;
+
+            case R.id.img_clear_tel_pass://
+                edit_tel.setText("");
+                img_clear_tel_pass.setVisibility(View.GONE);
             break;
             case R.id.et_per_type_pass://查询旅客类型
                 DialogUtils.showItemDialog(instance,"类型选择",new String[]{"中国大陆","国外","港澳"},et_per_type);

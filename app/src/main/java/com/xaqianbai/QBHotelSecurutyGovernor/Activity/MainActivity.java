@@ -64,14 +64,14 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
     private SlidingMenu sm;
 
 
-    private Handler mHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            isQuit = false;
-        }
-    };
+//    private Handler mHandler = new Handler() {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            isQuit = false;
+//        }
+//    };
 
     private Unbinder mUnbinder;
     @BindView(R.id.iv_user)
@@ -140,8 +140,8 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
                     .load(url)
                     .skipMemoryCache(false)//防止大图因为内存问题无法加载
                     .transform(new GlideRoundTransform(instance, 10))
-                    .error(R.mipmap.per)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.now_no_pic)
+                    .placeholder(R.mipmap.now_no_pic)
                     .into(mHeadPic);
         }
 
@@ -250,19 +250,19 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!isQuit) {
-            isQuit = true;
-            Toast.makeText(getApplicationContext(), "再按一次退出程序",
-                    Toast.LENGTH_SHORT).show();
-            // 利用handler延迟发送更改状态信息
-            mHandler.sendEmptyMessageDelayed(0, 2000);
-        } else {
-            finish();
-            System.exit(0);
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (!isQuit) {
+//            isQuit = true;
+//            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+//                    Toast.LENGTH_SHORT).show();
+//            // 利用handler延迟发送更改状态信息
+//            mHandler.sendEmptyMessageDelayed(0, 2000);
+//        } else {
+//            finish();
+//            System.exit(0);
+//        }
+//    }
 
     @Override
     protected void onResume() {
@@ -411,7 +411,14 @@ public class MainActivity extends SlidingFragmentActivity implements View.OnClic
         DecimalFormat decimalFormat=new DecimalFormat("0.00");//构造方法的字符格式这里如果小数不足2位,会以0补足.
         String p=decimalFormat.format(faultp);//format 返回的是字符串
 
+        if(ho_count==0.0){
+            progress_text.setText("0.0");
+
+        }else {
         progress_text.setText(p+"");
+
+        }
+
         float no_fault = 100.0f - faultp;
 
         if (faultp<5){

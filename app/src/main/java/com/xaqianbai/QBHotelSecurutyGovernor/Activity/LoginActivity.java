@@ -2,6 +2,7 @@ package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
@@ -42,13 +43,23 @@ public class LoginActivity extends BaseActivityNew {
     private TextView tvForgetPsw;
     private LoginActivity instance;
     private Button btLogin;
+    private TextView version_login;
     private String username, psw;
     private EditText etUsername, etPsw;
     private CheckBox cbRememberPsw;
     private LinearLayout mLayStatus;
+    private boolean isQuit = false;
     private ImageView ivDeUser, ivDePsw;
     SharedPreferences sprfMain;
     SharedPreferences.Editor editorMain;
+//    private Handler mHandler = new Handler() {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            isQuit = false;
+//        }
+//    };
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -96,14 +107,33 @@ public class LoginActivity extends BaseActivityNew {
     }
 
     private void assignViews() {
-        tvForgetPsw = (TextView) findViewById(R.id.tv_forgetPsw);
-        btLogin = (Button) findViewById(R.id.bt_login);
-        etUsername = (EditText) findViewById(R.id.et_username);
-        etPsw = (EditText) findViewById(R.id.et_password);
-        cbRememberPsw = (CheckBox) findViewById(R.id.cb_remember_psw);
-        ivDeUser = (ImageView) findViewById(R.id.img_delete_user_login);
-        ivDePsw = (ImageView) findViewById(R.id.img_delete_psw_login);
-        mLayStatus = (LinearLayout) findViewById(R.id.lay_status);
+        tvForgetPsw =  findViewById(R.id.tv_forgetPsw);
+        btLogin =  findViewById(R.id.bt_login);
+        etUsername =  findViewById(R.id.et_username);
+        etPsw =  findViewById(R.id.et_password);
+        cbRememberPsw =  findViewById(R.id.cb_remember_psw);
+        ivDeUser =  findViewById(R.id.img_delete_user_login);
+        ivDePsw =  findViewById(R.id.img_delete_psw_login);
+        mLayStatus =  findViewById(R.id.lay_status);
+        version_login =  findViewById(R.id.version_login);
+        version_login.setText("v"+getVersionName());
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return
+     */
+    public String getVersionName() {
+        try {
+            PackageInfo info = instance.getPackageManager().getPackageInfo(instance.getPackageName(), 0);
+
+            // 当前应用的版本名称
+            return info.versionName;
+
+        } catch (Exception e) {
+            return "";
+        }
     }
 
 
@@ -162,6 +192,22 @@ public class LoginActivity extends BaseActivityNew {
         }
     }
 
+
+//    @Override
+//    public void onBackPressed() {
+//        if (!isQuit) {
+//            isQuit = true;
+//            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+//                    Toast.LENGTH_SHORT).show();
+//            // 利用handler延迟发送更改状态信息
+//            mHandler.sendEmptyMessageDelayed(0, 2000);
+//        } else {
+//            finish();
+//            System.exit(0);
+//        }
+//    }
+
+
     private void login() {
         if (!checkNetwork()) {
             showToast(getResources().getString(R.string.network_not_alive));
@@ -184,7 +230,6 @@ public class LoginActivity extends BaseActivityNew {
                     .execute(new StringCallback() {
                         @Override
                         public void onError(Call call, Exception e, int i) {
-                            loadingDialog.dismiss();
                             showToast(e.toString());
                         }
                         @Override
@@ -230,8 +275,8 @@ public class LoginActivity extends BaseActivityNew {
                                     editorMain.putBoolean("auto", true);
                                     editorMain.commit();
                                     startActivity(new Intent(instance, MainActivity.class));
-                                    finish();
-                                } else {
+                                    instance.finish();
+                                }else {
                                     showToast(NullUtil.getString(map.get("mess")));
                                     return;
                                 }

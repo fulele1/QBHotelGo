@@ -54,6 +54,7 @@
                     android:textSize="@dimen/textview_small_size"
                     android:textColor="@color/viewfinder_frame"
                     android:gravity="right|center"
+                    android:longClickable="false"
                     />
 
                 <ImageView
@@ -111,7 +112,7 @@
                 android:textColorHint="@color/text"
                 android:textSize="@dimen/textview_small_size"
                 android:textColor="@color/viewfinder_frame"
-
+                android:longClickable="false"
                 />
             <ImageView
                 android:id="@+id/img_clear_start_org"

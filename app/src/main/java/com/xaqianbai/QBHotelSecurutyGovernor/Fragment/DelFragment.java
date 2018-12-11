@@ -1,5 +1,6 @@
 package com.xaqianbai.QBHotelSecurutyGovernor.Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.xaqianbai.QBHotelSecurutyGovernor.Utils.SPUtils;
  * Created by fl on 2017/5/2.
  */
 
+@SuppressLint("ValidFragment")
 public class DelFragment extends Fragment{
     private View view;
     private Context instance;

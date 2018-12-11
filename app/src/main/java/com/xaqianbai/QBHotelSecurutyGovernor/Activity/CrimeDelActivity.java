@@ -54,6 +54,7 @@ public class CrimeDelActivity extends BaseActivityNew {
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("发案详情");
+        loadingDialog.show("");
 
     }
     private String id;
@@ -79,7 +80,7 @@ public class CrimeDelActivity extends BaseActivityNew {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-
+                        loadingDialog.dismiss();
                     }
 
                     @Override
@@ -109,6 +110,7 @@ public class CrimeDelActivity extends BaseActivityNew {
                         }catch (Exception e){
                             Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
                         }
+                        loadingDialog.dismiss();
                     }
                 });
     }

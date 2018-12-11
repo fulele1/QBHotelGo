@@ -66,6 +66,7 @@ public class QueryOrcActivity extends BaseActivityNew {
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         title.setText("二维码查询");
+        loadingDialog.show("");
         connecting();
 
     }
@@ -98,10 +99,12 @@ public class QueryOrcActivity extends BaseActivityNew {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
+                        loadingDialog.dismiss();
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
+                        loadingDialog.dismiss();
                         try {
                             Map<String, Object> data = GsonUtil.JsonToMap(s);
                             if (data.get("state").toString().equals("1")) {

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,22 @@ public class PunishmentAddActivity extends BaseActivityNew {
     EditText edit_per_pu;
     @BindView(R.id.edit_convendent_pu)
     EditText edit_convendent_pu;
+    @BindView(R.id.img_hname_clear_pu)
+    ImageView img_hname_clear_pu;
+    @BindView(R.id.img_time_clear_pu)
+    ImageView img_time_clear_pu;
+    @BindView(R.id.img_kind_clear_pu)
+    ImageView img_kind_clear_pu;
+    @BindView(R.id.img_result_clear_pu)
+    ImageView img_result_clear_pu;
+    @BindView(R.id.img_del_clear_pu)
+    ImageView img_del_clear_pu;
+    @BindView(R.id.img_org_clear_pu)
+    ImageView img_org_clear_pu;
+    @BindView(R.id.img_mane_clear_pu)
+    ImageView img_mane_clear_pu;
+    @BindView(R.id.img_per_clear_pu)
+    ImageView img_per_clear_pu;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -92,7 +109,7 @@ public class PunishmentAddActivity extends BaseActivityNew {
     }
 
     private void intternet() {
-
+        loadingDialog.show("");
         if (mHotelCode.equals("") || mHotelCode == null) {
             Toast.makeText(instance, "请选择酒店", Toast.LENGTH_SHORT).show();
             return;
@@ -110,6 +127,7 @@ public class PunishmentAddActivity extends BaseActivityNew {
             return;
         }
 
+        loadingDialog.show("");
 
         LogUtils.e((HttpUrlUtils.getHttpUrl().PunishmentList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()));
         OkHttpUtils.post()
@@ -154,7 +172,12 @@ public class PunishmentAddActivity extends BaseActivityNew {
                         } catch (Exception e) {
                             showToast("数据格式异常，无法解析");
                         }
+
+                        loadingDialog.dismiss();
+
                     }
+
+
                 });
 
 
@@ -189,6 +212,39 @@ public class PunishmentAddActivity extends BaseActivityNew {
             case R.id.edit_result_pu:
                 pickerView1.show();
                 break;
+
+            case R.id.img_hname_clear_pu:
+                edit_hname_pu.setText("");
+                img_hname_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_time_clear_pu:
+                edit_time_pu.setText("");
+                img_time_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_kind_clear_pu:
+                edit_kind_pu.setText("");
+                img_kind_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_result_clear_pu:
+                edit_result_pu.setText("");
+                img_result_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_del_clear_pu:
+                edit_del_pu.setText("");
+                img_del_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_org_clear_pu:
+                edit_org_pu.setText("");
+                img_org_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_mane_clear_pu:
+                edit_mane_pu.setText("");
+                img_mane_clear_pu.setVisibility(View.GONE);
+                break;
+            case R.id.img_per_clear_pu:
+                edit_per_pu.setText("");
+                img_per_clear_pu.setVisibility(View.GONE);
+                break;
         }
     }
 
@@ -221,6 +277,14 @@ public class PunishmentAddActivity extends BaseActivityNew {
         edit_time_pu.setOnClickListener(instance);
         edit_kind_pu.setOnClickListener(instance);
         edit_result_pu.setOnClickListener(instance);
+        img_hname_clear_pu.setOnClickListener(instance);
+        img_time_clear_pu.setOnClickListener(instance);
+        img_kind_clear_pu.setOnClickListener(instance);
+        img_result_clear_pu.setOnClickListener(instance);
+        img_del_clear_pu.setOnClickListener(instance);
+        img_org_clear_pu.setOnClickListener(instance);
+        img_mane_clear_pu.setOnClickListener(instance);
+        img_per_clear_pu.setOnClickListener(instance);
         checkTime();
         checkType();
         checkResult();

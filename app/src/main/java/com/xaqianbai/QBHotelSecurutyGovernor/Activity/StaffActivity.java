@@ -42,6 +42,14 @@ public class StaffActivity extends AppCompatActivity implements View.OnClickList
             EditText edit_org;
     @BindView(R.id.img_clear_staff)//清空管辖机构
             ImageView img_clear;
+    @BindView(R.id.img_hotel_clear_staff)
+            ImageView img_hotel_clear_staff;
+    @BindView(R.id.img_name_clear_staff)
+            ImageView img_name_clear_staff;
+    @BindView(R.id.img_tel_clear_staff)
+            ImageView img_tel_clear_staff;
+    @BindView(R.id.img_iden_clear_staff)
+            ImageView img_iden_clear_staff;
     private Unbinder unbinder;
     private StaffActivity instance;
     private String hotel;
@@ -67,7 +75,15 @@ public class StaffActivity extends AppCompatActivity implements View.OnClickList
         btn_quary.setOnClickListener(instance);
         edit_org.setOnClickListener(instance);
         img_clear.setOnClickListener(instance);
+        img_hotel_clear_staff.setOnClickListener(instance);
+        img_name_clear_staff.setOnClickListener(instance);
+        img_tel_clear_staff.setOnClickListener(instance);
+        img_iden_clear_staff.setOnClickListener(instance);
         EditClearUtils.clearText(edit_org,img_clear);
+        EditClearUtils.clearText(edit_hotel,img_hotel_clear_staff);
+        EditClearUtils.clearText(edit_name,img_name_clear_staff);
+        EditClearUtils.clearText(edit_tel,img_tel_clear_staff);
+        EditClearUtils.clearText(edit_iden,img_iden_clear_staff);
     }
 
     public void onBackward(View view) {
@@ -106,6 +122,22 @@ public class StaffActivity extends AppCompatActivity implements View.OnClickList
                 edit_org.setText("");
                 org="";
                 img_clear.setVisibility(View.GONE);
+                break;
+                case R.id.img_hotel_clear_staff:
+                    edit_hotel.setText("");
+                    img_hotel_clear_staff.setVisibility(View.GONE);
+                break;
+                case R.id.img_name_clear_staff://
+                    edit_name.setText("");
+                    img_name_clear_staff.setVisibility(View.GONE);
+                break;
+                case R.id.img_tel_clear_staff://
+                    edit_tel.setText("");
+                    img_tel_clear_staff.setVisibility(View.GONE);
+                break;
+                case R.id.img_iden_clear_staff://
+                    edit_iden.setText("");
+                    img_iden_clear_staff.setVisibility(View.GONE);
                 break;
         }
     }

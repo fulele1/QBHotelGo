@@ -64,6 +64,7 @@ public class LogDetActivity extends BaseActivityNew {
         StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("联合检查详情");
+        loadingDialog.show("");
     }
     private String id;
     @Override
@@ -87,7 +88,7 @@ public class LogDetActivity extends BaseActivityNew {
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-
+                        loadingDialog.dismiss();
                     }
 
                     @Override
@@ -122,6 +123,7 @@ public class LogDetActivity extends BaseActivityNew {
                         }catch (Exception e){
                             Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
                         }
+                        loadingDialog.dismiss();
                     }
                 });
     }

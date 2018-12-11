@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
+
 import java.util.List;
 
 /**
@@ -15,6 +17,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public FragmentAdapter(FragmentManager fm, List<Fragment> list) {
         super(fm);
         mList = list;
+        LogUtils.e("FragmentAdapter++++++++++++++++++++++++"+mList.size());
     }
 
     @Override

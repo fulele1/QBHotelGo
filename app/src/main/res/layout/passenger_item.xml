@@ -18,7 +18,7 @@
             android:id="@+id/img_pic_pass_list"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@mipmap/per"
+            android:src="@mipmap/now_no_pic"
             android:layout_gravity="center"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:scaleType="fitXY"

@@ -41,6 +41,8 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
     ImageView img_clear_org;
     @BindView(R.id.img_clear_time_hotel)
     ImageView img_clear_time;
+    @BindView(R.id.img_clear_name_hotel)
+    ImageView img_clear_name_hotel;
     @BindView(R.id.btn_quary_hotel)
     Button btn_quary;
     private Unbinder unbinder;
@@ -66,8 +68,10 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
         edit_time.setOnClickListener(instance);
         img_clear_org.setOnClickListener(instance);
         img_clear_time.setOnClickListener(instance);
+        img_clear_name_hotel.setOnClickListener(instance);
         EditClearUtils.clearText(edit_org, img_clear_org);
         EditClearUtils.clearText(edit_time, img_clear_time);
+        EditClearUtils.clearText(edit_name, img_clear_name_hotel);
     }
 
     public void onBackward(View view) {
@@ -102,6 +106,11 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
             case R.id.img_clear_time_hotel://清除时间
                 edit_time.setText("");
                 img_clear_time.setVisibility(View.GONE);
+                break;
+
+                case R.id.img_clear_name_hotel://清除时间
+                edit_name.setText("");
+                    img_clear_name_hotel.setVisibility(View.GONE);
                 break;
             case R.id.btn_quary_hotel://查询
                 getIntentData();

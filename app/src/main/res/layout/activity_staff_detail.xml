@@ -333,7 +333,7 @@
                         android:id="@+id/txt_face_pic_staff_tel"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@mipmap/per"
+                        android:src="@mipmap/now_no_pic"
                         android:layout_centerHorizontal="true"
                         android:scaleType="fitXY"
                         android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -348,7 +348,7 @@
                 android:id="@+id/img_pic_staff_del"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@mipmap/per"
+                android:src="@mipmap/now_no_pic"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
                 />

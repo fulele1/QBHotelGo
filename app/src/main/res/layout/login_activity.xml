@@ -3,32 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/login_bg"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5" />
-
+        android:layout_weight="10" />
 
     <LinearLayout
         android:id="@+id/lay_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margins">
-
-
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="账号"
             android:layout_marginBottom="@dimen/button_normal_sizes"
-
+            android:text="账号"
             />
 
         <LinearLayout
@@ -36,17 +33,14 @@
             android:layout_height="wrap_content"
             android:background="@mipmap/login_edit_bg"
             android:gravity="center"
-            android:orientation="horizontal"
-            >
-
-
-
+            android:orientation="horizontal">
 
 
             <EditText
                 android:id="@+id/et_username"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@null"
@@ -54,43 +48,40 @@
                 android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:hint="@string/input_account"
                 android:maxLength="20"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/textview_small_size" />
 
-                android:textSize="@dimen/textview_small_size"
-                />
+
+
 
             <ImageView
                 android:id="@+id/img_delete_user_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/delete_edit"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@mipmap/delete_edit"
                 android:visibility="gone" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="密码"
             android:layout_marginBottom="@dimen/button_normal_sizes"
-android:layout_marginTop="@dimen/activity_horizontal_margin"
-            />
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="密码" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/login_edit_bg"
-            android:gravity="center"
-            >
-
-
+            android:gravity="center">
 
 
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="@null"
@@ -101,7 +92,6 @@ android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:maxLength="20"
                 android:paddingLeft="10px"
                 android:textSize="@dimen/textview_small_size"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
 
                 />
 
@@ -109,12 +99,10 @@ android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:id="@+id/img_delete_psw_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/delete_edit"
-                android:visibility="gone"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                />
+                android:src="@mipmap/delete_edit"
+                android:visibility="gone" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -134,8 +122,7 @@ android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:paddingBottom="3dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="3dp"
-                android:paddingTop="3dp"
-                />
+                android:paddingTop="3dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -162,8 +149,7 @@ android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@drawable/bg_textview"
                 android:text="忘记密码？"
                 android:textSize="@dimen/textview_small_size"
-                android:visibility="gone"
-                />
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>
@@ -176,9 +162,27 @@ android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/slidingmenu_offset"
         android:background="@mipmap/login_btn_next"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/activity_horizontal_margins"
         android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/activity_horizontal_margins" />
+
+    <TextView
+        android:id="@+id/version_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/textview_smallx_size"
+        android:layout_marginBottom="@dimen/button_normal_sizes"
+        />
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="©2018-2020 陕西嘉惠碧海电子科技有限公司"
+        android:gravity="center"
+        android:textSize="@dimen/textview_smallx_sizes"
+        android:layout_marginBottom="@dimen/button_normal_sizes"
         />
 
 
