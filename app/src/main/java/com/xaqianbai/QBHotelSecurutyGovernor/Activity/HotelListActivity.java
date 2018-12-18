@@ -226,9 +226,12 @@ public class HotelListActivity extends AppCompatActivity {
         mStart = intent.getStringExtra("start");
         mEnd = intent.getStringExtra("end");
         map.put("\"psorgan\"", "\"" + mOrg + "\"");//管辖机构
-        map.put("\"hname\"", "\"" + mName + "\"");//场站名称
+//        map.put("\"hname\"", "\"" + mName + "\"");//酒店名称
         if (!mStart.equals("") && mStart != null && !mEnd.equals("") && mEnd != null) {
             map.put("\"inputtime\"", "[[\">=\"," + DateUtil.data(mStart) + "],[\"<=\"," + DateUtil.data(mEnd) + "]]");//时间
+        }
+        if (!mName.equals("") && mName != null) {//酒店名称
+            map.put("\"hname\"", "[\"like\",\"%" + mName + "%\"]");
         }
         return "?condition=" + ConditionUtil.getConditionString(map);
     }

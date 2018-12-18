@@ -228,11 +228,14 @@ public class PassengerListActivity extends AppCompatActivity {
         LogUtils.e("mStart22222222222" + start);
         LogUtils.e("mEnd22222222" + end);
         map.put("\"idtype\"", "\"" + idenType + "\"");//
-        map.put("\"name\"", "\"" + name + "\"");//
+//        map.put("\"name\"", "\"" + name + "\"");//
+//        map.put("\"name\"", "\"%" + name + "%\"");//
         map.put("\"idcode\"", "\"" + iden + "\"");//
         map.put("\"telphone\"", "\"" + tel + "\"");//
         if (!start.equals("") && start != null && !end.equals("") && end != null) {
             map.put("\"ltime\"", "[[\">=\"," + DateUtil.data(start) + "],[\"<=\"," + DateUtil.data(end) + "]]");//时间
+        }if (!name.equals("") && name != null) {
+                    map.put("\"name\"", "[\"like\",\"%" + name + "%\"]");
         }
 
         return "?condition=" + ConditionUtil.getConditionString(map) + "&type=" + nameType;

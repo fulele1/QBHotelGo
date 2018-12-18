@@ -249,15 +249,15 @@ public class PassengerDetActivity extends AppCompatActivity {
                                     del.setCome(DateUtil.getDate(NullUtil.getString(lists.get(j).get("ltime"))));//入住时间
                                     String goTime = NullUtil.getString(lists.get(j).get("day"));
                                     String goTime1 = NullUtil.getString(lists.get(j).get("etime"));
-                                    if (goTime.equals("")){
-                                        goTime = "未离店";
-                                    }else if (goTime.equals("0")){
-                                        goTime = "当天离店";
+                                    if (goTime1.equals("")){
+                                        goTime1 = "未离店";
+                                    }else if (goTime1.equals("0")){
+                                        goTime1 = "当天离店";
                                     }else{
-                                        goTime = DateUtil.getDate(goTime1);
+                                        goTime1 = DateUtil.getDate(goTime1);
                                     }
 //                                    del.setGo(goTime+curr+"--"+j);//离店时间
-                                    del.setGo(goTime);//离店时间
+                                    del.setGo(goTime1);//离店时间
                                     del.setDays("共"+NullUtil.getString(lists.get(j).get("day"))+"天");//入住天数
                                     del.setHotel(NullUtil.getString(lists.get(j).get("hname")));//酒店名称
                                     del.setRoomNum(NullUtil.getString(lists.get(j).get("noroom")));//房间号

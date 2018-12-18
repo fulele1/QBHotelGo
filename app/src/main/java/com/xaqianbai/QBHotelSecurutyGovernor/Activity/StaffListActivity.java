@@ -303,11 +303,16 @@ public class StaffListActivity extends AppCompatActivity {
         iden = i.getStringExtra("iden");
         org = i.getStringExtra("org");
         map.put("\"psorgan\"", "\"" + org + "\"");//管辖机构
-        map.put("\"hname\"", "\"" + hotel + "\"");//酒店名称
-        map.put("\"xm\"", "\"" + name + "\"");//姓名
+//        map.put("\"hname\"", "\"" + hotel + "\"");//酒店名称
+//        map.put("\"xm\"", "\"" + name + "\"");//姓名
         map.put("\"lxfs1\"", "\"" + tel + "\"");//电话号码
         map.put("\"zjhm\"", "\"" + iden + "\"");//证件号码
 
+        if (!hotel.equals("") && hotel != null) {//酒店名称
+            map.put("\"hname\"", "[\"like\",\"%" + hotel + "%\"]");
+        }if (!name.equals("") && name != null) {//姓名
+            map.put("\"xm\"", "[\"like\",\"%" + name + "%\"]");
+        }
         return "?condition=" + ConditionUtil.getConditionString(map);
     }
 

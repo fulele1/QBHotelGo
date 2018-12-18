@@ -46,8 +46,9 @@
         android:onClick="onForward"
         android:singleLine="true"
         android:textSize="@dimen/textview_smalls_size"
+        android:text="编辑"
         android:visibility="invisible"
-        android:textColor="@color/viewfinder_frame"
+        android:textColor="@color/main"
          />
 
 </FrameLayout>

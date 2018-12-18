@@ -201,14 +201,14 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
 
 
     /**
-     * 更新界面
+     * 删除界面使用
      * @param context
      * @param title
      * @param message
      * @param ok
      * @return
      */
-    public AlertDialog showAdialog(final Context context, String title, String message, String ok) {
+    public AlertDialog showAdialog(final Context context,final int positions, String title, String message, String ok ) {
         alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.show();
         Window window = alertDialog.getWindow();
@@ -217,16 +217,25 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
         tvTitle.setText(title);
         TextView tvMessage = (TextView) window.findViewById(R.id.tv_dialog_message);
         tvMessage.setText(message);
+        Button btn_dia_no = (Button) window.findViewById(R.id.btn_dia_no);
         Button btOk = (Button) window.findViewById(R.id.btn_dia_ok);
         btOk.setText(ok);
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BaseActivityNew.this.dialogOk();
+                BaseActivityNew.this.dialogdelectOk(positions);
                 alertDialog.dismiss();
 
             }
         });
+
+        btn_dia_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
         return alertDialog;
     }
 
@@ -248,6 +257,11 @@ public abstract class BaseActivityNew extends AppCompatActivity implements View.
 
     //对话框单击确定按钮处理
     protected void dialogOk() {
+
+    }
+
+    //对话框单击确定按钮处理
+    protected void dialogdelectOk(int position) {
 
     }
 

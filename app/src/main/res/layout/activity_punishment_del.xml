@@ -32,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="酒店名称"
+                    android:text="酒店名称  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
@@ -62,7 +62,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="处罚日期"
+                    android:text="处罚日期  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
@@ -90,7 +90,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="处罚类别"
+                    android:text="处罚类别  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
@@ -118,7 +118,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="处罚结果"
+                    android:text="处罚结果  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
@@ -146,14 +146,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="处罚依据"
+                    android:text="处罚依据  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <EditText
                     android:id="@+id/edit_wgxq_delpud"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@null"
@@ -174,14 +174,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="批准机构"
+                    android:text="批准机构  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <EditText
                     android:id="@+id/edit_cfyj_delpud"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@null"
@@ -202,14 +202,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="批准人姓名"
+                    android:text="批准人姓名  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <EditText
                     android:id="@+id/edit_pzjg_delpud"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@null"
@@ -230,14 +230,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="执行人姓名"
+                    android:text="执行人姓名  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 
                 <EditText
                     android:id="@+id/edit_pzrxm_delpud"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="@null"
@@ -258,7 +258,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="违规详情"
+                    android:text="违规详情  "
                     android:textColor="@color/viewfinder_frame"
                     android:textSize="@dimen/textview_smalls_size" />
 

@@ -4,9 +4,9 @@
 
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -55,7 +55,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
         android:name=".Utils.MyApplication"
@@ -92,8 +92,7 @@
         <activity
             android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            >
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -103,54 +102,45 @@
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.MainActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.BackPswActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.ModifyPswActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".CameraTool.CertCaptureActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".zxing.activity.CaptureActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="d527989c59a1fee043cce36a43f687b0"
-            />
+            android:value="d527989c59a1fee043cce36a43f687b0" />
 
         <activity
             android:name=".Activity.StaffActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.HotelActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.OrgActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -159,8 +149,7 @@
         <activity
             android:name=".Activity.UpdateActivityNew"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <!-- 7.0y以上安装apk崩溃问题解决代码 -->
         <provider
@@ -176,143 +165,126 @@
         <activity
             android:name=".Activity.PassengerActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.StaffListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.StaffDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.SearchOrgActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.PassengerListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.PassengerDetActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.HotelListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.HotelDetilActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.OrgDetileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.ClueListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.ClueDelActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.LogListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.LogDetActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.SearchAreaActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.OrderActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.OrderListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.QueryOrcActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.UserPicActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.UserNickNameActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.ShowBigPicActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.AboutActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.CrimeListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.CrimeAddActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.PunishmentListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.PunishmentAddActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.CrimeDelActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.PunishmentDelActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".Activity.SearchHotelActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".Activity.CrimeEditActivity"
+            android:label="@string/title_activity_crime_edit"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name=".Activity.PunishmentEditActivity"
+            android:label="@string/title_activity_crime_edit"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

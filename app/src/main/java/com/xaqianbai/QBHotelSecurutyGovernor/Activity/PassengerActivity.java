@@ -114,6 +114,8 @@ public class PassengerActivity extends AppCompatActivity implements View.OnClick
             break;
             case R.id.img_clear_date_pass://清除时间
                 edit_date.setText("");
+                mStart = "";
+                mEnd = "";
                 img_clear_date.setVisibility(View.GONE);
             break;
 

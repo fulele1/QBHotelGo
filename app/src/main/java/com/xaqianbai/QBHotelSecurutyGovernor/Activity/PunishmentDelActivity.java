@@ -34,6 +34,9 @@ public class PunishmentDelActivity extends BaseActivityNew {
     Unbinder unbinder;
     @BindView(R.id.tv_title)
     TextView title;
+    @BindView(R.id.tv_forward)
+    TextView tv_forward;
+
     @BindView(R.id.layout_titlebar)
     FrameLayout titlebar;
     @BindView(R.id.edit_namehotel_delpud)
@@ -66,8 +69,23 @@ public class PunishmentDelActivity extends BaseActivityNew {
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         title.setText("处罚详情");
         loadingDialog.show("");
+        tv_forward.setVisibility(View.VISIBLE);
+        tv_forward.setOnClickListener(instance);
     }
 
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_forward:
+
+                Intent i = new Intent(instance, PunishmentEditActivity.class);
+                i.putExtra("id", id);
+                startActivity(i);
+                finish();
+                break;
+        }
+    }
 
     private String id;
 

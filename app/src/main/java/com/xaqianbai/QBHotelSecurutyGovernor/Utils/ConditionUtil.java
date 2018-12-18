@@ -32,6 +32,7 @@ public class ConditionUtil {
         switch (list.size()) {
             case 1:
                     condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + "}";
+//                    condition = "{" + list.get(0) +":[\"like\","+ map2.get(list.get(0)) + "]}";
                 break;
             case 2:
                 condition = "{" + list.get(0) +":"+ map2.get(list.get(0)) + ","

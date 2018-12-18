@@ -1,6 +1,5 @@
 package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,28 +17,37 @@ import com.bigkoo.pickerview.TimePickerView;
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.CastTypeUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.DateUtil;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.EditClearUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GsonUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.HttpUrlUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.NullUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.SPUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.OtherRequestBuilder;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
-public class PunishmentAddActivity extends BaseActivityNew {
 
-    private PunishmentAddActivity instance;
+public class PunishmentEditActivity extends BaseActivityNew {
+    private PunishmentEditActivity instance;
     Unbinder unbinder;
     @BindView(R.id.tv_title)
     TextView title;
@@ -81,21 +89,79 @@ public class PunishmentAddActivity extends BaseActivityNew {
     ImageView img_mane_clear_pu;
     @BindView(R.id.img_per_clear_pu)
     ImageView img_per_clear_pu;
+    String id;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
-        setContentView(R.layout.activity_punish_add);
+        setContentView(R.layout.activity_punish_edit);
         instance = this;
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
-        title.setText("处罚登记");
+        title.setText("处罚编辑");
 
         pvTime = new TimePickerView(instance, TimePickerView.Type.YEAR_MONTH_DAY);
         pickerView = new OptionsPickerView(instance);
         pickerView1 = new OptionsPickerView(instance);
+
+        Intent intent = getIntent();
+        id = intent.getStringExtra("id");
+        if (!id.equals("")) {
+            LogUtils.e(HttpUrlUtils.getHttpUrl().PunishmentList() + "/" + id + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+            OkHttpUtils
+                    .get()
+                    .url(HttpUrlUtils.getHttpUrl().PunishmentList() + "/" + id + "?access_token=" + SPUtils.get(instance, "access_token", ""))
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int i) {
+                            loadingDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onResponse(String s, int i) {
+
+                            try {
+                                Map<String, Object> data = GsonUtil.JsonToMap(s);
+                                if (data.get("state").toString().equals("1")) {
+                                    Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_LONG).show();
+                                    return;
+                                } else if (data.get("state").toString().equals("0")) {
+                                    edit_hname_pu.setText(NullUtil.getString(data.get("hname")));
+                                    edit_time_pu.setText(DateUtil.getDate(NullUtil.getString(data.get("punishdate"))));
+                                    edit_kind_pu.setText(CastTypeUtil.getTypeString(NullUtil.getString(data.get("cflb"))));
+                                    edit_result_pu.setText(CastTypeUtil.getResultTypeString(NullUtil.getString(data.get("punishresult"))));
+                                    edit_del_pu.setText(NullUtil.getString(data.get("cfyj")));
+                                    edit_org_pu.setText(NullUtil.getString(data.get("pzjg")));
+                                    edit_mane_pu.setText(NullUtil.getString(data.get("pzrxm")));
+                                    edit_per_pu.setText(NullUtil.getString(data.get("zxrxm")));
+                                    edit_convendent_pu.setText(NullUtil.getString(data.get("wgxq")));
+                                    mHotelCode = NullUtil.getString(data.get("nohotel"));
+                                    kind = NullUtil.getString(data.get("cflb"));
+                                    result = NullUtil.getString(data.get("punishresult"));
+
+                                } else if (data.get("state").toString().equals("0")) {
+                                    //响应失败
+                                    Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_SHORT).show();
+                                } else if (data.get("state").toString().equals("10")) {
+                                    //响应失败
+                                    Toast.makeText(instance, data.get("mess").toString(), Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(instance, LoginActivity.class));
+                                    finish();
+                                }
+                            } catch (Exception e) {
+                                Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                            loadingDialog.dismiss();
+                        }
+                    });
+
+        }
+
+
+
     }
 
 
@@ -109,44 +175,51 @@ public class PunishmentAddActivity extends BaseActivityNew {
     }
 
     private void intternet() {
+
         if (mHotelCode.equals("") || mHotelCode == null) {
             Toast.makeText(instance, "请选择酒店", Toast.LENGTH_SHORT).show();
-
             return;
-        }else if (time.equals("") || time == null) {
+        }
+        if (time.equals("") || time == null) {
             Toast.makeText(instance, "请选择处罚日期", Toast.LENGTH_SHORT).show();
             return;
-        }else if (kind.equals("") || kind == null) {
+        }
+        if (kind.equals("") || kind == null) {
             Toast.makeText(instance, "请选择处罚类别", Toast.LENGTH_SHORT).show();
-
             return;
-        }else if (result.equals("") || result == null) {
+        }
+        if (result.equals("") || result == null) {
             Toast.makeText(instance, "请选择处罚结果", Toast.LENGTH_SHORT).show();
             return;
         }
 
         loadingDialog.show("");
+        Map<String, String> map = new HashMap<>();
+        map.put("nohotel", mHotelCode);
+        map.put("punishdate", DateUtil.data(time));
+        map.put("punishresult", result);
+        map.put("cflb", kind);
+        map.put("cfyj", edit_del_pu.getText().toString().trim());
+        map.put("pzjg", edit_org_pu.getText().toString().trim());
+        map.put("pzrxm", edit_mane_pu.getText().toString().trim());
+        map.put("zxrxm", edit_per_pu.getText().toString().trim());
+        map.put("wgxq", edit_convendent_pu.getText().toString().trim());
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), GsonUtil.GsonString(map));
 
-        LogUtils.e((HttpUrlUtils.getHttpUrl().PunishmentList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()));
-        OkHttpUtils.post()
-                .url(HttpUrlUtils.getHttpUrl().PunishmentList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
-                .addParams("nohotel", mHotelCode)//
-                .addParams("punishdate", DateUtil.data(time))//选
-                .addParams("punishresult", result)//处罚结果 选
-                .addParams("cflb", kind)//处罚类别 选
-                .addParams("cfyj", edit_del_pu.getText().toString().trim())//处罚依据
-                .addParams("pzjg", edit_org_pu.getText().toString().trim())//批准机构
-                .addParams("pzrxm", edit_mane_pu.getText().toString().trim())//批准人姓名
-                .addParams("zxrxm", edit_per_pu.getText().toString().trim())//执行人姓名
-                .addParams("wgxq", edit_convendent_pu.getText().toString().trim())//违规详情
+
+        LogUtils.e(map.toString());
+        LogUtils.e(HttpUrlUtils.getHttpUrl().PunishmentList() +"/"+id+ "?access_token=" + SPUtils.get(instance, "access_token", "").toString());
+         OkHttpUtils.put()
+                .url(HttpUrlUtils.getHttpUrl().PunishmentList() +"/"+id+ "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
+                .requestBody(body)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
                         loadingDialog.dismiss();
-                        showToast(e.toString());
-                        LogUtils.e(e.toString());
+                        showToast(e.getMessage());
                     }
+
 
                     @Override
                     public void onResponse(String s, int i) {
@@ -161,8 +234,6 @@ public class PunishmentAddActivity extends BaseActivityNew {
                                 LogUtils.e("--------------" + addSuccess);
                                 btn_finish_puad.setText("已发送成功");
                                 btn_finish_puad.setEnabled(false);
-//                                mIvShopDel.setVisibility(View.GONE);
-//                                mIvTerDel.setVisibility(View.GONE);
                             } else {
                                 showToast("发送失败");
                             }
@@ -172,13 +243,9 @@ public class PunishmentAddActivity extends BaseActivityNew {
                         }
 
                         loadingDialog.dismiss();
-
                     }
 
-
                 });
-
-
     }
 
 
@@ -351,6 +418,5 @@ public class PunishmentAddActivity extends BaseActivityNew {
         super.onDestroy();
         unbinder.unbind();
     }
-
 
 }

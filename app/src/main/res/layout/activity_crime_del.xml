@@ -135,7 +135,10 @@
                 android:gravity="right"
                 android:focusable="false"
                 />
-        </LinearLayout><LinearLayout
+        </LinearLayout>
+
+
+            <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
@@ -153,7 +156,7 @@
             <EditText
                 android:id="@+id/edit_event_log_del"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:textColor="@color/viewfinder_frame"
@@ -167,6 +170,37 @@
         </LinearLayout>
 
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_en">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="备注"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size" />
+
+                <EditText
+                    android:id="@+id/edit_remark_log_del"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="@color/viewfinder_frame"
+                    android:textSize="@dimen/textview_smalls_size"
+                    android:gravity="left"
+                    android:layout_gravity="center"
+                    android:focusable="false"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/app_name"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -22,6 +22,7 @@ import com.xaqianbai.QBHotelSecurutyGovernor.Utils.EditClearUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GsonUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.HttpUrlUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.NullUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.SPUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.StatuBarUtil;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -189,7 +190,8 @@ public class CrimeAddActivity extends BaseActivityNew {
         }
         loadingDialog.show("");
         LogUtils.e((HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()));
-        OkHttpUtils.post()
+        OkHttpUtils
+                .post()
                 .url(HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
                 .addParams("nohotel", mHotelCode)//
                 .addParams("crimedate", DateUtil.data(time))//

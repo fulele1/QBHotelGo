@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.github.jdsjlzx.ItemDecoration.DividerDecoration;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.github.jdsjlzx.interfaces.OnItemLongClickListener;
 import com.github.jdsjlzx.interfaces.OnLoadMoreListener;
 import com.github.jdsjlzx.interfaces.OnNetWorkErrorListener;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
@@ -282,21 +283,19 @@ public class CrimeListActivity extends BaseActivityNew {
                                         @Override
                                         public void onItemClick(View view, int position) {
                                             if (mDataAdapter.getDataList().size() > position) {
-//                                                if (readConfig("addSuccesscrime").equals("yes")) {
-//                                                    LogUtils.e("--------------" + readConfig("addSuccesscrime"));
-//                                                    Intent i = new Intent(instance, CrimeDelActivity.class);
-//                                                    int a = Integer.parseInt(mLogs.get(position).getId());
-//                                                    int b = a + 1;
-//                                                    i.putExtra("id", b + "");
-//                                                    startActivity(i);
-//                                                } else {
                                                     Intent i = new Intent(instance, CrimeDelActivity.class);
                                                     i.putExtra("id", mLogs.get(position).getId());
                                                     LogUtils.e(mLogs.get(position).getId());
                                                     startActivity(i);
-//                                                }
-
                                             }
+                                        }
+                                    });
+
+                                    //自条目的长按事件
+                                    mLRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
+                                        @Override
+                                        public void onItemLongClick(View view, int position) {
+                                            showAdialog(instance,position,"删除","删除后不可找回，请再三确定","确定").show();
                                         }
                                     });
                                     mHandler.sendEmptyMessage(-1);
@@ -305,7 +304,6 @@ public class CrimeListActivity extends BaseActivityNew {
                                     txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);
                                 }
-
 
                             } else if (map.get("state").toString().equals("19")) {
                                 mHandler.sendEmptyMessage(-3);
@@ -327,6 +325,36 @@ public class CrimeListActivity extends BaseActivityNew {
                 });
     }
 
+
+    //删除列表
+    @Override
+    protected void dialogdelectOk(final int position) {
+        super.dialogdelectOk(position);
+
+        OkHttpUtils
+                .delete()
+                .url(HttpUrlUtils.getHttpUrl().BothList() + "/"+mLogs.get(position).getId()+ "?access_token="
+                        + SPUtils.get(instance, "access_token", "")  )
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int i) {
+                        Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onResponse(String s, int i) {
+                        LogUtils.e(s);
+                        Map<String, Object> map = GsonUtil.JsonToMap(s);
+                        if (map.get("state").toString().equals("0")) {
+                        Toast.makeText(instance, "删除成功", Toast.LENGTH_SHORT).show();
+                            mLogs.remove(position);
+                            list_r.refresh();//刷新数据
+                        }
+                    }
+                });
+
+    }
 
     private void notifyDataSetChanged() {
         mLRecyclerViewAdapter.notifyDataSetChanged();
