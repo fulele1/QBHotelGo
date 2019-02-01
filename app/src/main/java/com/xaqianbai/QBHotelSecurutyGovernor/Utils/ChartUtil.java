@@ -124,14 +124,15 @@ public class ChartUtil {
         mLineChart.setScaleEnabled(true);// 缩放
         mLineChart.setPinchZoom(false);
         mLineChart.getAxisRight().setEnabled(false);// 隐藏右边 的坐标轴
+        mLineChart.getAxisLeft().setEnabled(true);// 隐藏左边 的坐标轴
         mLineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);// 让x轴在下面
         mLineChart.getXAxis().setLabelRotationAngle(-60);
-        // // 隐藏左边坐标轴横网格线
-        // mLineChart.getAxisLeft().setDrawGridLines(false);
-        // // 隐藏右边坐标轴横网格线
-        // mLineChart.getAxisRight().setDrawGridLines(false);
-        // // 隐藏X轴竖网格线
-        // mLineChart.getXAxis().setDrawGridLines(false);
+//         // 隐藏左边坐标轴横网格线
+//         mLineChart.getAxisLeft().setDrawGridLines(false);
+         // 隐藏右边坐标轴横网格线
+//         mLineChart.getAxisRight().setDrawGridLines(true);
+         // 隐藏X轴竖网格线
+//         mLineChart.getXAxis().setDrawGridLines(false);
         mLineChart.setBackgroundColor(color);// 设置背景
         mLineChart.setData(lineData);// 设置x,y轴的数据
         Legend mLegend = mLineChart.getLegend(); // 设置比例图标示，就是那个一组y的value的
