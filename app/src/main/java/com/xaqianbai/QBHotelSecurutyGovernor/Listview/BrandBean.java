@@ -3,6 +3,8 @@ package com.xaqianbai.QBHotelSecurutyGovernor.Listview;
 
 import android.text.TextUtils;
 
+import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
+
 import java.util.ArrayList;
 
 public class BrandBean {
@@ -51,7 +53,12 @@ public class BrandBean {
 
     public void setName(String name) {
         this.name = name;
+        name = name.replace("爱","");
+        name = name.replace("艾","");
+        LogUtils.e(name);
         name_en = getPinYin(name);//获取字母名称
+//        LogUtils.e(name);
+        LogUtils.e(name_en);
         name_en = name_en.toUpperCase();//把小写字母换成大写字母
         if (!TextUtils.isEmpty(name_en)) {
             char head = name_en.charAt(0);
@@ -78,6 +85,11 @@ public class BrandBean {
      * 汉字转换拼音，字母原样返回，都转换为小写
      */
     public String getPinYin(String input) {
+//        if (input.contains("艾")||input.contains("爱")){
+//            input.replace("","艾");
+//            input.replace("","爱");
+//        }
+
         ArrayList<HanziToPinyin.Token> tokens = HanziToPinyin.getInstance().get(input);
         StringBuilder sb = new StringBuilder();
         if (tokens != null && tokens.size() > 0) {

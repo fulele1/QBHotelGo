@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,8 @@ public class HotelListActivity extends AppCompatActivity {
     TextView txt_size;
     @BindView(R.id.recycler_view)
     LRecyclerView list_r;
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
     /**
      * 服务器端一共多少条数据
      */
@@ -238,7 +241,7 @@ public class HotelListActivity extends AppCompatActivity {
 
 
     List<Hotel> mHotel;
-    private List<Hotel> mHotels ;
+    private List<Hotel> mHotels;
 
     private void connecting(int p) {
 
@@ -267,7 +270,6 @@ public class HotelListActivity extends AppCompatActivity {
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
                                 if (!map.get("count").toString().equals("0")) {
-                                    list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     mHandler.sendEmptyMessage(-1);
                                     String pk = map.get("pk").toString();
                                     String img = map.get("img").toString();
@@ -296,9 +298,12 @@ public class HotelListActivity extends AppCompatActivity {
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
                                     txt_size.setText("共查询到" + count + "条数据");
+                                    empty_view.setVisibility(View.GONE);
+                                    list_r.setVisibility(View.VISIBLE);
                                 } else {
                                     mHandler.sendEmptyMessage(-3);
                                     txt_size.setVisibility(View.GONE);
+                                    list_r.setEmptyView(empty_view);
                                 }
 
 

@@ -43,7 +43,8 @@ public class PassengerAdapter extends ListBaseAdapter<Passenger> {
         }
 
         if(!item.getPic().equals("")&&item.getPic() !=null){
-            Glide.with(mContext).load(item.getPic()).transform(new GlideRoundTransform(mContext,10))
+            Glide.with(mContext).load(item.getPic())
+                    .transform(new GlideRoundTransform(mContext,10))
                     .error(R.mipmap.now_no_pic).into(tv_pic);
         }
 

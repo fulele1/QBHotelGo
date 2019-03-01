@@ -17,7 +17,8 @@ public class LeftMenuListAdapter extends BaseAdapter {
     private Context context;
     private String status = "";
     private String[] leftMenuTitles = {
-            "线索信息", "联合检查","发案登记","处罚登记","关于我们","修改密码","版本更新"
+            "线索信息", "联合检查","发案登记","处罚登记","关于我们","修改密码"
+//            ,"版本更新"
     };
     private int[] icons = {
 
@@ -27,7 +28,7 @@ public class LeftMenuListAdapter extends BaseAdapter {
             R.mipmap.more_icon_faan,
             R.mipmap.more_icon_regist,
             R.mipmap.more_icon_password,
-            R.mipmap.more_icon_update,
+//            R.mipmap.more_icon_update,
     };
     private ViewHolder holder;
 

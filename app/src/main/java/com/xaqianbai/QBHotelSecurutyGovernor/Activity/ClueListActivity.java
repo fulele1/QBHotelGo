@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,7 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.Call;
 
-public class ClueListActivity extends BaseActivityNew{
+public class ClueListActivity extends BaseActivityNew {
 
 
     private ClueListActivity instance;
@@ -60,28 +61,37 @@ public class ClueListActivity extends BaseActivityNew{
     TextView txt_size;
     @BindView(R.id.recycler_view)
     LRecyclerView list_r;
-    /**服务器端一共多少条数据*/
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
+    /**
+     * 服务器端一共多少条数据
+     */
     private int TOTAL_COUNTER;//如果服务器没有返回总数据或者总页数，这里设置为最大值比如10000，什么时候没有数据了根据接口返回判断
 
-    /**每一页展示多少条数据*/
+    /**
+     * 每一页展示多少条数据
+     */
     private int REQUEST_COUNT;
 
-    /**已经获取到多少条数据了*/
+    /**
+     * 已经获取到多少条数据了
+     */
     private static int mCurrentCounter = 0;
-    private  int mCurrentpage = 1;
+    private int mCurrentpage = 1;
 
 
     private ClueAdapter mDataAdapter = null;
 
     private ClueListActivity.PreviewHandler mHandler = new ClueListActivity.PreviewHandler(this);
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void initViews() throws Exception {
         setContentView(R.layout.activity_recyclerview_list);
         instance = this;
         unbinder = ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
 
         title.setText("线索信息");
@@ -94,7 +104,7 @@ public class ClueListActivity extends BaseActivityNew{
     /**
      * 初始化recycleview数据
      */
-    public void initList(){
+    public void initList() {
 
         //上拉刷新
         list_r.setOnRefreshListener(new OnRefreshListener() {
@@ -119,7 +129,7 @@ public class ClueListActivity extends BaseActivityNew{
 
                 if (mCurrentCounter < TOTAL_COUNTER) {
                     // loading more
-                    mCurrentpage =mCurrentpage+1;
+                    mCurrentpage = mCurrentpage + 1;
                     connecting(mCurrentpage);
                 } else {
                     //the end
@@ -157,15 +167,15 @@ public class ClueListActivity extends BaseActivityNew{
         list_r.setLoadingMoreProgressStyle(ProgressStyle.BallSpinFadeLoader);
 
         //add a HeaderView
-        final View header = LayoutInflater.from(this).inflate(R.layout.sample_header,(ViewGroup)findViewById(android.R.id.content), false);
+        final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
         //设置头部加载颜色
-        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
+        list_r.setHeaderViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载颜色
-        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary ,android.R.color.white);
+        list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载文字提示
-        list_r.setFooterViewHint("拼命加载中","已经全部为你呈现了","网络不给力啊，点击再试一次吧");
+        list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
 
 
     }
@@ -193,39 +203,38 @@ public class ClueListActivity extends BaseActivityNew{
     }
 
 
-
     List<Clue> mClue;
-    List<Clue> mClues ;
+    List<Clue> mClues;
+
     private void connecting(int p) {
 
-        LogUtils.e(HttpUrlUtils.getHttpUrl().clueList()+"?access_token="+ SPUtils.get(instance,"access_token",""));
+        LogUtils.e(HttpUrlUtils.getHttpUrl().clueList() + "?access_token=" + SPUtils.get(instance, "access_token", ""));
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().clueList()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&p="+p)
+                .url(HttpUrlUtils.getHttpUrl().clueList() + "?access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p)
                 .build()
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int i) {
-                        Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         mHandler.sendEmptyMessage(-3);
                     }
 
                     @Override
                     public void onResponse(String s, int i) {
 
-                        try{
+                        try {
                             mClue = new ArrayList<>();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
 
                             LogUtils.e(map.toString());
                             if (map.get("state").toString().equals("1")) {
                                 mHandler.sendEmptyMessage(-3);
-                                Toast.makeText(instance,map.get("mess").toString(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
-                                if (!map.get("count").toString().equals("0")){
+                                if (!map.get("count").toString().equals("0")) {
                                     mHandler.sendEmptyMessage(-1);
-                                    list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                     for (int j = 0; j < data.size(); j++) {
                                         Clue clue = new Clue();
@@ -233,11 +242,11 @@ public class ClueListActivity extends BaseActivityNew{
                                         String pk = NullUtil.getString(data.get(j).get("pk"));
                                         String sc_id = NullUtil.getString(data.get(j).get(pk));
                                         String img = NullUtil.getString(data.get(j).get("img"));
-                                        LogUtils.e("头像"+HttpUrlUtils.getHttpUrl().picInclue()+sc_id+"/"+img
-                                                +"?access_token="+ SPUtils.get(instance,"access_token",""));
+                                        LogUtils.e("头像" + HttpUrlUtils.getHttpUrl().picInclue() + sc_id + "/" + img
+                                                + "?access_token=" + SPUtils.get(instance, "access_token", ""));
 
-                                        clue.setPic(HttpUrlUtils.getHttpUrl().picInclue()+sc_id+"/"+img
-                                                +"?access_token="+ SPUtils.get(instance,"access_token",""));
+                                        clue.setPic(HttpUrlUtils.getHttpUrl().picInclue() + sc_id + "/" + img
+                                                + "?access_token=" + SPUtils.get(instance, "access_token", ""));
                                         clue.setName(NullUtil.getString(data.get(j).get("people")));//姓名
                                         clue.setDate(NullUtil.getString(data.get(j).get("createtime")));//
                                         clue.setTel(NullUtil.getString(data.get(j).get("mp")));
@@ -249,12 +258,11 @@ public class ClueListActivity extends BaseActivityNew{
                                     }
 
 
-
                                     String count = map.get("count").toString();
-                                    String  num = map.get("num").toString();
+                                    String num = map.get("num").toString();
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
-                                    txt_size.setText("共查询到"+count+"条数据");
+                                    txt_size.setText("共查询到" + count + "条数据");
 
 
                                     //子条目的点击事件
@@ -271,10 +279,12 @@ public class ClueListActivity extends BaseActivityNew{
                                     });
 
 
-
+                                    empty_view.setVisibility(View.GONE);
+                                    list_r.setVisibility(View.VISIBLE);
                                 } else {
                                     mHandler.sendEmptyMessage(-3);
                                     txt_size.setVisibility(View.GONE);
+                                    list_r.setEmptyView(empty_view);
                                 }
 
 
@@ -282,17 +292,17 @@ public class ClueListActivity extends BaseActivityNew{
                                 //响应失败
                                 mHandler.sendEmptyMessage(-3);
                                 txt_size.setVisibility(View.GONE);
-                            }else if (map.get("state").toString().equals("10")) {
+                            } else if (map.get("state").toString().equals("10")) {
                                 mHandler.sendEmptyMessage(-3);
                                 //响应失败
                                 Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(instance,LoginActivity.class));
+                                startActivity(new Intent(instance, LoginActivity.class));
                                 finish();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             mHandler.sendEmptyMessage(-3);
                             txt_size.setVisibility(View.GONE);
-                            Toast.makeText(instance,e.toString(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         }
 
 
@@ -302,6 +312,7 @@ public class ClueListActivity extends BaseActivityNew{
 
 
     String first = "";
+
     private void notifyDataSetChanged() {
         mLRecyclerViewAdapter.notifyDataSetChanged();
     }
@@ -390,9 +401,6 @@ public class ClueListActivity extends BaseActivityNew{
         }
         return true;
     }
-
-
-
 
 
 }

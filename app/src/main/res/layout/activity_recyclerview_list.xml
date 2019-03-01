@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.xaqianbai.QBHotelSecurutyGovernor.Activity.StaffListActivity">
 
@@ -29,8 +30,12 @@
             android:id="@+id/recycler_view"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@mipmap/nodata"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <include
+            android:id="@+id/empty_view"
+            layout="@layout/empty_layout"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

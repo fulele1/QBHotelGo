@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +59,8 @@ public class StaffListActivity extends AppCompatActivity {
     LRecyclerView list_r;
     @BindView(R.id.recycler_text)
     TextView txt_size;
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
     /**
      * 服务器端一共多少条数据
      */
@@ -193,7 +196,7 @@ public class StaffListActivity extends AppCompatActivity {
     }
 
     private List<Staff> mStaffs;
-    private List<Staff> mStaffss ;
+    private List<Staff> mStaffss;
 
     private void connecting(int p) {
 
@@ -221,7 +224,6 @@ public class StaffListActivity extends AppCompatActivity {
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
                                 if (!map.get("count").toString().equals("0")) {
-                                    list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     mHandler.sendEmptyMessage(-1);
                                     String pk = map.get("pk").toString();
                                     String img = map.get("img").toString();
@@ -251,9 +253,12 @@ public class StaffListActivity extends AppCompatActivity {
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
                                     txt_size.setText("共查询到" + count + "条数据");
+                                    empty_view.setVisibility(View.GONE);
+                                    list_r.setVisibility(View.VISIBLE);
                                 } else {
-                                    txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);
+                                    txt_size.setVisibility(View.GONE);
+                                    list_r.setEmptyView(empty_view);
                                 }
                             } else if (map.get("state").toString().equals("19")) {
                                 mHandler.sendEmptyMessage(-3);
@@ -310,7 +315,8 @@ public class StaffListActivity extends AppCompatActivity {
 
         if (!hotel.equals("") && hotel != null) {//酒店名称
             map.put("\"hname\"", "[\"like\",\"%" + hotel + "%\"]");
-        }if (!name.equals("") && name != null) {//姓名
+        }
+        if (!name.equals("") && name != null) {//姓名
             map.put("\"xm\"", "[\"like\",\"%" + name + "%\"]");
         }
         return "?condition=" + ConditionUtil.getConditionString(map);

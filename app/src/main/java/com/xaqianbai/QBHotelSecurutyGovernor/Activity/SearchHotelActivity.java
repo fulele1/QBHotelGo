@@ -56,7 +56,7 @@ public class SearchHotelActivity extends BaseActivityNew {
     private EditText edit_search;
     private PinnedSectionListView listView;
     private LetterIndexView letterIndexView;
-    private TextView txt_center,mTxtTitle;
+    private TextView txt_center, mTxtTitle;
     private ArrayList<BrandBean> list_all;
     private ArrayList<BrandBean> list_show;
     private BrandAdapter adapter;
@@ -70,7 +70,7 @@ public class SearchHotelActivity extends BaseActivityNew {
         setContentView(R.layout.activity_search_staff);
         instance = this;
         ButterKnife.bind(instance);
-        StatuBarUtil.setStatuBarLightMode(instance,getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
+        StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
         edit_search = (EditText) findViewById(R.id.edit_search_org);
         listView = (PinnedSectionListView) findViewById(R.id.phone_listview_org);
@@ -93,10 +93,10 @@ public class SearchHotelActivity extends BaseActivityNew {
 
 
     public void okConnection() {
-        LogUtils.e(HttpUrlUtils.getHttpUrl().HotelDelnew()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&nopage=");
+        LogUtils.e(HttpUrlUtils.getHttpUrl().HotelDelnew() + "?access_token=" + SPUtils.get(instance, "access_token", "") + "&nopage=");
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().HotelDelnew()+"?access_token="+ SPUtils.get(instance,"access_token","")+"&nopage=")
+                .url(HttpUrlUtils.getHttpUrl().HotelDelnew() + "?access_token=" + SPUtils.get(instance, "access_token", "") + "&nopage=")
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -106,22 +106,23 @@ public class SearchHotelActivity extends BaseActivityNew {
                     @Override
                     public void onResponse(String s, int i) {
 
-                        Log.e("fule",s);
+                        Log.e("fule", s);
 
                         Map<String, Object> map = GsonUtil.JsonToMap(s);
                         if (map.get("state").toString().equals("1")) {
                             showToast(map.get("mess").toString());
                             return;
                         } else if (map.get("state").toString().equals("0")) {
-                            if (!map.get("count").toString().equals("0")){
+                            if (!map.get("count").toString().equals("0")) {
                                 List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                 for (int j = 0; j < data.size(); j++) {
                                     BrandBean cityBean = new BrandBean();
+                                    LogUtils.e(j + "");
                                     cityBean.setName(data.get(j).get("hname").toString());
                                     cityBean.setCode(data.get(j).get("hnohotel").toString());
                                     list_all.add(cityBean);
                                 }
-                            }else {
+                            } else {
                                 Toast.makeText(instance, "未查询到有效数据", Toast.LENGTH_SHORT).show();
                             }
 
@@ -280,7 +281,6 @@ public class SearchHotelActivity extends BaseActivityNew {
             }
         });
     }
-
 
 
     public class MemberSortUtil implements Comparator<BrandBean> {

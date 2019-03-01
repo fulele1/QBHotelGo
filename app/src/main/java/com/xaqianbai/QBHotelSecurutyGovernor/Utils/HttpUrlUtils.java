@@ -14,8 +14,9 @@ public class HttpUrlUtils {
     }
 
     public String getBaseUrl() {
-        return BuildConfig.DEBUG ?"http://hotel.qbchoice.cn":"http://hotel.qbchoice.cn";
+//        return BuildConfig.DEBUG ?"http://hotel.qbchoice.cn":"http://hotel.qbchoice.cn";
 //        return BuildConfig.DEBUG ?"http://hotel.qbchoice.com":"http://hotel.qbchoice.com";
+        return BuildConfig.DEBUG ?"http://h.qbchoice.cn":"http://h.qbchoice.cn";
     }
 
     //  用户登录接口/governor/login

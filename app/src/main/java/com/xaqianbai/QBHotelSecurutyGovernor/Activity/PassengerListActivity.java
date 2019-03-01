@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,8 @@ public class PassengerListActivity extends AppCompatActivity {
     FrameLayout titlebar;
     @BindView(R.id.recycler_text)
     TextView txt_size;
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
     @BindView(R.id.recycler_view)
     LRecyclerView list_r;
     /**
@@ -234,8 +238,9 @@ public class PassengerListActivity extends AppCompatActivity {
         map.put("\"telphone\"", "\"" + tel + "\"");//
         if (!start.equals("") && start != null && !end.equals("") && end != null) {
             map.put("\"ltime\"", "[[\">=\"," + DateUtil.data(start) + "],[\"<=\"," + DateUtil.data(end) + "]]");//时间
-        }if (!name.equals("") && name != null) {
-                    map.put("\"name\"", "[\"like\",\"%" + name + "%\"]");
+        }
+        if (!name.equals("") && name != null) {
+            map.put("\"name\"", "[\"like\",\"%" + name + "%\"]");
         }
 
         return "?condition=" + ConditionUtil.getConditionString(map) + "&type=" + nameType;
@@ -243,7 +248,7 @@ public class PassengerListActivity extends AppCompatActivity {
 
 
     List<Passenger> mPassengers;
-    private List<Passenger> mPassengerss ;
+    private List<Passenger> mPassengerss;
 
     private void connecting(int p) {
 
@@ -273,7 +278,6 @@ public class PassengerListActivity extends AppCompatActivity {
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
                                 if (!map.get("count").toString().equals("0")) {
-                                    list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     mHandler.sendEmptyMessage(-1);
                                     String pk = map.get("pk").toString();
                                     String ppp = "";
@@ -310,9 +314,12 @@ public class PassengerListActivity extends AppCompatActivity {
                                     TOTAL_COUNTER = Integer.valueOf(count).intValue();
                                     REQUEST_COUNT = Integer.valueOf(num).intValue();
                                     txt_size.setText("共查询到" + count + "条数据");
+                                    empty_view.setVisibility(View.GONE);
+                                    list_r.setVisibility(View.VISIBLE);
                                 } else {
                                     mHandler.sendEmptyMessage(-3);
                                     txt_size.setVisibility(View.GONE);
+                                    list_r.setEmptyView(empty_view);
                                 }
 
 

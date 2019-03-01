@@ -120,25 +120,25 @@ public class CrimeAddActivity extends BaseActivityNew {
                 startActivityForResult(intent, 0);
                 break;
 
-                case R.id.img_name_clear_cr:
-                    edit_name_cr.setText("");
-                    mHotelCode = "";
-                    img_name_clear_cr.setVisibility(View.GONE);
+            case R.id.img_name_clear_cr:
+                edit_name_cr.setText("");
+                mHotelCode = "";
+                img_name_clear_cr.setVisibility(View.GONE);
                 break;
 
-                case R.id.img_typeone_clear_cr:
-                    edit_type_one_cr.setText("");
-                    img_typeone_clear_cr.setVisibility(View.GONE);
+            case R.id.img_typeone_clear_cr:
+                edit_type_one_cr.setText("");
+                img_typeone_clear_cr.setVisibility(View.GONE);
                 break;
 
-                case R.id.img_code_clear_cr:
-                    edit_code_cr.setText("");
-                    img_code_clear_cr.setVisibility(View.GONE);
+            case R.id.img_code_clear_cr:
+                edit_code_cr.setText("");
+                img_code_clear_cr.setVisibility(View.GONE);
                 break;
 
-                case R.id.img_date_clear_cr:
-                    edit_date_cr.setText("");
-                    img_date_clear_cr.setVisibility(View.GONE);
+            case R.id.img_date_clear_cr:
+                edit_date_cr.setText("");
+                img_date_clear_cr.setVisibility(View.GONE);
                 break;
 
         }
@@ -190,6 +190,13 @@ public class CrimeAddActivity extends BaseActivityNew {
         }
         loadingDialog.show("");
         LogUtils.e((HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString()));
+        LogUtils.e("nohotel" + mHotelCode);
+        LogUtils.e("crimedate" + DateUtil.data(time));
+        LogUtils.e("remark" + remark);
+        LogUtils.e("ajxz" + ajxz);
+        LogUtils.e("ajlb" + ajlb);
+        LogUtils.e("ajbh" + code);
+        LogUtils.e("qkms" + condition);
         OkHttpUtils
                 .post()
                 .url(HttpUrlUtils.getHttpUrl().BothList() + "?access_token=" + SPUtils.get(instance, "access_token", "").toString())
@@ -262,10 +269,10 @@ public class CrimeAddActivity extends BaseActivityNew {
         img_typeone_clear_cr.setOnClickListener(instance);
         img_code_clear_cr.setOnClickListener(instance);
         img_date_clear_cr.setOnClickListener(instance);
-        EditClearUtils.clearText(edit_name_cr,img_name_clear_cr);
-        EditClearUtils.clearText(edit_type_one_cr,img_typeone_clear_cr);
-        EditClearUtils.clearText(edit_code_cr,img_code_clear_cr);
-        EditClearUtils.clearText(edit_date_cr,img_date_clear_cr);
+        EditClearUtils.clearText(edit_name_cr, img_name_clear_cr);
+        EditClearUtils.clearText(edit_type_one_cr, img_typeone_clear_cr);
+        EditClearUtils.clearText(edit_code_cr, img_code_clear_cr);
+        EditClearUtils.clearText(edit_date_cr, img_date_clear_cr);
 
         checkType();
         checkTime();

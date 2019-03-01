@@ -17,12 +17,12 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "1.1.8"
+        versionName "2.1.8"
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi'
-//            abiFilters 'arm64-v8a','armeabi-v7a'
-//            abiFilters "x86"
+            abiFilters 'arm64-v8a','armeabi-v7a'
+            abiFilters "x86"
         }
 
         //信鸽
@@ -130,8 +130,6 @@ dependencies {
     compile 'com.android.support:design:26.1.0'
     //二级联动 时间选择  案件类型选择
     compile 'com.bigkoo:pickerview:2.1.1'
-
     //加载框
     compile 'com.wang.avi:library:2.1.3'
-
 }

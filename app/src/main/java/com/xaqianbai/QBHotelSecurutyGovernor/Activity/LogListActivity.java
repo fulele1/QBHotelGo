@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,8 @@ public class LogListActivity extends BaseActivityNew {
     TextView txt_size;
     @BindView(R.id.recycler_view)
     LRecyclerView list_r;
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
     /**
      * 服务器端一共多少条数据
      */
@@ -131,8 +134,6 @@ public class LogListActivity extends BaseActivityNew {
         list_r.setFooterViewColor(R.color.colorAccent, R.color.colorPrimary, android.R.color.white);
         //设置底部加载文字提示
         list_r.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-
-
     }
 
 
@@ -194,7 +195,7 @@ public class LogListActivity extends BaseActivityNew {
 
 
     List<Log> mLog;
-    List<Log> mLogs ;
+    List<Log> mLogs;
 
     private void connecting(int p) {
 
@@ -223,7 +224,6 @@ public class LogListActivity extends BaseActivityNew {
                             } else if (map.get("state").toString().equals("0")) {
                                 if (!map.get("count").toString().equals("0")) {
                                     mHandler.sendEmptyMessage(-1);
-                                    list_r.setBackgroundColor(getResources().getColor(R.color.white));
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                     for (int j = 0; j < data.size(); j++) {
                                         Log log = new Log();
@@ -257,9 +257,12 @@ public class LogListActivity extends BaseActivityNew {
                                     });
 
 
+                                    empty_view.setVisibility(View.GONE);
+                                    list_r.setVisibility(View.VISIBLE);
                                 } else {
-                                    txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);
+                                    txt_size.setVisibility(View.GONE);
+                                    list_r.setEmptyView(empty_view);
                                 }
 
 

@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,8 @@ public class PunishmentListActivity extends BaseActivityNew {
     LRecyclerView list_r;
     @BindView(R.id.floatingActionButton)
     FloatingActionButton floatingActionButton;
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
     /**
      * 服务器端一共多少条数据
      */
@@ -114,7 +117,7 @@ public class PunishmentListActivity extends BaseActivityNew {
     @Override
     public void onResume() {
         super.onResume();
-        if (readConfig("addSuccess").equals("yes")){
+        if (readConfig("addSuccess").equals("yes")) {
             mLogs = new ArrayList<>();
             mCurrentpage = 1;
             initList();
@@ -255,7 +258,7 @@ public class PunishmentListActivity extends BaseActivityNew {
                                 return;
                             } else if (map.get("state").toString().equals("0")) {
                                 if (!map.get("count").toString().equals("0")) {
-                                    list_r.setBackgroundColor(getResources().getColor(R.color.white));
+                                    mHandler.sendEmptyMessage(-1);
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                     for (int j = 0; j < data.size(); j++) {
                                         Punishment log = new Punishment();
@@ -278,9 +281,9 @@ public class PunishmentListActivity extends BaseActivityNew {
                                         @Override
                                         public void onItemClick(View view, int position) {
                                             if (mDataAdapter.getDataList().size() > position) {
-                                                    Intent i = new Intent(instance, PunishmentDelActivity.class);
-                                                    i.putExtra("id", mLogs.get(position).getId());
-                                                    startActivity(i);
+                                                Intent i = new Intent(instance, PunishmentDelActivity.class);
+                                                i.putExtra("id", mLogs.get(position).getId());
+                                                startActivity(i);
 
                                             }
                                         }
@@ -291,17 +294,18 @@ public class PunishmentListActivity extends BaseActivityNew {
                                     mLRecyclerViewAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
                                         @Override
                                         public void onItemLongClick(View view, int position) {
-                                            showAdialog(instance,position,"删除","删除后不可找回，请再三确定","确定").show();
+                                            showAdialog(instance, position, "删除", "删除后不可找回，请再三确定", "确定").show();
 
                                         }
                                     });
 
-                                    mHandler.sendEmptyMessage(-1);
 
-
+                                    empty_view.setVisibility(View.GONE);
+                                    list_r.setVisibility(View.VISIBLE);
                                 } else {
-                                    txt_size.setVisibility(View.GONE);
                                     mHandler.sendEmptyMessage(-3);
+                                    txt_size.setVisibility(View.GONE);
+                                    list_r.setEmptyView(empty_view);
                                 }
 
 
@@ -333,8 +337,8 @@ public class PunishmentListActivity extends BaseActivityNew {
 
         OkHttpUtils
                 .delete()
-                .url(HttpUrlUtils.getHttpUrl().PunishmentList() + "/"+mLogs.get(position).getId()+ "?access_token="
-                        + SPUtils.get(instance, "access_token", "")  )
+                .url(HttpUrlUtils.getHttpUrl().PunishmentList() + "/" + mLogs.get(position).getId() + "?access_token="
+                        + SPUtils.get(instance, "access_token", ""))
                 .build()
                 .execute(new StringCallback() {
                     @Override
