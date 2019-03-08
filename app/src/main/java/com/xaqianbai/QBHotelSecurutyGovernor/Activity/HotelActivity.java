@@ -92,25 +92,23 @@ public class HotelActivity extends AppCompatActivity implements View.OnClickList
                 startActivityForResult(intent, 0);
                 break;
             case R.id.edit_time_hotel://选择时间
-
                 DoubleDateUtil.show(instance, edit_time);
-
                 break;
-
             case R.id.img_clear_org_hotel://清除管辖机构
                 edit_org.setText("");
                 mOrg = "";
                 img_clear_org.setVisibility(View.GONE);
                 break;
-
             case R.id.img_clear_time_hotel://清除时间
                 edit_time.setText("");
+                mTime = "";
+                mStart = "";
+                mEnd = "";
                 img_clear_time.setVisibility(View.GONE);
                 break;
-
-                case R.id.img_clear_name_hotel://清除时间
+            case R.id.img_clear_name_hotel://清除时间
                 edit_name.setText("");
-                    img_clear_name_hotel.setVisibility(View.GONE);
+                img_clear_name_hotel.setVisibility(View.GONE);
                 break;
             case R.id.btn_quary_hotel://查询
                 getIntentData();
