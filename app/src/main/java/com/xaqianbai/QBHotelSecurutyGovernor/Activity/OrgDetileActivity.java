@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.Call;
 
-public class OrgDetileActivity extends AppCompatActivity {
+public class OrgDetileActivity extends AppCompatActivity implements View.OnClickListener{
 
     OrgDetileActivity instance;
     Unbinder unbinder;
@@ -56,6 +57,8 @@ public class OrgDetileActivity extends AppCompatActivity {
     TextView txt_passenger;
     @BindView(R.id.lineChart_del_org)
     LineChart chart_line;
+    @BindView(R.id.layout_fault_orgdel)
+    LinearLayout layout_fault_orgdel;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,7 @@ public class OrgDetileActivity extends AppCompatActivity {
          titlebar.setBackgroundColor(getResources().getColor(R.color.bag));
         title.setText("辖区统计查询");
         connecting();
+        layout_fault_orgdel.setOnClickListener(instance);
     }
 
     @Override
@@ -89,6 +93,7 @@ public class OrgDetileActivity extends AppCompatActivity {
         return "?condition="+ ConditionUtil.getConditionString(map);
     }
 
+    String psorgan = "";
 
     private void connecting() {
 
@@ -112,14 +117,15 @@ public class OrgDetileActivity extends AppCompatActivity {
                             } else if (data.get("state").toString().equals("0")) {
                                 txt_org.setText(NullUtil.getString(data.get("so_name")));
                                 txt_hotel.setText(NullUtil.getString(data.get("hotel_num")));
-                                txt_staff.setText(NullUtil.getString(data.get("staff_num")));
+                                txt_staff.setText(NullUtil.getString(data.get("fault_hotel_num")));
                                 txt_passenger.setText(NullUtil.getString(data.get("check_num")));
-                                ArrayList<String> x = new ArrayList<String>();
-                                ArrayList<Double> y = new ArrayList<Double>();
+                                psorgan = NullUtil.getString(data.get("psorgan"));
+                                ArrayList<String> x = new ArrayList<>();
+                                ArrayList<Double> y = new ArrayList<>();
                                 try
                                 {
                                     JSONArray jsonArray = new JSONArray(data.get("result").toString());
-                                    for (int j=0; j < jsonArray.length(); j++)    {
+                                    for (int j=0; j < jsonArray.length(); j++){
                                         JSONObject jsonObject = jsonArray.getJSONObject(j);
                                         x.add(jsonObject.getInt("date")+"");
                                         y.add(jsonObject.getDouble("live_num"));
@@ -154,4 +160,14 @@ public class OrgDetileActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.layout_fault_orgdel:
+                Intent i = new Intent(instance, HotelFaultListActivity.class);
+                i.putExtra("psorgan", psorgan);
+                startActivity(i);
+                break;
+        }
+    }
 }

@@ -1,12 +1,13 @@
 package com.xaqianbai.QBHotelSecurutyGovernor.Activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,14 +27,13 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-import com.xaqianbai.QBHotelSecurutyGovernor.Activity.RLview.PassengerAdapter;
-import com.xaqianbai.QBHotelSecurutyGovernor.Entity.Passenger;
+import com.xaqianbai.QBHotelSecurutyGovernor.Activity.RLview.HotelAdapter;
+import com.xaqianbai.QBHotelSecurutyGovernor.Entity.Hotel;
 import com.xaqianbai.QBHotelSecurutyGovernor.R;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.ConditionUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.DateUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.GsonUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.HttpUrlUtils;
-import com.xaqianbai.QBHotelSecurutyGovernor.Utils.IdenTypeUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.LogUtils;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.NullUtil;
 import com.xaqianbai.QBHotelSecurutyGovernor.Utils.SPUtils;
@@ -53,10 +52,9 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.Call;
 
+public class HotelFaultListActivity extends AppCompatActivity {
 
-public class PassengerListActivity extends AppCompatActivity {
-
-    PassengerListActivity instance;
+    HotelFaultListActivity instance;
     Unbinder unbinder;
     @BindView(R.id.tv_title)
     TextView title;
@@ -64,10 +62,10 @@ public class PassengerListActivity extends AppCompatActivity {
     FrameLayout titlebar;
     @BindView(R.id.recycler_text)
     TextView txt_size;
-    @BindView(R.id.empty_view)
-    RelativeLayout empty_view;
     @BindView(R.id.recycler_view)
     LRecyclerView list_r;
+    @BindView(R.id.empty_view)
+    RelativeLayout empty_view;
     /**
      * 服务器端一共多少条数据
      */
@@ -85,9 +83,9 @@ public class PassengerListActivity extends AppCompatActivity {
     private int mCurrentpage = 1;
 
 
-    private PassengerAdapter mDataAdapter = null;
+    private HotelAdapter mDataAdapter = null;
 
-    private PassengerListActivity.PreviewHandler mHandler = new PassengerListActivity.PreviewHandler(this);
+    private HotelFaultListActivity.PreviewHandler mHandler = new HotelFaultListActivity.PreviewHandler(this);
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -99,9 +97,17 @@ public class PassengerListActivity extends AppCompatActivity {
         unbinder = ButterKnife.bind(instance);
         StatuBarUtil.setStatuBarLightMode(instance, getResources().getColor(R.color.white));//修改状态栏字体颜色为黑色
         titlebar.setBackgroundColor(getResources().getColor(R.color.white));
-        title.setText("旅客列表");
+        title.setText("故障酒店列表");
+        initLRecycleView();
+    }
 
-        mDataAdapter = new PassengerAdapter(instance);
+    /**
+     * 初始化LRecycleView
+     */
+    @SuppressLint("ResourceType")
+    public void initLRecycleView() {
+
+        mDataAdapter = new HotelAdapter(instance);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
         list_r.setAdapter(mLRecyclerViewAdapter);
 
@@ -124,10 +130,13 @@ public class PassengerListActivity extends AppCompatActivity {
         final View header = LayoutInflater.from(this).inflate(R.layout.sample_header, (ViewGroup) findViewById(android.R.id.content), false);
         mLRecyclerViewAdapter.addHeaderView(header);
 
+//        list_r.setEmptyView(findViewById(R.id.recycler_view));//空白页面
+
+
         list_r.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPassengerss = new ArrayList<>();
+                mHotels = new ArrayList<>();
                 mDataAdapter.clear();
                 mLRecyclerViewAdapter.notifyDataSetChanged();//fix bug:crapped or attached views may not be recycled. isScrap:false isAttached:true
                 mCurrentCounter = 0;
@@ -183,33 +192,21 @@ public class PassengerListActivity extends AppCompatActivity {
 
         list_r.refresh();
 
-        //子条目的点击事件
-        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mDataAdapter.getDataList().size() > position) {
-                    LogUtils.e(mPassengers.size() + "mOrder总数");
-                    LogUtils.e(mDataAdapter.getDataList().size() + "总数");
-                    LogUtils.e(position + "当前位置");
-                    Intent intent = new Intent(instance, PassengerDetActivity.class);
-                    intent.putExtra("id", mPassengerss.get(position).getId());
-                    intent.putExtra("type", mPassengerss.get(position).getPassType());
-                    intent.putExtra("name", mPassengerss.get(position).getName());
-                    intent.putExtra("idcode", mPassengerss.get(position).getIden());
-                    intent.putExtra("address", mPassengerss.get(position).getAddress());
-                    intent.putExtra("sex", mPassengerss.get(position).getSex());
-                    intent.putExtra("idtype", mPassengerss.get(position).getIdenType());
-                    intent.putExtra("dt_id", mPassengerss.get(position).getDt_id());
-                    intent.putExtra("pic", mPassengerss.get(position).getPic());
-                    startActivity(intent);
-                }
-
-            }
-
-        });
+//        //子条目的点击事件
+//        mLRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                if (mDataAdapter.getDataList().size() > position) {
+//                    Intent intent = new Intent(instance, HotelDetilActivity.class);
+//                    intent.putExtra("id", mHotels.get(position).getId());
+//                    intent.putExtra("pic", mHotels.get(position).getPic());
+//                    startActivity(intent);
+//                }
+//            }
+//
+//        });
 
     }
-
 
     @Override
     protected void onDestroy() {
@@ -217,59 +214,34 @@ public class PassengerListActivity extends AppCompatActivity {
         unbinder.unbind();
     }
 
+    String mOrg, mName, mStart, mEnd;
+
+    /**
+     * 得到condition
+     *
+     * @return
+     */
     public String getIntentData() {
-
-
         HashMap map = new HashMap();
         Intent intent = getIntent();
-        String nameType = intent.getStringExtra("nameType");
-        String name = intent.getStringExtra("name");
-        String idenType = intent.getStringExtra("idenType");
-        String iden = intent.getStringExtra("iden");
-        String tel = intent.getStringExtra("tel");
-        String start = intent.getStringExtra("start");
-        String end = intent.getStringExtra("end");
-        String psorgan = intent.getStringExtra("psorgan");
-        String bdate = intent.getStringExtra("bdate");
-        String nation = intent.getStringExtra("nation");
-        LogUtils.e("mStart22222222222" + start);
-        LogUtils.e("mEnd22222222" + end);
-        LogUtils.e("mEnd22222222bdate" + bdate);
-        map.put("\"idtype\"", "\"" + idenType + "\"");//
-//        map.put("\"name\"", "\"" + name + "\"");//
-//        map.put("\"name\"", "\"%" + name + "%\"");//
-        map.put("\"idcode\"", "\"" + iden + "\"");//
-        map.put("\"telphone\"", "\"" + tel + "\"");//
-        map.put("\"psorgan\"", "\"" + psorgan + "\"");//
-        map.put("\"nation\"", "\"" + nation + "\"");//
-
-        if (!start.equals("") && start != null && !end.equals("") && end != null) {
-            map.put("\"ltime\"", "[[\">=\"," + DateUtil.data(start) + "],[\"<=\"," + DateUtil.data(end) + "]]");//时间
-        }
-        if (!bdate.equals("") && bdate != null  ){
-            String starta = NullUtil.getString(bdate.substring(0, bdate.indexOf(" - ")));
-            String enda  = NullUtil.getString(bdate.substring(bdate.indexOf(" - ") + 3));
-
-            map.put("\"bdate\"", "[[\">=\"," + starta + "],[\"<=\"," + enda + "]]");//时间
-
-        }
-        if (!name.equals("") && name != null) {
-            map.put("\"name\"", "[\"like\",\"%" + name + "%\"]");
-        }
-
-        return "?condition=" + ConditionUtil.getConditionString(map) + "&type=" + nameType;
+        mOrg = intent.getStringExtra("psorgan");
+        mName = intent.getStringExtra("name");
+        mStart = intent.getStringExtra("start");
+        mEnd = intent.getStringExtra("end");
+        map.put("\"psorgan\"", "\"" + mOrg + "\"");//管辖机构
+        return "?condition=" + ConditionUtil.getConditionString(map);
     }
 
 
-    List<Passenger> mPassengers;
-    private List<Passenger> mPassengerss;
+    List<Hotel> mHotel;
+    private List<Hotel> mHotels;
 
     private void connecting(int p) {
 
-        LogUtils.e(HttpUrlUtils.getHttpUrl().passengerList() + getIntentData() + "&access_token=" + SPUtils.get(instance, "access_token", ""));
+        LogUtils.e(HttpUrlUtils.getHttpUrl().HoteFaultlList() + getIntentData() + "&access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p);
         OkHttpUtils
                 .get()
-                .url(HttpUrlUtils.getHttpUrl().passengerList() + getIntentData() + "&access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p)
+                .url(HttpUrlUtils.getHttpUrl().HoteFaultlList() + getIntentData() + "&access_token=" + SPUtils.get(instance, "access_token", "") + "&p=" + p)
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -278,12 +250,11 @@ public class PassengerListActivity extends AppCompatActivity {
                         mHandler.sendEmptyMessage(-3);
                     }
 
-                    @RequiresApi(api = Build.VERSION_CODES.M)
                     @Override
                     public void onResponse(String s, int i) {
 
                         try {
-                            mPassengers = new ArrayList<>();
+                            mHotel = new ArrayList<>();
                             Map<String, Object> map = GsonUtil.JsonToMap(s);
 
                             if (map.get("state").toString().equals("1")) {
@@ -293,35 +264,28 @@ public class PassengerListActivity extends AppCompatActivity {
                             } else if (map.get("state").toString().equals("0")) {
                                 if (!map.get("count").toString().equals("0")) {
                                     mHandler.sendEmptyMessage(-1);
-                                    String pk = map.get("pk").toString();
-                                    String ppp = "";
-                                    String img = map.get("img").toString();
-                                    if (pk.equals("dt_id")) {
-                                        ppp = "1001";
-                                    } else if (pk.equals("ft_id")) {
-                                        ppp = "1002";
-                                    } else if (pk.equals("mt_id")) {
-                                        ppp = "1003";
-                                    }
+//                                    String pk = map.get("pk").toString();
+//                                    String img = map.get("img").toString();
                                     List<Map<String, Object>> data = GsonUtil.GsonToListMaps(GsonUtil.GsonString(map.get("table")));//参数[{},{}]
                                     for (int j = 0; j < data.size(); j++) {
-                                        Passenger passenger = new Passenger();
-                                        passenger.setId(NullUtil.getString(data.get(j).get("ccode")));//ID
-                                        passenger.setPic(HttpUrlUtils.getHttpUrl().picInDel() + "/" + ppp + "/" + NullUtil.getString(data.get(j).get(pk))
-                                                + "/" + NullUtil.getString(img)
-                                                + "?access_token=" + SPUtils.get(instance, "access_token", ""));//头像
-                                        LogUtils.e(HttpUrlUtils.getHttpUrl().picInDel() + "/" + ppp + "/" + NullUtil.getString(data.get(j).get(pk))
-                                                + "/" + NullUtil.getString(img)
-                                                + "?access_token=" + SPUtils.get(instance, "access_token", ""));
-                                        passenger.setName(NullUtil.getString(data.get(j).get("name")));//姓名
-                                        passenger.setSex(NullUtil.getString(data.get(j).get("sex")));//性别
-                                        passenger.setIden(NullUtil.getString(data.get(j).get("idcode")));//身份证
-                                        passenger.setAddress(NullUtil.getString(data.get(j).get("address")));//户籍地址
-                                        passenger.setIdenType(IdenTypeUtils.getIdenType(NullUtil.getString(data.get(j).get("idtype"))));//证件类型
-                                        passenger.setPassType(NullUtil.getString(data.get(j).get("type")));//旅客类型
-                                        passenger.setDt_id(NullUtil.getString(data.get(j).get(pk)));//头像 dt_id
-                                        mPassengers.add(passenger);
-                                        mPassengerss.add(passenger);
+                                        Hotel hotel = new Hotel();
+                                        hotel.setId(NullUtil.getString(data.get(j).get("ho_id")));//ID
+                                        hotel.setName(NullUtil.getString(data.get(j).get("hname")) + "         " +
+                                                NullUtil.getString(data.get(j).get("ltime")));//姓名+最后上传时间
+                                        hotel.setStars(NullUtil.getString(data.get(j).get("stars")));//星级
+                                        hotel.setManager(NullUtil.getString(data.get(j).get("principal")));//旅馆负责人
+                                        hotel.setAddress(NullUtil.getString(data.get(j).get("so_name")));//地址
+                                        hotel.setTel(NullUtil.getString(data.get(j).get("hnohotel")));//联系电话
+//                                        hotel.setPic(HttpUrlUtils.getHttpUrl().picInHotel() + NullUtil.getString(data.get(j).get(pk))
+//                                                + "/" + NullUtil.getString(img)
+//                                                + "?access_token=" + SPUtils.get(instance, "access_token", ""));//酒店全景图
+//
+//                                        LogUtils.e(HttpUrlUtils.getHttpUrl().picInHotel() + NullUtil.getString(data.get(j).get(pk))
+//                                                + "/" + NullUtil.getString(img)
+//                                                + "?access_token=" + SPUtils.get(instance, "access_token", ""));
+
+                                        mHotel.add(hotel);
+                                        mHotels.add(hotel);
                                     }
                                     String count = map.get("count").toString();
                                     String num = map.get("num").toString();
@@ -339,12 +303,11 @@ public class PassengerListActivity extends AppCompatActivity {
 
                             } else if (map.get("state").toString().equals("19")) {
                                 mHandler.sendEmptyMessage(-3);
-                                //响应失败
-                                Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
+                                txt_size.setVisibility(View.GONE);
                             } else if (map.get("state").toString().equals("10")) {
                                 mHandler.sendEmptyMessage(-3);
                                 //响应失败
-                                Toast.makeText(instance, map.get("mess").toString() + "正在重新登陆", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(instance, map.get("mess").toString(), Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(instance, LoginActivity.class));
                                 finish();
                             }
@@ -352,6 +315,8 @@ public class PassengerListActivity extends AppCompatActivity {
                             mHandler.sendEmptyMessage(-3);
                             Toast.makeText(instance, e.toString(), Toast.LENGTH_SHORT).show();
                         }
+
+
                     }
                 });
 
@@ -361,30 +326,29 @@ public class PassengerListActivity extends AppCompatActivity {
         this.finish();
     }
 
+
     private void notifyDataSetChanged() {
         mLRecyclerViewAdapter.notifyDataSetChanged();
     }
 
-    private void addItems(ArrayList<Passenger> list) {
+    private void addItems(ArrayList<Hotel> list) {
 
         mDataAdapter.addAll(list);
         mCurrentCounter += list.size();
 
     }
 
-    private int size;
-
     private class PreviewHandler extends Handler {
 
-        private WeakReference<PassengerListActivity> ref;
+        private WeakReference<HotelFaultListActivity> ref;
 
-        PreviewHandler(PassengerListActivity activity) {
+        PreviewHandler(HotelFaultListActivity activity) {
             ref = new WeakReference<>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            final PassengerListActivity activity = ref.get();
+            final HotelFaultListActivity activity = ref.get();
             if (activity == null || activity.isFinishing()) {
                 return;
             }
@@ -395,19 +359,20 @@ public class PassengerListActivity extends AppCompatActivity {
                     int currentSize = activity.mDataAdapter.getItemCount();
 
                     //模拟组装15个数据
-                    ArrayList<Passenger> newList = new ArrayList<>();
-                    for (int i = 0; i < mPassengers.size(); i++) {
+                    ArrayList<Hotel> newList = new ArrayList<>();
+                    for (int i = 0; i < mHotel.size(); i++) {
                         if (newList.size() + currentSize >= TOTAL_COUNTER) {
                             break;
                         }
-                        Passenger item = new Passenger();
-                        item.setId(mPassengers.get(i).getId());
-                        item.setName(mPassengers.get(i).getName());
-                        item.setPic(mPassengers.get(i).getPic());
-                        item.setSex(mPassengers.get(i).getSex());
-                        item.setIden(mPassengers.get(i).getIden());
-                        item.setAddress(mPassengers.get(i).getAddress());
-                        item.setIdenType(mPassengers.get(i).getIdenType());
+
+                        Hotel item = new Hotel();
+                        item.setId(i + "");
+                        item.setName(mHotel.get(i).getName());
+                        item.setStars(mHotel.get(i).getStars());
+                        item.setManager(mHotel.get(i).getManager());
+                        item.setPic(mHotel.get(i).getPic());
+                        item.setAddress(mHotel.get(i).getAddress());
+                        item.setTel(mHotel.get(i).getTel());
                         newList.add(item);
                     }
 
@@ -450,6 +415,5 @@ public class PassengerListActivity extends AppCompatActivity {
         }
         return true;
     }
-
 
 }

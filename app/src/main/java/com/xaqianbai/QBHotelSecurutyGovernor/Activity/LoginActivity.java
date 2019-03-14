@@ -240,7 +240,7 @@ public class LoginActivity extends BaseActivityNew {
                                 Map<?, ?> map = GsonUtil.JsonToMap(s);
                                 if (map.get("state").toString().equals("0")) {
                                     SPUtils.put(instance, "ou_code", NullUtil.getString(map.get("ou_code")));//警员编号
-                                    SPUtils.put(instance, "ou_nickname", NullUtil.getString(map.get("ou_nickname")));//昵称
+                                    SPUtils.put(instance, "ou_realname", NullUtil.getString(map.get("ou_nickname")));//昵称
                                     SPUtils.put(instance, "ou_headpic", HttpUrlUtils.getHttpUrl().getOuPic() +
                                             NullUtil.getString(map.get("ou_id")) + "/ou_headpic" +
                                             "?access_token=" + NullUtil.getString(map.get("access_token")));//用户头像

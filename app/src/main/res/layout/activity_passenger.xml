@@ -10,7 +10,6 @@
 
     <include layout="@layout/pub_titlebar" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -291,6 +290,135 @@
 
             <ImageView
                 android:id="@+id/img_clear_date_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/delete_edit"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/padding"
+                />
+
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:paddingRight="@dimen/padding_en"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_en"
+                android:text="民族"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size" />
+
+            <EditText
+                android:id="@+id/edit_nation_passenger"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:focusable="false"
+                android:gravity="right|center"
+                android:hint="请选择民族..."
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_small_size"
+                android:longClickable="false"
+                />
+
+            <ImageView
+                android:id="@+id/img_clear_nation_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/delete_edit"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/padding"
+                />
+
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:paddingRight="@dimen/padding_en"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_en"
+                android:text="管辖机构"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size" />
+
+            <EditText
+                android:id="@+id/edit_area_passenger"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:focusable="false"
+                android:gravity="right|center"
+                android:hint="请选择行政区域..."
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_small_size"
+                android:longClickable="false"
+                />
+
+            <ImageView
+                android:id="@+id/img_clear_area_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@mipmap/delete_edit"
+                android:visibility="gone"
+                android:layout_marginLeft="@dimen/padding"
+                />
+
+        </LinearLayout><LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/white"
+            android:paddingRight="@dimen/padding_en"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/padding_en"
+                android:text="年龄范围"
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_smalls_size" />
+
+            <EditText
+                android:id="@+id/edit_age_passenger"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@null"
+                android:focusable="false"
+                android:gravity="right|center"
+                android:hint="请选择年龄范围..."
+                android:textColor="@color/viewfinder_frame"
+                android:textSize="@dimen/textview_small_size"
+                android:longClickable="false"
+                />
+
+            <ImageView
+                android:id="@+id/img_clear_age_pass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
