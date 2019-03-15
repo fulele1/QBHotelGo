@@ -130,13 +130,6 @@ public class HttpUrlUtils {
         return getBaseUrl() + "/v1/governor/crime";
     }
 
-
-//    //  删除发案列表   /v1/governor/crime/:id
-//    public String BothdeleteList() {
-//        return getBaseUrl() + "/v1/governor/crime";
-//    }
-
-
     //  处罚列表
     public String PunishmentList() {
         return getBaseUrl() + "/v1/governor/punish";

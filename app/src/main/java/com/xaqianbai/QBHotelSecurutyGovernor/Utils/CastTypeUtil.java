@@ -28,7 +28,6 @@ public class CastTypeUtil {
         else if (string.equals("限期整改")) code = "5";
         else if (string.equals("其他"))
             code = "9";
-
         return code;
     }
 
@@ -39,7 +38,6 @@ public class CastTypeUtil {
         else if (code.equals("4")) code = "吊销许可证";
         else if (code.equals("5")) code = "限期整改";
         else if (code.equals("9")) code = "其他";
-
         return code;
     }
 
@@ -125,7 +123,6 @@ public class CastTypeUtil {
         if (nation.equals("门巴族")) type = "54";
         if (nation.equals("珞巴族")) type = "55";
         if (nation.equals("基诺族")) type = "56";
-
         return type;
     }
 
@@ -234,9 +231,7 @@ public class CastTypeUtil {
         if (contry.equals("香港")) type = "HKG";
         if (contry.equals("赫德岛和麦克唐纳岛")) type = "HMD";
         if (contry.equals("洪都拉斯")) type = "HND";
-
         return type;
     }
-
 
 }

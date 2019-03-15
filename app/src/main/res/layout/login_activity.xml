@@ -48,6 +48,7 @@
                 android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:hint="@string/input_account"
                 android:maxLength="20"
+                android:maxLines="1"
                 android:textSize="@dimen/textview_small_size" />
 
 
@@ -91,6 +92,7 @@
                 android:inputType="textPassword"
                 android:maxLength="20"
                 android:paddingLeft="10px"
+                android:maxLines="1"
                 android:textSize="@dimen/textview_small_size"
 
                 />
